@@ -5,6 +5,8 @@ site_description: "mtdicken's blog"
 
 nav:
   - Home: index.md
+  - Trouble Shooting: 
+    - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages 部署.md'
 theme:
   name: 'material'
 
