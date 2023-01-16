@@ -51,13 +51,14 @@
 1. 参考官方文档
     - [Deploy MkDocs with Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-mkdocs-site/#deploy-with-cloudflare-pages)
 2. 如果希望自定义域名的话，在 Cloudflare 的 Pages/blog/Custom Domain 下面，可以用 CNAME 接入自定义域名。
-   - **注意：** 接入后，可能很长一段时间都在显示 initializing。没有关系，一天后就行了。
+   - **注意：**接入后，可能很长一段时间都在显示 initializing。没有关系，一天后就行了。
 
 坑点：
 
 - 环境变量的 `PYTHON_VERSION` 后，**一定不能**有空格！否则 Cloudflare 无法识别，导致部署时使用老旧的 Python 2.7，导致错误
     - 另外，`PYTHON_VERSION` 只能是：2.7、3.5 和 3.7。输入其他的，都没有用。不要“自作主张”，把最新的 Python 版本号输进去了。详见 [Build Configuration](https://developers.cloudflare.com/pages/platform/build-configuration/)
-- **注意！：** 教程中的 `pip freeze > requirements.txt` 命令并不好用，因为你本地的 Python 的 requirements 太多了。因此，建议将 **requirements** 文件内容用如下替代：
+- **注意：**教程中的 `pip freeze > requirements.txt` 命令并不好用，因为你本地的 Python 的 requirements 太多了。因此，建议将 **requirements** 文件内容用如下替代：
+  
     ```
     mkdocs==1.4.2
     mkdocs-material==9.0.3
@@ -66,4 +67,6 @@
     <你的其他扩展 (extensions)>
     ```
     - 也许以后版本号会改动
-- 如果部署失败，进行改动，重新部署时，一定要**不要**用旧的 deployment 进行部署（否则配置是旧的）！
+- 如果部署失败，进行改动，重新部署时，一定要**不要**用旧的 deployment 进行部署（否则配置是旧的）！要重启一个新的。
+
+    - 另外，如果 github repo 的文件有变，那么，Pages 就会自动重新构建。

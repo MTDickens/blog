@@ -4,11 +4,27 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-  - Home: index.md
-  - Trouble Shooting: 
-    - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages 部署.md'
+  - Home: 'index.md'
+  - Others:
+    - Trouble Shooting: 
+      - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
+
 theme:
   name: 'material'
+  palette:     #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
+    - media: "(prefers-color-scheme: light)" 
+      scheme: default  #配色方案：浅色模式
+      primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
+      accent: Brown  #强调色，默认蓝，可以交互的元素如悬停链接、按钮和滚动条
+      toggle:
+        icon: material/weather-sunny #图标，太阳
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"  
+      scheme: slate  #配色方案：深色模式
+      # primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
+      toggle:
+        icon: material/weather-night  #图标，月亮
+        name: Switch to light mode
 
 markdown_extensions:
   - markdown_checklist.extension
