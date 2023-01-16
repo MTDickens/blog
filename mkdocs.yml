@@ -1,0 +1,12 @@
+site_name: MkLorum
+site_url: "http://blog.mtds.eu.org:80/"
+site_author: "mtdickens"
+site_description: "mtdicken's blog"
+
+nav:
+  - Home: index.md
+theme:
+  name: 'material'
+
+markdown_extensions:
+  - markdown_checklist.extension
