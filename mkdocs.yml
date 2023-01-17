@@ -8,6 +8,7 @@ nav:
   - 其他 Others:
     - 故障排除 Trouble Shooting: 
       - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
+      - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
     - 使用技巧 Tips:
       - Linux: 'Tips/Linux tips.md'
       - Git: 'Tips/Git tips.md'
