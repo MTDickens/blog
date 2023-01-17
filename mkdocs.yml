@@ -4,10 +4,13 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-  - Home: 'index.md'
-  - Others:
-    - Trouble Shooting: 
+  - 主页 Home: 'index.md'
+  - 其他 Others:
+    - 故障排除 Trouble Shooting: 
       - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
+    - 使用技巧 Tips:
+      - Linux: 'Tips/Linux tips.md'
+      - Git: 'Tips/Git tips.md'
 
 theme:
   name: 'material'
@@ -27,4 +30,23 @@ theme:
         name: Switch to light mode
 
 markdown_extensions:
-  - markdown_checklist.extension
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
