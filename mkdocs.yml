@@ -12,6 +12,8 @@ nav:
     - 使用技巧 Tips:
       - Linux: 'Tips/Linux tips.md'
       - Git: 'Tips/Git tips.md'
+      - PDF:
+        - 给 PDF 文件添加目录 Add contents to a PDF file: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
   - 建议 Advice:
     - 教授建议 Professors:
       - 丁尧相教授 Prof. Yaoxiang Ding:
