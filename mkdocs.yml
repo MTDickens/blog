@@ -10,7 +10,9 @@ nav:
       - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
       - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
     - 使用技巧 Tips:
-      - Linux: 'Tips/Linux tips.md'
+      - Linux: 
+        - Linux tips: 'Tips/Linux tips.md'
+        - Linux 常用软件 Frequantly used softwares in Linux: 'Tips\frequently_used_softwares_in_Linux.md'
       - Git: 'Tips/Git tips.md'
       - PDF:
         - 给 PDF 文件添加目录 Add contents to a PDF file: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
