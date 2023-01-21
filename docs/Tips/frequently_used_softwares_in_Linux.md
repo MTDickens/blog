@@ -1,6 +1,6 @@
-# Linux 常用软件 Frequently used softwares in Linux
+# Linux 常用软件
 
-## 使用手册 Manual
+## 使用手册
 
 1. `man`: `man` is an interface to the system reference manuals
 
@@ -8,16 +8,16 @@
 
    > Simplified and community-driven man pages
 
-## 阅读器与编辑器 Reader and Editor
+## 阅读器与编辑器
 
-### 阅读器 Reader
+### 阅读器
 
 1. `tail`, `head`：字面意思，截取（长）文本后面/前面的几行，并输出到标准输出。
 2. 
 
-## 查找与替换 Find and Replace
+## 查找与替换
 
-### 文本查找 Text Find
+### 文本查找
 
 1. `grep`：`grep` 有很多选项，这也使它成为一个非常全能的工具。其中我经常使用的有 `-C` ：获取查找结果的上下文（Context）；`-v` 将对结果进行反选（Invert），也就是输出不匹配的结果。举例来说， `grep -C 5` 会输出匹配结果前后五行。当需要搜索大量文件的时候，使用 `-R` 会递归地进入子目录并搜索所有的文本文件。
 
@@ -38,7 +38,7 @@
    rg --stats PATTERN
    ```
 
-### 文本替换 Text Replace
+### 文本替换
 
 1. `sed`：`sed` 是一个基于文本编辑器`ed`构建的”流编辑器” 。在 `sed` 中，您基本上是利用一些简短的命令来修改文件，而不是直接操作文件的内容（尽管您也可以选择这样做）。
 
@@ -66,13 +66,13 @@
       - `uniq -c` 把连续出现的行折叠为一行并使用出现次数作为前缀。
       - 该匹配要求文本的第一部分需要等于1（这部分刚好是`uniq -c`得到的计数值），然后其第二部分必须满足给定的一个正则表达式。代码块中的内容则表示打印用户名。
 
-### Shell 命令查找 Shell Command Find
+### Shell 命令查找
 
 1. `history`：`history`  命令允许您以程序员的方式来访问shell中输入的历史命令。这个命令会在标准输出中打印shell中的里面命令。如果我们要搜索历史记录，则可以利用管道将输出结果传递给 `grep` 进行模式搜索。 `history | grep find` 会打印包含find子串的命令。
 2. `Ctrl+R`：对于大多数的shell来说，您可以使用 `Ctrl+R` 对命令历史记录进行回溯搜索。敲 `Ctrl+R` 后您可以输入子串来进行匹配，查找历史命令行。
 3. `fzf`：`Ctrl+R` 可以配合 [fzf](https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r) 使用。`fzf` 是一个通用对模糊查找工具，它可以和很多命令一起使用。这里我们可以对历史命令进行模糊查找并将结果以赏心悦目的格式输出。
 
-### 文件查找 Files Find
+### 文件查找
 
 1. `find`：所有的类UNIX系统都包含一个名为 [`find`](https://man7.org/linux/man-pages/man1/find.1.html) 的工具，它是 shell 上用于查找文件的绝佳工具。`find`命令会递归地搜索符合条件的文件。
 
@@ -88,9 +88,9 @@
 
    
 
-##  数据分析与整理 Data Analysis and Wrangling
+##  数据分析与整理
 
-### 数据分析 Data Analysis
+### 数据分析
 
 1. `bc`: `bc` is an arbitrary precision calculator language.
    - For example, to calculate 4 times 5 then subtract 17: `echo '4 * 5 - 17' | bc`
@@ -101,7 +101,7 @@
    - 比如，`R --slave -e 'x <- scan(file="stdin", quiet=TRUE); summary(x)'`
 4. `gnuplot`：如果您希望绘制一些简单的图表， `gnuplot` 可以帮助到您：`gnuplot -p -e 'set boxwidth 0.5; plot "-" using 1:xtic(2) with boxes'`
 
-### 数据整理 Data Wrangling
+### 数据整理
 
 1. `xargs`：有时候您要利用数据整理技术从一长串列表里找出你所需要安装或移除的东西。我们之前讨论的相关技术配合 `xargs` 即可实现：
 
@@ -118,12 +118,12 @@
     | ssh mymachine 'gzip -d | tee copy.jpg | env DISPLAY=:0 feh -'
    ```
 
-## 文件夹导航 File Folder Navigation
+## 文件夹导航
 
 1. `fasd`：Fasd 基于 [*frecency* ](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm)对文件和文件排序，也就是说它会同时针对频率（*frequency*）和时效（*recency*）进行排序。默认情况下，`fasd`使用命令 `z` 帮助我们快速切换到最常访问的目录。例如， 如果您经常访问`/home/user/files/cool_project` 目录，那么可以直接使用 `z cool` 跳转到该目录。
 2. `autojump`：以上操作命令，对于 autojump，则使用`j cool`代替即可。
 
-## 壳 Shell
+## Shell
 
 1. `zsh`: ***Zsh\*** is a shell designed for interactive use, although it is also a powerful scripting language. Many of the useful features of *bash*, *ksh*, and *tcsh* were incorporated into zsh; many original features were added.
 
@@ -133,8 +133,8 @@
 
    Oh My Zsh 是一个令人愉快的、开源的、社区驱动的框架，用于管理您的 Zsh 配置。它捆绑了成千上万的有用功能，帮助程序，插件，主题，和让你兴奋大叫的一些东西……
 
-## 正则表达式 Regex
+## 正则表达式
 
-## 其他 Others
+## 其他
 
 1. `sort`, `uniq`：**排序**，**将*连续出现*的行折叠为一行**（一般作用于已排序的数据）
