@@ -19,12 +19,16 @@
 ## 其他
 
 1. `tldr`：一个强大的、社区型的 cheetsheet。
-   - 安装命令：
-     1. 用 npm：`npm install -g tldr`
-     2. 用 pip（推荐）：`pip install tldr`
-     3. 用其他包管理器：详见[官方列表](https://github.com/tldr-pages/tldr/wiki/tldr-pages-clients)
-     4. 自行编译：详见 [tldr written in C](https://github.com/tldr-pages/tldr-c-client)
+
+      安装命令：
+
+      1. 用 npm：`npm install -g tldr`
+      2. 用 pip（推荐）：`pip install tldr`
+      3. 用其他包管理器：详见[官方列表](https://github.com/tldr-pages/tldr/wiki/tldr-pages-clients)
+      4. 自行编译：详见 [tldr written in C](https://github.com/tldr-pages/tldr-c-client)
 
 2. `v2ray`：不解释，去 Github/Google 上搜”v2ray一键脚本“，一搜一大把
-   - :warning:警告：强烈建议安装在**非**生产环境的**国外**服务器上。
+
+      :warning:警告：强烈建议安装在**非**生产环境的**国外**服务器上。
+
 3. [一些 MIT missing semester 推荐的常用软件](frequently_used_softwares_in_Linux.md)
