@@ -27,7 +27,11 @@
       3. 用其他包管理器：详见[官方列表](https://github.com/tldr-pages/tldr/wiki/tldr-pages-clients)
       4. 自行编译：详见 [tldr written in C](https://github.com/tldr-pages/tldr-c-client)
 
-2. `v2ray`：不解释，去 Github/Google 上搜”v2ray一键脚本“，一搜一大把
+2. `v2ray`：建议使用我改过的 xray.sh（只改了 DNS 解析部分）。
+
+      1. 建议使用 vless/vmess + ws + tls (+ cdn)
+      2. 建议在 [eu.org](https://nic.eu.org) 注册免费域名，并用 Cloudflare 托管，最后用 cloudflare cdn 的 websocket 来加速~~（也可能是减速）~~你的节点。
+      3. [脚本地址](https://raw.githubusercontent.com/MTDickens/scripts/master/xray.sh)。
 
       :warning:警告：强烈建议安装在**非**生产环境的**国外**服务器上。
 
