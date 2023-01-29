@@ -39,9 +39,10 @@
 2. 添加以下命令：
 
 ```bash
-export hostip="cat /etc/resolv.conf | grep "nameserver" | awk '{print $2}'"
+export hostip=$(cat "/etc/resolv.conf" | grep "nameserver" | awk '{print $2}')
 alias proxyon='export ALL_PROXY="socks5://${hostip}:10810";export https_proxy=$ALL_PROXY;export http_proxy=$ALL_PROXY'
 alias proxyoff='unset ALL_PROXY;unset http_proxy;unset https_proxy'
 ```
 
 3. 使 **.xxrc** 生效，输入：`source ~/.bashrc`。
+
