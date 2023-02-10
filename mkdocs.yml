@@ -4,24 +4,26 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-  - 主页 Home: 'index.md'
-  - 其他 Others:
-    - 故障排除 Trouble Shooting: 
+  - 主页: 'index.md'
+  - 其他:
+    - 故障排除: 
       - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
       - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
-    - 使用技巧 Tips:
+    - 使用技巧:
       - Linux: 
         - Linux tips: 'Tips/Linux tips.md'
-        - Linux 常用软件 Frequantly used softwares in Linux: 'Tips/frequently_used_softwares_in_Linux.md'
-        - Linux 必备软件 Must-install softwares in Linux: 'Tips/must-install_softwares_in_Linux.md'
+        - Linux 常用软件: 'Tips/frequently_used_softwares_in_Linux.md'
+        - Linux 必备软件: 'Tips/must-install_softwares_in_Linux.md'
       - Git: 'Tips/Git tips.md'
       - PDF:
-        - 给 PDF 文件添加目录 Add contents to a PDF file: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
-  - 建议 Advice:
-    - 教授建议 Professors:
-      - 丁尧相教授 Prof. Yaoxiang Ding:
-        - 阅读建议 Advice on Reading: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
-        - 听讲记录 note: 'Advice/Professors/Yaoxiang Ding/note.md'
+        - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
+  - 建议:
+    - 教授建议:
+      - 丁尧相教授:
+        - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
+        - 听讲记录: 'Advice/Professors/Yaoxiang Ding/note.md'
+  - 技术:
+    - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
 
 theme:
   name: 'material'
