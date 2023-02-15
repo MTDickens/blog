@@ -1,7 +1,3 @@
----
-use_secret: 'ENCRYPTCONTENT_PASSWORD'
----
-
 # Forums
 
 ## 1. [Reddit](https://reddit.com)
