@@ -1,3 +1,7 @@
+---
+password: secret_password
+---
+
 # Forums
 
 ## 1. [Reddit](https://reddit.com)
