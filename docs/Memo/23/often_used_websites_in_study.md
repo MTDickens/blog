@@ -6,14 +6,14 @@
 
 1. [Mathematics](https://www.reddit.com/r/math/)
 2. [Computer Science](https://www.reddit.com/r/computerscience/)
-3. Programming Languages
+3. [Programming Languages](https://www.reddit.com/r/learnprogramming/)
    1. [Haskell](https://www.reddit.com/r/haskell/)
 
 ### Tool-Oriented
 
 1. [Github](https://www.reddit.com/r/github/)
 2. Free books, papers, etc
-   1. [LibGen](https://www.reddit.com/r/libgen/)
+   1. [Library Genesis](https://www.reddit.com/r/libgen/)
 3. [Linux](https://www.reddit.com/r/linux/)
 
 ### School-Oriented
