@@ -23,11 +23,14 @@ nav:
         - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
         - 听讲记录: 'Advice/Professors/Yaoxiang Ding/note.md'
   - 技术:
-    - 2023年: 
+    - 2023 年: 
       - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
   - 数学:
-    - 2023年: 
+    - 2023 年: 
       - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_guru.md'
+  - 随记:
+    - 2023 年:
+      - 学习常用网站: 'Memo/23/often_used_websites_in_study.md'
 
 theme:
   name: 'material'
