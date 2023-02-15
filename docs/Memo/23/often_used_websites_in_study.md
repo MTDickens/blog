@@ -1,5 +1,5 @@
 ---
-password: secret_password
+use_secret: 'ENCRYPTCONTENT_PASSWORD'
 ---
 
 # Forums

@@ -53,7 +53,7 @@ plugins:
   - search
   - mermaid2
   - encryptcontent:
-      use_secret: 'ENCRYPTCONTENT_PASSWORD'
+      # use_secret: 'ENCRYPTCONTENT_PASSWORD'
       remember_password: True
       default_expire_delay: 24
       
