@@ -25,9 +25,12 @@ nav:
   - 技术:
     - 2023 年: 
       - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
+  - 计算机科学:
+    - 2023 年:
+      - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
   - 数学:
     - 2023 年: 
-      - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_guru.md'
+      - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_guru.md' 
   - 随记:
     - 2023 年:
       - 学习常用网站: 'Notes/23/often_used_websites_in_study.md'
@@ -81,3 +84,8 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.arithmatex:
       generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
