@@ -49,7 +49,7 @@ The main sites are:
 > Memos are for storing unread web pages and I can read them later.
 
 1. [Cubox](https://cubox.cc/my/inbox)
-2. [Feedly](https://feedly.com/i/my)
+2. [Inoreader](https://www.inoreader.com/all_articles)
 
 ---
 
