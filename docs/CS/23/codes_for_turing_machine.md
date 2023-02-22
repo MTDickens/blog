@@ -35,7 +35,7 @@ reject:
 accept:
 ```
 
-## $\{\omega|\text{The number of 0s and 1s are the same in }\omega\}$
+## $\{\omega \in \{0,1\}^*|\omega \text{ has the same number of 0s and 1s}\}$
 
 ```yaml
 input: '0001100111'
