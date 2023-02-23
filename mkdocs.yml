@@ -18,10 +18,15 @@ nav:
       - PDF:
         - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
   - 建议:
-    - 教授建议:
-      - 丁尧相教授:
-        - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
-        - 听讲记录: 'Advice/Professors/Yaoxiang Ding/note.md'
+    - 丁尧相教授:
+      - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
+      - 书籍建议: 'Advice/Professors/Yaoxiang Ding/advice_on_books.md'
+      - 课程建议: 'Advice/Professors/Yaoxiang Ding/advice_on_courses.md'
+      - 2023 年:
+        - 1 月:
+          - 听讲记录: 'Advice/Professors/Yaoxiang Ding/23/01/note.md'
+        - 2 月:
+          - 听讲 23-02-23: 'Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md'
   - 技术:
     - 2023 年: 
       - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
