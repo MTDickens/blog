@@ -28,6 +28,8 @@ nav:
           - 听讲记录: 'Advice/Professors/Yaoxiang Ding/23/01/note.md'
         - 2 月:
           - 听讲 23-02-23: 'Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md'
+        - 3 月:
+          - 线下交流 23-03-18: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md'
   - 技术:
     - 2023 年: 
       - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
@@ -66,7 +68,7 @@ plugins:
   - mermaid2
   - encryptcontent:
       # use_secret: 'ENCRYPTCONTENT_PASSWORD'
-      remember_password: True
+      remember_password: True 
       default_expire_delay: 24
       title_prefix: '[LOCKED]'
       summary: 'This content is PROTECTED'
