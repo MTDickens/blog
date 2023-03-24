@@ -37,9 +37,10 @@ nav:
   - 计算机科学:
     - 2023 年:
       - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
+      - 和 ChatGPT 的一次交流: 'CS/23/chatgpt_mutual_communication.md'
   - 数学:
     - 2023 年: 
-      - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_guru.md' 
+      - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_master.md' 
       - 图解对偶映射: 'Mathematics/23/dual_map_explained.md' 
   - 随记:
     - 2023 年:
