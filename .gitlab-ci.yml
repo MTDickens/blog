@@ -1,0 +1,17 @@
+image: python:3.8
+
+stages:
+  - build
+
+before_script:
+  - pip install mkdocs mkdocs-material
+
+build:
+  stage: build
+  script:
+    - mkdocs build --clean
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
