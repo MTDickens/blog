@@ -15,13 +15,15 @@ git config --global credential.helper cache
 
 这会将 Git 的 `credential.helper` 设置为 cache，表示会缓存凭证，下次操作时直接使用缓存中的凭证。
 
-:bulb:**Note:** 需要注意的是，缓存的有效期默认为 15 分钟，你可以通过设置 `credential.helper` 的 timeout 参数来修改有效期，例如：
+!!! note
 
-```bash
-git config --global credential.helper 'cache --timeout=3600'
-```
+    需要注意的是，缓存的有效期默认为 15 分钟，你可以通过设置 `credential.helper` 的 timeout 参数来修改有效期，例如：
 
-这会将缓存的有效期设置为 1 小时。
+    ```bash
+    git config --global credential.helper 'cache --timeout=3600'
+    ```
+
+    这会将缓存的有效期设置为 1 小时。
 
 ---
 
@@ -39,4 +41,5 @@ git config --global credential.helper store
 
 总之，通过设置 Git 的 `credential.helper`，可以方便地保存用户名和 token，避免每次都需要输入。
 
-:warning:**Warning:** 但是，需要注意安全性问题，尽量避免将凭证保存在明文文件中。
+!!! warning
+    需要注意安全性问题，尽量避免将凭证保存在明文文件中。
