@@ -16,6 +16,7 @@ nav:
         - Linux 必备软件: 'Tips/must-install_softwares_in_Linux.md'
       - Git 备忘录: 'Tips/git_tips.md'
       - GDB 备忘录: 'Tips/gdb_tips.md'
+      - Docker 备忘录: 'Tips/docker_tips.md'
       - PDF:
         - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
   - 建议:
