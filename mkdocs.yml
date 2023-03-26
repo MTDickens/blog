@@ -79,6 +79,7 @@ plugins:
       encryption_info_message: 'Contact me for access to this page.'      
 
 markdown_extensions:
+  - admonition
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.tilde
