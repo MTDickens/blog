@@ -37,6 +37,9 @@ nav:
     - 2023 年: 
       - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
       - rlwrap 使用: 'Technology/23/rlwrap/rlwrap_manual.md'
+      - MkDocs 使用:
+        - 插件:
+          - mkdocs_encryptcontent 插件使用: 'Technology/23/mkdocs/plugins/mkdocs_encryptcontent.md'
   - 计算机科学:
     - 2023 年:
       - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
