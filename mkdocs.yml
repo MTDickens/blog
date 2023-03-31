@@ -4,57 +4,56 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-  - 主页: 'index.md'
-  - 其他:
-    - 故障排除: 
-      - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
-      - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
-    - 使用技巧:
-      - VS Code:
-        - 插件推荐: 'Tips/VS_Code/plugins_recommendation.md'
-        - 排错:
-      - Linux: 
-        - Linux tips: 'Tips/Linux tips.md'
-        - Linux 常用软件: 'Tips/frequently_used_softwares_in_Linux.md'
-        - Linux 必备软件: 'Tips/must-install_softwares_in_Linux.md'
-      - Git 备忘录: 'Tips/git_tips.md'
-      - GDB 备忘录: 'Tips/gdb_tips.md'
-      - Docker 备忘录: 'Tips/docker_tips.md'
-      - PDF:
-        - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
-  - 建议:
-    - 丁尧相教授:
-      - 总体建议:
-        - 书籍建议: 'Advice/Professors/Yaoxiang Ding/advice_on_books.md'
-        - 课程建议: 'Advice/Professors/Yaoxiang Ding/advice_on_courses.md'
-      - 2023 年:
-        - 1 月:
-          - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
-          - 听讲记录: 'Advice/Professors/Yaoxiang Ding/23/01/note.md'
-        - 2 月:
-          - 听讲 23-02-23: 'Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md'
-        - 3 月:
-          - 线下交流 23-03-18: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md'
-          - 线下交流 23-03-25: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md'
-  - 技术:
-    - 2023 年: 
-      - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
-      - rlwrap 使用: 'Technology/23/rlwrap/rlwrap_manual.md'
-      - MkDocs 使用:
-        - 插件:
-          - mkdocs_encryptcontent 插件使用: 'Technology/23/mkdocs/plugins/mkdocs_encryptcontent.md'
-  - 计算机科学:
+- 主页: 'index.md'
+- 建议:
+  - 丁尧相老师:
+    - 总体建议:
+      - 书籍建议: 'Advice/Professors/Yaoxiang Ding/advice_on_books.md'
+      - 课程建议: 'Advice/Professors/Yaoxiang Ding/advice_on_courses.md'
     - 2023 年:
-      - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
-      - 和 ChatGPT 的一次交流: 'CS/23/chatgpt_mutual_communication.md'
-  - 数学:
-    - 2023 年: 
-      - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_master.md' 
-      - 图解对偶映射: 'Mathematics/23/dual_map_explained.md' 
-  - 随记:
-    - 2023 年:
-      - 学习常用网站: 'Notes/23/often_used_websites_in_study.md'
-      - 关于在 Chatgpt 上执行代码: 'Notes/23/run_code_on_chat_gpt.md'
+      - 1 月:
+        - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
+        - 听讲记录: 'Advice/Professors/Yaoxiang Ding/23/01/note.md'
+      - 2 月:
+        - 听讲 23-02-23: 'Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md'
+      - 3 月:
+        - 线下交流 23-03-18: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md'
+        - 线下交流 23-03-25: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md'
+- 技术:
+  - 故障排除: 
+    - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
+    - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
+  - 使用技巧:
+    - VS Code:
+      - 插件推荐: 'Tips/VS_Code/plugins_recommendation.md'
+      # - 排错:
+    - MkDocs 使用:
+      - 插件:
+        - mkdocs_encryptcontent 插件使用: 'Technology/23/mkdocs/plugins/mkdocs_encryptcontent.md'
+    - Linux: 
+      - Linux tips: 'Tips/Linux tips.md'
+      - Linux 常用软件: 'Tips/frequently_used_softwares_in_Linux.md'
+      - Linux 必备软件: 'Tips/must-install_softwares_in_Linux.md'
+      - Linux 软件介绍:
+        - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
+        - rlwrap 使用: 'Technology/23/rlwrap/rlwrap_manual.md'
+    - Git 备忘录: 'Tips/git_tips.md'
+    - GDB 备忘录: 'Tips/gdb_tips.md'
+    - Docker 备忘录: 'Tips/docker_tips.md'
+    - PDF 处理:
+      - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
+- 计算机科学:
+  - 2023 年:
+    - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
+    - 和 ChatGPT 的一次交流: 'CS/23/chatgpt_mutual_communication.md'
+- 数学:
+  - 2023 年: 
+    - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_master.md' 
+    - 图解对偶映射: 'Mathematics/23/dual_map_explained.md' 
+- 随记:
+  - 2023 年:
+    - 学习常用网站: 'Notes/23/often_used_websites_in_study.md'
+    - 关于在 Chatgpt 上执行代码: 'Notes/23/run_code_on_chat_gpt.md'
 
 theme:
   name: 'material'

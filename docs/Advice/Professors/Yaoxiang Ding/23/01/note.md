@@ -1,6 +1,6 @@
----
+<!-- ---
 use_secret: 'ENCRYPTCONTENT_PASSWORD'
----
+--- -->
 
 三种人：
 1. 科研
