@@ -21,27 +21,30 @@ nav:
         - 线下交流 23-03-25: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md'
 - 技术:
   - 故障排除: 
-    - Cloudflare Pages 部署: 'Trouble Shooting/Cloudflare Pages deployment.md'
-    - Ubuntu 中更改 Shell: 'Trouble Shooting/change shell in Ubuntu.md'
+    - Cloudflare Pages 部署: 'Technology/Trouble Shooting/Cloudflare Pages deployment.md'
+    - Ubuntu 中更改 Shell: 'Technology/Trouble Shooting/change shell in Ubuntu.md'
   - 使用技巧:
     - VS Code:
-      - 插件推荐: 'Tips/VS_Code/plugins_recommendation.md'
+      - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
       # - 排错:
     - MkDocs 使用:
       - 插件:
-        - mkdocs_encryptcontent 插件使用: 'Technology/23/mkdocs/plugins/mkdocs_encryptcontent.md'
+        - mkdocs_encryptcontent 插件使用: 'Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md'
+    - VPS:
+      - Microsoft Azure:
+        - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
     - Linux: 
-      - Linux tips: 'Tips/Linux tips.md'
-      - Linux 常用软件: 'Tips/frequently_used_softwares_in_Linux.md'
-      - Linux 必备软件: 'Tips/must-install_softwares_in_Linux.md'
+      - Linux tips: 'Technology/Linux/Linux tips.md'
+      - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
+      - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
       - Linux 软件介绍:
-        - fail2ban 使用: 'Technology/23/fail2ban/fail2ban.md'
-        - rlwrap 使用: 'Technology/23/rlwrap/rlwrap_manual.md'
-    - Git 备忘录: 'Tips/git_tips.md'
-    - GDB 备忘录: 'Tips/gdb_tips.md'
-    - Docker 备忘录: 'Tips/docker_tips.md'
+        - fail2ban 使用: 'Technology/Linux/Softwares/fail2ban/fail2ban.md'
+        - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
+    - Git 备忘录: 'Technology/git_tips.md'
+    - GDB 备忘录: 'Technology/gdb_tips.md'
+    - Docker 备忘录: 'Technology/docker_tips.md'
     - PDF 处理:
-      - 给 PDF 文件添加目录: 'Tips/PDF/Add_contents_to_a_PDF_file.md'
+      - 给 PDF 文件添加目录: 'Technology/PDF/Add_contents_to_a_PDF_file.md'
 - 计算机科学:
   - 2023 年:
     - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
