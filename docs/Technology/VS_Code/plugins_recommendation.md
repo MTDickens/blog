@@ -2,16 +2,22 @@
 
 ## 编程语言
 
+1. Error Lens: 在代码旁边实时显示错误原因
+   - 如果不习惯的话，关掉也行
+2. Debug Visualizer
+3. Code Runner
+4. highlight-words：便于 debug 时查看同一变量的出现位置
+
+???+ note highlight-words Tips
+    highlight-words 需要配合 `ctrl + p` 组合键
+
+下面具体介绍各个语言的插件。
+
 ### C/C++
 
 1. C/C++：VS Code 的经典插件，建议安装
-2. C++ TestMate：便于单元测试等等
-3. Code Runner
-4. Debug Visualizer
-5. highlight-words：便于 debug 时查看同一变量的出现位置
-
-!!! note
-    highlight-words 需要配合 `ctrl + p` 组合键
+2. C/C++ Extension Pack
+3. C++ TestMate：便于单元测试等等
 
 ### Python
 
@@ -33,7 +39,7 @@
 3. Markdown Preview Enhanced：写 Markdown 必备
 4. Paste Image：便于直接粘贴剪切板的照片到 markdown 中
 
-!!! tip
+!!! tip 在 VS Code 中输入编辑器命令的一般方法
 
     可以用 `ctrl + p` 打开命令行面板，再输入 `> markdown`，就可以看见很多可用的快捷命令。
 

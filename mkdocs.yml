@@ -26,11 +26,12 @@ nav:
   - 使用技巧:
     - VS Code:
       - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
-      # - 排错:
+      - 提高文件树的可读性: 'Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md'
     - MkDocs 使用:
       - 插件:
         - mkdocs_encryptcontent 插件使用: 'Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md'
     - VPS:
+      - 设置 VPS ipv4 优先的方法: 'Technology/VPS/ipv4_first.md'
       - Microsoft Azure:
         - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
         - Azure 如何启用 root 用户登录: 'Technology/VPS/Azure/ssh_via_root.md'
