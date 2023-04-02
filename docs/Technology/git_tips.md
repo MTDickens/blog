@@ -43,3 +43,35 @@ git config --global credential.helper store
 
 !!! warning
     需要注意安全性问题，尽量避免将凭证保存在明文文件中。
+
+# 设置代理
+
+如果要设置全局代理：
+
+```bash
+git config --global http.proxy http://127.0.0.1:10809
+
+git config --global https.proxy http://127.0.0.1:10809
+
+# 以下为取消代理命令
+git config --global --unset http.proxy
+
+git config --global --unset https.proxy
+```
+
+如果只对 github.com 设置代理（e.g. 对 gitee 等不用代理），可以使用：
+
+```bash
+git config --global http.https://github.com.proxy http://127.0.0.1:10809
+git config --global https.https://github.com.proxy http://127.0.0.1:10809
+
+# 以下为取消代理命令
+
+git config --global --unset http.https://github.com.proxy)
+
+git config --global --unset https.https://github.com.proxy)
+```
+
+!!! note 
+    1. 可以在 `.gitconfig` 内直接修改代理设置
+    2. 更详细的，参考[教程](https://gist.github.com/laispace/666dd7b27e9116faece6)
