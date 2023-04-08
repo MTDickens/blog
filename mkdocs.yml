@@ -4,7 +4,7 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-- 主页: 'main_page.md'
+- 主页: 'index.md'
 - 建议:
   - 丁尧相老师:
     - 总体建议:
