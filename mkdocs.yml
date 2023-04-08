@@ -61,6 +61,7 @@ nav:
   - 2023 年:
     - 学习常用网站: 'Notes/23/often_used_websites_in_study.md'
     - 关于在 Chatgpt 上执行代码: 'Notes/23/run_code_on_chat_gpt.md'
+    - 如何高效阅读论文: 'Notes/23/how_to_read_papers_efficiently.md'
 
 theme:
   name: 'material'
