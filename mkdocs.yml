@@ -36,7 +36,7 @@ nav:
         - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
         - Azure 如何启用 root 用户登录: 'Technology/VPS/Azure/ssh_via_root.md'
     - Linux: 
-      - Linux tips: 'Technology/Linux/Linux tips.md'
+      - Linux tips: 'Technology/Linux/Linux_tips.md'
       - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
       - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
       - Linux 软件介绍:
