@@ -56,6 +56,7 @@ nav:
     - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
     - 和 ChatGPT 的一次交流: 'CS/23/chatgpt_mutual_communication.md'
     - 神经网络简介: 'CS/23/introduction_to_neuron_network/introduction_to_neuron_network.md'
+    - 如何阅读源码: 'CS/23/how_to_read_source_code.md'
 - 数学:
   - 2023 年: 
     - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_master.md' 
