@@ -24,8 +24,10 @@ nav:
     - Cloudflare Pages 部署: 'Technology/Trouble Shooting/Cloudflare Pages deployment.md'
     - Ubuntu 中更改 Shell: 'Technology/Trouble Shooting/change shell in Ubuntu.md'
   - 使用技巧:
-    - Python 插件:
-      - yt-dlp: 'Technology/Python/yt-dlp.md'
+    - Python:
+      - Python 插件:
+        - yt-dlp: 'Technology/Python/yt-dlp.md'
+      - Python tips: 'Technology/Python/python_tips.md'
     - VS Code:
       - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
       - 提高文件树的可读性: 'Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md'
