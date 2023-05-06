@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {{ super() }}
+<h2 id="__comments">{{ lang.t("meta.comments") }}</h2>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+
+  <script>
+const gitalk = new Gitalk({
+  clientID: 'c60552c1f161d85a12be',
+  clientSecret: '064fecc7347ae83d61ce5ebff1223dbd5602d2a4',
+  repo: 'MTDickens/blog',      // The repository of store comments,
+  owner: 'MTDickens',
+  admin: ['GitHub repo owner and collaborators, only these guys can initialize github issues'],
+  id: 'zenlayer19980721',      // Ensure uniqueness and length less than 50
+  distractionFreeMode: false  // Facebook-like distraction free mode
+})
+
+gitalk.render('gitalk-container')
+  </script>
+{% endblock %}
