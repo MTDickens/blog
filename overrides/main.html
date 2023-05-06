@@ -1,23 +1,33 @@
 {% extends "base.html" %}
 
-{% block content %}
-  {{ super() }}
-<h2 id="__comments">{{ lang.t("meta.comments") }}</h2>
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <div id="gitalk-container"></div>
+{% block disqus %}
+<script src="https://giscus.app/client.js" data-repo="MTDickens/blog" data-repo-id="R_kgDOIyJdXg"
+    data-category="Announcements" data-category-id="DIC_kwDOIyJdXs4CWTF1" data-mapping="title"
+    data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_protanopia"
+    data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async>
+</script>
 
-  <script>
-const gitalk = new Gitalk({
-  clientID: 'c60552c1f161d85a12be',
-  clientSecret: '064fecc7347ae83d61ce5ebff1223dbd5602d2a4',
-  repo: 'MTDickens/blog',      // The repository of store comments,
-  owner: 'MTDickens',
-  admin: ['GitHub repo owner and collaborators, only these guys can initialize github issues'],
-  id: 'zenlayer19980721',      // Ensure uniqueness and length less than 50
-  distractionFreeMode: false  // Facebook-like distraction free mode
-})
+<script>
+    var palette = __get("__palette")
+    if (palette && typeof palette.color === "object") {
+        if (palette.color.scheme === "slate") {
+            const giscus = document.querySelector("script[src*=giscus]")
+            giscus.setAttribute("data-theme", "dark_protanopia")
+        }
+    }
 
-gitalk.render('gitalk-container')
-  </script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ref = document.querySelector("[data-md-component=palette]")
+        ref.addEventListener("change", function () {
+            var palette = __get("__palette")
+            if (palette && typeof palette.color === "object") {
+                const theme = palette.color.scheme === "slate" ? "dark_protanopia" : "light_protanopia"
+                const frame = document.querySelector(".giscus-frame")
+                frame.contentWindow.postMessage({
+                    giscus: { setConfig: { theme } }
+                }, "https://giscus.app")
+            }
+        })
+    })
+</script>
 {% endblock %}
