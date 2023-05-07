@@ -71,7 +71,9 @@ nav:
     - 关于在 Chatgpt 上执行代码: 'Notes/23/run_code_on_chat_gpt.md'
     - 如何高效阅读论文: 'Notes/23/how_to_read_papers_efficiently.md'
     - 如何祛费拉化: 'Notes/23/how_to_not_be_a_fellah.md'
-
+- 转载:
+  - 知乎:
+    - 库，框架，架构，平台的区别: 'Repost/zhihu/distinguish_between_library_framework_architecture_platform.md'
 theme:
   name: 'material'
   palette:     #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
