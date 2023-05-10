@@ -31,6 +31,8 @@ nav:
         - yt-dlp: 'Technology/Python/yt-dlp.md'
       - Python tips: 'Technology/Python/python_tips.md'
     - VS Code:
+      - ssh:
+        - VS Code 中为 ssh 配置代理: 'Technology/VS_Code/ssh/ssh_via_proxy.md'
       - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
       - 提高文件树的可读性: 'Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md'
     - MkDocs 使用:
