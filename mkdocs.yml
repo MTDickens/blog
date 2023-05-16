@@ -52,7 +52,7 @@ nav:
         - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
     - Chrome 插件:
       - Google 输入工具: 'Technology/Chrome_addons/google-input-tools.md'
-    - Git 备忘录: 'Technology/git_tips.md'
+    - Git 备忘录: 'Technology/Git/git_tips.md'
     - GDB 备忘录: 'Technology/gdb_tips.md'
     - Docker 备忘录: 'Technology/docker_tips.md'
     - PDF 处理:
