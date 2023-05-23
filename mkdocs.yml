@@ -22,41 +22,52 @@ nav:
       - 5 月:
         - 线下交流 23-05-05: 'Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md'
 - 技术:
-  - 故障排除: 
-    - Cloudflare Pages 部署: 'Technology/Trouble Shooting/Cloudflare Pages deployment.md'
-    - Ubuntu 中更改 Shell: 'Technology/Trouble Shooting/change shell in Ubuntu.md'
-  - 使用技巧:
+  - 网络:
+    - Cloudflare:
+      - Cloudflare Pages 部署: 'Technology/Internet/Cloudflare/Cloudflare Pages deployment.md'
+    - SSH:
+      - 使用密钥登录 ssh: 'Technology/Internet/SSH/ssh_via_password_or_public_key.md'
+  - 编程语言:
     - Python:
       - Python 插件:
         - yt-dlp: 'Technology/Python/yt-dlp.md'
       - Python tips: 'Technology/Python/python_tips.md'
+  - 软件:
     - VS Code:
       - ssh:
         - VS Code 中为 ssh 配置代理: 'Technology/VS_Code/ssh/ssh_via_proxy.md'
       - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
       - 提高文件树的可读性: 'Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md'
-    - MkDocs 使用:
+  - Git:
+    - Git 备忘录: 'Technology/Git/git_tips.md'
+    - Git-crypt 插件: 'Technology/Git/git_crypt.md'
+  - GNU:
+    - GDB 备忘录: 'Technology/gdb_tips.md'
+  - Docker:
+    - Docker 备忘录: 'Technology/docker_tips.md'
+  - 博客:
+    - MkDocs:
       - 插件:
         - mkdocs_encryptcontent 插件使用: 'Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md'
-    - VPS:
-      - 设置 VPS ipv4 优先的方法: 'Technology/VPS/ipv4_first.md'
-      - Microsoft Azure:
-        - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
-        - Azure 如何启用 root 用户登录: 'Technology/VPS/Azure/ssh_via_root.md'
-    - Linux: 
-      - Linux tips: 'Technology/Linux/Linux_tips.md'
-      - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
-      - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
-      - Linux 软件介绍:
-        - fail2ban 使用: 'Technology/Linux/Softwares/fail2ban/fail2ban.md'
-        - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
+  - VPS:
+    - Microsoft Azure:
+      - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
+      - Azure 如何启用 root 用户登录: 'Technology/VPS/Azure/ssh_via_root.md'
+  - Linux: 
+    - FAQ:  
+      - 设置 Linux ipv4 优先的方法: 'Technology/Linux/FAQ/ipv4_first.md'
+      - Ubuntu 中更改 Shell: 'Technology/Linux/FAQ/change shell in Ubuntu.md'
+    - Linux tips: 'Technology/Linux/Linux_tips.md'
+    - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
+    - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
+    - Linux 软件介绍:
+      - fail2ban 使用: 'Technology/Linux/Softwares/fail2ban/fail2ban.md'
+      - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
+  - 浏览器:
     - Chrome 插件:
       - Google 输入工具: 'Technology/Chrome_addons/google-input-tools.md'
-    - Git 备忘录: 'Technology/Git/git_tips.md'
-    - GDB 备忘录: 'Technology/gdb_tips.md'
-    - Docker 备忘录: 'Technology/docker_tips.md'
-    - PDF 处理:
-      - 给 PDF 文件添加目录: 'Technology/PDF/Add_contents_to_a_PDF_file.md'
+  - PDF 处理:
+    - 给 PDF 文件添加目录: 'Technology/PDF/Add_contents_to_a_PDF_file.md'
 - 计算机科学:
   - 2023 年:
     - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
