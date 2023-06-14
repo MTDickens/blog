@@ -60,6 +60,7 @@ nav:
     - Linux tips: 'Technology/Linux/Linux_tips.md'
     - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
     - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
+    - Linux 各个主要目录的作用: 'Technology/Linux/FAQ/Linux_directories.md'
     - Linux 软件介绍:
       - fail2ban 使用: 'Technology/Linux/Softwares/fail2ban/fail2ban.md'
       - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
