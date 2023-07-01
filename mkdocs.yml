@@ -4,105 +4,107 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-- 主页: 'index.md'
-- 建议:
-  - 丁尧相老师:
-    - 总体建议:
-      - 书籍建议: 'Advice/Professors/Yaoxiang Ding/advice_on_books.md'
-      - 课程建议: 'Advice/Professors/Yaoxiang Ding/advice_on_courses.md'
-    - 2023 年:
-      - 1 月:
-        - 阅读建议: 'Advice/Professors/Yaoxiang Ding/advice on reading.md'
-        - 听讲记录: 'Advice/Professors/Yaoxiang Ding/23/01/note.md'
-      - 2 月:
-        - 听讲 23-02-23: 'Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md'
-      - 3 月:
-        - 线下交流 23-03-18: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md'
-        - 线下交流 23-03-25: 'Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md'
-      - 5 月:
-        - 线下交流 23-05-05: 'Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md'
-- 技术:
-  - 网络:
-    - Cloudflare:
-      - Cloudflare Pages 部署: 'Technology/Internet/Cloudflare/Cloudflare Pages deployment.md'
-    - SSH:
-      - 使用密钥登录 ssh: 'Technology/Internet/SSH/ssh_via_password_or_public_key.md'
-  - 编程语言:
-    - Python:
-      - Python 插件:
-        - yt-dlp: 'Technology/Python/yt-dlp.md'
-      - Python tips: 'Technology/Python/python_tips.md'
-  - 软件:
-    - VS Code:
-      - ssh:
-        - VS Code 中为 ssh 配置代理: 'Technology/VS_Code/ssh/ssh_via_proxy.md'
-      - 插件推荐: 'Technology/VS_Code/plugins_recommendation.md'
-      - 提高文件树的可读性: 'Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md'
-  - Git:
-    - Git 备忘录: 'Technology/Git/git_tips.md'
-    - Git-crypt 插件: 'Technology/Git/git_crypt.md'
-  - GNU:
-    - GDB 备忘录: 'Technology/gdb_tips.md'
-  - Docker:
-    - Docker 备忘录: 'Technology/docker_tips.md'
-  - 博客:
-    - MkDocs:
-      - 插件:
-        - mkdocs_encryptcontent 插件使用: 'Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md'
-  - VPS:
-    - Microsoft Azure:
-      - Azure 使用避雷: 'Technology/VPS/Azure/azure_using_guide.md'
-      - Azure 如何启用 root 用户登录: 'Technology/VPS/Azure/ssh_via_root.md'
-  - Linux: 
-    - FAQ:  
-      - 设置 Linux ipv4 优先的方法: 'Technology/Linux/FAQ/ipv4_first.md'
-      - Ubuntu 中更改 Shell: 'Technology/Linux/FAQ/change shell in Ubuntu.md'
-    - Linux tips: 'Technology/Linux/Linux_tips.md'
-    - Linux 常用软件: 'Technology/Linux/frequently_used_softwares_in_Linux.md'
-    - Linux 必备软件: 'Technology/Linux/must-install_softwares_in_Linux.md'
-    - Linux 各个主要目录的作用: 'Technology/Linux/FAQ/Linux_directories.md'
-    - Linux 软件介绍:
-      - fail2ban 使用: 'Technology/Linux/Softwares/fail2ban/fail2ban.md'
-      - rlwrap 使用: 'Technology/Linux/Softwares/rlwrap/rlwrap_manual.md'
-  - 浏览器:
-    - Chrome 插件:
-      - Google 输入工具: 'Technology/Chrome_addons/google-input-tools.md'
-  - PDF 处理:
-    - 给 PDF 文件添加目录: 'Technology/PDF/Add_contents_to_a_PDF_file.md'
-- 计算机科学:
-  - 2023 年:
-    - 图灵机代码: 'CS/23/codes_for_turing_machine.md'
-    - 和 ChatGPT 的一次交流: 'CS/23/chatgpt_mutual_communication.md'
-    - 神经网络简介: 'CS/23/introduction_to_neuron_network/introduction_to_neuron_network.md'
-    - 如何阅读源码: 'CS/23/how_to_read_source_code.md'
-- 数学:
-  - 2023 年: 
-    - MIT牛人解说数学体系: 'Mathematics/23/mathematical_system_explained_by_MIT_master.md' 
-    - 图解对偶映射: 'Mathematics/23/dual_map_explained.md' 
-- 随记:
-  - 2023 年:
-    - 学习常用网站: 'Notes/23/often_used_websites_in_study.md'
-    - 关于在 Chatgpt 上执行代码: 'Notes/23/run_code_on_chat_gpt.md'
-    - 如何高效阅读论文: 'Notes/23/how_to_read_papers_efficiently.md'
-    - 如何祛费拉化: 'Notes/23/how_to_not_be_a_fellah.md'
-- 转载:
-  - 知乎:
-    - 库，框架，架构，平台的区别: 'Repost/zhihu/distinguish_between_library_framework_architecture_platform.md'
+  - 主页: "index.md"
+  - 建议:
+      - 丁尧相老师:
+          - 总体建议:
+              - 书籍建议: "Advice/Professors/Yaoxiang Ding/advice_on_books.md"
+              - 课程建议: "Advice/Professors/Yaoxiang Ding/advice_on_courses.md"
+          - 2023 年:
+              - 1 月:
+                  - 阅读建议: "Advice/Professors/Yaoxiang Ding/advice on reading.md"
+                  - 听讲记录: "Advice/Professors/Yaoxiang Ding/23/01/note.md"
+              - 2 月:
+                  - 听讲 23-02-23: "Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md"
+              - 3 月:
+                  - 线下交流 23-03-18: "Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md"
+                  - 线下交流 23-03-25: "Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md"
+              - 5 月:
+                  - 线下交流 23-05-05: "Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md"
+  - 技术:
+      - 网络:
+          - Cloudflare:
+              - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"
+          - SSH:
+              - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh_via_password_or_public_key.md"
+          - JS:
+              - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA_script.md"
+      - 编程语言:
+          - Python:
+              - Python 插件:
+                  - yt-dlp: "Technology/Python/yt-dlp.md"
+              - Python tips: "Technology/Python/python_tips.md"
+      - 软件:
+          - VS Code:
+              - ssh:
+                  - VS Code 中为 ssh 配置代理: "Technology/VS_Code/ssh/ssh_via_proxy.md"
+              - 插件推荐: "Technology/VS_Code/plugins_recommendation.md"
+              - 提高文件树的可读性: "Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md"
+      - Git:
+          - Git 备忘录: "Technology/Git/git_tips.md"
+          - Git-crypt 插件: "Technology/Git/git_crypt.md"
+      - GNU:
+          - GDB 备忘录: "Technology/gdb_tips.md"
+      - Docker:
+          - Docker 备忘录: "Technology/docker_tips.md"
+      - 博客:
+          - MkDocs:
+              - 插件:
+                  - mkdocs_encryptcontent 插件使用: "Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md"
+      - VPS:
+          - Microsoft Azure:
+              - Azure 使用避雷: "Technology/VPS/Azure/azure_using_guide.md"
+              - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh_via_root.md"
+      - Linux:
+          - FAQ:
+              - 设置 Linux ipv4 优先的方法: "Technology/Linux/FAQ/ipv4_first.md"
+              - Ubuntu 中更改 Shell: "Technology/Linux/FAQ/change shell in Ubuntu.md"
+          - Linux tips: "Technology/Linux/Linux_tips.md"
+          - Linux 常用软件: "Technology/Linux/frequently_used_softwares_in_Linux.md"
+          - Linux 必备软件: "Technology/Linux/must-install_softwares_in_Linux.md"
+          - Linux 各个主要目录的作用: "Technology/Linux/FAQ/Linux_directories.md"
+          - Linux 软件介绍:
+              - fail2ban 使用: "Technology/Linux/Softwares/fail2ban/fail2ban.md"
+              - rlwrap 使用: "Technology/Linux/Softwares/rlwrap/rlwrap_manual.md"
+      - 浏览器:
+          - Chrome 插件:
+              - Google 输入工具: "Technology/Chrome_addons/google-input-tools.md"
+      - PDF 处理:
+          - 给 PDF 文件添加目录: "Technology/PDF/Add_contents_to_a_PDF_file.md"
+  - 计算机科学:
+      - 2023 年:
+          - 图灵机代码: "CS/23/codes_for_turing_machine.md"
+          - 和 ChatGPT 的一次交流: "CS/23/chatgpt_mutual_communication.md"
+          - 神经网络简介: "CS/23/introduction_to_neuron_network/introduction_to_neuron_network.md"
+          - 如何阅读源码: "CS/23/how_to_read_source_code.md"
+  - 数学:
+      - 2023 年:
+          - MIT牛人解说数学体系: "Mathematics/23/mathematical_system_explained_by_MIT_master.md"
+          - 图解对偶映射: "Mathematics/23/dual_map_explained.md"
+  - 随记:
+      - 2023 年:
+          - 学习常用网站: "Notes/23/often_used_websites_in_study.md"
+          - 关于在 Chatgpt 上执行代码: "Notes/23/run_code_on_chat_gpt.md"
+          - 如何高效阅读论文: "Notes/23/how_to_read_papers_efficiently.md"
+          - 如何祛费拉化: "Notes/23/how_to_not_be_a_fellah.md"
+  - 转载:
+      - 知乎:
+          - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish_between_library_framework_architecture_platform.md"
 theme:
-  name: 'material'
-  palette:     #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
-    - media: "(prefers-color-scheme: light)" 
-      scheme: default  #配色方案：浅色模式
-      primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
-      accent: Brown  #强调色，默认蓝，可以交互的元素如悬停链接、按钮和滚动条
+  name: "material"
+  palette: #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
+    - media: "(prefers-color-scheme: light)"
+      scheme: default #配色方案：浅色模式
+      primary: Brown #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
+      accent: Brown #强调色，默认蓝，可以交互的元素如悬停链接、按钮和滚动条
       toggle:
         icon: material/weather-sunny #图标，太阳
         name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"  
-      scheme: slate  #配色方案：深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate #配色方案：深色模式
       # primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
       toggle:
-        icon: material/weather-night  #图标，月亮
+        icon: material/weather-night #图标，月亮
         name: Switch to light mode
   features:
     - content.code.copy
@@ -113,11 +115,11 @@ plugins:
   - mermaid2
   - encryptcontent:
       # use_secret: 'ENCRYPTCONTENT_PASSWORD'
-      remember_password: True 
+      remember_password: True
       default_expire_delay: 24
-      title_prefix: '[LOCKED]'
-      summary: 'This content is PROTECTED'
-      encryption_info_message: 'Contact me for access to this page.'      
+      title_prefix: "[LOCKED]"
+      summary: "This content is PROTECTED"
+      encryption_info_message: "Contact me for access to this page."
 
 markdown_extensions:
   - admonition
@@ -134,7 +136,7 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.tabbed:
-      alternate_style: true 
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.highlight:
