@@ -91,6 +91,13 @@ nav:
   - 转载:
       - 知乎:
           - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish_between_library_framework_architecture_platform.md"
+  - 音乐:
+      - 特辑：前苏联:
+          - 加盟共和国国歌选: "Music/USSR/national_anthems_of_union_republics.md"
+      - 阿富汗: "Music/Afghanistan.md"
+      - 伊朗: "Music/Iran.md"
+      - 中亚五国: "Music/Central_asia.md"
+
 theme:
   name: "material"
   palette: #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
