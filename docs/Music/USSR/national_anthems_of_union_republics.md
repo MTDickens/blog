@@ -24,7 +24,18 @@ audio
     }
 </style>
 
-## 拉脱维亚加盟共和国 Latvia SSR
+
+<!-- auto stop other when current is playing with javascript -->
+<script>
+document.addEventListener("play", function(evt) {
+    if(this.$AudioPlaying && this.$AudioPlaying !== evt.target) {
+        this.$AudioPlaying.pause();
+    }
+    this.$AudioPlaying = evt.target;
+}, true);
+</script>
+
+## 爱沙尼亚加盟共和国 Estonia SSR
 
 <audio
     id="ee"
