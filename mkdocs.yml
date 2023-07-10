@@ -96,6 +96,8 @@ nav:
           - 加盟共和国国歌选: "Music/USSR/national_anthems_of_union_republics.md"
       - 阿富汗: "Music/Afghanistan.md"
       - 伊朗: "Music/Iran.md"
+      - 高加索:
+          - 阿塞拜疆: "Music/Caucasia/Azerbaijan.md"
       - 中亚五国: "Music/Central_asia.md"
 
 theme:
