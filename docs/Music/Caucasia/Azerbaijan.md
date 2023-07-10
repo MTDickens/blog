@@ -48,7 +48,7 @@ document.addEventListener("play", function(evt) {
     <source src="https://b2.mtds.eu.org/file/mtdmusic/(AZ)Az%C9%99rbaycan+Sovet+Sosialist+Respublikas%C4%B1n%C4%B1n+Himni!+Anthem+of+the+Azerbaijan+SSR!+(English+Lyrics)+%5BGartH61hzZA%5D.mp3" type="audio/mp3">
     抱歉，您的浏览器不支持 mp3 播放
     <script>
-        document.getElementById("ee").volume=0.05;
+        document.getElementById("1").volume=0.05;
     </script>
 </audio>
 
@@ -65,7 +65,7 @@ document.addEventListener("play", function(evt) {
     <source src="https://b2.mtds.eu.org/file/mtdmusic/(AZ)Azərbaycan_marşı_instrumental.ogg.mp3" type="audio/mp3">
     抱歉，您的浏览器不支持 mp3 播放
     <script>
-        document.getElementById("ee").volume=0.05;
+        document.getElementById("21").volume=0.05;
     </script>
 </audio>
 
@@ -79,6 +79,6 @@ document.addEventListener("play", function(evt) {
     <source src="https://b2.mtds.eu.org/file/mtdmusic/(AZ)National Anthem of Azerbaijan - _Azərbaycan marşı_.mp3" type="audio/mp3">
     抱歉，您的浏览器不支持 mp3 播放
     <script>
-        document.getElementById("ee").volume=0.05;
+        document.getElementById("22").volume=0.05;
     </script>
 </audio>
