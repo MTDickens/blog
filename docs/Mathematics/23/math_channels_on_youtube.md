@@ -1,3 +1,5 @@
+> Github 上面有一个 [`awesome-math-learning`](https://github.com/tensorush/Awesome-Maths-Learning) 的项目，里面有不少数学的课程和 notes，可以参考。
+
 根据我这么一年半载的搜录，Youtube 上不错的数学频道大概有以下这些。
 
 ## [The Bright Side of Mathematics](https://www.youtube.com/@brightsideofmaths)
