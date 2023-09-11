@@ -97,3 +97,16 @@
 - 我的评价：
   
     如需补这一方面地知识 OR 希望以直观的方式入门的话，可以有目的性地看看。
+
+## [Numberphile](https://www.youtube.com/@numberphile)
+
+- 推荐指数：4
+- 频道介绍：Videos about numbers and mathematics. Videos by Brady Haran since 2011.
+- 频道特色：各种有趣的数学内容大杂烩
+
+## [Richard E Borcherds](https://www.youtube.com/@richarde.borcherds7998)
+
+- 推荐指数：（待定）
+- 频道介绍：这主要是关于代数几何、交换代数、群/环域的研究生课程的数学讲座。还包括一些针对本科生或高中生的数学讲座，以及一些关于其他主题的短期课程，如复分析、数论、模形式、范畴论、表示论。
+  - 注：根据 [Awesome-Maths-Learning](https://github.com/tensorush/Awesome-Maths-Learning)，似乎还有调和分析。
+- 频道特色：不用说，一定是代数爱好者的首选
