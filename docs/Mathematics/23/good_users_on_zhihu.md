@@ -40,6 +40,10 @@
    >
    > 已婚，不常上乎，可能一周一两次）三流数学 PhD，对不需要太多分析和 PDE 的微分几何感兴趣
 
+4. [张学军](https://www.zhihu.com/people/zhang_xuejun)
+
+   喷姚兴腾、韦东奕等人
+
 ## 科普
 
 1. [赵泠](https://www.zhihu.com/people/MarryMea)
