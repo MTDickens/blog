@@ -6,7 +6,7 @@
 2. 下面的标题都是语言。标题下方的代码**识别**这种语言。
 
 
-## $\{0^{2^n}|n \in \mathbb N\}$
+## $\text{ Check if the string} \in \{0^{2^n}|n \in \mathbb N\}$
 
 ```yaml
 input: '0'
@@ -31,11 +31,11 @@ table:
   q5:
     [0,'x']  : {L: q5}
     ' '      : {R: q2}
-reject:
-accept:
+  reject:
+  accept:
 ```
 
-## $\{\omega \in \{0,1\}^*|\omega \text{ has the same number of 0s and 1s}\}$
+## $\text{Check if string} \in \{\omega \in \{0,1\}^*|\omega \text{ has the same number of 0s and 1s}\}$
 
 ```yaml
 input: '0001100111'
