@@ -3,6 +3,7 @@
 :bulb:注：
 
 1. 请在<a href=https://turingmachine.io/ target="_blank">这个网站</a>测试这些程序。
+   - 或者可以就[我克隆的仓库](https://github.com/MTDickens/turing-machine-viz)自行搭建
 2. 下面的标题都是语言。标题下方的代码**识别**这种语言。
 
 ## $\text{ Check if the string} \in \{0^{2^n}|n \in \mathbb N\}$
