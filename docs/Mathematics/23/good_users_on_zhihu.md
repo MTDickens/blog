@@ -49,6 +49,9 @@
 5. [桥地稳定性学徒 ​](https://www.zhihu.com/people/homology)
     原“justlikemath”。
 
+6. [gmachine1729](https://www.zhihu.com/people/gmachine1729)
+    六岁去美国的海归，反美的俄语粉丝，学数学的原程序员
+
 ## 科普
 
 1. [赵泠](https://www.zhihu.com/people/MarryMea)
