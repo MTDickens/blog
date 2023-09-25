@@ -66,7 +66,7 @@ table:
   reject:
 ```
 
-# Reverse an 0-1-string of arbitrary length
+## Reverse an 0-1-string of arbitrary length
 
 ```yaml
 input: '110110'
