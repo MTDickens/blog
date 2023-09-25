@@ -3,4 +3,4 @@ mkdocs-material
 mkdocs-material-extensions
 markdown_checklist
 mkdocs-mermaid2-plugin
-# mkdocs-encryptcontent-plugin
+mkdocs-encryptcontent-plugin
