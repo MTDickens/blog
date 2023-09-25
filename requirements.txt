@@ -1,6 +1,6 @@
-mkdocs==1.4.2
-mkdocs-material==9.0.3
-mkdocs-material-extensions==1.1.1
+mkdocs
+mkdocs-material
+mkdocs-material-extensions
 markdown_checklist
 mkdocs-mermaid2-plugin
-mkdocs-encryptcontent-plugin
+# mkdocs-encryptcontent-plugin
