@@ -30,6 +30,8 @@ nav:
           - JS:
               - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA_script.md"
       - 编程语言:
+          - Haskell:
+              - How to use GHCup and Stack: "Technology/Haskell/how_to_use_ghcup_and_stack.md"
           - Python:
               - Python 插件:
                   - yt-dlp: "Technology/Python/yt-dlp.md"
