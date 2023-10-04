@@ -33,7 +33,7 @@
 
 以多层单个神经元和 $\frac{\partial C_0}{\partial w^{(L)}}$ 为例：
 
-![](partial_derivative.png.png)
+![](partial-derivative.png.png)
 
 - 其中：
   - $C_0 = (\lVert a^{(L)} - y \rVert _2)^2$，也就是误差的平方和
@@ -42,7 +42,7 @@
 
 当然，实际情况下，我们会使用所有样本（or 因性能起见，使用部分随机样本）：
 
-![](average_partial.png.png)
+![](average-partial.png.png)
 
 #### 反向递归求偏导
 
@@ -58,4 +58,4 @@ $$
 
 对于多层多神经元的网络，计算如下：
 
-![](multiple_neuron_back_propagation.png.png)
+![](multiple-neuron-back-propagation.png.png)

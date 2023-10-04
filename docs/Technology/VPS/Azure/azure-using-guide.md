@@ -15,7 +15,7 @@
 
     !!! warning
         这里有一个坑，就是创建Win的时候，**不可以**选择下面的选项。
-        ![](dont_tick.png)
+        ![](dont-tick.png)
         否则这一台Win会作为Linux来算。
 
 3. 两块免费硬盘必须都是64G+P6

@@ -35,4 +35,4 @@
 
       :warning:警告：强烈建议安装在**非**生产环境的**国外**服务器上。
 
-3. [一些 MIT missing semester 推荐的常用软件](frequently_used_softwares_in_Linux.md)
+3. [一些 MIT missing semester 推荐的常用软件](frequently-used-softwares-in-Linux.md)

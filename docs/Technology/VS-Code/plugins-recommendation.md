@@ -57,4 +57,4 @@
 1. `vscode-pdf`：可以直接查看 pdf
 2. `Windows Ink`：可以直接查看
 3. `Prettier - Code Formatter`：可以自动 format 你的 code
-4. `Remote Development`：用远程服务器，或者 wsl 时必备。用法可以参考[这篇文章](ssh/ssh_via_proxy.md)
+4. `Remote Development`：用远程服务器，或者 wsl 时必备。用法可以参考[这篇文章](ssh/ssh-via-proxy.md)

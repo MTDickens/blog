@@ -57,7 +57,7 @@
 
 > 「吉」=
 
-![](https://pic4.zhimg.com/v2-bdccdfaf71aaa95585e125103487b2cb_b.png)
+![](https://pic4.zhimg.com/v2-bdccdfaf71aaa95585e125103487b2cb-b.png)
 
 > **兵器置桌，象征有武（权）力，而不用，吉也**  
 > 用于不用，皆取决于有无，故而无武力，即便尚言「和平」，又何吉之有哉？

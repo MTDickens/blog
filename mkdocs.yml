@@ -8,8 +8,8 @@ nav:
   - 建议:
       - 丁尧相老师:
           - 总体建议:
-              - 书籍建议: "Advice/Professors/Yaoxiang Ding/advice_on_books.md"
-              - 课程建议: "Advice/Professors/Yaoxiang Ding/advice_on_courses.md"
+              - 书籍建议: "Advice/Professors/Yaoxiang Ding/advice-on-books.md"
+              - 课程建议: "Advice/Professors/Yaoxiang Ding/advice-on-courses.md"
           - 2023 年:
               - 1 月:
                   - 阅读建议: "Advice/Professors/Yaoxiang Ding/advice on reading.md"
@@ -26,90 +26,90 @@ nav:
           - Cloudflare:
               - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"
           - SSH:
-              - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh_via_password_or_public_key.md"
+              - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh-via-password-or-public-key.md"
           - JS:
-              - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA_script.md"
+              - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA-script.md"
       - 编程语言:
           - Haskell:
-              - How to use GHCup and Stack: "Technology/Haskell/how_to_use_ghcup_and_stack.md"
+              - How to use GHCup and Stack: "Technology/Haskell/how-to-use-ghcup-and-stack.md"
           - Python:
               - Python 插件:
                   - yt-dlp: "Technology/Python/yt-dlp.md"
-              - Python tips: "Technology/Python/python_tips.md"
+              - Python tips: "Technology/Python/python-tips.md"
       - 软件:
           - VS Code:
               - ssh:
-                  - VS Code 中为 ssh 配置代理: "Technology/VS_Code/ssh/ssh_via_proxy.md"
-              - 插件推荐: "Technology/VS_Code/plugins_recommendation.md"
-              - 提高文件树的可读性: "Technology/VS_Code/readable_explorer_tree/readable_explorer_tree.md"
+                  - VS Code 中为 ssh 配置代理: "Technology/VS-Code/ssh/ssh-via-proxy.md"
+              - 插件推荐: "Technology/VS-Code/plugins-recommendation.md"
+              - 提高文件树的可读性: "Technology/VS-Code/readable-explorer-tree/readable-explorer-tree.md"
       - Git:
-          - Git 备忘录: "Technology/Git/git_tips.md"
-          - Git-crypt 插件: "Technology/Git/git_crypt.md"
+          - Git 备忘录: "Technology/Git/git-tips.md"
+          - Git-crypt 插件: "Technology/Git/git-crypt.md"
       - GNU:
-          - GDB 备忘录: "Technology/gdb_tips.md"
+          - GDB 备忘录: "Technology/gdb-tips.md"
       - Docker:
-          - Docker 备忘录: "Technology/docker_tips.md"
+          - Docker 备忘录: "Technology/docker-tips.md"
       - 博客:
           - MkDocs:
               - 插件:
-                  - mkdocs_encryptcontent 插件使用: "Technology/Linux/mkdocs/plugins/mkdocs_encryptcontent.md"
+                  - mkdocs-encryptcontent 插件使用: "Technology/Linux/mkdocs/plugins/mkdocs-encryptcontent.md"
       - VPS:
           - Microsoft Azure:
-              - Azure 使用避雷: "Technology/VPS/Azure/azure_using_guide.md"
-              - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh_via_root.md"
+              - Azure 使用避雷: "Technology/VPS/Azure/azure-using-guide.md"
+              - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh-via-root.md"
       - Linux:
           - FAQ:
-              - 设置 Linux ipv4 优先的方法: "Technology/Linux/FAQ/ipv4_first.md"
+              - 设置 Linux ipv4 优先的方法: "Technology/Linux/FAQ/ipv4-first.md"
               - Ubuntu 中更改 Shell: "Technology/Linux/FAQ/change shell in Ubuntu.md"
-          - Linux tips: "Technology/Linux/Linux_tips.md"
-          - Linux 常用软件: "Technology/Linux/frequently_used_softwares_in_Linux.md"
-          - Linux 必备软件: "Technology/Linux/must-install_softwares_in_Linux.md"
-          - Linux 各个主要目录的作用: "Technology/Linux/FAQ/Linux_directories.md"
+          - Linux tips: "Technology/Linux/Linux-tips.md"
+          - Linux 常用软件: "Technology/Linux/frequently-used-softwares-in-Linux.md"
+          - Linux 必备软件: "Technology/Linux/must-install-softwares-in-Linux.md"
+          - Linux 各个主要目录的作用: "Technology/Linux/FAQ/Linux-directories.md"
           - Linux 软件介绍:
               - fail2ban 使用: "Technology/Linux/Softwares/fail2ban/fail2ban.md"
-              - rlwrap 使用: "Technology/Linux/Softwares/rlwrap/rlwrap_manual.md"
+              - rlwrap 使用: "Technology/Linux/Softwares/rlwrap/rlwrap-manual.md"
       - 浏览器:
           - Chrome 插件:
-              - Google 输入工具: "Technology/Chrome_addons/google-input-tools.md"
+              - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
       - PDF 处理:
-          - 给 PDF 文件添加目录: "Technology/PDF/Add_contents_to_a_PDF_file.md"
+          - 给 PDF 文件添加目录: "Technology/PDF/Add-contents-to-a-PDF-file.md"
   - 计算机科学:
       - 2023 年:
-          - 图灵机代码: "CS/23/codes_for_turing_machine.md"
-          - 和 ChatGPT 的一次交流: "CS/23/chatgpt_mutual_communication.md"
-          - 神经网络简介: "CS/23/introduction_to_neuron_network/introduction_to_neuron_network.md"
-          - 如何阅读源码: "CS/23/how_to_read_source_code.md"
+          - 图灵机代码: "CS/23/codes-for-turing-machine.md"
+          - 和 ChatGPT 的一次交流: "CS/23/chatgpt-mutual-communication.md"
+          - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
+          - 如何阅读源码: "CS/23/how-to-read-source-code.md"
   - 数学:
       - 2023 年:
-          - MIT牛人解说数学体系: "Mathematics/23/mathematical_system_explained_by_MIT_master.md"
-          - 图解对偶映射: "Mathematics/23/dual_map_explained.md"
-          - Youtube 的数学频道: "Mathematics/23/math_channels_on_youtube.md"
-          - 知乎用户收集: "Mathematics/23/good_users_on_zhihu.md"
+          - MIT牛人解说数学体系: "Mathematics/23/mathematical-system-explained-by-MIT-master.md"
+          - 图解对偶映射: "Mathematics/23/dual-map-explained.md"
+          - Youtube 的数学频道: "Mathematics/23/math-channels-on-youtube.md"
+          - 知乎用户收集: "Mathematics/23/good-users-on-zhihu.md"
   - 随记:
       - 2023 年:
-          - 学习常用网站: "Notes/23/often_used_websites_in_study.md"
-          - 关于在 Chatgpt 上执行代码: "Notes/23/run_code_on_chat_gpt.md"
-          - 如何高效阅读论文: "Notes/23/how_to_read_papers_efficiently.md"
-          - 如何祛费拉化: "Notes/23/how_to_not_be_a_fellah.md"
+          - 学习常用网站: "Notes/23/often-used-websites-in-study.md"
+          - 关于在 Chatgpt 上执行代码: "Notes/23/run-code-on-chat-gpt.md"
+          - 如何高效阅读论文: "Notes/23/how-to-read-papers-efficiently.md"
+          - 如何祛费拉化: "Notes/23/how-to-not-be-a-fellah.md"
   - 转载:
       - 知乎:
-          - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish_between_library_framework_architecture_platform.md"
+          - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish-between-library-framework-architecture-platform.md"
           - 拓扑数据分析 - 持续同调:
-              - 一: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (1).md"
-              - 二: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (2).md"
-              - 三: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (3).md"
-              - 四: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (4).md"
-              - 五（上）: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (5a).md"
-              - 五（下）: "Repost/zhihu/topological_data_analysis/topological_data_analysis_homology (5b).md"
-          - 什么是代数: "Repost/zhihu/what_is_algebra.md"
+              - 一: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (1).md"
+              - 二: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (2).md"
+              - 三: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (3).md"
+              - 四: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (4).md"
+              - 五（上）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5a).md"
+              - 五（下）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5b).md"
+          - 什么是代数: "Repost/zhihu/what-is-algebra.md"
   - 音乐:
       - 特辑：前苏联:
-          - 加盟共和国国歌选: "Music/USSR/national_anthems_of_union_republics.md"
+          - 加盟共和国国歌选: "Music/USSR/national-anthems-of-union-republics.md"
       - 阿富汗: "Music/Afghanistan.md"
       - 伊朗: "Music/Iran.md"
       - 高加索:
           - 阿塞拜疆: "Music/Caucasia/Azerbaijan.md"
-      - 中亚五国: "Music/Central_asia.md"
+      - 中亚五国: "Music/Central-asia.md"
 
 theme:
   name: "material"

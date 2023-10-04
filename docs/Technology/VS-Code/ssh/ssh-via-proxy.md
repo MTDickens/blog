@@ -21,7 +21,7 @@
 
 单击左下角的这个图标
 
-![](ssh_quick_button.png)
+![](ssh-quick-button.png)
 
 之后步骤与法一相同。
 
