@@ -137,7 +137,6 @@ plugins:
   - encryptcontent:
       # use_secret: 'ENCRYPTCONTENT_PASSWORD'
       remember_password: True
-      default_expire_delay: 24
       title_prefix: "[LOCKED]"
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
