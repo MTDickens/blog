@@ -73,6 +73,7 @@ nav:
               - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
       - PDF 处理:
           - 给 PDF 文件添加目录: "Technology/PDF/Add-contents-to-a-PDF-file.md"
+          - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
