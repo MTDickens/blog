@@ -7,6 +7,9 @@
 3. 然后 console 下面的输出就是平均绩点
 
 ```js
+// 不计入的课程（你可以自己添加、修改、删除这些课程名）
+let courseIgnore = ["英语水平测试"]
+
 // 获取表格
 let table = document.getElementById("DataGrid1");
 
@@ -38,6 +41,7 @@ for (let i = 1; i < rows.length; i++) {
   let cells = rows[i].getElementsByTagName("td");
 
   // 获取该课程的学分和绩点
+  if (courseIgnore.includes(cells[1].innerText)) continue;
   let credits = parseFloat(cells[3].innerText);
   let gpa = parseFloat(cells[4].innerText);
   let score = parseFloat(cells[2].innerText);
@@ -64,4 +68,5 @@ let gpa4 = totalGPA4 / totalCredits;
 
 // 输出结果
 console.log(`GPA5: ${gpa5}\nGPA100: ${gpa100}\nGPA4.3: ${gpa4_3}\nGPA4: ${gpa4}`);
+
 ```
