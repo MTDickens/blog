@@ -1,5 +1,35 @@
 # 使用密码或密钥登录 ssh
 
+## tl;dr
+1. 生成私钥（id_rsa）和公钥（id_rsa.pub）
+2. 将公钥（id_rsa.pub）**追加**到远程主机的`~/.ssh/authorized_keys`文件
+3. 在远程主机的 `/etc/ssh/sshd_config` 文件中，增加以下内容：
+    ```
+    RSAAuthentication yes
+    PubkeyAuthentication yes
+    AuthorizedKeysFile .ssh/authorized_keys
+    ```
+4. 重启远程主机的ssh服务
+    ```
+　 　// ubuntu系统
+　 　service ssh restart
+ 
+　 　// debian系统
+　 　/etc/init.d/ssh restart
+    ```
+5. 使用私钥登录
+    - 可能要在 `~/.ssh/config` 配置内加入
+      ```
+      IdentityFile ~/.ssh/<your private key file name>
+      ```
+      这一行
+
+### Tips
+
+有些时候，并非远程主机上没有你的私钥，而是由于重装了远程主机，导致远程主机的 fingerprint 出现变化。
+
+这种情况下，你可以简单地将你本地的 `~/.ssh/known_hosts` 对应的 host 删除即可。
+
 ## ssh 原理
 
 SSH之所以能够保证安全，原因在于它采用了公钥加密。
@@ -106,5 +136,7 @@ SSH协议是如何应对的呢？
 ### 总结
 
 密码登录：vps 把公钥发给你 -> 你输入密码 -> 用公钥加密 -> vps 用私钥解密 -> vps 验证
+    - 证明你有密码
 
-公钥登录：你把公钥发给 vps -> vps 制造随机字符串 -> 用公钥加密 -> 你用私钥解密 -> vps 验证
+公钥登录：你把公钥提前储存在 vps -> vps 制造随机字符串 -> 用公钥加密 -> 你用私钥解密 -> vps 验证
+    - 证明你有私钥
