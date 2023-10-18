@@ -236,7 +236,17 @@
   
   ```
 
-### 杂项
+## dns 配置
+
+如果使用 singbox，本地 dns 可以选择 localhost（就是直接使用本地电脑上的 dns），远程 dns 可以使用 DNS-Over-HTTPS（DoH），比如 `https://1.1.1.1/dns-query`（毕竟拟合远程服务器建立连接的时候用的是 tcp，而不是 udp，那么你最好也用基于 tcp 的 DoH，而非 udp-over-tcp）。
+
+## 路由配置
+
+建议下载这个 [Github Repo](https://github.com/Loyalsoldier/v2ray-rules-dat) 中的规则文件，然后用它替代之前的 `geosite.dat` 和 `geoip.dat`。
+
+然后，在需要代理的域名中，建议增加一条规则：`geosite:geolocation-!cn`。
+
+## 杂项
 
 1. 刷 Cloudflare ip：:warning: 建议把 ipv4 和 ipv6 **都**刷成支持流媒体的 ip（用 fscarsman的脚本）。
 2. Wireproxy 和 Tor 的配置：见上文。
