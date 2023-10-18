@@ -246,6 +246,33 @@
 
 然后，在需要代理的域名中，建议增加一条规则：`geosite:geolocation-!cn`。
 
+!!! Tip 小贴士
+    Sing-box 默认规则使用以下匹配逻辑：
+    
+    (`domain` || `domain_suffix` || `domain_keyword` || `domain_regex` || `geosite` || `geoip` || `ip_cidr`) &&
+      (`port` || `port_range`) &&
+      (`source_geoip` || `source_ip_cidr`) &&
+      (`source_port` || `source_port_range`) &&
+      `other fields`
+
+    **注意并非所有匹配项之间都是“或”逻辑。**
+
+!!! Warning 注意
+    Sing-box 配置和 V2Ray 配置格式并不完全相同，比如：
+    
+    1. Sing-box 用 `domain` 来**严格**匹配域名本身，用 `domain-suffix` 匹配后缀
+    2. 但是，V2Ray 用 `full` 来**严格**匹配域名本身，用 `domain` 匹配后缀
+    
+    因此，一定要多加注意。
+
+    -------------
+
+    下面是 sing-box 的基本域名配置规则：
+
+    1. 使用 `domain` 来**严格**匹配域名本身。如：*`domain: google.com`* 匹配 `google.com`，**但不匹配 `www.google.com`（并不完全相同）**
+    2. 使用 `domain-suffix` 来匹配域名后缀。如：*`domain-suffix: google.com`* 匹配 `google.com` 以及 `www.google.com`，**但不匹配 `google.com.hk`（多了 `.hk`）**
+    3. 使用 `domain-keyword` 来匹配域名关键字。如：*`domain-keyword: google`* 匹配 `google.com`, `www.google.fi` 甚至 `service.googleapis.cn`
+    4. 使用 `domain_regex` 来匹配域名 regex。如：*`domain_regex: \.goo.*\.com$`* 匹配 `www.google.com`、`fonts.googleapis.com`，**但不匹配 `google.com`（`google` 前没有匹配 `\.`）**
 ## 杂项
 
 1. 刷 Cloudflare ip：:warning: 建议把 ipv4 和 ipv6 **都**刷成支持流媒体的 ip（用 fscarsman的脚本）。
