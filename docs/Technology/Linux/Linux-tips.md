@@ -46,3 +46,18 @@ alias proxyoff='unset ALL_PROXY;unset http_proxy;unset https_proxy'
 
 3. 使 **.xxrc** 生效，输入：`source ~/.bashrc`。
 
+## 如何删除密码
+
+!!! Tip
+    The sudo password is the same as the **user's own password**, ***not*** the root password
+
+使用命令：
+
+```bash
+passwd -d <your username>
+```
+
+其中，`<your username>` 为你的用户名。
+
+!!! Warning
+    这个命令会删除你的密码，建议只在本地（如 WSL、虚拟机或 MacOS 等本地环境）上使用。
