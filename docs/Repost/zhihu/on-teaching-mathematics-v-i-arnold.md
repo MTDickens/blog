@@ -38,7 +38,8 @@ Unfortunately, it was an ugly twisted construction of mathematics like the one a
 **不幸的是，像上面那样扭曲的数学构建在数十年的数学教学中占主导地位。这种变态的现象起源于法国，迅速传播到数学基础教学中，首先是大学生，然后是各个学科的学生（首先是法国，然后是其他国家，包括俄罗斯）。**
 
 To the question "what is 2 + 3" a French primary school pupil replied: "3 + 2, since addition is commutative". He did not know what the sum was equal to and could not even understand what he was asked about!
-对于问题“2 + 3等于多少”，一个法国小学生回答：“3 + 2，因为加法是可交换的。”他不知道这个和是多少，甚至无法理解被问到的是什么！
+
+**对于问题“2 + 3等于多少”，一个法国小学生回答：“3 + 2，因为加法是可交换的。”他不知道这个和是多少，甚至无法理解被问到的是什么！**
 
 Another French pupil (quite rational, in my opinion) defined mathematics as follows: "there is a square, but that still has to be proved".
 
@@ -61,7 +62,8 @@ Mentally challenged zealots of "abstract mathematics" threw all the geometry (th
 **"抽象数学"的智力挑战者们将所有与物理和现实最常联系的几何学从教学中排除了。高尔萨、埃尔米特和皮卡尔的微积分教材最近被巴黎6和7大学（朱西厄）的学生图书馆丢弃，因为它们被认为过时且有害（只有在我的干预下才得以保留）。**
 
 ENS students who have sat through courses on differential and algebraic geometry (read by respected mathematicians) turned out be acquainted neither with the Riemann surface of an elliptic curve y^2 = x^3 + ax + b nor, in fact, with the topological classification of surfaces (not even mentioning elliptic integrals of first kind and the group property of an elliptic curve, that is, the Euler-Abel addition theorem). They were only taught Hodge structures and Jacobi varieties!
-曾经上过微分几何和代数几何课程（由受人尊敬的数学家讲授）的ENS学生，事实上对于椭圆曲线y^2 = x^3 + ax + b的黎曼曲面以及曲面的拓扑分类一无所知（更不用提一阶椭圆积分和椭圆曲线的群性质，即欧拉-阿贝尔加法定理）。他们只学到了霍奇结构和雅可比变量！
+
+**曾经上过微分几何和代数几何课程（由受人尊敬的数学家讲授）的ENS学生，事实上对于椭圆曲线y^2 = x^3 + ax + b的黎曼曲面以及曲面的拓扑分类一无所知（更不用提一阶椭圆积分和椭圆曲线的群性质，即欧拉-阿贝尔加法定理）。他们只学到了霍奇结构和雅可比变量！**
 
 How could this happen in France, which gave the world Lagrange and Laplace, Cauchy and Poincaré, Leray and Thom? It seems to me that a reasonable explanation was given by I.G. Petrovskii, who taught me in 1966: genuine mathematicians do not gang up, but the weak need gangs in order to survive. They can unite on various grounds (it could be super-abstractness, anti-Semitism or "applied and industrial" problems), but the essence is always a solution of the social problem - survival in conditions of more literate surroundings.
 
@@ -76,7 +78,8 @@ In those times I was treating Petrovskii's words with some doubt, but now I am b
 **在那个时候，我对彼得罗夫斯基的话有些怀疑，但现在我越来越确信他是多么正确。超抽象活动的相当一部分实际上只是将发现者的发现无耻地工业化，然后系统地归属给后来者和泛化者。就像美国不以哥伦布的名字命名一样，数学结果几乎从不以发现者的名字命名。**
 
 In order to avoid being misquoted, I have to note that my own achievements were for some unknown reason never expropriated in this way, although it always happened to both my teachers (Kolmogorov, Petrovskii, Pontryagin, Rokhlin) and my pupils. Prof. M. Berry once formulated the following two principles:
-为了避免被错误引用，我必须说明一下，我的个人成就出于某种未知原因从未被以这种方式侵占，尽管我的老师（科尔莫戈洛夫、彼得罗夫斯基、庞特亚金、罗赫林）和我的学生总是遭遇这种情况。M. Berry教授曾经提出了以下两个原则：
+
+**为了避免被错误引用，我必须说明一下，我的个人成就出于某种未知原因从未被以这种方式侵占，尽管我的老师（科尔莫戈洛夫、彼得罗夫斯基、庞特亚金、罗赫林）和我的学生总是遭遇这种情况。M. Berry教授曾经提出了以下两个原则：**
 
 The Arnold Principle. If a notion bears a personal name, then this name is not the name of the discoverer.
 
@@ -199,7 +202,8 @@ We get a totally different situation if we start off not with the group but with
 **如果我们从一个转换的概念开始（一个将集合映射到自身的一对一映射），而不是从群体开始，我们会得到完全不同的情况，这是历史上的情况。如果一个集合的一组变换包含它们连续应用的结果以及每个变换的逆变换，那么这个集合就被称为一个群体。**
 
 This is all the definition there is. The so-called "axioms" are in fact just (obvious) properties of groups of transformations. What axiomatisators call "abstract groups" are just groups of transformations of various sets considered up to isomorphisms (which are one-to-one mappings preserving the operations). As Cayley proved, there are no "more abstract" groups in the world. So why do the algebraists keep on tormenting students with the abstract definition?
-这就是全部的定义。所谓的“公理”实际上只是变换群的（显而易见的）性质。公理化者所称的“抽象群”只是考虑到同构的各种集合上的变换群（同构是保持运算的一对一映射）。正如Cayley证明的那样，世界上没有“更抽象”的群。那么为什么代数学家还要用抽象的定义来折磨学生呢？
+
+**这就是全部的定义。所谓的“公理”实际上只是变换群的（显而易见的）性质。公理化者所称的“抽象群”只是考虑到同构的各种集合上的变换群（同构是保持运算的一对一映射）。正如Cayley证明的那样，世界上没有“更抽象”的群。那么为什么代数学家还要用抽象的定义来折磨学生呢？**
 
 By the way, in the 1960s I taught group theory to Moscow schoolchildren. Avoiding all the axiomatics and staying as close as possible to physics, in half a year I got to the Abel theorem on the unsolvability of a general equation of degree five in radicals (having on the way taught the pupils complex numbers, Riemann surfaces, fundamental groups and monodromy groups of algebraic functions). This course was later published by one of the audience, V. Alekseev, as the book The Abel theorem in problems.
 
@@ -222,7 +226,8 @@ Between smooth manifolds smooth mappings are naturally defined. Diffeomorphisms 
 **在光滑流形之间，自然定义了光滑映射。微分同胚是光滑映射及其逆映射的组合。**
 
 An "abstract" smooth manifold is a smooth submanifold of a Euclidean space considered up to a diffeomorphism. There are no "more abstract" finite-dimensional smooth manifolds in the world (Whitney's theorem). Why do we keep on tormenting students with the abstract definition? Would it not be better to prove them the theorem about the explicit classification of closed two-dimensional manifolds (surfaces)?
-一个“抽象”的光滑流形是指在一个欧几里得空间中考虑的光滑子流形，其等价于一个微分同胚。世界上没有“更抽象”的有限维光滑流形（惠特尼定理）。为什么我们要继续用抽象的定义折磨学生呢？证明一下关于闭合二维流形（曲面）的显式分类定理不是更好吗？
+
+**一个“抽象”的光滑流形是指在一个欧几里得空间中考虑的光滑子流形，其等价于一个微分同胚。世界上没有“更抽象”的有限维光滑流形（惠特尼定理）。为什么我们要继续用抽象的定义折磨学生呢？证明一下关于闭合二维流形（曲面）的显式分类定理不是更好吗？**
 
 It is this wonderful theorem (which states, for example, that any compact connected oriented surface is a sphere with a number of handles) that gives a correct impression of what modern mathematics is and not the super-abstract generalizations of naive submanifolds of a Euclidean space which in fact do not give anything new and are presented as achievements by the axiomatisators.
 
