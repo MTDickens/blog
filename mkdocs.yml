@@ -52,22 +52,25 @@ nav:
       - 博客:
           - MkDocs:
               - 插件:
-                  - mkdocs-encryptcontent 插件使用: "Technology/Linux/mkdocs/plugins/mkdocs-encryptcontent.md"
+                  - mkdocs-encryptcontent 插件使用: "Technology/OS/Linux/mkdocs/plugins/mkdocs-encryptcontent.md"
       - VPS:
           - Microsoft Azure:
               - Azure 使用避雷: "Technology/VPS/Azure/azure-using-guide.md"
               - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh-via-root.md"
-      - Linux:
-          - FAQ:
-              - 设置 Linux ipv4 优先的方法: "Technology/Linux/FAQ/ipv4-first.md"
-              - Ubuntu 中更改 Shell: "Technology/Linux/FAQ/change shell in Ubuntu.md"
-          - Linux tips: "Technology/Linux/Linux-tips.md"
-          - Linux 常用软件: "Technology/Linux/frequently-used-softwares-in-Linux.md"
-          - Linux 必备软件: "Technology/Linux/must-install-softwares-in-Linux.md"
-          - Linux 各个主要目录的作用: "Technology/Linux/FAQ/Linux-directories.md"
-          - Linux 软件介绍:
-              - fail2ban 使用: "Technology/Linux/Softwares/fail2ban/fail2ban.md"
-              - rlwrap 使用: "Technology/Linux/Softwares/rlwrap/rlwrap-manual.md"
+      - 操作系统:
+          - Linux:
+              - FAQ:
+                  - 设置 Linux ipv4 优先的方法: "Technology/OS/Linux/FAQ/ipv4-first.md"
+                  - Ubuntu 中更改 Shell: "Technology/OS/Linux/FAQ/change shell in Ubuntu.md"
+              - Linux tips: "Technology/OS/Linux/Linux-tips.md"
+              - Linux 常用软件: "Technology/OS/Linux/frequently-used-softwares-in-Linux.md"
+              - Linux 必备软件: "Technology/OS/Linux/must-install-softwares-in-Linux.md"
+              - Linux 各个主要目录的作用: "Technology/OS/Linux/FAQ/Linux-directories.md"
+              - Linux 软件介绍:
+                  - fail2ban 使用: "Technology/OS/Linux/Softwares/fail2ban/fail2ban.md"
+                  - rlwrap 使用: "Technology/OS/Linux/Softwares/rlwrap/rlwrap-manual.md"
+          - Windows:
+              - Windows tips: "Technology/OS/Windows/faq.md"
       - 浏览器:
           - Chrome 插件:
               - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
