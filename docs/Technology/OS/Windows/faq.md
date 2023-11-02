@@ -24,3 +24,11 @@
 
 回退之后，我的耳机就能连接了。这是在是一个疑难杂症，我是通过 [Microsoft Community](https://answers.microsoft.com/zh-hans/windows/forum/all/type/082a6478-e168-47ba-ada1-224ac32f923d) 的这个帖子的回复解决的。
 
+## Q2
+
+我的电脑 Ctrl 键锁住了。比如我按下 `A`，电脑就会认为我按下了 `Ctrl + A` 键。
+
+## A2
+
+方法 1：同时按下 `ctrl + alt + fn`，有奇效
+方法 2：可以重启一下电脑。
