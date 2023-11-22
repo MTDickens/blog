@@ -69,6 +69,7 @@ nav:
               - Linux 软件介绍:
                   - fail2ban 使用: "Technology/OS/Linux/Softwares/fail2ban/fail2ban.md"
                   - rlwrap 使用: "Technology/OS/Linux/Softwares/rlwrap/rlwrap-manual.md"
+                  - V2rayA 使用: "Technology/OS/Linux/Softwares/v2raya/v2raya.md"
           - Windows:
               - Windows tips: "Technology/OS/Windows/faq.md"
       - 浏览器:
