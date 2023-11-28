@@ -27,6 +27,7 @@ nav:
               - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"
           - SSH:
               - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh-via-password-or-public-key.md"
+              - Mosh 使用指南: "Technology/Internet/SSH/mosh-guide.md"
           - JS:
               - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA-script.md"
       - 编程语言:
