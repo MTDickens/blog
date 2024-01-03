@@ -87,6 +87,22 @@ nav:
           - 和 ChatGPT 的一次交流: "CS/23/chatgpt-mutual-communication.md"
           - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
           - 如何阅读源码: "CS/23/how-to-read-source-code.md"
+      - 2023 年:
+          - CS 106L 课程笔记:
+              - 2. Types and Structs: "CS/24/Stanford CS106L/2-Types-and-Structs.md"
+              - 3. Initialization and References: "CS/24/Stanford CS106L/3-Initialization-and-References.md"
+              - 4. Streams: "CS/24/Stanford CS106L/4-Streams.md"
+              - 5. Containers: "CS/24/Stanford CS106L/5-Containers.md"
+              - 6. Iterators and Pointers: "CS/24/Stanford CS106L/6-Iterators-and-Pointers.md"
+              - 7. Classes: "CS/24/Stanford CS106L/7-Classes.md"
+              - 8. Template Classes and Const Correctness: "CS/24/Stanford CS106L/8-Template-Classes-and-Const-Correctness.md"
+              - 9. Template Functions: "CS/24/Stanford CS106L/9-Template-Functions.md"
+              - 10. Functions and Lambdas: "CS/24/Stanford CS106L/10-Functions-and-Lambdas.md"
+              - 12. Special Member Functions: "CS/24/Stanford CS106L/12-Special-Member-Functions.md"
+              - 13. Move Semantics: "CS/24/Stanford CS106L/13-Move-Semantics.md"
+              - 14. std::optional and Type Safety: "CS/24/Stanford CS106L/14-std-optional-and-Type-Safety.md"
+              - 15. RAII, Smart Pointers, and Building C++ Projects: "CS/24/Stanford CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
+
   - 数学:
       - 2023 年:
           - MIT牛人解说数学体系: "Mathematics/23/mathematical-system-explained-by-MIT-master.md"
