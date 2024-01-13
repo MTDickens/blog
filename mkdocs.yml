@@ -98,10 +98,19 @@ nav:
               - 8. Template Classes and Const Correctness: "CS/24/Stanford CS106L/8-Template-Classes-and-Const-Correctness.md"
               - 9. Template Functions: "CS/24/Stanford CS106L/9-Template-Functions.md"
               - 10. Functions and Lambdas: "CS/24/Stanford CS106L/10-Functions-and-Lambdas.md"
+              - 11. Operators: "CS/24/Stanford CS106L/11-Operators.md"
               - 12. Special Member Functions: "CS/24/Stanford CS106L/12-Special-Member-Functions.md"
               - 13. Move Semantics: "CS/24/Stanford CS106L/13-Move-Semantics.md"
               - 14. std::optional and Type Safety: "CS/24/Stanford CS106L/14-std-optional-and-Type-Safety.md"
               - 15. RAII, Smart Pointers, and Building C++ Projects: "CS/24/Stanford CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
+          - CS 15-445 课程笔记:
+              - 3-4. Database Storage: "CS/24/CMU CS15-445/3-4-Database-Storage.md"
+          - CSAPP 课程笔记:
+              - 1. Course Overview: "CS/24/CMU CSAPP/1-Course-Overview.md"
+              - 2-3. Bits, Bytes And Integers: "CS/24/CMU CSAPP/2-3-Bits-Bytes-And-Integers.md"
+              - 4. Floating Points: "CS/24/CMU CSAPP/4-Floating-Points.md"
+              - 5. Machine Level Programming: "CS/24/CMU CSAPP/5-Machine-Level-Programming.md"
+              - 6. Machine Level Programming: "CS/24/CMU CSAPP/6-Machine-Level-Programming.md"
 
   - 数学:
       - 2023 年:
