@@ -172,9 +172,11 @@ An object that is an r-value is disposable, so **you can either copy or move fro
 
 > The move constructor and move assignment are at the bottom two lines.
 
+***Rule of thumb:*** If your class has **copy constructor** and **copy assignment defined**, you should also define a **move constructor** and **move assignment**.
+
 So, if RHS is an r-value, we use move constructor; if not, we use normal constructor.
 
-- Notice actually **you can bind `const Type&` to an r-value**, but C++11 standard says if you are encountered with a r-value, you must use `Type &&`, if it exists.
+- Notice actually **you can bind `const Type&` to an r-value**, but C++11 standard says if you are encountered with a r-value, `Type &&` is the priority.
 
 ---
 

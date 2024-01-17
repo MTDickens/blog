@@ -103,6 +103,7 @@ nav:
               - 13. Move Semantics: "CS/24/Stanford CS106L/13-Move-Semantics.md"
               - 14. std::optional and Type Safety: "CS/24/Stanford CS106L/14-std-optional-and-Type-Safety.md"
               - 15. RAII, Smart Pointers, and Building C++ Projects: "CS/24/Stanford CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
+              - 16. Multithreading: "CS/24/Stanford CS106L/16-Multithreading.md"
           - CS 15-445 课程笔记:
               - 3-4. Database Storage: "CS/24/CMU CS15-445/3-4-Database-Storage.md"
           - CSAPP 课程笔记:
