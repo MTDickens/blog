@@ -168,7 +168,7 @@ An object that is an r-value is disposable, so **you can either copy or move fro
 
 ### Move constructor and move assignment
 
-<img src="img/image-20240113182043527.png" alt="image-20240113182043527" style="zoom:33%;" />
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202401232228821.png" style="zoom:33%;" />
 
 > The move constructor and move assignment are at the bottom two lines.
 

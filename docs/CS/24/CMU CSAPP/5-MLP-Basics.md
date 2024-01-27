@@ -1,4 +1,4 @@
-# Lec 5: Machine Level Programming
+# Lec 5: Machine Level Programming - Basics
 
 > This course uses Intel 64-bit version of the instruction set.
 
@@ -103,7 +103,7 @@ Also, for each register starting with `e` (which indicate it's a 32-bit register
    - e.g. `movq (%rcx), %rax`
 2. Displacement: `Mem[Reg[R] + D]`
    - e.g. `movq 8(%rcx), %rax`
-3. General Addressing `D(Rb,Ri,S)`: `Mem[Reg[Rb]] + S * Reg[Ri] + D`
+3. General Addressing `D(Rb,Ri,S)`: `Mem[Reg[Rb] + S * Reg[Ri] + D]`
    - more precisely: `D=0(Rb=0,Ri=0,S=1)`
      - So you can just use part of it
      - e.g.1 `(Rb,Ri)` is equivalent to `0x0(Rb,Ri,1)`

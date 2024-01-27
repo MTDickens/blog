@@ -63,7 +63,7 @@ with
 
 ```assembly
 greater_than:
-	cmpq %rsi, %rdi   # compare x:y
+	cmpq %rsi, %rdi   # compare x(dest) y(src)
 	setg %al          # set %al if (x-y)>0, i.e. x > y
 	movabl %al, %rax  # copy %al to the lowest byte of %rax, and set the rest bits of %rax to 0
 	rtn
@@ -98,7 +98,7 @@ long absdiff
 {
     long result;
     int ntest = x - y;
-    if (ntest) goto Else;
+    if (ntest < 0) goto Else;
     goto Done; 
     
 Else:
@@ -116,7 +116,7 @@ Done:
 ```assembly
 absdiff:
 	cmpq %rsi, %rdi
-	jg .L1
+	jg .L1          # jump if %rdi is greater than %rsi
 	movq %rsi, %rax
 	subq %rdi, %rax
 	rtn

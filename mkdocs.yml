@@ -103,15 +103,26 @@ nav:
               - 13. Move Semantics: "CS/24/Stanford CS106L/13-Move-Semantics.md"
               - 14. std::optional and Type Safety: "CS/24/Stanford CS106L/14-std-optional-and-Type-Safety.md"
               - 15. RAII, Smart Pointers, and Building C++ Projects: "CS/24/Stanford CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
-              - 16. Multithreading: "CS/24/Stanford CS106L/16-Multithreading.md"
+              - Guest Lecture: Template Metaprogramming: "CS/24/Stanford CS106L/GL-Template-Metaprogramming.md"
           - CS 15-445 课程笔记:
               - 3-4. Database Storage: "CS/24/CMU CS15-445/3-4-Database-Storage.md"
           - CSAPP 课程笔记:
               - 1. Course Overview: "CS/24/CMU CSAPP/1-Course-Overview.md"
               - 2-3. Bits, Bytes And Integers: "CS/24/CMU CSAPP/2-3-Bits-Bytes-And-Integers.md"
               - 4. Floating Points: "CS/24/CMU CSAPP/4-Floating-Points.md"
-              - 5. Machine Level Programming: "CS/24/CMU CSAPP/5-Machine-Level-Programming.md"
-              - 6. Machine Level Programming: "CS/24/CMU CSAPP/6-Machine-Level-Programming.md"
+              - 5. Machine Level Programming - Basics: "CS/24/CMU CSAPP/5-MLP-Basics.md"
+              - 6. Machine Level Programming - Control: "CS/24/CMU CSAPP/6-MLP-Control.md"
+              - 7. Machine Level Programming - Procedure: "CS/24/CMU CSAPP/7-MLP-Proc.md"
+              - 8. Machine Level Programming - Data: "CS/24/CMU CSAPP/8-MLP-Data.md"
+              - 9. Machine Level Programming - Advanced: "CS/24/CMU CSAPP/9-MLP-Advanced.md"
+              - 10. Program Optimization: "CS/24/CMU CSAPP/10-Program-Optimization.md"
+              - 11. The Memory Hierarchy: "CS/24/CMU CSAPP/11-The-Memory-Hierarchy.md"
+              - 12. Cache Memories: "CS/24/CMU CSAPP/12-Cache-Memories.md"
+              - 13. Linking: "CS/24/CMU CSAPP/13-Linking.md"
+          - GAMES101 课程笔记:
+              - 12. Geometry: "CS/24/GAMES101/12-Geometry.md"
+              - 13. Ray Tracing 1: "CS/24/GAMES101/13-Ray-Tracing-1.md"
+              - 14-16. Ray Tracing 2-4: "CS/24/GAMES101/14-16-Ray-Tracing-2-4.md"
 
   - 数学:
       - 2023 年:
