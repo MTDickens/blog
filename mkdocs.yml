@@ -76,6 +76,7 @@ nav:
       - 浏览器:
           - Chrome 插件:
               - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
+              - Glarity: "Technology/Chrome-addons/glarity.md"
       - PDF 处理:
           - 给 PDF 文件添加目录: "Technology/PDF/Add-contents-to-a-PDF-file.md"
           - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
@@ -103,7 +104,7 @@ nav:
               - 13. Move Semantics: "CS/24/Stanford CS106L/13-Move-Semantics.md"
               - 14. std::optional and Type Safety: "CS/24/Stanford CS106L/14-std-optional-and-Type-Safety.md"
               - 15. RAII, Smart Pointers, and Building C++ Projects: "CS/24/Stanford CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
-              - Guest Lecture: Template Metaprogramming: "CS/24/Stanford CS106L/GL-Template-Metaprogramming.md"
+              - "Guest Lecture: Template Metaprogramming": "CS/24/Stanford CS106L/GL-Template-Metaprogramming.md"
           - CS 15-445 课程笔记:
               - 3-4. Database Storage: "CS/24/CMU CS15-445/3-4-Database-Storage.md"
           - CSAPP 课程笔记:
@@ -119,10 +120,18 @@ nav:
               - 11. The Memory Hierarchy: "CS/24/CMU CSAPP/11-The-Memory-Hierarchy.md"
               - 12. Cache Memories: "CS/24/CMU CSAPP/12-Cache-Memories.md"
               - 13. Linking: "CS/24/CMU CSAPP/13-Linking.md"
+              - 14. Exceptional Control Flow - Exceptions and Processes: "CS/24/CMU CSAPP/14-ECF-Exceptions-And-Processes.md"
+              - 15. Exceptional Control Flow - Signals and Nonlocal Jumps: "CS/24/CMU CSAPP/15-ECF-Signals-And-Nonlocal-Jumps.md"
+              - 16. System-Level I/O: "CS/24/CMU CSAPP/16-System-Level-IO.md"
+              - 17. Virtual Memory: "CS/24/CMU CSAPP/17-Virtual-Memory.md"
+              - 18. Virtual Memory System: "CS/24/CMU CSAPP/18-Virtual-Memory-System.md"
           - GAMES101 课程笔记:
               - 12. Geometry: "CS/24/GAMES101/12-Geometry.md"
               - 13. Ray Tracing 1: "CS/24/GAMES101/13-Ray-Tracing-1.md"
               - 14-16. Ray Tracing 2-4: "CS/24/GAMES101/14-16-Ray-Tracing-2-4.md"
+              - 17. Materials and Appearances: "CS/24/GAMES101/17-Materials-And-Appearances.md"
+              - 19. Cameras, Lenses And Light Fields: "CS/24/GAMES101/19-Cameras-Lenses-And-Light-Fields.md"
+              - 20. Color And Perception: "CS/24/GAMES101/20-Color-And-Perception.md"
 
   - 数学:
       - 2023 年:
@@ -151,6 +160,10 @@ nav:
           - 什么是代数: "Repost/zhihu/what-is-algebra.md"
           - 论数学教育: "Repost/zhihu/on-teaching-mathematics-v-i-arnold.md"
           - 个人谈 中西方一起在工业化上撒的慌: "Repost/zhihu/lies-that-china-and-the-west-have-made.md"
+      - 哲学:
+          - 汉哲学:
+              - 文化危机: "Repost/philosophy/han-philosophy/cultural-crisis.md"
+              - 传统汉文明的基本特征: "Repost/philosophy/han-philosophy/basic-characteristics-of-traditional-han-civilization.md"
   - 音乐:
       - 特辑：前苏联:
           - 加盟共和国国歌选: "Music/USSR/national-anthems-of-union-republics.md"

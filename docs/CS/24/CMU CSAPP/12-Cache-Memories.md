@@ -180,7 +180,7 @@ int test(int elems, int stride) {
 }
 ```
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240124231845086.png" alt="image-20240124231845086" style="zoom:50%;" />
+<img src="https://i.stack.imgur.com/J5Jv5.jpg" alt="image-20240124231845086" style="zoom:50%;" />
 
 As you can see:
 

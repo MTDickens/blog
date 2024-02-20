@@ -154,10 +154,13 @@ $$
 #### Differential Solid Angles
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127004348952.png" alt="image-20240127004348952" style="zoom:50%;" />
+
 $$
 \mathrm d A = (r \sin \theta \mathrm d\phi) (r \mathrm d\theta) = r^2 \sin \theta \mathrm d\theta \mathrm d\phi 
 $$
+
 因此，有
+
 $$
 \mathrm d\omega = \frac{\mathrm dA}{r^2} = \sin \theta \mathrm d\theta \mathrm d\phi
 $$
@@ -177,6 +180,7 @@ Definition: The irradiance is **the power per (perpendicular/projected) unit are
 #### Radiance
 
 Definition: The radiance (luminance) is the power emitted, reflected, transmitted or received by a surface, **per unit solid angle, per projected unit area.**
+- 其实，radiance 还有另一层意义：人眼对发光体或被照射物体表面的发光或反射光强度实际感受的物理量
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127012719956.png" alt="image-20240127012719956" style="zoom:50%;" />
 
@@ -337,7 +341,7 @@ shade(p, wo):
 解决方法：
 
 1. 令 $N=1$（我们采用的方法）
-2. 采用 $\epsilon$-stop 的方式。也就是：$\mathbb E \left[\frac{f(\mathbf\xi)}{p_\mathbf\xi(\mathbf\xi)}\right] = \mathbb E \left[X_{1-\epsilon}\frac{f(\mathbf\xi)}{p_\mathbf\xi(\mathbf\xi)(1-\epsilon)}\right]$
+2. 采用 $\epsilon$-stop 的方式（或称 Russian Roulette）。也就是：$\mathbb E \left[\frac{f(\mathbf\xi)}{p_\mathbf\xi(\mathbf\xi)}\right] = \mathbb E \left[X_{1-\epsilon}\frac{f(\mathbf\xi)}{p_\mathbf\xi(\mathbf\xi)(1-\epsilon)}\right]$
    其中，$X_{1-\epsilon}$ 就是有 $\epsilon$ 的概率等于 0 的、独立的零一随机变量
 
 经过两次修改，代码如下：
@@ -360,4 +364,53 @@ shade(p, wo):
 
 仍然有一个问题：如何控制采样方差？
 
-一个好的 $p_\xi$，应该和 $f$ 的形状相似。
+一个好的 $p_\xi$，应该和 $f$ 的形状相似。也就是说，我们应该尽量在有光的方向进行采样。
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240128175845984.png" alt="image-20240128175845984" style="zoom: 33%;" />
+
+对于 `ray r hit the light x` 的情况，其实我们不如直接在光源上进行均匀采样，然后再把这个随机变量的 pdf 转换成立体角的 pdf。
+
+
+
+假设只有一个光源，且没有其它反光物体。令 $\xi' \sim \operatorname{Uniform}(A)$，从而：
+$$
+\begin{aligned}
+\lVert x'-x\rVert^2 \mathrm d\omega &= \cos \theta' \mathrm d A \\
+\frac{\mathrm d A}{\mathrm d\omega} &= \frac{\lVert x'-x\rVert^2}{\cos \theta'} 
+\end{aligned}
+$$
+从而，
+$$
+p_\xi(\mathbf x) = p_{\xi'}(\mathbf y) \frac{\lVert x'-x\rVert^2}{\cos \theta'}
+$$
+其中，$\mathbf y$ 就是与立体角坐标 $\mathbf x$ 对应的面积坐标。
+
+**注意：**
+
+- 如果有多个光源，我们可以分别进行采样，然后累加到该点的光照 $L_o$。
+- 对于非直接光源，我们还是采用原先的在半球上均匀随机采样的方法。
+  - 也就是说，我们分别讨论直接光源和反射光源，前者直接在光源（平面）上采样，后者还是在原半球进行采样
+- 最后，还要判断一下视线和直接光源之间有没有遮挡物。如果有的话，就 `=0.0`。
+
+代码：
+
+```
+shade(p, wo)
+	# Contribution from the light source.
+	Uniformly sample the light at x’ (pdf_light = 1 / A)
+	If no blockings within the path:
+        L_dir = L_i * f_r * cos θ * cos θ’ / |x’ - p|^2 / pdf_light
+    Else:
+    	L_dir = 0.0
+	
+	# Contribution from other reflectors.
+	L_indir = 0.0
+	Test Russian Roulette with probability P_RR
+    Uniformly sample the hemisphere toward wi (pdf_hemi = 1 / 2pi)
+	Trace a ray r(p, wi)
+	If ray r hit a non-emitting object at q
+		L_indir = shade(q, -wi) * f_r * cos θ / pdf_hemi / P_RR
+    
+	Return L_dir + L_indir
+```
+
