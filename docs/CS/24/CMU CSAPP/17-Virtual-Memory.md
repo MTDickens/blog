@@ -169,7 +169,7 @@ A **page table** is an array of page table entries (PTEs) that maps virtual page
 
 从而，我们的寻址过程如下（两个例子）：
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240203175512087.png" alt="image-20240203175512087" style="zoom: 25%;" /><img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240203180537955.png" alt="image-20240203180537955" style="zoom: 25%;" />
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402202337167.png" alt="image-20240203175512087" style="zoom: 25%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402202337895.png" alt="image-20240203180537955" style="zoom: 25%;" />
 
 如图，例一中
 
