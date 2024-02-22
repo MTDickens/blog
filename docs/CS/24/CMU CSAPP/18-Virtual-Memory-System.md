@@ -96,13 +96,14 @@ Core i7 Level 4 Page Table Entries
 VM areas initialized by **associating them with disk objects**.
 
 - 这个过程被称为内存映射
+- 为什么内存映射考虑的是”（常规/匿名）磁盘文件“？因为在系统层面，我们就是加载文件，所以我们只关心虚拟内存和文件的抽象对应关系。至于虚拟内存和物理内存/磁盘扇区的具体对应关系？那是硬件（MMU）的事情。
 
 Area can be backed by (i.e.,get its initial values from):
 
 - Regular file on disk (e.g.,an executable object file)
-  - Initial page bytes come from a section of a file
+  - **Initial page bytes come from a section of a file**
 - Anonymous file (e.g.,nothing)
-  - First fault will allocate a physical page full of 0's(demand-zero page)
+  - **First fault will allocate a physical page full of 0's**(demand-zero page)
   - Once the page is written to (dirtied), it is like any other page
 
 Dirty pages are copied back and forth between memory and a special swap file.
@@ -111,7 +112,7 @@ Dirty pages are copied back and forth between memory and a special swap file.
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402191725519.png" alt="image-20240219172535993" style="zoom: 50%;" />
 
-如图，两个进程共享一个 object。也就是说，两块虚拟内存映射到同一块物理内存。
+如图，两个进程共享一个 object。也就是说，无论读写，磁盘上的同一个 page 会缓存在同一段 memory 里。
 
 ### Sharing Revisited: Copy-on-write (COW) Objects
 
@@ -125,3 +126,49 @@ Dirty pages are copied back and forth between memory and a special swap file.
 - 如果进程执行了**写（write）操作**。那么，就需要**复制**待更改的 page 到另外一个 page（图中从紫色小块复制到黄色小块），并对黄色小块进行改动
 - 如果只是执行读（read）操作，那么就无需改变。
 
+也就是说，如果只有读操作，磁盘上的同一个 page 会缓存在同一段 memory 里；只要包含了写操作，磁盘上的同一个 page 就会缓存在不同段的 memory 里。
+
+#### Implementation
+
+- *Instruction* writing to private page triggers *protection fault*.
+- *Handler* creates *new R/W page*.
+- *Instruction* *restarts* upon handler return.
+
+In all, copying is deferred as long as possible!
+
+### `fork` revisited
+
+Naive implementation of `fork`, as you can easily figure out, is incredibly expensive (i.e. you have to copy all those memory).
+
+#### Implementation
+
+- 将父进程的数据结构（i.e. `mm_struct`, `vm_area_struct` 以及 page table）复制到子进程
+  - 这些通常而言不会太多
+- 将父进程和子进程的**每一页**（在 PTE 中）都标为 read-only
+- 将父进程和子进程的**每个** `vm_area_struct` 都标为 COW
+
+### `execve` revisited
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402210017263.png" alt="image-20240221001753740" style="zoom:50%;" />
+
+如图
+
+- 首先清除旧的数据结构
+- 然后创造新的数据结构
+- 最后将 `%rip` 指向 `.text` 的 entry point
+
+**注意：**我们现在只建立了内存映射，而没有实际使用内存，从而非常 efficient。
+
+### User-level memory mapping - `mmap`
+
+```c
+#include <unistd.h>
+#include <sys/mman.h>
+
+void *mmap(void *start, size_t length, int prot, int flags,
+           int fd, off_t offset);
+
+// 返回：若成功时则为指向映射区域的指针，若出错则为 MAP_FAILED(-1)。
+```
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402210103873.png" alt="image-20240221010332338" style="zoom:33%;" />
