@@ -125,6 +125,7 @@ nav:
               - 16. System-Level I/O: "CS/24/CMU CSAPP/16-System-Level-IO.md"
               - 17. Virtual Memory: "CS/24/CMU CSAPP/17-Virtual-Memory.md"
               - 18. Virtual Memory System: "CS/24/CMU CSAPP/18-Virtual-Memory-System.md"
+              - 19-20. Storage Allocation: "CS/24/CMU CSAPP/19-20-Storage-Allocation.md"
           - GAMES101 课程笔记:
               - 12. Geometry: "CS/24/GAMES101/12-Geometry.md"
               - 13. Ray Tracing 1: "CS/24/GAMES101/13-Ray-Tracing-1.md"
