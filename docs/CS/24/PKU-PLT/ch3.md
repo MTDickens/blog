@@ -113,4 +113,29 @@ $| Consts(t) | \leq size(t)$
 
 - i.e. 对于一个 term，在其所有 sub-term 满足假设的情况下，如果我们能够证明该 term 也满足假设，那么就完成了归纳。
 
-## Semantic Styles (*TODO*)
+## Semantic Styles
+
+> 原文：[知乎 - Jason Hu](操作语义、指称语义、代数语义、公理语义学，谁能简单介绍下？ - Jason Hu的回答 - 知乎
+> https://www.zhihu.com/question/23861885/answer/762550769)
+>
+> 改写：Google Gemini
+
+这段话主要介绍了程序语义的三种类型：操作语义、指称语义和公理语义。
+
+**操作语义**定义程序如何运行，是三种语义中最重要的。它与类型系统密切相关，决定了类型系统的有效性。
+
+**指称语义**将程序映射到数学系统中，从而证明程序的一致性。这种语义偏向于数学，对使用者有一定要求。
+
+**公理语义**根据公理定义程序含义，其中 Hoare 逻辑是一种重要的公理语义。传统的 Hoare 逻辑是全局语义，需要描述整个内存状况，而 21 世纪的 Hoare 逻辑（分离逻辑）解决了这个问题。
+
+基本上，程序语义就是数学方法和数学问题。定义程序语义的最终目的就是为了证明程序的正确性。用数学方法的原因是因为你根本没法在地球上找到其他比数学更加全面又一致的理论系统了。
+
+---
+
+在本书中，我们只会用到 operational semantics。
+
+因为 "the bête noire (棘手之处) of **denotational semantics** turned out to be the treatment of **nondeterminism and concurrency**; for **axiomatic semantics**, it was **procedures**."
+
+并且 "Milner’s work on CCS (1980; 1989; 1999), which introduced more elegant formalisms and showed how many of **the powerful mathematical techniques** developed in the context of **denotational semantics could be transferred to an operational setting**."
+
+## Evaluation

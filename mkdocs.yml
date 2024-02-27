@@ -82,6 +82,10 @@ nav:
           - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
       - 网络代理:
           - V2Ray+ws+tls+nginx(web) 全解析: "Technology/Proxy/v2ray-ws-tls-web.md"
+  - 学校课程:
+      - Spring/Summer 2024:
+          - 计算机组成与设计:
+              - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
