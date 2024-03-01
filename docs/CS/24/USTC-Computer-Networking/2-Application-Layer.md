@@ -97,7 +97,7 @@
 
 ## 三个问题和解决方案
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240227233453236.png" alt="image-20240227233453236" style="zoom: 67%;" />
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403020008891.png" alt="image-20240227233453236" style="zoom: 67%;" />
 
 也就是
 
