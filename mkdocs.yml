@@ -86,6 +86,12 @@ nav:
       - Spring/Summer 2024:
           - 计算机组成与设计:
               - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
+          - 数值分析:
+              - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-Introduction.md"
+          - 拓扑数据处理:
+              - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
+          - 数据库系统:
+              - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
@@ -144,6 +150,7 @@ nav:
               - 3. Untyped Arithmetic Expressions: "CS/24/PKU-PLT/ch3.md"
           - USTC 计网笔记:
               - 1. Introduction: "CS/24/USTC-Computer-Networking/1-Introduction.md"
+              - 2. Application Layer: "CS/24/USTC-Computer-Networking/2-Application-Layer.md"
 
   - 数学:
       - 2023 年:
@@ -184,6 +191,12 @@ nav:
       - 高加索:
           - 阿塞拜疆: "Music/Caucasia/Azerbaijan.md"
       - 中亚五国: "Music/Central-asia.md"
+  - 美食:
+      - 意大利:
+          - Bolognese Sauce (番茄肉酱): "food/italy/bolognese-sauce.md"
+          - Spaghetti Carbonara (培根蛋酱意大利面): "food/italy/spaghetti-carbonara.md"
+          - Spaghetti al Limone: "food/italy/spaghetti-al-limone.md"
+          - 如何选择意面: "food/italy/best-pasta-to-buy-in-store.md"
 
 theme:
   name: "material"

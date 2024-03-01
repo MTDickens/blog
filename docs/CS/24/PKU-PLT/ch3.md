@@ -115,8 +115,7 @@ $| Consts(t) | \leq size(t)$
 
 ## Semantic Styles
 
-> 原文：[知乎 - Jason Hu](操作语义、指称语义、代数语义、公理语义学，谁能简单介绍下？ - Jason Hu的回答 - 知乎
-> https://www.zhihu.com/question/23861885/answer/762550769)
+> 原文：[知乎 - Jason Hu](https://www.zhihu.com/question/23861885/answer/762550769)
 >
 > 改写：Google Gemini
 
@@ -139,3 +138,31 @@ $| Consts(t) | \leq size(t)$
 并且 "Milner’s work on CCS (1980; 1989; 1999), which introduced more elegant formalisms and showed how many of **the powerful mathematical techniques** developed in the context of **denotational semantics could be transferred to an operational setting**."
 
 ## Evaluation
+
+（Evaluation 细节具体详见 PPT）
+
+总体而言，我们最好保证
+
+- 对于两个相同的语句，如果能够进行 small-step (i.e. 1-step) evaluation，哪么，无论运用什么规则，结果都是相同的
+  - 可能只有一个适合的规则
+  - 可能虽然有多个匹配，但是最终结果还是一样
+  - Corollary: small-step same $\implies$ normal-form big-step same
+- value（我们在文中以 metavariable $v$ 表示）一定是 normal form
+  - normal form 就是无法匹配任何规则的
+
+如果能够保证
+
+- normal form 一定是 value
+
+当然更好。但是，with our naive implementation，未必能够保证，如：
+
+- `if (succ 0) then 1 else 0`
+- `iszero (if true then true else 0)`
+
+---
+
+我们可以用 `stuck` 这个 term 来指代所有的 non-value normal-form。
+
+或者，我们可以（某种对应关系上）等价、显式地定义 `bad-nat`：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403010038602.png" alt="image-20240301003800413" style="zoom: 50%;" />
