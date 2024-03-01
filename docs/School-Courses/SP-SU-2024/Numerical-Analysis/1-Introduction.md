@@ -232,5 +232,4 @@ $$
 
 ## Reference
 
-[^1]: [OpenAI](https://openai.com)
-
+[^1]: [迭代稳定性代码](https://github.com/MTDickens/numerical-analysis-sp24/blob/e512d84239e407862c4aa981b90ed9fa68d05cd7/lec1/integral-precision.py?plain=1#L1-L48)
