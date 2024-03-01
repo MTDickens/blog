@@ -229,6 +229,7 @@ plugins:
       encryption_info_message: "Contact me for access to this page."
 
 markdown_extensions:
+  - footnotes
   - admonition
   - pymdownx.keys
   - pymdownx.mark
@@ -254,3 +255,4 @@ markdown_extensions:
 extra_javascript:
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
