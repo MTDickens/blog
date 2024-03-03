@@ -216,6 +216,8 @@ Web Server 有一个守护 socket，相当于经理；每出现一个请求，�
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402292224917.png" alt="image-20240229222431417" style="zoom: 67%;" />
 
+注意：request line 和 header line 都必须使用 ASCII 编码，不过 entity body 无需。
+
 ### HTTP 状态保持：Cookie
 
 为了以某种等价的形式保持 HTTP 的状态，我们需要用到 cookie。
@@ -259,6 +261,272 @@ FTP 显然是有状态的（应用层）协议。服务器和客户端都维持�
 
 1. 有状态
 2. 控制命令和数据传输分别在两个 TCP 连接上
+
+# Lec 2.4: Email
+
+>3个主要组成部分： 
+>
+>- 用户代理
+>- 邮件服务器
+>- 简单邮件传输协议：SMTP 
+>  - 电子邮件应用分为**发送端**和**接收端**：
+>    - **邮件服务器之间传输**以及**用户代理传输给邮件服务器**，就是 SMTP 一种
+>    - **邮件服务器传输给用户代理**，可以是 POP3, IMAP, HTTP
+
+## 用户代理
+
+电子邮件应用的用户代理，就是电子邮件客户端（如 Outlook 等等）。
+
+- 就像 HTTP 的用户代理，就是 Web 浏览器；FTP 的用户代理，就是 FTP 客户端
+  - “代理”的意思就是：这个东西代替你去完成一些事情，如 Web 浏览器代替用户去发送 HTTP 请求。
+
+## 邮件服务器
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021537576.png" alt="image-20240302153617811" style="zoom:67%;" />
+
+如上图和下图，
+
+- 用户代理传输到邮件服务器以及邮件服务器之间通信，使用 SMTP 进行
+  - 对应下图 (2), (4)
+- 邮件服务器收到了信件之后，会将其加入自己的队列，逐一传输到对应用户的 mailbox 里
+- 用户使用 POP3, IMAP 或 HTTP 从邮件服务器中取回信件
+  - 对应下图 (6)
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021546980.png" alt="image-20240302154635159" style="zoom:50%;" />
+
+## SMTP
+
+### SMTP via telnet
+
+```
+╭─root@mtdickens /home/mtdickens
+╰─➤  telnet smtp.zju.edu.cn 25                                  1 ↵
+Trying 61.164.42.155...
+Connected to mail.zju.edu.cn.
+Escape character is '^]'.
+220 zju.edu.cn Anti-spam GT for Coremail System (mispb-4df6dc2c-e274-4d1c-b502-72c5c3dfa9ce-zj.edu.cn[20230316])
+	EHLO smtp.zju.edu.cn
+250-mail
+250-PIPELINING
+250-AUTH LOGIN PLAIN
+250-AUTH=LOGIN PLAIN
+250-coremail 1U3r2xKj7kG0xkI17xGrU7I0s8FY2U3Uj8Cz28x1UUUUU7Ic2I0Y2UracVUbb0I7xC2jI0I4UJUUUU81IkIcUJUUUU8=
+250-STARTTLS
+250-SMTPUTF8
+250 8BITMIME
+	AUTH LOGIN
+334 dXNlcm5hbWU6
+	<my username in base64>
+334 UGFzc3dvcmQ6
+	<my password in base64>
+235 Authentication successful
+	MAIL FROM: <xxx@zju.edu.cn>
+553 Mail from must equal authorized user
+	MAIL FROM: <xxx@zju.edu.cn>
+250 Mail OK
+	RCPT TO: <cc98myhome@gmail.com>
+250 Mail OK
+	DATA
+354 End data with <CR><LF>.<CR><LF>
+	From: imfake@zju.edu.cn
+	To: mtdickens1998@gmail.com
+	Subject: Test Sending Email with Telnet
+	
+	Hello! How's everything going?
+	I'm imfake@zju.edu.cn.
+	.
+250 Mail OK queued as cC_KCgBnbjkC4eJldi_KAQ--.11653S3
+	QUIT
+221 Bye
+Connection closed by foreign host.
+```
+
+如上，我输入的每一条命令前面，都加上了一个 tab（原本没有 tab），从而与返回信息区分。
+
+注意：
+
+- SMTP 连接是持久连接，只有在 client 发送了 QUIT 之后，服务器才会断开连接。
+- SMTP要求报文（首部 和主体）为7位ASCII编码
+  -  b/c of the ASCII tradition
+- SMTP服务器使用 `<CRLF>.<CRLF>` 决定报文的尾部 
+
+### SMTP 报文格式
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021655678.png" alt="image-20240302165503967" style="zoom: 25%;" />
+
+SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP 不一样），比如同时有文本、附件等等。
+
+### SMTP extended encoding
+
+由于 SMTP 只支持 ASCII，因此，多媒体文件和非英语语言，就需要用到 MIME (RFC 2045, 2056) via base64 encoding：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021658878.png" alt="image-20240302165856736" style="zoom:67%;" />
+
+## POP3, IMAP 和 HTTP
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021701548.png" alt="image-20240302170108938" style="zoom: 33%;" />
+
+- SMTP: 传送到接收方的邮件服务器
+- 邮件访问协议：
+  - POP: 邮局访问协议（Post Office Protocol）[RFC 1939]
+    - 用户身份确认 (代理<-->服务器) 并下载
+  - IMAP: Internet 邮件访问协议（Internet Mail Access Protocol）[RFC 1730]
+    - **更多特性** (更复杂)
+      - e.g. 允许用户远程维护目录等等
+    - 在服务器上处理存储的报文
+  - HTTP: Hotmail, Yahoo! Mail等
+    - 方便
+
+### POP3 via telnet
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021712673.png" alt="image-20240302171242452" style="zoom:50%;" />
+
+### POP3 vs IMAP
+
+- POP3会话是无状态的
+  - **下载并删除模式**：
+    - 在这种模式下，邮件被下载到客户端后会立即从服务器上删除。这意味着邮件只存在于客户端，服务器上不再保留邮件的副本。
+    - 这种模式下，POP3会话是无状态的，因为每次连接到服务器时，都会下载所有的邮件并删除服务器上的副本，不会保留任何关于会话状态的信息。
+  - **下载并保留模式**：
+    - 在这种模式下，邮件被下载到客户端后不会立即从服务器上删除，而是等到客户端主动删除或者按照服务器上的规定时间自动删除。
+    - 这种模式下，POP3会话仍然可以看作是无状态的，因为服务器不需要跟踪每个会话的状态，只有客户端和服务器之间的简单交互。
+- IMAP会话是有状态的，因为**服务器会记住客户端的会话状态**。这意味着客户端可以在多次连接之间保持对服务器的持续连接，并且**服务器会跟踪邮件的状态和文件夹结构等信息**。
+
+# Lec 2.5: DNS
+
+## 三个问题
+
+- 问题1：
+    - 如何命名设备：
+        - 用**有意义的字符串**：好记，便于人类使用
+        - 解决一个平面命名的重名问题：**层次化命名**
+- 问题2：
+    - 如何完成名字到IP地址的转换：
+        - **分布式**的数据库维护和响应名字查询
+- 问题3：
+    - 如何维护：增加或者删除一个域，需要在域名系统中做哪些工作
+
+## DNS 的总体思路和目标
+
+总体思路
+
+- （针对问题 1）**分层**的、基于 **domain** 的命名机制
+- （针对问题 2）若干**分布式**的数据库完成 hostname to IP conversion
+- （针对问题 2）运行在 UDP 53 端口的**应用**服务
+  - 核心的 Internet 功能，但以应用层协议实现，从而得以在网络边缘处理**复杂性**
+
+目标
+
+- 主要目标：name/IP translate (A/AAAA)
+- 其他目的
+  - host aliasing (CNAME)
+    - 比如，很多主机的规范名和编号、机房、地址等等有关，因此呈现给客户的时候，我们需要用到规范名字
+  - mail server aliasing (MX)
+    - 比如域名邮箱，就需要使用 MX，将自己的域名指向 server 的（规范）域名。从而，如果某人发邮件给你，就可以发到对应的 server 上去
+  - 负载均衡
+
+## DNS 名字空间
+
+### 域名的分层
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021939785.png" alt="在这里插入图片描述" style="zoom:50%;" />
+
+如图，这就是分层明明，形如 `jp`, `net` 被称为顶级域，`ac.jp`, `google.com` 被称为二级域，诸如此类。
+
+### 域名的管理
+
+- 域名的管理
+  - **一个域管理其下的子域**
+    .jp 被划分为 ac.jp co.jp
+    .cn 被划分为 edu.cn com.cn
+  - 创建一个新的域，必须征得它所属域的同意域与物理网络无关
+- **域遵从组织界限**，而不是物理网络
+  - 一个域的主机可以不在一个网络
+  - 一个网络的主机不一定在一个域。域的划分是逻辑的，而不是物理的
+
+## 分布式查询
+
+域名被分为不相交的**域（zone）**。
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403022012575.png" alt="image-20240302201245804" style="zoom:50%;" />
+
+如图，由于耶鲁计算机系下面域名众多，因此独成一 zone（`*.cs.yale.edu`）。其它的 `*.yale.edu`（其中不含 `*cs.yale.edu`）又成一个 zone。
+
+每个 zone 都有**权威名字服务器**，负责记录 zone 里面所有域名的相关信息（稍后介绍）。
+
+而 zone 之上的节点，就是 x-LD (x- Level Domain) Nameserver。它们负责记录 (x+1)-LD 和 (x+1) 层的权威名字服务器的地址。
+
+- 注意：x-LD 同时也是权威名字服务器，因为它总要记录自己的 x-LD 的 NS 记录。比如
+  - 权威名字服务器：`eu.org` 记录着诸如 `nic.eu.org`, `eu.org`, `www.eu.org` 的各种记录
+  - 2LD：`eu.org` 记录着其它的 `*.eu.org` 的权威名字服务器的地址
+    - 比如，`mtds.eu.org` 的地址就是 Cloudflare 的服务器
+
+### 资源记录
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403022047784.png" alt="image-20240302204705218" style="zoom: 33%;" />
+
+其中，对于权威服务器上的 RR，TTL 是无限大，而对于非权威的，RR 只不过是缓存，因此 TTL 就是一个特定的有限值，过了时间就删除，以确保缓存一致性。
+
+## 查询流程
+
+如下图，
+
+- 应用程序向 resolver application 发送一个请求
+- resolver 将这个请求以 UDP 的方式发送给 LNS
+- LNS 进一步进行查询（稍后会写），并返回 response
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031417963.png" alt="image-20240303141738690" style="zoom: 50%;" />
+
+### Local Name Server
+
+- 并不严格属于层次结构
+- 一般而言，每个 ISP（居民区、公司、大学）都有一个 LNS
+- 起到**代理**的作用，将查询转发到层次结构中
+
+查询时，
+
+- 如果目标名字在 LNS 内部，那么就直接返回
+  - Case 1: 查询的名字在该区域内部
+  - Case 2: 缓存
+- 否则，就联系根服务器，顺着根-TLD-SLD-...，一直找到权威名字服务器
+
+### 递归查询、迭代查询
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031423624.png" alt="image-20240303141946975" style="zoom: 33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031424035.png" alt="image-20240303142421425" style="zoom: 33%;" />
+
+递归查询（如左图）会给根 DNS 服务器造成巨大压力（需要返回整个 DNS 数据包）。
+
+因此，目前的解决方案，就是
+
+- TLD、权威服务器，均使用迭代查询（如右图，只需返回下级 DNS 服务器的 IP 地址）。
+- 至于像 1.1.1.1, 8.8.8.8 这样的公共/私人 DNS 服务器，它们是递归**解析器**（帮你直接查完，和 LNS 做的工作一样）
+
+### DNS 协议、报文
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031544566.png" alt="image-20240303154354693" style="zoom:50%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031544399.png" alt="image-20240303154405426" style="zoom:50%;" />
+
+## 增删域名
+
+比如，你希望在 Cloudflare 上托管 `mtds.eu.org`，那么，你把以下两种记录交给 `eu.org` 的 TLD 服务器：
+
+1. `(mtds.eu.org, PORTER.NS.CLOUDFLARE.COM, NS)`, `(mtds.eu.org, ARON.NS.CLOUDFLARE.COM, NS)`
+2. `(PORTER.NS.CLOUDFLARE.COM, 108.162.195.243, A)`, etc
+
+从而，`eu.org` 的 2LD 名字服务器就知道了 `mtds.eu.org` 的 3LD 或权威名字服务器是什么。
+
+- 本例中，是权威名字服务器，`ARON.NS.CLOUDFLARE.COM` 知晓关于 `*.mtds.eu.org` 的一切
+
+**注意：**`eu.org` 并不会直接在你查询 `mtds.eu.org, #NULL, IN, NS, #NULL ` 的时候，返回给你 `mtds.eu.org` 的 NS 记录。它还是会通过 authority 告知你，让你去 `mtds.eu.org` 的 权威域名服务器上去查。
+
+---
+
+从而，当迭代查询 `mtds.eu.org` 的时候，如下：
+
+- 根服务器让你去 `.org` T(op)LD 名字服务器
+  - 不过，实际上，LNS 大多有 TLD、2LD 的缓存，因此不一定从 root 开始查询
+- `.org` TLD 名字服务器让你去 `.eu.org` 2LD 名字服务器
+- `.eu.org` 2LD 名字服务器让你去 `mtds.eu.org` 权威名字服务器
+- 然后，`ARON.NS.CLOUDFLARE.COM` 就可以给你正确的答复
 
 # Reference
 
