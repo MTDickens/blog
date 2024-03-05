@@ -528,6 +528,97 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
 - `.eu.org` 2LD 名字服务器让你去 `mtds.eu.org` 权威名字服务器
 - 然后，`ARON.NS.CLOUDFLARE.COM` 就可以给你正确的答复
 
+# Lec 2.6: P2P 应用
+
+## 引入：文件分发时间
+
+对于 C/S 模式，文件分发时间等于
+$$
+D_{C-S} \geq \max\{NF/u_s, F/d_{min}\}
+$$
+其中，$N$ 就是用户数量，$u_s$ 就是服务器最大上载速率，$d_{min}$ 就是用户链路中的瓶颈。
+
+当 $N$ 很大的时候，服务器的服务能力会很快下降。因此，我们需要 P2P 模式。
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403050001936.png" alt="image-20240305000129117" style="zoom:50%;" />
+
+## 纯 P2P 模式
+
+文件分发时间，利用简单模型，理论上可以是：
+$$
+D_{P2P} \geq \max\{\frac {NF} {u_s + \sum_{i=1}^N u_i}, F/d_{min}, F/u_s\}
+$$
+其中，
+
+- 最后一项是服务器的发送速率
+- 中间一项是接受速率
+- 第一项是总需求/总发送能力
+
+### 分类
+
+P2P 分为
+
+- 非结构化 P2P
+  - 集中化目录：Napster
+    - 坏处：单点故障、性能瓶颈、侵犯版权
+  - 非集中化目录：Gnutella
+  - 混合体：KaZaA
+    - 分为组长和组员
+    - 在组内，相当于 Napster
+      - 组长知道组员的一切，并把一切告诉组员
+    - 在组外，相当于 Gnutella
+      - 如果查询的东西组内没有，那么，组长就代表整组，向其他组长进行询问，并保存副本
+    - 查询的话，也是组长进行中转。具体地，
+      - 每一个文件有散列标识码和一个描述符
+      - 组员发送关键字给组长，组长转发请求到其他主机
+      - 其他主机返回匹配响应。响应的每一个 entry 包括：
+        - 文件元数据
+        - 散列标识码
+        - IP 地址
+      - 客户端从中选择符合自己的散列标识码的 entry，并向对应 IP 地址进行请求
+- DHT（分布式哈希表，或者意译为“结构化”）P2P：节点之间构成某种（应用层上的、逻辑上的）树状、网状等关系
+  - 
+
+### 应用：BitTorrent
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403050026602.png" alt="image-20240305002629782" style="zoom:50%;" />
+
+- 文件被分为一个个块256KB
+- 网络中的这些peers发送接收文件块，相互服务
+
+左上角的黑色服务器，就是 **tracker**，负责追踪 torrent 的参与节点。
+
+**torrent**，是节点的组，之间交换文件块
+
+---
+
+- Peer加入torrent: 
+
+  - 一开始没有块，但是将会通过其他节点处累积文件块
+
+  - **向跟踪服务器注册**，获得 peer节点列表，和部分peer 节点构成邻居关系 (“连接 ”) 
+
+- 当peer下载时，该peer可以**同时向其他节点提供上载服务**
+  - *兼备 C/S 的功能*
+- Peer**可能会变换**用于交换块的peer**节点**
+  - *服务对象易变*
+- 扰动churn: **peer节点可能会上线或者下线**
+  - *服务不稳定*
+- 一旦一个peer拥有整个文件，它会（自私的）离开或者保留（利他主义）在torrent中 
+
+### 应用：Gnutella
+
+- 全分布式（包括查询）
+- 使用泛洪（flooding）的方式查询
+- 使用 TTL 或者标记重复的方式，避免泛洪查询信息不断回荡在全网上
+
+缺点：
+
+- 网络建立、维护困难
+  - 软件在下载的时候，就会附带一个列表，帮助建立起初始的 overlay
+
+**总体而言，这个网络很不成功。**
+
 # Reference
 
 [^1]:[Linux Process Communication With Pipe: A Toy Example](https://raw.githubusercontent.com/MTDickens/dev/main/ustc-networking/ch2/process-communication.c)

@@ -146,6 +146,7 @@ nav:
               - 20. Color And Perception: "CS/24/GAMES101/20-Color-And-Perception.md"
               - 21-22. Animation: "CS/24/GAMES101/21-22-Animation.md"
           - PKU 编程语言理论笔记:
+              - 0+. OCaml Basics: "CS/24/PKU-PLT/ch0+.md"
               - 1-2. Introduction: "CS/24/PKU-PLT/ch1-2.md"
               - 3. Untyped Arithmetic Expressions: "CS/24/PKU-PLT/ch3.md"
           - USTC 计网笔记:
