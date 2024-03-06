@@ -88,6 +88,7 @@ nav:
               - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
           - 数值分析:
               - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-Introduction.md"
+              - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-Equations.md"
           - 拓扑数据处理:
               - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
           - 数据库系统:
@@ -99,6 +100,8 @@ nav:
           - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
           - 如何阅读源码: "CS/23/how-to-read-source-code.md"
       - 2024 年:
+          - EECS 498-007 / 598-005:
+              - 1. Introduction: "CS/24/dl4cv/1-introduction.md"
           - CS 106L 课程笔记:
               - 2. Types and Structs: "CS/24/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "CS/24/Stanford-CS106L/3-Initialization-and-References.md"
