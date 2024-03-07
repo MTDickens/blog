@@ -71,3 +71,19 @@ TDA 源于 Computational Topology，而后者又由 Computational Geometry。
 
 ### 向量化
 
+首先将二位点阵进行线性变换，将纵坐标从死亡时间变成持续时间。
+
+然后将每个点当作高斯核函数的中心，从而计算出一个标量场。
+
+将这个标量场光栅化，称为**“持续图”**。
+
+最后，一行一行/一列一列地变成向量。
+
+- 可以证明，这样的向量化是稳定的（i.e. 向量的 L^2 距离小于二位点阵的 Wasserstein 距离）
+
+## 标量场的PD计算
+
+如图，通过下水平集重建的方式如下。
+
+<img src="https://www.researchgate.net/profile/Brittany-Fasy/publication/260107617/figure/fig8/AS:668506240598034@1536395716800/We-plot-the-persistence-diagram-corresponding-to-the-upper-level-set-filtration-of-the.png" alt="img" style="zoom:50%;" />
+
