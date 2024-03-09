@@ -90,9 +90,12 @@ nav:
               - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-Introduction.md"
               - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-Equations.md"
           - 拓扑数据处理:
+              - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
               - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
+              - 2.  Applications: "School-Courses/SP-SU-2024/TDA/lec2.md"
           - 数据库系统:
               - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
+              - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
@@ -102,6 +105,7 @@ nav:
       - 2024 年:
           - EECS 498-007 / 598-005:
               - 1. Introduction: "CS/24/dl4cv/1-introduction.md"
+              - 2. Image Classification: "CS/24/dl4cv/2-image-classification.md"
           - CS 106L 课程笔记:
               - 2. Types and Structs: "CS/24/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "CS/24/Stanford-CS106L/3-Initialization-and-References.md"
@@ -152,9 +156,11 @@ nav:
               - 0+. OCaml Basics: "CS/24/PKU-PLT/ch0+.md"
               - 1-2. Introduction: "CS/24/PKU-PLT/ch1-2.md"
               - 3. Untyped Arithmetic Expressions: "CS/24/PKU-PLT/ch3.md"
+              - 4. Lambda Calculus: "CS/24/PKU-PLT/ch4.md"
           - USTC 计网笔记:
               - 1. Introduction: "CS/24/USTC-Computer-Networking/1-Introduction.md"
               - 2. Application Layer: "CS/24/USTC-Computer-Networking/2-Application-Layer.md"
+              - 3. Transport Layer: "CS/24/USTC-Computer-Networking/3-Transport-Layer.md"
 
   - 数学:
       - 2023 年:
@@ -168,6 +174,8 @@ nav:
           - 关于在 Chatgpt 上执行代码: "Notes/23/run-code-on-chat-gpt.md"
           - 如何高效阅读论文: "Notes/23/how-to-read-papers-efficiently.md"
           - 如何祛费拉化: "Notes/23/how-to-not-be-a-fellah.md"
+      - 2024 年:
+          - 模拟计算: "Notes/24/analog-computing.md"
   - 转载:
       - Hostloc:
           - 樱花妹（重口慎入）: "Repost/hostloc/23-10-08.md"

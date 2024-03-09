@@ -131,6 +131,8 @@
 
 同时，由于 socket API 内容繁多，使用起来复杂麻烦，因此，我们就使用 socket 进行传输
 
+- 也就是说：应用层在 SAP (也就是 port) 处，使用 Socket API 与传输层交流。由于 Socket API 比较繁琐，因此我们在 C 中使用封装的 Socket 进行调用。
+
 - 在 Linux 上，（以 TCP socket 为例，）socket 建立之后，会返回一个文件描述符。我们只要向这个文件描述符传输数据就行
 - **（猜测）**一个网络 IP + 端口，只能有一个 open file table entry
   - 因此，比如 `fork` 之后，可以有两个文件描述符指向同一个 entry
@@ -662,6 +664,120 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
   - 软件在下载的时候，就会附带一个列表，帮助建立起初始的 overlay
 
 **总体而言，这个网络很不成功。**
+
+# Lec 2.7: CDN
+
+## 背景和挑战
+
+视频流化服务（也就是边传边播的服务，不同于必须先下载再播放的传统）是互联网的一个 killer application，消耗带宽极大（Netflix 和 YouTube 占据了 ISP 的 37%，16% 的下行带宽）。因此，除了流量极大以外，还有两个挑战
+
+1. 规模性：单个服务器无法承受如此大的访问压力
+    - 注意和流量大不一样，比如电话系统的用户规模虽然大，但是流量很小
+2. 异构性：不同用户拥有不同的能力（例如：有线接入和移 动用户；带宽丰富和受限用户） 
+
+## 多媒体：视频
+
+视频特点：
+
+1. 高码率：>10x 于音频
+2. 可压缩性：由于视频信息的冗余度很大，可以压缩的空间很大
+    - 空间（一张图片内）和时间（相邻的图片之间）的冗余度都很大
+3. 占据网络流量的 90%
+
+## 流视频传输
+
+服务器在获得视频之后，会将其转换成多种码率，并逐个进行**切片**，将其变成若干个小 HTTP 块，便于流式传输。
+
+---
+
+客户端向服务器请求视频时，服务器会向你传输一个**告知文件 (Manifest File)**，告诉你各种码率视频的信息和请求格式，如下：
+
+```xml
+<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+    <Representation id="1" bandwidth="1000000" width="1280" height="720" codecs="avc1.4d401f">
+        <BaseURL>http://example.com/video_1.mp4</BaseURL>
+    </Representation>
+    <Representation id="2" bandwidth="500000" width="854" height="480" codecs="avc1.4d401e">
+        <BaseURL>http://example.com/video_2.mp4</BaseURL>
+    </Representation>
+</AdaptationSet>
+```
+
+其中，
+
+1. `id`：表示该版本的唯一标识符。
+2. `bandwidth`：表示该版本的码率，以比特率（bits per second）为单位。
+3. `width` 和 `height`：表示该版本的视频宽度和高度。
+4. `codecs`：表示该版本的视频编解码器。
+
+---
+
+之后，客户端向服务器请求视频块，服务器会使用 **DASH（Dynamic Adaptive Streaming over HTTP）**等协议向客户端传输。
+
+同时，客户端会根据
+
+1. 自己的实时带宽大小
+2. 自己的缓冲区大小
+
+来智能决定
+
+1. 什么时候请求（避免缓存溢出或者不足）
+2. 请求什么码率（带宽大时，尽量请求高质量视频块）
+3. 去哪里请求（就近请求 or 向带宽大的服务器进行请求）
+
+---
+
+从而，**客户端异构性**的问题得以解决（动态使用码率）。
+
+## 带宽瓶颈和重复流量的解决方案：CDN 
+
+由于
+
+1. 服务器和源主机之间可能有很多跳，这些跳之间的薄弱环节就是**带宽瓶颈**
+2. 由于一个地区的用户的请求**同质化**，因此会有大量的**重复流量**
+
+因此，就像我们之前说的 Web Cache 一样，不仅 ISP 会使用，ICP 也会使用类似的技术——这就是 CDN (Content Delivery Network)。
+
+- 注意：ISP 的缓存比 CDN 小得多，而且主要用于缓存网页内容。
+
+### CDN 部署策略
+
+CDN 将节点部署在全球，并缓存 ICP 的内容，以便于快速、大量分发。一般采用的会有两种策略：
+
+1. Enter Deep: 在 local ISP 中部署 CDN 服务器
+    - 优点：更接近用户
+    - 缺点：节点数量大、管理困难
+2. Bring Home: 部署在少数位置，比如 Peer 1 ISP 的 POP 附近
+
+当然，有些是 mixed，比如 Google：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403092129773.png" alt="image-20240309212917419" style="zoom:33%;" />
+
+### CDN 工作原理
+
+用户先从源服务器上获取 manifest file，然后根据文件里的（多个）CDN 的 `<BaseURL>`，选择一个最适合自己的，进行访问。
+
+从而，CDN 对服务器而言，提供的是“（帮你把）内容分发服务”；对客户而言，提供的是“内容加速服务”。
+
+### CDN 特点: Over the Top (OTT) & On the Edge
+
+CDN 工作在**网络边缘**，同时也工作在**应用层（也就是 Over The Top）**。
+
+### CDN 的挑战
+
+1. 从哪一个缓存节点获取内容？
+2. 用户在网络堵塞情况时的行为？
+3. 在哪些 CDN 里储存哪些内容？
+
+### 案例学习：Netflix
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403092118995.png" alt="image-20240309211833661" style="zoom: 67%;" />
+
+注意：很多情况下，`<BaseURL>`的域名会 CNAME 到 CDN 服务器。从而，你首先请求 base URL，然后再请求其 CNAME，也就是 CDN 节点域名。
+
+为什么要有 CNAME 呢？因为 CDN 有自己一套域名管理规范，ICP 也有一套规范。两个规范通过 CNAME 这个“接口”接在一起。
+
+由于这一切都是在 DNS 中完成的，因此 DNS 之外的应用层完全无感。
 
 # Reference
 
