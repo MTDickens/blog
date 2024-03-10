@@ -11,9 +11,7 @@
 ## 处理器芯片的发展趋势
 
 - 工艺、主频遇到瓶颈后，开始通过增加核数的方式来提升性能；
-
 - 芯片的物理尺寸有限制，不能无限制的增加；
-
 - ARM 的众核横向扩展空间优势明显。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402271226219.png" alt="image-20240227122623415" style="zoom:33%;" />
@@ -190,3 +188,128 @@ $$
     \end{cases}
 \end{cases}
 $$
+
+## Intel CPU 发展历史
+
+- 1971 年，Intel 4004
+
+    - 第一个微处理器
+    - 所有 CPU components 都在 single chip 上
+    - 位宽只有 4 bits
+        - 如果需要进行更多位的计算，那么就要用到 SIMD (Single Instruction, Multiple Chips) 技术
+
+- 后来，8008 有了 8 位，是第一个**通用**微处理器
+
+- 8086 有了 16 位，much more powerful
+
+- 80486 有了 
+
+    - sophisticated powerful cache
+    - instruction pipelining
+
+- Pentium 引入了所谓**超标量 (Superscalar)** 计算，旨在使用并行性更好地加速计算
+
+    - 具体来说，如果你有多个 ALU, FPU，而且若干条指令之间没有依赖关系，那么你就可以同时执行这几条指令
+
+- Pentium Pro 引入了更多的特性
+
+    - Increased superscalar organization
+
+    - Aggressive register renaming 
+
+        - 运用虚拟寄存器（虚拟寄存器数量很多，实际的寄存器数量有限）+依赖分析技术，使得寄存器能够发挥出最大能力
+
+            - 也就是说，与其
+
+                ```c
+                int temp1 = x + y
+                int a = temp1 - 1
+                int temp1 = z + w
+                // ... (calculations involving temp1)
+                ```
+
+                不如
+
+                ```c
+                int temp1 = x + y
+                int a = temp1 - 1
+                int temp2 = z + w
+                // ... (calculations involving temp2)
+                ```
+
+                这样，`temp1` 和 `temp2` 就可以并行执行了
+
+    - branch prediction
+
+    - data flow analysis
+
+    - speculative execution
+
+- Pentium II 的新特性
+
+    - MMX 技术：使得图形、视频、音频处理更加高效
+
+- Pentium III 的新特性
+
+    - 3D 浮点运算
+
+- Pentium 4
+
+    - 一些浮点运算和多媒体处理的 enhancements
+
+- Itanium
+
+    - 位宽提升到 64 bits
+
+## CPU 性能评估
+
+### 性能评估的指标
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403101734078.png" alt="image-20240310173418035" style="zoom:50%;" />
+
+1. 对于用户而言，关注的是 response time。Response time 也和软件、外接设备（如鼠标、硬盘等）有关。
+2. **对于设计者而言，最重要的还是 CPU time，因为 CPU time 只和 CPU 本身有关。**
+3. 对于管理员而言，throughput time 就是总性能/吞吐率。
+    - 如果所有程序都没有用多线程技术，那么，添加核数不会增加单核的性能，但是可以让服务器同时服务的人数更多，也就是增加了总性能。
+
+#### CPU time
+
+CPU time 包含了
+
+- User time: 执行用户代码的时间
+- Sys time: 执行系统代码的时间
+
+#### IC (Instrution Count) and CPI (Clock per Instruction)
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403101743611.png" alt="image-20240310174311621" style="zoom:50%;" />
+
+如上图所示，对于一个程序而言，它有**时钟周期数**和 **CPU 时间**两个性能指标。前者和程序指令数以及 CPI 有关，而后者还跟 Clock Rate 有关。
+
+提升 Clock Rate，未必能够提升整体性能。如果你将 Clock Rate 提升一倍，那么，可能一个时钟周期就无法完成一个算术运算，从而你需要两个时钟周期去完成，总时间并没有缩短（甚至可能反而增加）。
+
+**对于计算机组成而言，我们的主要目的就是：减少 CPI。**
+
+### 影响性能的因素
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403101827779.png" alt="image-20240310182752022" style="zoom:50%;" />
+
+## CPU 性能的瓶颈
+
+主要有三个
+
+- 内存速度跟不上 CPU 速度
+- 单位面积功耗增大，散热问题
+    - 同时，功耗增加时快于 CPU 单核性能增加的。也就是说，性能功耗比随着性能、功耗的增加而增加。
+- 摩尔定律受物理规律影响，面临失效
+
+---
+
+因此，我们需要用到多核并行技术。并行技术，整体来说，有三种：
+
+- **Instruction-Level Parallelism (ILP):** This form of TLP focuses on **executing multiple instructions from a single thread** in parallel. Techniques such as pipelining and superscalar architectures fall under this category.
+- **Data-Level Parallelism (DLP):** DLP involves **executing the same operation on multiple data elements** simultaneously, often seen in SIMD (Single Instruction, Multiple Data) architectures.
+- **Task-Level Parallelism (TLP): **TLP refers to **executing multiple independent threads** concurrently. This is particularly relevant in today’s context, as it aligns with the trend of increasing processor core counts.
+
+其中，ILP 的潜能基本上已经无法挖掘了（i.e. 即使有无限台计算机，你也无法在一瞬间执行完一个程序，因为前后代码的依赖关系复杂）。
+
+我们现在的优化主要靠 DLP，比如 MapReduce；以及 TLP，也就是将一个进程划分为独立的多个线程同时执行。

@@ -32,18 +32,18 @@ $$
 **Theorem 1:** 假如
 
 - $g \in C[a,b]$ s.t. $g(x) \in [a,b]$
-  - 保证值域包含于定义域内
+    - 保证值域包含于定义域内
 - $\exists k \in (0,1), \forall x \in (a,b): \lvert g'(x) \rvert \leq k$
 - $p_0 \in [a,b]$
-  - 保证数学归纳法的 initial condition is satisfied
+    - 保证数学归纳法的 initial condition is satisfied
 
 那么，上述数列一定收敛
 
-**Proof: ** 
+**Proof:** 
 $$
 \frac {\lvert p_{i+2} - p_{i+1} \rvert} {\lvert p_{i+1} - p_{i} \rvert} = \frac {\lvert g(p_{i+1}) - g(p_{i}) \rvert} {\lvert p_{i+1} - p_{i} \rvert} = \lvert g'(\xi) \rvert \leq k
 $$
-通过数学归纳法，可以容易证明 $g(p_0) \neq p_0 \implies \{p_i\}_{i \in \Z^+} \in (a,b)$ ，从而就在我们讨论的定义域内。
+通过数学归纳法，可以容易证明 $g(p_0) \neq p_0 \implies \{p_i\}_{i \in \mathbb{Z}^+} \in (a,b)$ ，从而就在我们讨论的定义域内。
 
 - 如果 $g(p_0) = p_0$，就没有算的必要了
 
@@ -78,8 +78,8 @@ $|g(x) - p| = |g(x) - g(p)| = |x-p||g'(\xi)| \leq k|x-p| \leq |x-p| \leq \delta$
 
 - 需要依靠 second condition 的保证
 - 另外，在 Newton's Method 下，second condition（以及 $g$ 可导）可以直接推出 first condition
-  - 因为，$a=p-\delta, b=p+\delta$ 是关于 $p$ 对称的
-  - 而一般的不动点定理的条件，并没有这样的条件
+    - 因为，$a=p-\delta, b=p+\delta$ 是关于 $p$ 对称的
+    - 而一般的不动点定理的条件，并没有这样的条件
 
 **Second condition:** $\exists k \in (0,1), \forall x \in (p - \delta, p + \delta): \lvert g'(x) \rvert \leq k$
 
