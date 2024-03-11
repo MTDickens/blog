@@ -106,6 +106,7 @@ nav:
           - 如何阅读源码: "CS/23/how-to-read-source-code.md"
       - 2024 年:
           - EECS 498-007 / 598-005:
+              - 0. PyTorch: "CS/24/EECS-498-007-598-005/0-pytorch.md"
               - 1. Introduction: "CS/24/dl4cv/1-introduction.md"
               - 2. Image Classification: "CS/24/dl4cv/2-image-classification.md"
               - 4. Optimization: "CS/24/dl4cv/4-optimization.md"
