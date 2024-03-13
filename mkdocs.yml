@@ -86,9 +86,11 @@ nav:
       - Spring/Summer 2024:
           - 计算机组成与设计:
               - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
+              - 1. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
           - 数值分析:
-              - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-Introduction.md"
-              - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-Equations.md"
+              - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-introduction.md"
+              - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-equations.md"
+              - 3. Linear Error Analysis: "School-Courses/SP-SU-2024/Numerical-Analysis/3-linear-error-analysis.md"
           - 拓扑数据处理:
               - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
               - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
