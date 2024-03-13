@@ -86,7 +86,7 @@ nav:
       - Spring/Summer 2024:
           - 计算机组成与设计:
               - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
-              - 1. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
+              - 2. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
           - 数值分析:
               - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-introduction.md"
               - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-equations.md"
@@ -106,9 +106,10 @@ nav:
           - 和 ChatGPT 的一次交流: "CS/23/chatgpt-mutual-communication.md"
           - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
           - 如何阅读源码: "CS/23/how-to-read-source-code.md"
+  - 自学课程:
       - 2024 年:
           - EECS 498-007 / 598-005:
-              - 0. PyTorch: "CS/24/EECS-498-007-598-005/0-pytorch.md"
+              - 0. PyTorch: "CS/24/dl4cv/0-pytorch.md"
               - 1. Introduction: "CS/24/dl4cv/1-introduction.md"
               - 2. Image Classification: "CS/24/dl4cv/2-image-classification.md"
               - 4. Optimization: "CS/24/dl4cv/4-optimization.md"
@@ -234,6 +235,8 @@ theme:
         name: Switch to light mode
   features:
     - content.code.copy
+    - navigation.instant
+    - navigation.tabs
   custom_dir: overrides
 
 plugins:
@@ -245,7 +248,8 @@ plugins:
       title_prefix: "[LOCKED]"
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
-
+  - toc:
+      title: On this page
 markdown_extensions:
   - footnotes
   - admonition

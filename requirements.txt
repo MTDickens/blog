@@ -4,3 +4,6 @@ mkdocs-material-extensions
 markdown_checklist
 mkdocs-mermaid2-plugin
 mkdocs-encryptcontent-plugin
+mkdocs-toc-plugin
+rich
+GitPython 
