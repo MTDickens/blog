@@ -160,3 +160,91 @@ $$
 # Accelerating Methods
 
 ## Aitken's &Delta;<sup>2</sup> Method
+
+### Intuition
+
+由于
+$$
+\frac { p _ { n + 1 } - p } { p _ { n } - p } \approx \lambda \newline
+\frac { p _ { n + 2 } - p } { p _ { n + 1 } - p } \approx \lambda
+$$
+因此，直觉上，两个式子应该也“差不多”。
+$$
+\begin{aligned}
+\frac { p _ { n + 1 } - p } { p _ { n } - p } &\approx \frac { p _ { n + 2 } - p } { p _ { n + 1 } - p } \newline
+
+( p _ { n + 1 } - p ) ( p _ { n + 1 } - p ) &\approx ( p _ { n + 2 } - p ) ( p _ { n } - p ) \newline
+
+ p _ { n + 1 } ^ { 2 } - 2 p _ { n + 1 } p + p ^ { 2 } &\approx p _ { n + 2 } p _ { n } - ( p _ { n + 2 } + p _ { n } ) p + p ^ { 2 } \newline
+
+ - 2 p _ { n + 1 } p + ( p _ { n + 2 } + p _ { n } ) p &\approx p _ { n + 2 } p _ { n } - p _ { n + 1 } ^ { 2 } \newline
+
+ p &\approx \frac { p _ { n + 2 } p _ { n } - p _ { n + 1 } ^ { 2 } } { - 2 p _ { n + 1 } + ( p _ { n + 2 } + p _ { n } ) } \newline
+
+ p &\approx p _ { n } - \frac { ( p _ { n + 1 } - p _ { n } ) ^ { 2 } } { p _ { n + 2 } - 2 p _ { n + 1 } + p _ { n } }
+\end{aligned}
+$$
+从而，我们得到了一个关于 $p$ 的 intuitive 的式子。我们不妨就直接用右边的式子代替 $g(x)$：
+$$
+\widehat p_n = p _ { n } - \frac { ( p _ { n + 1 } - p _ { n } ) ^ { 2 } } { p _ { n + 2 } - 2 p _ { n + 1 } + p _ { n } }
+$$
+
+### Definition
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131527562.png" alt="image-20240313152716120" style="zoom: 50%;" />
+
+### Calculation Steps
+
+1. 首先算出 $\set{p_0, p_1, \dots}$
+2. 然后通过 $p_i, p_{i+1}, p_{i + 2}$ 算出 $\widehat p_{i}$
+3. 我们用 $\widehat p_n$ 代替 $p_n$ 作为最后的输出
+
+下图就是形象的计算过程：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131519913.png" alt="image-20240313151913805" style="zoom:33%;" />
+
+**WARNING:**
+
+1. 不可以认为 $\widehat p_n$ 比 $p_n$ “精确”，就自作聪明，在 $\widehat p_n$ 算出来之后，再反过来通过它来计算 $p_{n+1}, p_{n+2}, p_{n+3}$（e.g. $p_4 = g(g(g(\widehat p_1)))$，而非 $p_4 = g(p_3)$）。因为 $\widehat p_n$ 更加精确某种意义上来说，是“概率性”的、“不可预知”的，因此**不能混用**。
+2. **递归计算不能够无限优化**，i.e. $\set{\widehat {\widehat p}_n}, \set{\widehat {\widehat {\widehat p}}_n}, \dots$ 的收敛性并不会趋于无穷大。这就像多次压缩文件无法使其变成 1 byte 一样。
+
+### Analysis
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131552199.png" alt="image-20240313155245679" style="zoom: 50%;" />
+
+## Steffensen’s Method
+
+虽然 Aitken's &Delta;<sup>2</sup> Method 不可以混用，但是，不能混用的原因是混用可能会导致 $\set{p_n}$ 不再是线性数列。
+
+Aitken's &Delta;<sup>2</sup> Method 最少需要 3 个数来计算出来 $\widehat p_0$，因此，我们可以三个一组，每组均采用递推的方法计算（**保证是线性数列**），然后得到 $\widehat p_0$，当作”新的起点“，然后再用 $\widehat p_0$ 继续这样做，so on and so forth。
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131558426.png" alt="image-20240313155847725" style="zoom:67%;" />
+
+---
+
+形象地看，如下图，序列整体不是线性的，但是每个方框内的小序列是线性的。箭头指的是*用前一个方框的三个值，推出新的方框的第一个值*。
+
+<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240313160216435.png" alt="image-20240313160216435" style="zoom:50%;" />
+
+由于方框内均为线性以及层层地推，由归纳法可知，所有方框均比上一个更优。
+
+- 实际上，如果 $g'(p) \neq 1$，则这样的迭代满足 local quadratic convergence。
+
+# Direct Method for Solving Linear Systems
+
+定义：解形如 $A\mathbf x=B$ 这样的线性方程组
+
+## Amount of Computation
+
+由于
+
+1. 单个乘除计算的 cycle 较多
+2. 乘除对数值稳定性的破坏性较大
+
+我们在分析线性系统的数值算法的时候，只考虑乘除运算的数量。
+
+### Example: Gaussian Elimination
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131620641.png" alt="image-20240313162015741" style="zoom:50%;" />
+
+Naive 高斯消元的计算复杂度为 $n^3$。
