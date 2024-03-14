@@ -74,3 +74,68 @@ struct hostent {
     - 因此，不必考虑多进程时的问题。
 4. 图中黑线是连接建立过程，红线是实际数据包发送过程。
 5. 图中红线显示的是“先发再收”。但是，普遍而言，“先发再收”还是“先收再发”，取决于应用协议的具体定义。
+
+## UDP 连接 VS TCP 连接
+
+对于 TCP 而言，客户端分这几个步骤：
+
+1. 初始化 socket file descriptor
+2. 执行 dns 查询，查找 host 对应的的 ip address
+3. 通过端口、IP 构建 sockaddr_in
+    - 指定对方 IP 和端口
+    - 自己的 IP 和端口隐式绑定
+4. 发起连接建立请求
+5. send
+6. receive
+7. 关闭连接
+
+---
+
+对于 TCP 而言，服务端分这几个步骤
+
+1. 初始化 welcome socket file descriptor
+2. 通过端口、IP 构建 sockaddr_in
+    - 指定自己 IP 和端口
+    - IP 经常为 `INADDR_ANY`, `INADDR_LOOPBACK` 等等
+3. 阻塞式 listen
+    - listen 时，需要绑定 `struct sockaddr_in client_socket`，以便于知道对方的 IP 和端口
+4. 创建 connection socket descriptor
+5. receive
+6. (process query)
+7. send
+8. 关闭连接
+
+---
+
+对于 UDP 而言，客户端分这几个步骤：
+
+1. 初始化 socket file descriptor
+2. 执行 dns 查询，查找 host 对应的的 ip address
+3. 通过端口、IP 构建 sockaddr_in
+    - 指定对方 IP 和端口
+    - 自己的 IP 和端口隐式绑定
+4. sendto（需要指定 socketaddr_in）
+5. recvfrom（需要指定 socketaddr_in）
+
+**与 TCP 不同：**
+
+1. **无需事先建立连接**
+2. **需要指定地址**
+
+---
+
+对于 UDP 而言，服务端分这几个步骤
+
+1. 初始化 socket file descriptor
+2. 通过端口、IP 构建 sockaddr_in
+    - 指定自己 IP 和端口
+    - IP 经常为 `INADDR_ANY`, `INADDR_LOOPBACK` 等等
+3. recvfrom（需要绑定 `socketaddr_in client_addr`，以便于知道对方的 IP 和端口）
+4. (process query)
+5. sendto（需要指定 `socketaddr_in client_addr`）
+
+**与 TCP 不同：**
+
+1. **无需事先建立连接**
+2. **需要指定地址**
+3. **无需创建新的 connection socket 用于服务这个连接**
