@@ -37,6 +37,7 @@ nav:
               - Python 插件:
                   - yt-dlp: "Technology/Python/yt-dlp.md"
               - Python tips: "Technology/Python/python-tips.md"
+              - SymPy 使用指南: "Technology/Python/sympy-guide.md"
       - 软件:
           - VS Code:
               - ssh:
