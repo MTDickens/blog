@@ -85,6 +85,7 @@ nav:
           - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
       - 网络代理:
           - V2Ray+ws+tls+nginx(web) 全解析: "Technology/Proxy/v2ray-ws-tls-web.md"
+          - Clash 订阅转换: "Technology/Proxy/clash-converter.md"
   - 学校课程:
       - Spring/Summer 2024:
           - 计算机组成与设计:
