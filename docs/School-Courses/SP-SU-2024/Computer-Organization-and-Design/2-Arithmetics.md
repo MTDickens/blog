@@ -77,7 +77,7 @@ Naive Multiplier V3 的流程如下：
 
 #### 例子
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240312160441658.png" alt="image-20240312160441658" style="zoom:50%;" />
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191941633.png" alt="image-20240312160441658" style="zoom:50%;" />
 
 如图：
 
