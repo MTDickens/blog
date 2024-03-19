@@ -141,7 +141,7 @@ Dividend (被除数) &div; Divisor (除数)
 
 ### 例：7 &div; 2
 
-<img src="C:/Users/mtdickens/Downloads/202303102303764.png" alt="img" style="zoom: 33%;" />
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403192108208.png" alt="img" style="zoom: 33%;" />
 
 ### 例：7 &div; 0（非法操作）
 
