@@ -1,3 +1,5 @@
+[TOC]
+
 # Lec 2.8: TCP Socket Programming
 
 ## 基本流程
@@ -139,3 +141,76 @@ struct hostent {
 1. **无需事先建立连接**
 2. **需要指定地址**
 3. **无需创建新的 connection socket 用于服务这个连接**
+
+# Lec 3.1: Introduction
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403170308600.png" alt="image-20240317030810612" style="zoom:50%;" />
+
+如图，TCP 和 UDP 都提供了多路复用和解复用的服务（也就是说，IP 只提供了主机到主机的服务，因此，如果主机里面的进程希望通信，那么就需要**复用** IP 提供的这一条链路，使之看起来就和**多路**一样）。
+
+但是，除此之外，UDP 不再提供任何其它服务，而 TCP 还提供了可靠、保序的服务，以及拥塞控制、流量控制等额外功能。为了实现这些功能，TCP 需要首先先建立连接。
+
+---
+
+当然，不论是 TCP 还是 UDP，它们能够提供的服务都是有限的。对于延时和带宽，它们无能为力。
+
+# Lec 3.2: Mux and Demux
+
+## TCP
+
+TCP 套接字需要提供 `(Source IP, Source Port, Dest IP, Dest Port)` 这一个四元组。通过这个四元组，我们就可以唯一标识一个 TCP 连接。
+
+具体地：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403171716571.png" alt="image-20240317171620938" style="zoom: 50%;" />
+
+1. 通过 socket，我们将四元组以 IDU 的形式传输给 TCP
+2. TCP 将 `(Source Port, Dest Port)` 封装到自己的 PDU 的 header 里去，然后把 `(Source IP, Dest IP)` 继续当作 ICI，传给 IP
+3. IP 将 `(Source IP, Dest IP)` 封装到自己的 PDU 的 header 里去，并一路传到对方的对等层
+4. 对方的 IP 将 TCP segment 以及 IP 信息传给 TCP
+5. 对方的 TCP 将 HTTP 数据包以及 IP, port 信息传给 HTTP，从而完成了一次发送
+
+## UDP
+
+UDP 相比 TCP 的套接字，创建的时候，无需指定对方的 IP 和 port，但是进行传输的时候需要指定。所以，具体的过程和 TCP 其实是大同小异的。
+
+### UDP 和 TCP 定位进程方式的区别
+
+但是，**UDP 只以目标 IP 和目标 port 来区分进程**。因此，如果多个不同的主机指定了同一个 IP:port，那么就会被转发到同一个对方主机的 PID 上处理。
+
+而 **TCP 还考虑了源 IP,port**，因此可以不同的 connection socket 服务不同的 source IP, port。
+
+如果要通过代码获得一些“感性上的认知”的话。如下
+
+TCP 是：
+
+```c
+/**
+ * tcp-server.c
+ */
+
+int main()
+{
+    //...
+	connection_socket = accept(welcome_socket, (struct sockaddr *)&client_address, &client_address_len);
+}
+
+```
+
+在这里面，kernel 就把 client_address 和 welcome_socket 绑定在一起，形成四元组，然后返回这个 file descriptor。
+
+而 UDP 是：
+
+```c
+/**
+ * udp-server.c
+ */
+
+int main()
+{
+    // ...
+	ssize_t bytes_received = recvfrom(sock, buffer, sizeof(buffer), 0, (struct sockaddr *)&client_address, &addr_len);
+}
+```
+
+在这里面，根本没有新的 file descriptor 被创建，显然只能是采用二元组。

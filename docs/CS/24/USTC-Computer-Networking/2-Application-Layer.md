@@ -146,6 +146,23 @@
 - 等到每一次进行传输的时候，再给对方的端口+IP。
 - 接收的时候，也要指定接收人的端口+IP。
 
+### Sidenote: 什么是 PDU, SDU, IDU, ICI
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403171723064.png" style="zoom: 67%;" />
+
+- PDU: 我方的第 N 层希望对方的第 N 层原原本本接收到的 unit
+- IDU: 第 N 层传给第 (N-1) 层的 unit
+    - SDU: 携带数据的 unit
+    - ICI: 控制信息
+- SAP: 第 N 层传给第 (N-1) 层的接口位置
+
+可以这么认为：
+
+- 我们希望传输到对方对等层的：PDU
+- 我们需要向下层告知的：IDU
+    - 其中的数据部分：SDU
+    - 其中的信息部分：ICI
+
 #### 传输层应该向应用层提供怎样的服务？
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402282307064.png" alt="image-20240228230725606" style="zoom:67%;" />
