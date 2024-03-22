@@ -67,7 +67,7 @@ of the CFG (i.e. the program)
 
 # Reaching Definitions Analysis
 
-定义：A **definition d** at program point p ***reaches*** a point q if there is a path from p to q such that **d** is not "killed"along that path
+定义：A **definition d** at program point p ***reaches*** a point q if there is a path from p to q such that **d** is not "killed" along that path
 
 也就是说：我在 p 处刚定义了 d，如果有一条路径能从 p 到 q，而且其中 d 没有被重新定义，那么，就说 d 可以 reach p。
 

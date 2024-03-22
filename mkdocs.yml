@@ -104,6 +104,7 @@ nav:
               - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
               - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
               - 3. SQL Syntax: "School-Courses/SP-SU-2024/DBMS/3-SQL-Syntax.md"
+              - 4. Advanced SQL: "School-Courses/SP-SU-2024/DBMS/4-Advanced-SQL.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
   - 自学课程:
@@ -117,6 +118,7 @@ nav:
               - 7. CNN: "CS/24/dl4cv/7-cnn.md"
               - 8. CNN Architectures: "CS/24/dl4cv/8-cnn-architectures.md"
               - 9. Hardware and Software: "CS/24/dl4cv/9-hardware-and-software.md"
+              - 10-11. Training NN: "CS/24/dl4cv/10-11-training-nn.md"
           - CS 106L 课程:
               - 2. Types and Structs: "CS/24/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "CS/24/Stanford-CS106L/3-Initialization-and-References.md"
