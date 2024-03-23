@@ -114,3 +114,16 @@ of the CFG (i.e. the program)
 因此，如果有 changes to any OUTPUT occur，则必然递增前是递增后的严格子集，也就是 $B_n$ 呈单调增加。
 
 由于集合最大只能是所有 $B_n$ 全满，因此，迭代的次数必然小于 $N * \# \text{ of definitions}$。从而，一定可以 stop。
+
+## Why we end when OUT stay that same?
+
+如果 OUT stay the same，就会有 $B_{n}(1, \dots, n) = B_{n-1}(1, \dots, n)$。
+
+从而，下一轮中，
+
+1. $B_{n+1}(1) = f(B_n(1, \dots, n)) = f(B_{n-1}(1, \dots, n)) = B_{n}(1)$
+2. 根据 (1)：$B_{n+1}(2) = f(B_{n+1}(1), B_n(2, \dots, n)) = f(B_{n+1}(1),B_{n-1}(2, \dots, n)) = B_{n}(1)$
+3. 根据 (1), (2)：$B_{n+1}(3) = f(B_{n+1}(1,2), B_n(3, \dots, n)) = f(B_{n+1}(1,2),B_{n-1}(3, \dots, n)) = B_{n}(3)$
+4. $\dots$
+
+如此归纳，从而，$n+1$ 轮中，所有的 $B_{n+1}(x)$ 也都等于 $B_n(x)$。我们无需再迭代下去了。

@@ -74,3 +74,11 @@ w = v / 3
 ## Algorithm
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403231614215.png" alt="image-20240323161359225" style="zoom:33%;" />
+
+# Conclusion and Comparison
+
+**May analysis:** false positive (i.e. you say it's positive, but actually it isn't) allowed, false negative forbidden.
+
+**Must analysis:** false negative allowed, false positve forbidden.
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403231718472.png" alt="image-20240323171825651" style="zoom: 33%;" />
