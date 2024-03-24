@@ -1,3 +1,5 @@
+[TOC]
+
 # Activation Functions
 
 ## Sigmoid and Tanh
@@ -210,7 +212,7 @@ $$
 
 ## Data Augmentation
 
-我们可以通过 human knowledge，来为我们的数据集增加更多的数据，同时通过引入随机性，增加模型的 robustness，避免 overfitting。
+我们可以通过 **background knowledge**，来为我们的数据集增加更多的数据，同时通过引入随机性，增加模型的 robustness，避免 overfitting。
 
 具体的方法，比如说：随机的旋转、对称、剪切、改变亮度、增加透镜效果等等。
 
@@ -223,7 +225,7 @@ $$
 - 训练的时候，将图片 randomly resize，然后 randomly sample a patch，作为 augmented training data
 - 测试的时候，我们就不能够这样 random 了。因此，我们指定了 5 个 scales，并且指定了剪裁位置，在保证测试结果的稳定性的同时，增加了测试的难度。
 
-## A Common Pattern of Regularization: Introducing Randomness
+## A General Concept of Regularization: Introducing Randomness
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230208684.png" alt="image-20240323020814856" style="zoom: 33%;" />
 
