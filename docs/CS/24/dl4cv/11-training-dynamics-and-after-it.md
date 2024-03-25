@@ -76,18 +76,133 @@ Random search 的好处：
 
 ## How To Choose Hyperparameters
 
-**Step 1:** Check initial loss without any weight decay
+### Step 1: Check initial loss without any weight decay
 
 - 因为我们可以解析地计算出最开始的 loss 的期望值大概是多少。因此，这可以作为一开始的 sanity check，用于 debug
 
-**Step 2:** Overfit a small sample
+### Step 2: Overfit a small sample
 
-*TODO:* https://youtu.be/WUazOtlti0g?list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&t=2198
+- 进一步 debug
+- 因为 small sample 可以瞬间训练完，因此，这一步中，你还可以 **interactively** 选择合适的 learning rate（范围）、architecture、optimizer, initialization 等等
+    - i.e. 保证 architecture, optimizer, learning rate, initialization etc 适合你的 data
+- 这一步确定下来了 architecture, optimizer, initialization，以及 learning rate 大致的范围
+
+### Step 3: Tune the learning rate
+
+- Use the architecture from the previous step, use all training data, **turn on small weight decay**, find a learning rate that makes the lossdrop significantly within ~100 iterations
+- Good learning rates to try:1e-1,1e-2,1e-3,1e-4
+- 这一步排除掉了一些不能用的 learning rate
+
+### Step 4: Coarse grid
+
+- Choose a few values of learning rate and weight decay around whatworked from Step 3, train a few models for ~1-5 epochs.
+- Good weight decay to try:1e-4,1e-5,0
+- 这一步
+
+### Step 5: Refine grid, train longer
+
+- Pick best models from Step 4, train them for longer (~10-20 epochs) without learning rate decay
+
+### Step 6: Look at learning curves
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251708322.png" alt="image-20240325170839135" style="zoom:33%;" />
+
+如图：
+
+对于 loss graph 而言：
+
+1. 如果 loss 降得太慢，就说明 lr 太低了
+2. 如果 loss 一开始降得快，但是后来就不降了，就说明 lr 太高了，你需要 introduce some learning decay
+3. 如果你采用了 weight decay 的方法，但是却出现了如下的情况，那么就说明你 decay 得太早了
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251721350.png" alt="image-20240325172142891" style="zoom:25%;" />
+
+对于 validation and training accuracy 而言：
+
+1. 如果两者一直稳步上升，且之间有一定的 gap（直到训练结束还在上升），那么就说明你训练的轮数太少了
+2. 如果 training 上升，validation 下降，就是 overfitting
+3. 如果两者虽然在上升，但是两者之间得 gap 太小，就是 underfitting
+    - 目前没有好的理论解释。只能说 training 和 validation 之间有一条天然的“鸿沟”。
+
+### Step 7: Repeat Step 5, Until It's Paper Submission Deadline
+
+### Sidenote: Track Ratio of Weight Update / Weight Magnitude
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251724490.png" alt="image-20240325172449721" style="zoom:50%;" />
 
 # After Training
 
 ## Model Ensembles
 
+1. Train multiple independent models
+2. At test time average their results (e.g. Take average of predicted probability distributions, then choose `argmax`)
+
+Normally, you can enjoy 2% extra performance via this method
+
+### Multiple Snapshots
+
+Instead of training independent models, use multiple snapshots of a single model during training!
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251739339.png" alt="image-20240325173907673" style="zoom: 50%;" />
+
+### Polyak Averaging
+
+Instead of using actual parameter vector, keep a moving average of the parameter vector and use that at test time.
+
+```python
+while True:
+	data_batch = dataset.sample_data_batch()
+    loss = network.forward(data_batch)
+    dx = network.backward()
+    x += - learning_rate * dx
+	x_test = 0.995*x_test + 0.005*x # This is the "moving average" weight
+    # that is use for test set
+```
+
+
+
 ## Transfer Learning
 
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251800359.png" alt="image-20240325180000946" style="zoom: 33%;" />
+
+如图，
+
+- 对于小样本，我们往往直接采用 feature extractor 的方式。就是冻结所有 feature extractor layers，然后只训练最后一层
+- 对于大样本，我们可以微调整个模型。以下是几个 fine-tuning tricks
+    - training (with feature extraction) before tuning
+    - use lower learning rate
+        - remember, you are tuning on a pre-trained model, not training
+    - freeze lower layers (i.e. layers that extract more coarse-grained and common features) to save computation
+
+**总结：**
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251810801.png" alt="image-20240325181045565" style="zoom:33%;" />
+
+## Transfer Learning in Practice
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251819866.png" alt="image-20240325181929748" style="zoom: 33%;" />
+
+如上：我们先**训练**分类，再**微调**图形检测；同时**训练**一个 NLP 模型。然后把图形检测模型和 NLP 模型结合起来，**训练** joint image / language modeling。最后再对目标任务，i.e. image captioning, visaual question answering 任务进行**微调**。
+
+## Is Pre-training a Must?
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251834054.png" alt="image-20240325183126238" style="zoom: 25%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251834902.png" alt="image-20240325183432418" style="zoom: 25%;" />
+
+如图，对比“直接使用模型在 COCO 数据集上进行训练”和“使用（在其他数据集上）pre-trained model 在 COCO 上微调”，前者也可以赶上后者，但是要花很多时间*（左图）*。
+
+另外，对于较小样本的情况，pre-training + fine-tuning 的效果还是更好*（右图）*。
+
+因此，我们可以得出几个规律
+
+1. Pretrain + fine-tuning 一般是不差于 traning from scratch 的
+2. 即使你的数据量很丰富，pretrain + fine-tuning 可以节省时间
+
 ## Large-Batch Learning
+
+In modern days，我们一般不会使用 model parallelism，而是使用 data parallelism，如下图所示：
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251839738.png" alt="image-20240325183931926" style="zoom:33%;" />
+
+这是因为，model parallelism 往往要涉及到多个 GPU 之间的大量通信；而 data parallelism 会因为 batches 之间的独立性，而往往不太需要 GPU 之间的通信。
+
+- 对于 data parallelism，我们唯一需要通信的地方，就是最后 aggregate the gradient
