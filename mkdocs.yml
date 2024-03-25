@@ -107,6 +107,7 @@ nav:
               - 4. Advanced SQL: "School-Courses/SP-SU-2024/DBMS/4-Advanced-SQL.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
+              - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
   - 自学课程:
       - 2024 年:
           - EECS 498-007 / 598-005:
