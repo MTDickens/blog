@@ -6,7 +6,7 @@
 
 Normal Gradient Descent:
 $$
-w_{t+1} = w_{t} - \alpha \grad F(w_t)
+w_{t+1} = w_{t} - \alpha \nabla F(w_t)
 $$
 where $F(w) := \frac 1 N \sum_{i=1}^N L(x_i; y_i; w)$ is a multivariable function that take account for the whole dataset.
 
@@ -25,24 +25,24 @@ That's partly because the loss function has a **high condition number**.
 ## Momentum
 
 $$
-v_{t+1} = \rho v_{t} - \grad f(w_t) \newline
-x_{t+1} = x_t + \alpha v_{t+1}
+v_{t+1} = \rho v_{t} - \nabla \alpha f(w_t) \\
+x_{t+1} = x_t + v_{t+1}
 $$
 
-In the formula above, $\rho$ is like the friction parameter (and the quicker, the more friction, the less $\rho$), and $\grad f(w_t)$ is like the force.
+In the formula above, $\rho$ is like the friction parameter (and the quicker, the more friction, the less $\rho$), and $\nabla f(w_t)$ is like the force.
 
 If you set $\rho$ to zero, the formula degenerates to normal gradient descent.
 
 ## Nesterov Momentum
 
 $$
-v_{t+1} = \rho v_{t} - \alpha \grad f(w_t + \rho v_t) \newline
-x_{t+1} = x_t + \alpha v_{t+1}
+v_{t+1} = \rho v_{t} - \nabla \alpha f(w_t + \rho v_t) \\
+x_{t+1} = x_t + v_{t+1}
 $$
 
 We can simplify it by a change of variable $\widetilde x_{t} := x_t + \rho v_t$, then:
 $$
-v_{t+1} = \rho v_{t} - \alpha \grad f(\widetilde x_t) \newline
+v_{t+1} = \rho v_{t} - \alpha \nabla f(\widetilde x_t) \newline
 \widetilde x_{t+1} = \widetilde x_t + \alpha v_{t+1} + \rho(v_{t+1} - v_{t})
 $$
 You can see the difference is that Nesterov momentum has $v_{t+1} - v_t$.
@@ -50,14 +50,14 @@ You can see the difference is that Nesterov momentum has $v_{t+1} - v_t$.
 ## AdaGrad & RMSDrop
 
 $$
-s_{t+1} := s_{t} + \grad f^2(w_t) \newline
-x_{t+1} := x_t - \frac {\alpha\grad f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
+s_{t+1} := s_{t} + \nabla f^2(w_t) \newline
+x_{t+1} := x_t - \frac {\alpha\nabla f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
 $$
 
 但是，这样的话，$s_t$ 只增不减，因此我们需要 decay rate $\rho$。这就是新方法 RMSDrop：
 $$
-s_{t+1} := \rho s_{t} + (1-\rho)\grad f^2(w_t) \newline
-x_{t+1} := x_t - \frac {\alpha\grad f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
+s_{t+1} := \rho s_{t} + (1-\rho)\nabla f^2(w_t) \newline
+x_{t+1} := x_t - \frac {\alpha\nabla f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
 $$
 这样，$s_t$ 就可以自适应地增减。
 
@@ -78,8 +78,8 @@ $$
 从而得到 Adam 最优化方法（$\sone$ 就是动量，$\stwo$ 就是自适应变量）：
 $$
 \begin{aligned}
-\sone_{t+1} &:= \rone \sone_{t} + (1-\rone) \grad f(\sone_t) \newline
-\stwo_{t+1} &:= \rtwo \stwo_{t} + (1-\rtwo) \grad f^2(\stwo_t) \newline
+\sone_{t+1} &:= \rone \sone_{t} + (1-\rone) \nabla f(\sone_t) \newline
+\stwo_{t+1} &:= \rtwo \stwo_{t} + (1-\rtwo) \nabla f^2(\stwo_t) \newline
 x_{t+1} &:= x_t - \frac {\alpha \sone_{t+1}}{\sqrt{\stwo_{t+1}} + 10^{-7}}
 \end{aligned}
 $$
@@ -110,12 +110,12 @@ $$
 ---
 
 $$
-L(w) \approx L(w_0) + (w-w_0)^T \grad_w L(w_0) + \frac 1 2 (w-w_0)^T \mathrm{H}_wL(w_0)(w-w_0)
+L(w) \approx L(w_0) + (w-w_0)^T \nabla_w L(w_0) + \frac 1 2 (w-w_0)^T \mathrm{H}_wL(w_0)(w-w_0)
 $$
 
 从而，该二次曲面的最小值点就在：
 $$
-\grad_w L(w_0) + (w - w_0)^T \mathrm{H}_wL(w_0)= w_0 - (L(w_0)\mathrm{H}_w)^{-1}\grad_wL(w_0)
+\nabla_w L(w_0) + (w - w_0)^T \mathrm{H}_wL(w_0)= w_0 - (L(w_0)\mathrm{H}_w)^{-1}\nabla_wL(w_0)
 $$
 
 - 注意算式中要对 Hessian 阵取逆。由于 Hessian 矩阵是稠密矩阵，因此没什么好方法，一般而言，复杂度就是在 $\mathcal O(n^3)$ 这个量级的。
