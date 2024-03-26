@@ -214,3 +214,138 @@ ELSE:
 ## 四则运算
 
 浮点数的四则运算，本质上就是整数的四则运算（可能还要进行移位等操作），只不过指数部分需要额外处理，另外也需要处理符号位。
+
+### 乘法
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403261843798.png" alt="image-20240326184330522" style="zoom:50%;" />
+
+如图，乘法只需要
+
+1. exponents 相加
+2. 两数相乘
+3. normalize（避免 overflow/underflow）
+4. round 一下
+5. 确定 sign 的正负
+
+# 记录一下（与上文无关）
+
+一个 object file 的
+
+- 符号表：符号+符号对应的位置
+- 重定位信息：
+    - RISC-V：重定位数据**的所在指令**的起始位置+命令类型+对应符号
+        - 因为 RISC-V 的指令很少，而且每条指令至多一个需要重定位的数据，因此可以这样做
+    - x86：重定位数据的起始位置+数据长度+对应符号（的 index）
+
+GCC 进行多文件编译的时候，可以在逻辑上理解成：
+
+1. 逐个扫描每个 obj 的重定位信息，添加到其 undefined symbol table
+2. 同时，逐个扫描每个 obj 和 library 的符号表，
+    - 如果是 obj，那么对于当前文件所有的符号
+        1. 如果是强符号，且 symbol table 里这个符号为强符号，就报错
+        2. 如果是强符号，且 symbol table 里这个符号不是强符号（或没有），就将其加入 symbol table，记作弱符号，同时记录地址
+        3. 如果是弱符号，且 symbol table 里这个符号为强符号或者弱符号，就直接忽略
+        4. 如果是弱符号，且 symbol table 里这个符号没有，就将其加入 symbol table，记作弱符号，同时记录地址
+    - 如果是 library，操作类似。但是由于库的符号实在太多，因此我们一般只会考虑将**目前已经在 undefined symbol table 里的符号**加入 symbol table。
+3. 在记录了所有符号的重定位位置之后，再进行二次扫描，并且给每一个符号进行重定位
+
+因此，由于所有 obj 的符号都会包含，因此不用关心顺序；由于 library 只会包含目前已经在 undefined symbol table 的符号，因此需要考虑顺序。
+
+## 注意
+
+实际上，GCC 比这复杂的多。
+
+比如，
+
+```c
+// 1.c
+int food()
+{
+    return 30;
+}
+
+int x = 30;
+```
+
+```c
+// 2.c
+int food()
+{
+    return 2;
+}
+
+int x = 2;
+```
+
+然后将 1.c 和 2.c 编译成静态库 lib1.a, lib2.a。
+
+如果是
+
+```c
+// main.c
+#include <stdio.h>
+
+int food()
+{
+    return 114514;
+}
+int x;
+
+int main()
+{
+    // printf("%d\n", food());
+    return 0;
+}
+```
+
+那么
+
+```bash
+gcc 3.c -L. -l1 
+```
+
+就无法通过。显示错误
+
+```c
+/usr/bin/ld: ./lib1.a(1.o): in function `food':
+1.c:(.text+0x0): multiple definition of `food'; /tmp/ccGkQvtL.o:3.c:(.text+0x0): first defined here
+collect2: error: ld returned 1 exit status
+```
+
+---
+
+但是，如果是
+
+```c
+// main.c
+#include <stdio.h>
+
+int food()
+{
+    return 114514;
+}
+int x = 114514;
+
+int main()
+{
+    // printf("%d\n", food());
+    return 0;
+}
+```
+
+或者
+
+```c
+#include <stdio.h>
+
+int food();
+int x = 114514;
+
+int main()
+{
+    // printf("%d\n", food());
+    return 0;
+}
+```
+
+就可以通过。
