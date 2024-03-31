@@ -38,6 +38,8 @@ nav:
                   - yt-dlp: "Technology/Python/yt-dlp.md"
               - Python tips: "Technology/Python/python-tips.md"
               - SymPy 使用指南: "Technology/Python/sympy-guide.md"
+          - Rust:
+              - Lec Note 1: "Technology/Rust/lec-note-1.md"
       - 软件:
           - VS Code:
               - ssh:
