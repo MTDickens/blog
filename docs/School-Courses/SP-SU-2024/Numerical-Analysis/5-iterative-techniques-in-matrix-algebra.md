@@ -1109,7 +1109,8 @@ $$
 Note:
 
 1. If $A$ is symmetric, then $K(A)_2 = \frac {\max \abs{\lambda}} {\min \abs{\lambda}}$
-    - 实际上，只需要 $A$ 是 normal operator, i.e. $A A^t = A^t A$，即可
+    - 这是因为，$A$ 可以标正对角化 &rArr; $A$ 的特征值的模和奇异值相等
+    - 另外，实际上，只需要 $A$ 是 normal operator, i.e. $A A^t = A^t A$，就可以标正对角化，从而就可以套用在这里
 2.  $K(A)_p \geq 1$ for all natural norm $\|\cdot\|_p$
     - 因为，$\|A\| \geq \|Ax\| / \|x\|$, $\|A^{-1}\| \geq \|A^{-1}Ax\| / \|Ax\| := \|x\| / \|Ax\|$
 3. $K(\alpha A) = K(A)$
