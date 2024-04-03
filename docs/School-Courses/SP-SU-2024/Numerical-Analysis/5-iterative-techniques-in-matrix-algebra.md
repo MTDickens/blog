@@ -4,6 +4,8 @@ $$
 \newcommand{N}{\mathbb N}
 $$
 
+[TOC]
+
 # Norm
 
 ## Vector Norm
@@ -1088,3 +1090,39 @@ Gauss-Seidal 方法，在形式上，上和 Jacobi 方法的区别不大。
 
 由于谱半径小于等于任意的自然范数，因此：<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272123492.png" alt="image-20240327212308128" style="zoom:67%;" />
 
+# Conditional Number
+
+$$
+\newcommand{abs}[1]{|#1|}
+$$
+
+
+
+## 推导
+
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404031825788.jpg" alt="a8d8877d-e0fd-4164-8e5e-3812ccfb71b1" style="zoom:50%;" />
+
+## 求 $K(A)$
+
+由于 $K(A) = \|A\| \|A^{-1}\|$，因此，一般而言，我们需要求出 $A^{-1}$ 才行。但是我们并不希望使用 $\mathcal O(n^{\log_2 7})$ 的复杂度来求逆矩阵。
+
+Note:
+
+1. If $A$ is symmetric, then $K(A)_2 = \frac {\max \abs{\lambda}} {\min \abs{\lambda}}$
+    - 实际上，只需要 $A$ 是 normal operator, i.e. $A A^t = A^t A$，即可
+2.  $K(A)_p \geq 1$ for all natural norm $\|\cdot\|_p$
+    - 因为，$\|A\| \geq \|Ax\| / \|x\|$, $\|A^{-1}\| \geq \|A^{-1}Ax\| / \|Ax\| := \|x\| / \|Ax\|$
+3. $K(\alpha A) = K(A)$
+    - 易证
+    - 也就是说，$A$ 的矩阵范数和其放大倍率无关
+4. $K(A)_2 = 1$ if $A$ is orthogonal, i.e. $A^{-1} = A^t$
+    - orthogonality &rArr; $\forall x: \|Ax\| = \|x\|$ &rArr; $\|A\|=1$, and so is $\|A^{-1}\|$
+5. $K(RA)_2 = K(AR)_2 = K(A)_2$, if $R$ is orthogonal
+
+总结：
+
+- 对称矩阵（乃至正规矩阵）直接算
+- 任意矩阵的条件数都不小于 1
+    - 条件数就是相对误差的放大倍率。但是相对误差是无法减小的，因此条件数至少是 1。
+- 条件数与常数放缩无关
+- 正交矩阵的条件数就是 1
