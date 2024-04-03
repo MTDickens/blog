@@ -189,7 +189,7 @@ nav:
               - 2. Intermediate Representation: "CS/24/static-program-analysis/2-intermediate-representation.md"
               - 3. Data Flow Analysis I: "CS/24/static-program-analysis/3-data-flow-analysis-i.md"
               - 4. Data Flow Analysis II: "CS/24/static-program-analysis/4-data-flow-analysis-ii.md"
-              - 5. DFA Foundations I: "CS/24/static-program-analysis/5-dfa-foundations-i.md"
+              - 5-6. DFA Foundations I & II: "CS/24/static-program-analysis/5-6-dfa-foundations-i-ii.md"
           - USTC 计网:
               - 1. Introduction: "CS/24/USTC-Computer-Networking/1-Introduction.md"
               - 2. Application Layer: "CS/24/USTC-Computer-Networking/2-Application-Layer.md"
