@@ -49,6 +49,9 @@ nav:
       - Git:
           - Git 备忘录: "Technology/Git/git-tips.md"
           - Git-crypt 插件: "Technology/Git/git-crypt.md"
+      - CI/CD:
+          - Gitlab CI/CD: "Technology/ci-cd/gitlab.md"
+          - Github CI/CD: "Technology/ci-cd/github.md"
       - CMake:
           - CMake 教程: "Technology/cmake/tutorial.md"
       - GNU:
