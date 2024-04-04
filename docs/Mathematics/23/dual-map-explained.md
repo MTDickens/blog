@@ -1,1 +1,1 @@
-![dual_map_explained](dual-map-explained.svg)
+![dual_map_explained](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_6_49_32_202404050649871.svg)
