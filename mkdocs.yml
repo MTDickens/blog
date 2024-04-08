@@ -22,6 +22,8 @@ nav:
               - 5 月:
                   - 线下交流 23-05-05: "Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md"
   - 技术:
+      - AI:
+          - Chatgpt Lawyer: "Technology/ai/chatgpt-lawyer.md"
       - 网络:
           - Cloudflare:
               - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"

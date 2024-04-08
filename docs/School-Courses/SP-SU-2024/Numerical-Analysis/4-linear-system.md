@@ -194,3 +194,52 @@ LLT和LDLT都是矩阵分解的方法，用于解决线性方程组和矩阵求�
 
 - $\exists i: \alpha_i = 0 \iff \det(A) = 0$。因此，能用这个方法当且仅当 $A$ 不是奇异矩阵。
 - Non-singular 的充分条件：如果 A 满足上面 theorem 里面的条件，那么 $A$ 就不是奇异矩阵，就可以这样算。
+
+# Selected Problem
+
+使用 four digit rounding arithmetics 来求 $\widehat H = (H^{-1})^{-1}$，然后求 $\|\widehat H - H \|_\infty$
+
+```python
+import numpy as np
+from scipy.linalg import hilbert
+from decimal import Decimal, getcontext
+
+getcontext().prec = 4 # Set digit
+
+def inv3(m4):
+    iden = np.vectorize(Decimal)(np.eye(3))
+    m = np.concatenate((m4.copy(), iden), axis=1)
+    m[1] -= m[0] * m[1][0] / m[0][0]
+    m[2] -= m[0] * m[2][0] / m[0][0]
+    m[1][0] *= 0
+    m[2][0] *= 0
+    m[2] -= m[1] * m[2][1] / m[1][1]
+    m[2][1] *= 0
+    m[1] -= m[2] * m[1][2] / m[2][2]
+    m[0] -= m[2] * m[0][2] / m[2][2]
+    m[1][2] *= 0
+    m[0][2] *= 0
+    m[0] -= m[1] * m[0][1] / m[1][1]
+    m[0][1] *= 0
+    m[0] /= m[0][0]
+    m[1] /= m[1][1]
+    m[2] /= m[2][2]
+    return m[:,3:6]
+
+def hat3_cnt(m4, n):
+    ret = m4.copy()
+    for i in range(n):
+        ret = inv3(inv3(ret))
+    return ret
+
+m4 = np.vectorize(Decimal)(hilbert(3))
+m4_hat = hat3_cnt(m4, 1)
+
+def inf_norm(x):
+    x = np.vectorize(np.float32)(x)
+    x_sum = np.sum(np.abs(x), axis=1)
+    return np.max(x_sum)
+
+# print(inf_norm(hat3_cnt(m4, 1) - m4))
+print(inf_norm(m4_hat - m4))
+```
