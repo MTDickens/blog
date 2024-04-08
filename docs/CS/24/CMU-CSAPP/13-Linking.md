@@ -50,7 +50,7 @@ Why not just put all codes into one file?
 
 - Program can be **written as a collection of smaller source files**, rather than one monolithic mass.
 - Can **build libraries of common functions** (more on this later)
-  - e.g. Math library, standard C library
+    - e.g. Math library, standard C library
 
 **Reason 2: Efficiency**
 
@@ -58,8 +58,8 @@ Why not just put all codes into one file?
   - Change one source file, compile, and then relink.
   - **No need to recompile other source files.**
 - Space: Libraries
-  - Common functions can be aggregated into a single file...
-  - Yet executable files and running memory images contain only code for the functions they actually use.
+    - Common functions can be aggregated into a single file...
+    - Yet executable files and running memory images contain only code for the functions they actually use.
 
 ## What Do Linkers Do?
 
@@ -71,13 +71,12 @@ Why not just put all codes into one file?
 
 - Relocatable Object File (`.o` file)
   - Contains code and data in a form that **can be combined with other relocatable object files** to form executable object file.
-    - Each `.o` file is produced from exactly one source (`.c`) file
+      - Each `.o` file is produced from exactly one source (`.c`) file
 - Executable Object File (`.out` file)
-  - Contains code and data in a form that **can be copied directly into memory** and then executed. 
-
+    - Contains code and data in a form that **can be copied directly into memory** and then executed. 
 - Shared object file (`.so` file) 
-  - Special type of relocatable object file that **can be loaded into memory and linked dynamically**, **at either load time or runtime.**
-  - Called Dynamic Link Libraries (DLLs) by Windows 
+    - Special type of relocatable object file that **can be loaded into memory and linked dynamically**, **at either load time or runtime.**
+    - Called Dynamic Link Libraries (DLLs) by Windows 
 
 ## Object File Format
 
@@ -91,67 +90,34 @@ The standard format for object file is "Executable and Linkable Format (ELF)".
 
 - Elf header:
   - Word size, byte ordering, file type (.o, exec, .so), machine type, etc.
-
-
 - Segment header table:
   - Page size, virtual addresses, memory segments (sections), segment sizes.
-
-
 - `.text` section (code indicator):
   - **Code**
-
-
 - `.rodata` section:
   - **Read-only data: jump tables, ...**
-
-
 - `.data` section:
   - **Initialized global variables**
-
-
 - `.bss` section:
-
   - **Uninitialized global variables**
-
   - "Block Started by Symbol"
-
   - "Beginner Save Space"
-
   - Has section header but occupies no space
-
 - `.symtab` section:
-
   - **Symbol table**
-
   - ***Procedure* and *static* variable *names***
-
   - Section names and locations
-
-
 - `.rel.text` section:
-
   - **Relocation info for `.text` section**
     - i.e. Assembler, "*I don't know where these symbols are located in memory, so linker, please fix these for me.*"
-
-
   - Addresses of instructions that will need to be modified in the executable
-
   - Instructions for modifying
-
-
 - `.rel.data` section:
-
   - **Relocation info for `.data` section**
     - similar to `.rel.text`
-
-
-  - Addresses of pointer data that will need to be modified in the merged executable
-
-
+- Addresses of pointer data that will need to be modified in the merged executable
 - `.debug` section:
   - Info for symbolic debugging (gcc -g)
-
-
 - Section header table:
   - Offsets and sizes of each section
 
@@ -426,40 +392,46 @@ See [here](https://hansimov.gitbook.io/csapp/part2/ch07-linking/7.13-library-int
 
 There are three interpositioning techniques in all:
 
-- on compilation
+1. on compilation
+    - 思路：使用本地的 `malloc.h`，在预处理阶段，替换 `main.c` 的头文件，从而达到**预处理期替换函数的作用**
+      - 使用 `-I.` flag
+      - 注意：`mymalloc.c` 不能加 `-I.` flag，从而 `mymalloc` 里的 `malloc/free` 不会被预处理成 `mymalloc/myfree`
+    - 流程：
+        1. 先使用 `gcc -E -I. int.c -o int.i` 将 `int.c` **通过我们自己的 `malloc.h`** 进行预处理
+            - 将函数替换成我们自己的函数
+        2. 然后使用 `gcc int.i mymalloc.c -DCOMPILETIME -o intc` 一条龙即可
+    
+2. on linking
+      - 思路：使用 linker 的独特机制，i.e. `--warp, func`，在 linking 时，将对 `func` 的引用解析成 `__warp_func`，对 `__real_func` 的引用解析成 `func`。从而达到**链接期强制替换（引用）符号的作用**。
+      - 流程：
+          1. 先使用 `gcc -DLINKTIME -c mymalloc.c` 和 `gcc -c int.c` 将两个源文件翻译成 obj 文件
+          2. 然后使用 `gcc int.o mymalloc.o -o intl -Wl,--wrap,malloc -Wl,--wrap,free`，将所有 obj 文件里的
+              - 符号 `malloc` **当作**符号 `__warp__malloc`
+              - 符号 `__real__malloc` **当作**符号 `malloc`
+              - 符号 `free` **当作**符号 `__warp__free`
+              - 符号 `__real__free` **当作**符号 `free`
+      
+3. at runtime
+      - 思路：使用 loader 的特殊机制，
+        - i.e. 如果 LD_PRELOAD 环境变量被设置为一个共享库路径名的列表，那么当你加载和执行一个程序，需要解析未定义的引用时，动态链接器会先搜索 LD_PRELOAD 库，然后才搜索任何其他的库。
+      - 从而，可以从外部指定一个函数将如何执行。也就是达到**运行时替换动态链接库，从而替换函数地址的作用**。
+      - **注意：**原运行时打桩的代码是错误的，因为 `printf` 也会用到 `malloc` 和 `free`，从而导致无限循环。我们需要使用 `static` 变量来记录递归次数。我们只在 `malloc` 递归深度为 1 的时候进行输出。
 
-  - 思路：使用本地的 `malloc.h`，在预处理阶段，替换 `main.c` 的头文件，从而达到**预处理期替换函数的作用**
-    - 使用 `-I.` flag
-    - 注意：`mymalloc.c` 不能加 `-I.` flag，从而 `mymalloc` 里的 `malloc/free` 不会被预处理成 `mymalloc/myfree`
+        ```c
+        void *malloc(size_t size)
+        {  
+            static int calltimes = 0;
+            calltimes++;
+            // ...
+            if (calltimes == 1)
+                printf(...)
+            calltimes--;
+            
+            return 0;
+        }
+        ```
 
-- on linking
-
-  - 思路：使用 linker 的独特机制，i.e. `--warp, func`，在 linking 时，将对 `func` 的引用解析成 `__warp_func`，对 `__real_func` 的引用解析成 `func`。从而达到**链接期强制替换（引用）符号的作用**。
-
-- at runtime
-
-  - 思路：使用 loader 的特殊机制，
-
-    - i.e. 如果 LD_PRELOAD 环境变量被设置为一个共享库路径名的列表，那么当你加载和执行一个程序，需要解析未定义的引用时，动态链接器会先搜索 LD_PRELOAD 库，然后才搜索任何其他的库。
-
-  - 从而，可以从外部指定一个函数将如何执行。也就是达到**运行时替换动态链接库，从而替换函数地址的作用**。
-
-  - **注意：**原运行时打桩的代码是错误的，因为 `printf` 也会用到 `malloc` 和 `free`，从而导致无限循环。我们需要使用 `static` 变量来记录递归次数。我们只在 `malloc` 递归深度为 1 的时候进行输出。
-
-    ```c
-    void *malloc(size_t size)
-    {  
-        static int calltimes = 0;
-        calltimes++;
-        // ...
-        if (calltimes == 1)
-            printf(...)
-        calltimes--;
+        `free` 同理。
         
-        return 0;
-    }
-    ```
+      - 流程：这里不赘述。不过说到底，并不是 runtime interpolation，而是 load time interpolation。
 
-    `free` 同理。
-
- 
