@@ -55,8 +55,8 @@ Why not just put all codes into one file?
 **Reason 2: Efficiency**
 
 - Time: Separate compilation
-  - Change one source file, compile, and then relink.
-  - **No need to recompile other source files.**
+    - Change one source file, compile, and then relink.
+    - **No need to recompile other source files.**
 - Space: Libraries
     - Common functions can be aggregated into a single file...
     - Yet executable files and running memory images contain only code for the functions they actually use.
@@ -70,8 +70,8 @@ Why not just put all codes into one file?
 ## Three Kinds of Object Files
 
 - Relocatable Object File (`.o` file)
-  - Contains code and data in a form that **can be combined with other relocatable object files** to form executable object file.
-      - Each `.o` file is produced from exactly one source (`.c`) file
+    - Contains code and data in a form that **can be combined with other relocatable object files** to form executable object file.
+        - Each `.o` file is produced from exactly one source (`.c`) file
 - Executable Object File (`.out` file)
     - Contains code and data in a form that **can be copied directly into memory** and then executed. 
 - Shared object file (`.so` file) 
@@ -89,52 +89,52 @@ The standard format for object file is "Executable and Linkable Format (ELF)".
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240125183020675.png" alt="image-20240125183020675" style="zoom: 50%;" />
 
 - Elf header:
-  - Word size, byte ordering, file type (.o, exec, .so), machine type, etc.
+    - Word size, byte ordering, file type (.o, exec, .so), machine type, etc.
 - Segment header table:
-  - Page size, virtual addresses, memory segments (sections), segment sizes.
+    - Page size, virtual addresses, memory segments (sections), segment sizes.
 - `.text` section (code indicator):
-  - **Code**
+    - **Code**
 - `.rodata` section:
-  - **Read-only data: jump tables, ...**
+    - **Read-only data: jump tables, ...**
 - `.data` section:
-  - **Initialized global variables**
+    - **Initialized global variables**
 - `.bss` section:
-  - **Uninitialized global variables**
-  - "Block Started by Symbol"
-  - "Beginner Save Space"
-  - Has section header but occupies no space
+    - **Uninitialized global variables**
+    - "Block Started by Symbol"
+    - "Beginner Save Space"
+    - Has section header but occupies no space
 - `.symtab` section:
-  - **Symbol table**
-  - ***Procedure* and *static* variable *names***
-  - Section names and locations
+    - **Symbol table**
+    - ***Procedure* and *static* variable *names***
+    - Section names and locations
 - `.rel.text` section:
-  - **Relocation info for `.text` section**
-    - i.e. Assembler, "*I don't know where these symbols are located in memory, so linker, please fix these for me.*"
-  - Addresses of instructions that will need to be modified in the executable
-  - Instructions for modifying
+    - **Relocation info for `.text` section**
+        - i.e. Assembler, "*I don't know where these symbols are located in memory, so linker, please fix these for me.*"
+    - Addresses of instructions that will need to be modified in the executable
+    - Instructions for modifying
 - `.rel.data` section:
-  - **Relocation info for `.data` section**
-    - similar to `.rel.text`
-- Addresses of pointer data that will need to be modified in the merged executable
+    - **Relocation info for `.data` section**
+        - similar to `.rel.text`
+    - Addresses of pointer data that will need to be modified in the merged executable
 - `.debug` section:
-  - Info for symbolic debugging (gcc -g)
+    - Info for symbolic debugging (gcc -g)
 - Section header table:
-  - Offsets and sizes of each section
+    - Offsets and sizes of each section
 
 ## Linking And Executing Procedure
 
 There are 3 kinds of linker symbols in total:
 
 - **Global symbols**
-  - Symbols defined by module *m* that can be referenced by other modules
-  - e.g. non-`static` C functions and non-`static` global variables
+    - Symbols defined by module *m* that can be referenced by other modules
+    - e.g. non-`static` C functions and non-`static` global variables
 - **External symbols**
-  - Global symbols that are **referenced** by module *m* but defined by some other module
+    - Global symbols that are **referenced** by module *m* but defined by some other module
 - **Local symbols**
-  - Symbols that are defined and referenced exclusively by module *m*
-  - E.g.:C functions and global variables defined with the `static` attribute
-  - Local linker symbols are *not* local program variables
-    - it's a way to define "private functions" and "private variables" in C
+    - Symbols that are defined and referenced exclusively by module *m*
+    - E.g.:C functions and global variables defined with the `static` attribute
+    - Local linker symbols are *not* local program variables
+        - it's a way to define "private functions" and "private variables" in C
 
 ### Step 1: Symbol Resolutions
 
@@ -192,10 +192,10 @@ where 0x400921fb4d12d84a is the double precision representation of 3.1415926.
 
 - Avoid using global variables
 - Otherwise
-  - use `static`
-  - Initialize if you define a global variable
-    - i.e. make it strong
-  - Use `extern` if you reference an external global variable
+    - use `static`
+    - Initialize if you define a global variable
+        - i.e. make it strong
+    - Use `extern` if you reference an external global variable
 
 ### Step 2: Relocation
 
@@ -240,7 +240,7 @@ As you can see, `14: R_X86_64_PC32	array-0x4` means
 
 - calculate the relative offset of *array* and *\*0x14*
 - decrease it by 0x4, since the PC is at 0x18
-  - i.e. `(array - 0x14) - 0x4 = array - 0x18`
+    - i.e. `(array - 0x14) - 0x4 = array - 0x18`
 
 - fill this 32-byte offset at 0x14 
 
@@ -263,12 +263,12 @@ How to package functions commonly used by programmers?
 Given the linker framework so far, it can be awkward:
 
 - Options 1: Put all functions into a single source file
-  - Programmers link big object file into their memory
-  - It's time and space inefficient
+    - Programmers link big object file into their memory
+    - It's time and space inefficient
 - Option 2: Put each function in a separate source file
-  - Programmers explicitly link appropriate binaries into their programs
-  - More efficient,but burdensome on the programmer
-    - i.e. ridiculous large command line to `gcc`
+    - Programmers explicitly link appropriate binaries into their programs
+    - More efficient,but burdensome on the programmer
+        - i.e. ridiculous large command line to `gcc`
 
 ### Old-Fashioned Way: Static Library
 
