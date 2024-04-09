@@ -20,6 +20,7 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
     - Guaranteed to reach?
 - If so, is there only one solution or only one fixed point? If more than one, is our solution the best one (most precise)?
     - How many fixed-points?
+    - How "precise" is our solution?
 - When will the algorithm reach the fixed point, or when can we get the solution?
     - Time complexity?
 
@@ -27,7 +28,7 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 
 ## Background: Upper and Lower Bounds
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010658220.png" alt="image-20240401065837486" style="zoom: 50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_59_23_202404091759255.png" alt="image-20240401065837486" style="zoom: 50%;" />
 
 ## Definition
 
@@ -38,15 +39,15 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 - if only $a \sqcup b$ exists, then $(P, \sqsubseteq)$ is called a **join** semilattice
 - if only $a \sqcap b$ exists, then $(P, \sqsubseteq)$ is called a **meet** semilattice
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010707961.png" alt="image-20240401070722049" style="zoom:50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_59_1_202404091759847.png" alt="image-20240401070722049" style="zoom:50%;" />
 
 - 注：由于程序是有限的，因此，我们的 lattice 就是 finite lattice，也就是 complete lattice。
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010711205.png" alt="image-20240401071147630" style="zoom:50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_56_202404091758866.png" alt="image-20240401071147630" style="zoom:50%;" />
 
 # Dataflow Analysis Framework via Lattice
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404012354829.png" alt="image-20240401235420991" style="zoom:67%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_51_202404091758964.png" alt="image-20240401235420991" style="zoom:67%;" />
 
 如上图（上图是一个 may analysis，采用 join operation）：
 
@@ -62,7 +63,7 @@ $$
 $$
 定理：
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404020118515.png" alt="image-20240402011819457" style="zoom:50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_47_202404091758112.png" alt="image-20240402011819457" style="zoom:50%;" />
 
 证明：
 
@@ -116,7 +117,7 @@ $$
 
 ### Answer to the third question
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404020201037.png" alt="image-20240402020117968" style="zoom: 50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_39_202404091758269.png" alt="image-20240402020117968" style="zoom: 50%;" />
 
 其中，
 
@@ -125,7 +126,7 @@ $$
 
 # Fixed-Point And Algorithm
 
-<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404020247579.png" alt="image-20240402024747058" style="zoom: 67%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_33_202404091758784.png" alt="image-20240402024747058" style="zoom: 67%;" />
 
 如上图所示，以 reaching definitions (may analysis) 为例
 
@@ -149,3 +150,131 @@ Available expression analysis (must analysis) 同理。
 不论是 join 还是 meet，都是往上走/往下走的过程中，**走最小的一步**。
 
 因此，通过“小步走”，我们可以避免走到过分 unprecise 的地方。
+
+# Precision
+
+## MOP: Meet Over All Paths
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_18_26_31_202404091826512.png" alt="image-20240409182628855" style="zoom:50%;" />
+
+假如我们根本不知道静态分析的 iterative approach，那么，一个直观的想法是：
+
+枚举**所有可能的路径**（可以有环），然后做一个 meet (must) / join (may)。
+
+但是：
+
+- 部分路径可能根本不会执行，从而这样的分析是 not fully precise 的（详见下面的代码）。
+- 所有可能的路径可能指数爆炸，甚至有无穷多，因此这样的分析是 impractical 的。
+    - 也就是说：这样的分析方式只存在于**概念**上，而不能用于实际
+
+```assembly
+li a5, 0
+bne a5, zero, if # Assume no statement would jump to this
+jal zero, else   # Assume no statement would jump to this 
+if:
+# ...
+else:
+# ...
+```
+
+## Compare To Iterative Approach
+
+对于这个简单的示例 (assuming it's may analysis) 而言：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_18_43_23_202404091843664.png" alt="image-20240409184320446" style="zoom:33%;" />
+
+- MOP: `IN[s4] = f_3(f_1(OUT[entry])) join f_3(f_2(OUT[entry]))`
+- Iterative: `IN[s4] = f_3(f_1(OUT[entry]) join f_2(OUT[entry]))`
+
+我们把 join 当作二元运算，那么这个 lattice 就是一个**交换群**。而 transfer function $f$​ 就是一个**群同态**。
+
+---
+
+**证明：**
+$$
+f(x) = (x - kill) + gen
+$$
+从而：
+$$
+\begin{aligned}
+f(x + y) &= ((x + y) - kill) + gen \\
+&= ((x - kill) + (y - kill)) + gen \\
+&= ((x - kill) + gen) + ((y - kill) + gen) \\
+&= f(x) + f(y)
+\end{aligned}
+$$
+上面讨论的是 join 的情况，对于 meet 同理。
+
+Q.E.D.
+
+## A counterexample: Constant Propagation
+
+Constant prop 是一个类 must analysis。但是，**使用 MOP 和 iterative method 不是等价的**。
+
+### Lattice and Meet Rules
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_20_57_45_202404092057690.png" alt="image-20240409205741923" style="zoom:50%;" />
+
+Constant propagation 的 lattice 如上图所示。
+
+其中 ，UNDEF 的意思就是：这个 variable 必然是常量（不论是什么路径），但是具体是什么，我们不知道，因为它没有被初始化。
+
+---
+
+meet 的运算是：
+
+- UNDEF &sqcap; u = u
+- u &sqcap; u = u
+- u &sqcap; v = NAC
+    - s.t. u &ne; v
+- NAC &sqcap; u = NAC
+
+其中，UNDEF &sqcap; u = u 可能会让人心生疑惑：假如一个变量在使用的时候确实没有被初始化，我们不就完了？
+
+我们这里给出解答：**constant propagation** 的设计里面，已经**假设**了变量使用之前一定已经被初始化了。至于检测是否初始化，那就是 **uninitialized variable detection** 需要做的事了。
+
+### Transfer Function
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_23_36_202404092123974.png" alt="image-20240409212334085" style="zoom:50%;" />
+
+一条语句就是一个 transfer function。如果语句不是赋值操作，那么 transfer function 就是 identity。
+
+### $F$ is non-homomorphic
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_30_0_202404092130537.png" alt="image-20240409212955584" style="zoom:67%;" />
+
+如上图，令 $f$ 为语句 `c = a + b` 的转移函数。
+
+则：
+$$
+\newcommand{nac}{\text{nac}}
+\newcommand{undef}{\text{undef}}
+\begin{aligned}
+f(X \sqcap Y) &= f((a=1, b=9, c=\undef) \sqcap (a=9, b=1, c=\undef)) \\
+&= f((a=\nac, b=\nac, c=\undef)) \\
+&= (a=\nac, b=\nac, c=\nac)
+\end{aligned}
+$$
+但是：
+$$
+\newcommand{nac}{\text{nac}}
+\newcommand{undef}{\text{undef}}
+\begin{aligned}
+f(X) \sqcap f(Y) &= f((a=1, b=9, c=\undef)) \sqcap f((a=9, b=1, c=\undef)) \\
+&= (a=1, b=9, c=10) \sqcap (a=9, b=1, c=10) \\
+&= (a=\nac, b=\nac, c=10)
+\end{aligned}
+$$
+因此，$F$ 并不是这个 lattice 上的同态。
+
+- 不过，还是可以证明：$f(X \sqcap Y) \sqsubseteq f(X) \sqcap f(Y)$​，也就是说，使用 iterative method 的分析方式，不会优于 meet over all paths 的分析方式。也就是说：iterative method 肯定不会比 MOP 更准。
+
+# Optimization: Worklist Algorithm
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_42_38_202404092142665.png" alt="image-20240409214235354" style="zoom:50%;" />
+
+如图，标黄的部分，就是 worklist algorithm 相对 na&iuml;ve iterative algorithm 的区别。
+
+优化的思想也很简单：如果上一轮和这一轮的值是不一样的，就把它的 successor 加入 worklist。
+
+- 换言之，假如一个 basic block 的所有 predecessor 在上一轮和本轮（或者上一轮和上上一轮）中是一样的，那么这个 basic block 的 out 在上一轮和本轮肯定也不会变——本轮不需要再计算了。
