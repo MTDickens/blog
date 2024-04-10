@@ -78,9 +78,11 @@ x & y & z & 1 \\\end{pmatrix}^\intercal$，令
   \end{pmatrix}$ 
 
 $v$ 到平面的**距离平方**就为
+
 $$
 \left(\frac{\left|ax_{\mathbf v} + by_{\mathbf v} + cz_{\mathbf v} + d\right|}{\sqrt{a^2 + b^2 + c^2}}\right)^2 = (\left|ax_{\mathbf v} + by_{\mathbf v} + cz_{\mathbf v} + d\right|)^2 = {\mathbf v}^\intercal {\mathbf p} {\mathbf p}^\intercal {\mathbf v} = {\mathbf v}^\intercal Q {\mathbf v}
 $$
+
 也就是一个二次型。
 
 ---
@@ -88,6 +90,7 @@ $$
 其次，我们希望将每个点 ${\mathbf v}$ 都赋予一个 $Q_{\mathbf v}$，该 $Q_{\mathbf v}$ 就是该点相邻所有平面的 $Q_{\mathbf p}$ 之和，即：$Q_{\mathbf v} = \sum_{\mathbf p \in \operatorname{plane}({\mathbf v})} Q_{\mathbf p}$。
 
 从而，合并一个点对 $({\mathbf v}_1,{\mathbf v}_2)$ 的时候，loss 就是：
+
 $$
 \begin{aligned}
 \text{loss}_{\bar{\mathbf v}} &= \bar {\mathbf v}^\intercal Q_\bar {\mathbf v} \bar {\mathbf v}\\ 
@@ -96,6 +99,7 @@ $$
 &= \bar {\mathbf v}^\intercal Q_{\bar{\mathbf v}} \bar {\mathbf v}
 \end{aligned}
 $$
+
 利用最优化，我们找到这样的 $\bar {\mathbf v}^* = \arg \min \text{loss}_{\bar {\mathbf v}} $，并令 $({\mathbf v}_1,{\mathbf v}_2)$ 的 loss 为 $\text{loss}_{\bar{\mathbf v}}$。
 
 当然，这个最优化也很简单，利用简单的求偏导：
@@ -113,6 +117,7 @@ q_{31} & q_{32} & q_{33} & q_{34} \\
 0 \\ 0 \\ 0 \\ 1
 \end{bmatrix}
 $$
+
 一般而言，矩阵是可逆的。如果矩阵不可逆，那么就再加一个约束：$\bar{\mathbf v} = \operatorname{span}(\mathbf v_1 , \mathbf v_2)$。
 
 如果仍然多解，那就分别计算两点以及中点，三者取其小。
