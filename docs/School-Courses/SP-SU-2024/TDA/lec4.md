@@ -292,6 +292,8 @@ $$
 
 # 上同调与对偶
 
+## 上同调
+
 上同调就是同调的对偶，上同调的映射就是同调映射的对偶映射。
 
 - 上链群：$C^k(K) := C_k(K)^\ast$，也就是说，上链群就是链群的对偶空间
@@ -316,7 +318,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_6_31_45_202404050631140.png" style="zoom: 67%; border: 3px solid; padding: 10px" />
 
-## 例子
+### 例子
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_7_34_21_202404050734608.png" alt="image-20240405073419747" style="zoom: 50%;" />
 
@@ -328,7 +330,34 @@ $$
     - 直观而言：就是图中的黑色边，都是蓝色区域和红色区域的跨边
 - 另外，直观而言：由于所有三角面片经过两次 $\partial$ 之后，都会变成 2 &times; (3 个顶点) &equiv; 0 &times; (3 个顶点) &equiv; 0，因此，$\delta^{k}\circ\delta^{k-1} \equiv 0$，也就是说，必然有 $B_k \subseteq Z_k$。
 
-## 上边缘矩阵
+### 上边缘矩阵
 
 由于上边缘算子是边缘算子的对偶映射，自然，上边缘矩阵就是边缘矩阵的 Hermitian 转置：$M(\delta^k) := M(\partial_{k+1})$。
+
+![image-20240410212630627](C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240410212630627.png)
+
+另外，不难发现，同调群和上同调群是同构的。
+
+- 毕竟 $\rank H^i = \rank Z^k - \rank B^k = (\rank C_p - \rank B_k) - (\rank C_p - \rank Z_k) = \rank Z_k - \rank B_k = rank H_i$
+
+## 对偶块
+
+### 重心细分
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_21_44_55_202404102144543.png" style="zoom:80%;" />
+
+具体解释：  
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_21_53_41_202404102153729.png" style="zoom: 67%;" />
+
+### 对偶块的建立
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_22_11_38_202404102211321.png" style="zoom:80%;" />
+
+简单来说，就是：
+
+1. 对于目标单形 $\sigma \in K$，我们先找出其重心
+2. 然后找出在 $\operatorname*{Sd} K$ 中所有与它的重心相连的单形
+3. 对于每一个与它的重心相连的单形，我们取出这个单形的所有顶点
+4. 对于这个单形的每个顶点，它必须是由一个**维数不小于 $\dim \sigma$ 的 K 中的单形所生成**
 
