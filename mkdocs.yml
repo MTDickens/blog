@@ -112,6 +112,7 @@ nav:
               - 2. Applications: "School-Courses/SP-SU-2024/TDA/lec2.md"
               - 3. Graph, Curve and Complex: "School-Courses/SP-SU-2024/TDA/lec3.md"
               - 4. Algebraic Topology: "School-Courses/SP-SU-2024/TDA/lec4.md"
+              - 5. Persistent Homology: "School-Courses/SP-SU-2024/TDA/lec5.md"
           - 数据库系统:
               - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
               - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
