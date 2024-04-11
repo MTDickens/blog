@@ -139,6 +139,7 @@ $$
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_17_30_27_202404101730418.png)
 
 牛顿多项式计算结果如下：
+
 $$
 N(x)=[y_{0}]+[y_{0},y_{1}](x-x_{0})+\cdots +[y_{0},\ldots ,y_{k}](x-x_{0})(x-x_{1})\cdots (x-x_{k-1})
 $$
