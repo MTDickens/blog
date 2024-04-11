@@ -114,11 +114,11 @@ nav:
               - 4. Algebraic Topology: "School-Courses/SP-SU-2024/TDA/lec4.md"
               - 5. Persistent Homology: "School-Courses/SP-SU-2024/TDA/lec5.md"
           - 数据库系统:
-              - 1. Introduction: "School-Courses/SP-SU-2024/dbms/1-introduction.md"
-              - 2. SQL Basics: "School-Courses/SP-SU-2024/dbms/2-sql-basics.md"
-              - 3. SQL Syntax: "School-Courses/SP-SU-2024/dbms/3-sql-syntax.md"
-              - 4. Advanced SQL: "School-Courses/SP-SU-2024/dbms/4-advanced-sql.md"
-              - 5. Database Design: "School-Courses/SP-SU-2024/dbms/5-database-design.md"
+              - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
+              - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
+              - 3. SQL Syntax: "School-Courses/SP-SU-2024/DBMS/3-SQL-Syntax.md"
+              - 4. Advanced SQL: "School-Courses/SP-SU-2024/DBMS/4-Advanced-SQL.md"
+              - 5. Database Design: "School-Courses/SP-SU-2024/DBMS/5-Database-Design.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
