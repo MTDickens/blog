@@ -3,20 +3,20 @@
 ## ToC
 
 - **Database Systems:**
-  - Database system concepts
-  - Database Applications
-  - Purpose of Database Systems
+    -  Database system concepts
+    -  Database Applications
+    -  Purpose of Database Systems
 
 - **Data Modeling:**
-  - Data Models
-  - Data abstraction
-  - Database Design
+    -  Data Models
+    -  Data abstraction
+    -  Database Design
 
 - **Database Languages**
 - **DBMS System Structure:**
-  - Storage manager
-  - Query processing
-  - Transaction manager
+    -  Storage manager
+    -  Query processing
+    -  Transaction manager
 
 - **Database and Application Architectures**
 - **Database Users**
@@ -25,21 +25,21 @@
 ## Database system concepts
 
 - **数据库系统**：包含关于特定组织的信息
-  - *数据*：一组相互关联的数据。例如，一个公司的员工信息数据库。
-  - *程序*：用于访问数据的一套程序。比如，一个用于查询员工工资信息的程序。
-  - *环境*：一个方便且高效的使用环境。比如，一个可以轻松查询和更新数据的用户界面。
+    -  *数据*：一组相互关联的数据。例如，一个公司的员工信息数据库。
+    -  *程序*：用于访问数据的一套程序。比如，一个用于查询员工工资信息的程序。
+    -  *环境*：一个方便且高效的使用环境。比如，一个可以轻松查询和更新数据的用户界面。
 
 - **数据库**
-  - 一组相互关联的数据（关于特定原因）。例如，一家医院的病人病历数据库。
-  - **极具价值**。例如，一个银行的客户交易记录数据库。
-  - **相对较大** -- 需要良好的组织。例如，一个电商平台的产品信息数据库。
-  - **同时被多个用户和应用程序访问**。例如，一个在线社交网络的用户信息数据库。
-  - **信息的安全性**，即使系统崩溃或未经授权的访问也能得到保障。例如，一个政府机构的公民个人资料数据库。
+    -  一组相互关联的数据（关于特定原因）。例如，一家医院的病人病历数据库。
+    -  **极具价值**。例如，一个银行的客户交易记录数据库。
+    -  **相对较大** -- 需要良好的组织。例如，一个电商平台的产品信息数据库。
+    -  **同时被多个用户和应用程序访问**。例如，一个在线社交网络的用户信息数据库。
+    -  **信息的安全性**，即使系统崩溃或未经授权的访问也能得到保障。例如，一个政府机构的公民个人资料数据库。
 
 - **DBMS（数据库管理系统）**：
-  - **一种软件**：一套用于访问数据的程序。例如，一个用于管理学生课程成绩的学校管理系统。
-  - 能够管理数据库。
-  - 提供了一个既方便又高效的使用环境。例如，一个用于管理图书馆藏书的图书馆管理软件。
+    -  **一种软件**：一套用于访问数据的程序。例如，一个用于管理学生课程成绩的学校管理系统。
+    -  能够管理数据库。
+    -  提供了一个既方便又高效的使用环境。例如，一个用于管理图书馆藏书的图书馆管理软件。
 
 ## Database Applications
 
@@ -52,15 +52,15 @@
 
 - **Data consists of information about**:
 
-  - Students
-  - Instructors
-  - Classes
+    -  Students
+    -  Instructors
+    -  Classes
 
 - **Application program examples**:
 
-  - Add new students, instructors, and courses
-  - Register students for courses, and generate class rosters
-  - Assign grades to students, compute grade point averages (GPA), and generate transcripts
+    -  Add new students, instructors, and courses
+    -  Register students for courses, and generate class rosters
+    -  Assign grades to students, compute grade point averages (GPA), and generate transcripts
 
 ## View of Data
 
@@ -76,15 +76,15 @@
 
 ```
 Students Table:
-| StudentID | Name     | Age | Major    |
-|-----------|----------|-----|----------|
-| 001       | Alice    | 20  | Biology  |
-| 002       | Bob      | 22  | Physics  |
-| 003       | Charlie  | 21  | History  |
+| StudentID | Name    | Age | Major   |
+| --------- | ------- | --- | ------- |
+| 001       | Alice   | 20  | Biology |
+| 002       | Bob     | 22  | Physics |
+| 003       | Charlie | 21  | History |
 
 Courses Table:
 | CourseID | CourseName | Instructor  |
-|----------|------------|-------------|
+| -------- | ---------- | ----------- |
 | 101      | Biology    | Dr. Smith   |
 | 102      | Physics    | Dr. Johnson |
 | 103      | History    | Prof. Lee   |
@@ -180,26 +180,26 @@ Courses Table:
 趋势：
 
 - 关系模型
-  - 应用最广的模型
-  - 我们这一节课要实现的模型
+    -  应用最广的模型
+    -  我们这一节课要实现的模型
 - OO 模型
 - OR 模型
-  - 两个对象模型可能是今后的方向
+    -  两个对象模型可能是今后的方向
 - ER 模型
-  - 非常重要的模型
+    -  非常重要的模型
 
 ### Data Abstraction
 
 我们采用 schema and instance model
 
 - Logical Schema
-  - The logical structure of the database
-  - Analogous to the **type** of a variable
+    -  The logical structure of the database
+    -  Analogous to the **type** of a variable
 - Physical Schema
-  - The overall physical structure of the database
+    -  The overall physical structure of the database
 - Instance
-  - The actual content of the DB at a particular point of time
-  - Analogous to the **value** of a variable
+    -  The actual content of the DB at a particular point of time
+    -  Analogous to the **value** of a variable
 
 ## Programming Language
 
@@ -207,22 +207,22 @@ Courses Table:
 
 - DDL compiler 会生成一个 data dictionary
 - Data dictionary contains metadata
-  - database schema
-    - 列名+数据类型
-  - integrity constraints
-    - 主键：uniqueness
-    - 外键：referential integrity
+    -  database schema
+        -  列名+数据类型
+    -  integrity constraints
+        -  主键：uniqueness
+        -  外键：referential integrity
       - i.e. 保证***课程安排***的**课程号**、**教师号**永远会出现在***课程***的**课程号**和***教师***的**教师号**当中
         - 因此，如果不在其中，那么插入错误
         - 如果***课程安排***仍有 entry 的**课程号**在***课程***的***课程号***里，那么就不能删除***课程***的**课程号**对应的 entry
-    - 其他约束：如非空等等
-  - authorization
-    - 这里没有给出，不过不难理解
+        -  其他约束：如非空等等
+    -  authorization
+        -  这里没有给出，不过不难理解
 
 ### DML (Data Manipulation Language)
 
 - Language for accessing and manipulating the data organized by the appropriate data model
-  - DML also known as query language
+    -  DML also known as query language
 - SQL is the most widely used query language
 
 ### 数据库设计示例：大学课程管理系统
@@ -232,17 +232,17 @@ Courses Table:
 代码段
 
 ```
-| 表名 | 列名 | 数据类型 | 主键 | 外键 | 约束 |
-|---|---|---|---|---|---|
-| 课程 | 课程号 | 字符(10) | 是 | | 非空 |
-| 课程 | 课程名 | 字符(50) | | | 非空 |
-| 课程 | 学分 | 整数 | | | 非空 |
-| 教师 | 教师号 | 字符(10) | 是 | | 非空 |
-| 教师 | 教师名 | 字符(50) | | | 非空 |
-| 教师 | 所属系 | 字符(10) | | | 非空 |
-| 课程安排 | 课程号 | 字符(10) | | 课程.课程号 | 非空 |
-| 课程安排 | 教师号 | 字符(10) | | 教师.教师号 | 非空 |
-| 课程安排 | 学期 | 字符(10) | | | 非空 |
+| 表名     | 列名   | 数据类型 | 主键 | 外键        | 约束 |
+| -------- | ------ | -------- | ---- | ----------- | ---- |
+| 课程     | 课程号 | 字符(10) | 是   |             | 非空 |
+| 课程     | 课程名 | 字符(50) |      |             | 非空 |
+| 课程     | 学分   | 整数     |      |             | 非空 |
+| 教师     | 教师号 | 字符(10) | 是   |             | 非空 |
+| 教师     | 教师名 | 字符(50) |      |             | 非空 |
+| 教师     | 所属系 | 字符(10) |      |             | 非空 |
+| 课程安排 | 课程号 | 字符(10) |      | 课程.课程号 | 非空 |
+| 课程安排 | 教师号 | 字符(10) |      | 教师.教师号 | 非空 |
+| 课程安排 | 学期   | 字符(10) |      |             | 非空 |
 ```
 
 **SQL 代码**
@@ -330,11 +330,11 @@ The storage manager is responsible for
 
 - 原子性
 - 一致性**（注意不是 DDL 的一致性）**
-  - 事务执行前后，数据库的状态都必须满足一定的约束条件，保证数据的逻辑完整性
-    - e.g. A 向 B 转 100 元，那么，A 如果转出成功，那么 B 必须转入成功
+    -  事务执行前后，数据库的状态都必须满足一定的约束条件，保证数据的逻辑完整性
+        -  e.g. A 向 B 转 100 元，那么，A 如果转出成功，那么 B 必须转入成功
 - 隔离性
-  - 不干扰其他 txs 的执行
+    -  不干扰其他 txs 的执行
 - 持久性（Durability）
-  - 一旦事务提交，其对数据库所做的更改将永久保存，即使系统发生故障也不会丢失
+    -  一旦事务提交，其对数据库所做的更改将永久保存，即使系统发生故障也不会丢失
 
 ## Database Users

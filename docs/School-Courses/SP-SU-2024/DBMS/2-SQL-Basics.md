@@ -16,23 +16,23 @@ Thus, a relation is **a set of** n-tuples $(a_1,a_2,\dots,a_n)$ where each $a_i 
 ## Relation Schema & Instance
 
 - $A_1, A_2, \dots, A_n$ are **attributes**
-  - e.g. `ID, name, dept_name, salary`
-  - It has both **name** and **domain** of its values
+    -  e.g. `ID, name, dept_name, salary`
+    -  It has both **name** and **domain** of its values
 - $R = (A_1, A_2, \dots, A_n)$ is a **relation schema**
-  - e.g. `instructor = (ID, name, dept_name, salary)`
-  - **NOTE:** Relation is **unordered** tuple
+    -  e.g. `instructor = (ID, name, dept_name, salary)`
+    -  **NOTE:** Relation is **unordered** tuple
 - A relation instance r defined over schema R is denoted by r(R).
-  - Analogy: if **schema** is **type**, **instance** is **value**
-  - e.g. <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403071426551.png" alt="image-20240307142609901" style="zoom:33%;" />
+    -  Analogy: if **schema** is **type**, **instance** is **value**
+    -  e.g. <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403071426551.png" alt="image-20240307142609901" style="zoom:33%;" />
 
 ### Attributes
 
 - The set of allowed values for each attribute is called the **domain** of the attribute
 - Attribute values are (normally) required to be **atomic**; that is, indivisible
-  - Analogy: **atomic value** is like **basic data types**
+    -  Analogy: **atomic value** is like **basic data types**
 - The special value **null** is a member of every domain
-  - used to represent that this value hasn't been initialized
-  - The null value causes complications in the definition of many operations
+    -  used to represent that this value hasn't been initialized
+    -  The null value causes complications in the definition of many operations
 
 ### Key
 
@@ -65,29 +65,29 @@ Key is a **subset of $R$**.
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403071505785.png" alt="image-20240307150509159" style="zoom:50%;" />
 
 - 其中，单箭头就是外键，双箭头就是参照完整性约束，下划线就是该 schema 的主键
-  - 对于主键，我们的目的是保证唯一
-  - 对于外键/参照完整性约束，我们的目的就是保证输入内容合法
+    -  对于主键，我们的目的是保证唯一
+    -  对于外键/参照完整性约束，我们的目的就是保证输入内容合法
 
 ## RQL (Relational Query Languages)
 
 常见的有：
 
 - $\cup, -$: Union, Difference
-  - The arity of the attributes of the two sets $R_1, R_2$ must be the same
-  - And the types of each corresponding attribute pair must be compatible
-    - i.e. of the same type
-  - **NOTE:** Set intersection can be defined by set difference, i.e. $r \cap s := r - (r - s) := s - (s - r)$
+    -  The arity of the attributes of the two sets $R_1, R_2$ must be the same
+    -  And the types of each corresponding attribute pair must be compatible
+        -  i.e. of the same type
+    -  **NOTE:** Set intersection can be defined by set difference, i.e. $r \cap s := r - (r - s) := s - (s - r)$
 - $\times$: Cartesian Product
 - $\newcommand{Proj}{\Pi}\Proj$: Projection
-  - $\Pi_{a_1, \dots, a_n}(R)$, where $a_1, \dots, a_n$ are attributes
-  - To restrict all tuples in $R$ to the set $\{a_1, \dots, a_n\}$
-    - **NOTE:** Some DMBS's are actually *multi-set*, so you have to use `DISTINCT` keyword to make the result distinct, since making the DMBS distinct is time-consuming.
+    -  $\Pi_{a_1, \dots, a_n}(R)$, where $a_1, \dots, a_n$ are attributes
+    -  To restrict all tuples in $R$ to the set $\{a_1, \dots, a_n\}$
+        -  **NOTE:** Some DMBS's are actually *multi-set*, so you have to use `DISTINCT` keyword to make the result distinct, since making the DMBS distinct is time-consuming.
 - $\newcommand{Select}{\sigma}\Select$: Selection
-  - $\sigma_{\varphi}(R)$, where $\varphi$ is proposition formula
-  - To select only those tuples satisfying $\varphi$
+    -  $\sigma_{\varphi}(R)$, where $\varphi$ is proposition formula
+    -  To select only those tuples satisfying $\varphi$
 - $\rho$: Rename
-  - $\phi_{a/b}(R)$
-  - To rename $b$ attributes in all tuples to $a$ attributes
+    -  $\phi_{a/b}(R)$
+    -  To rename $b$ attributes in all tuples to $a$ attributes
 
 ### Example
 
@@ -123,23 +123,23 @@ Set intersection, joins and join-like ops are like **the aliases of some complex
 
 - $\cap$: Set intersection
 - $\bowtie$: Natural join (or inner join)
-  - $r \bowtie s = \Proj_{(r+s-common)}(\Select_{s.commom = r.common}(r \times s))$
+    -  $r \bowtie s = \Proj_{(r+s-common)}(\Select_{s.commom = r.common}(r \times s))$
 - $⟖, ⟕, ⟗$: Outer join
-  - $r ⟕ s := (r \bowtie s) \cup ((r - \Proj_R(r \bowtie s)) \times \{(\op{null}, \dots,  \op{null})\})$
-  - $r ⟖ s := (r \bowtie s) \cup (\{(\op{null}, \dots,  \op{null})\} \times (s - \Proj_S(r \bowtie s)))$
-  - $r ⟗ s := (r \bowtie s) \cup ((r - \Proj_R(r \bowtie s)) \times \{(\op{null}, \dots,  \op{null})\}) \cup (\{(\op{null}, \dots,  \op{null})\} \times (s - \Proj_S(r \bowtie s)))$
+    -  $r ⟕ s := (r \bowtie s) \cup ((r - \Proj_R(r \bowtie s)) \times \{(\op{null}, \dots,  \op{null})\})$
+    -  $r ⟖ s := (r \bowtie s) \cup (\{(\op{null}, \dots,  \op{null})\} \times (s - \Proj_S(r \bowtie s)))$
+    -  $r ⟗ s := (r \bowtie s) \cup ((r - \Proj_R(r \bowtie s)) \times \{(\op{null}, \dots,  \op{null})\}) \cup (\{(\op{null}, \dots,  \op{null})\} \times (s - \Proj_S(r \bowtie s)))$
 - $\bowtie_\theta$: Natural join with condition
-  - $r \bowtie_\theta s := \Select_\theta(r \bowtie s)$
+    -  $r \bowtie_\theta s := \Select_\theta(r \bowtie s)$
 - $\ltimes_{\theta}$: Semijoin
-  - $r \rtimes_\theta := \Proj_R(r \bowtie_\theta s)$
-  - $r \ltimes_\theta := \Proj_S(r \bowtie_\theta s)$
-  - **NOTE:** Semijoin is NOT among the seven circumstances shown in the image above. 
+    -  $r \rtimes_\theta := \Proj_R(r \bowtie_\theta s)$
+    -  $r \ltimes_\theta := \Proj_S(r \bowtie_\theta s)$
+    -  **NOTE:** Semijoin is NOT among the seven circumstances shown in the image above. 
 - $\leftarrow$: Assignment
 - $r \div s$: Division 
 
-  - Given relations $r(R)$ and $s(S)$, s.t. $S \subsetneq R$, $r\div s$ is the **largest relation** $t(R - S)$ s.t. $t \times s \subseteq r$
+    -  Given relations $r(R)$ and $s(S)$, s.t. $S \subsetneq R$, $r\div s$ is the **largest relation** $t(R - S)$ s.t. $t \times s \subseteq r$
 
-  - $$
+    -  $$
     \begin{aligned}
     temp1 &\leftarrow \Proj_{R-S}(r), \text{ i.e. all the R-S of (r, s)}\\
     temp2 &\leftarrow \Proj_{R-S}(temp1 \times s - \Proj_{R-S, S}(r)), \\
@@ -148,7 +148,7 @@ Set intersection, joins and join-like ops are like **the aliases of some complex
     \end{aligned}
     $$
 
-  - Example: <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403071833411.png" alt="image-20240307183304964" style="zoom:50%;" />
+    -  Example: <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403071833411.png" alt="image-20240307183304964" style="zoom:50%;" />
 
 
 #### Example
