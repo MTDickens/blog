@@ -83,8 +83,10 @@ you can often use some kind of attention mechanism to cause the model to focus o
 
 - 这里使用 scaled dot product 当作 $f_{att}$
     - 为何需要 scale？因为 softmax 并不是 linear 的。$20, 40$ 之间差了 $e^{20}$，而 $2, 4$ 之间只差了 $e^2$
-    - 另外，我们也避免使用神经网络这样复杂的结构来作为 $f_{att}$​，简化了运算
--  最终结果是：$ans = X^t \operatorname*{softmax}(Xq/\sqrt{D_Q})$​
+    - 另外，我们也避免使用神经网络这样复杂的结构来作为 $f_{att}$​​，简化了运算
+    - 具体 scale 的原因，可以认为，这样能够让 $\operatorname*{Var}(e_i - e_j)$​ 在维数增加的时候，保持不变
+        - 详见：[StackOverflow](https://ai.stackexchange.com/questions/21237/why-does-this-multiplication-of-q-and-k-have-a-variance-of-d-k-in-scaled)
+- 最终结果是：$ans = X^t \operatorname*{softmax}(Xq/\sqrt{D_Q})$​
     - 其中，最后一行的 "(Shape: D<sub>x</sub>)" 就是 D<sub>Q</sub>
 
 
@@ -105,3 +107,29 @@ $$
     - 然后，再 softmax，形状不变，称为 matrix of weights
     - 最后，与 $X^t$ 相乘，就是 3&times;9 的 matrix of weighted picture
 - 可以发现，matrix of queries 和 matrix of weighted pictures 的形状一样
+
+## Third Generalization
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_28_15_202404120328608.png" alt="image-20240412032812074" style="zoom: 50%;" />
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_28_55_202404120328865.png" alt="image-20240412032854499" style="zoom:33%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_28_48_202404120328218.png" alt="image-20240412032844210" style="zoom:33%;" />
+
+如上所示，相比 second generalization，我们**增加了 K 和 V**，而不是让 X 直接与 E、A 接触。
+
+- i.e. 去掉上图中的 V 和 K，就是 second generalization；加上 V 和 K，就是 third generalization。
+
+## Variation: Self-Attention Layer
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_33_3_202404120333601.png" alt="image-20240412033300656" style="zoom:50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_33_24_202404120333400.png" alt="image-20240412033320657" style="zoom: 50%;" />
+
+如上图所示，self-attention 不过不使用 query vector，而是把 input vector 经过 query matrix 当作 query vector。
+
+不过，self-attention layer 有这样的性质：给定任意的 permutation matrix $P$，都有 $\operatorname*{self-attention}(PX) = P \cdot \operatorname*{self-attention}(X)$。也就是说，self-attention layer **不考虑顺序**。
+
+- 从而，如果你希望让它考虑顺序，就要人为  encode 进去。
+
+## Variation: Masked Self-Attention Layer
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_48_45_202404120348701.png" alt="image-20240412034842500" style="zoom: 50%;" />
+
+如图，为了防止之前的预测使用之后的预测结果（关键是我们根本不知道），我们需要人为加上 mask。
