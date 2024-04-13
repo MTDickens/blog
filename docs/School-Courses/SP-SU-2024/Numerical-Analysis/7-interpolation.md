@@ -82,6 +82,7 @@ $$
 ## Lift the Degree of a Polynomial
 
 我们可以发现，令多项式 $p_{\text{some indices}}$ 经过的点的 index 即为其下标，且阶数为 $\#\text{ of indices} - 1$。那么，如果已知两个 $n$ 阶多项式 $p_{1,2,\dots,i-1,i+1,\dots,n}, p_{1,2,\dots,j-1,j+1,\dots,n}$，我们就可以凑出：
+
 $$
 p_{1, 2, \dots, n} = \frac {(x-x_i) p_{1,2,\dots,i-1,i+1,\dots,n} - (x-x_j) p_{1,2,\dots,j-1,j+1,\dots,n}} {x_j - x_i}
 $$
@@ -94,7 +95,7 @@ $$
 
 如图，上图中的 $p_{(m, n)} := p_{m, m+1, \dots, n-1, n}$。因此，我们有递推关系：
 $$
-p_{m, n} = \frac{(x-x_m) p_{m, n-1} - (x - x_n)p_{m+1,n}} {x_n - x_m}
+p_{m, n} = \frac{(x-x_m) p_{m+1, n} - (x - x_n)p_{m,n-1}} {x_n - x_m}
 $$
 因此，一开始，我们只需要把最下面的 $p_{m}(x) := f(x_m)$ 算出来（这里没有显示），就可以层层递推上去了。
 
