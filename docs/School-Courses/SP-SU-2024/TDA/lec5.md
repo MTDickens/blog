@@ -123,6 +123,7 @@ $$
 2. $\beta^{i,j}_p$ 为 i 时刻到 j 时刻都存在的线性无关同调生成元的数目。
 
 从而，我们可以得到 $\beta$ 和 $\mu$ 的关系：
+
 $$
 \begin{aligned}
 \mu_p^{i,j} &= \text{在 i 时刻存在，在 j 时刻消失} - \text{在 (i-1) 时刻存在，在 j 时刻消失} \newline
@@ -130,7 +131,9 @@ $$
 &= (\beta^{i,j-1}_p - \beta^{i,j}_p) - (\beta^{i-1,j-1}_p - \beta^{i-1,j}_p)
 \end{aligned}
 $$
+
 **持续同调基本定理：**
+
 $$
 \beta_p^{k,l} = \sum_{i \leq k} \sum_{j \geq l} \mu_p^{i,j}
 $$
@@ -150,7 +153,7 @@ $$
 
 那么，$U_i$ 和 $V_i$ 的 persistent diagram (持续图) 就是相同的。
 
-<iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMTAsWzAsMCwiVl8wIl0sWzEsMCwiVl8xIl0sWzIsMCwiXFxjZG90cyJdLFszLDAsIlZfe24tMX0iXSxbNCwwLCJWX24iXSxbMCwxLCJVXzAiXSxbMSwxLCJVXzEiXSxbMiwxLCJcXGNkb3RzIl0sWzMsMSwiVV97bi0xfSJdLFs0LDEsIlVfbiJdLFswLDFdLFs1LDBdLFs2LDFdLFsxLDJdLFs1LDZdLFs2LDddLFsyLDNdLFszLDRdLFs4LDldLFs3LDhdLFs4LDNdLFs5LDRdXQ==&embed" width="500" height="230" style="border-radius: 8px; border: none;"></iframe>
+<iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMTAsWzAsMCwiVl8wIl0sWzEsMCwiVl8xIl0sWzIsMCwiXFxjZG90cyJdLFszLDAsIlZfe24tMX0iXSxbNCwwLCJWX24iXSxbMCwxLCJVXzAiXSxbMSwxLCJVXzEiXSxbMiwxLCJcXGNkb3RzIl0sWzMsMSwiVV97bi0xfSJdLFs0LDEsIlVfbiJdLFswLDFdLFs1LDBdLFs2LDFdLFsxLDJdLFs1LDZdLFs2LDddLFsyLDNdLFszLDRdLFs4LDldLFs3LDhdLFs4LDNdLFs5LDRdXQ==&embed" width="375" height="200" style="border-radius: 8px; border: none;"></iframe>
 
 - 具体来说：我们可以认为，$V_i$ 和 $U_i$ 就是一组 filtration（之间由嵌入映射连接）。如果两者之间存在同构，那么在 PD 图层面就是等价的。
 
@@ -158,7 +161,7 @@ $$
 
 对于一个标量场，我们就不能简单使用复形了，而是要使用上下水平集。
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240414181837611.png" alt="image-20240414181837611" style="zoom:50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/15_0_5_52_202404150005343.png" alt="image-20240414181837611" style="zoom: 33%;" />
 $$
 f(x)=1+0.0416667x-1.3125 x^{2}-0.0416667 x^{3}+0.3125 x^{4}
 $$

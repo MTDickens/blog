@@ -267,7 +267,7 @@ Helly Theorem：如果 $F$ 是有限个 $\mathbb R^n$ 中的闭凸集的集合�
 
 ### Voronoi Diagram
 
-### <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310440972.png" alt="image-20240331044007632" style="zoom:50%;" /> 
+<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310440972.png" alt="image-20240331044007632" style="zoom:50%;" /> 
 
 如图，实际上，每一次 k\-means （硬）聚类的时候，就会出现这种情况。
 
