@@ -42,6 +42,7 @@ nav:
               - SymPy 使用指南: "Technology/Python/sympy-guide.md"
           - Rust:
               - Lec Note 1: "Technology/Rust/lec-note-1.md"
+              - Lec Note 2: "Technology/Rust/lec-note-2.md"
       - 软件:
           - VS Code:
               - ssh:
