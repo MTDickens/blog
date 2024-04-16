@@ -49,7 +49,14 @@
 **定义：** 如果 a decomposition of $R$ to $R_1, R_2$ 是一个 lossless join，那么至少要满足下面二者之一
 
 - $R_1 \cap R_2 \to R_1$
-- $R_1 \cap R_2 \to R_2$
+- $R_1 \cap R_2 \to R_2$​
+
+不难发现，如果 $R_1, R_2$​ 满足了 decomposition that is a lossless join，那么必然满足 lossless decomposition。
+
+- 也就是说：lossless join 是更强的条件
+- 而且是严格更强。
+    - 因为假设一个系有固定两栋大楼，那么就不是 lossless join（i.e. `dept` 不再是主键）
+    - 但是仍然是 lossless decomposition（i.e. 满足 $\Pi_{R_1}(r) \bowtie \Pi_{R_2}(r) = r$）
 
 ---
 
@@ -161,3 +168,129 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 - $R - (\beta - \alpha)$
 
 由于 $R_1 \cap R_2 = (\alpha \cup \beta) \cap (\bar\beta \cup \alpha) = \alpha$，因此自然有：$R_1 \cap R_2 \to R_1$。满足 lossless join。
+
+### Example
+
+对于下面的依赖图：
+
+<iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsNCxbMCwwLCJBIl0sWzEsMCwiQiJdLFsyLDAsIkMiXSxbMiwxLCJEIl0sWzAsMV0sWzEsMl0sWzEsM11d&embed" width="375" height="200" style="border-radius: 8px; border: none;"></iframe>
+
+**步骤 1：** 找出 super keys
+
+不难发现，任何包含 A 的属性集都是 super key，反之则都不是。
+
+**步骤 2：** 找出 initial object 不是 superkey 的 initial object
+
+我们发现 $B \to CD$ 的 $B$ 不是 superkey。
+
+**步骤 3：** 分解
+
+令 $R_1 = BCD, R_2 = ABCD - (CD - B) = AB$。
+
+**步骤 4：** 检查
+
+由于 $R_1$ 和 $R_2$ 都是 BCNF，因此不必再递归下去。结束。
+
+- 同时可以发现，$R_1$ 和 $R_2$ 之间是 lossless join，因为 $R_1 \cap R_2 = B$，而 $B$ 正是 $R_1$ 的 superkey。
+
+# Even stricter: Dependency Preservation
+
+令 $F_i \overset{\text{def}}= F_{R_i}^+$，如果一个 decomposition 是 dependency preserving，那么就必须满足：
+$$
+(\bigcup_{i=1}^n F_i)^+ = F^+
+$$
+
+- 实际上，如果令 $F_i \overset{\text{def}}= \text{any F, s.t.} F^+ = F_{R_i}^+$，其实也可以。
+    - 毕竟 $(\bigcup_{i=1}^n \text{any F})^+ = (\bigcup_{i=1}^n \text{any F}^+)^+ = (\bigcup_{i=1}^n F_{R_i}^+)^+ = F^+$​
+    - 也就是说：检查的时候，使用 Canonical Cover 即可。
+
+## 意义
+
+我们发现，
+
+- 如果满足 dependency preservation 的，就可以通过函数映射+公理，来还原出 $F$​ 的函数映射。
+    - 对应 SQL 操作，就是通过任意一个属性集查询任意其闭包内的元素，其难度不会高于属性集本身的大小
+- 如果不满足 dependency preservation，就可能导致必须用极高的成本来完成本身很简单的搜索。请看下面的例子。
+
+## Example
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/15_21_31_43_202404152131875.png"  />
+
+- 如上图，$F_1, F_2$ 就是 Canonical Cover。
+
+对于第二个例子，由于不满足 dependency preservation，就可能引起 SQL 查询的开销很大。
+
+假如 A 表里有 100 亿条项目，分别对应 30 条 B 和 5 条 C。
+
+Case 1: 我希望查询一个 B 属性对应的 C
+
+- 如果采用例一，那么 $R_2$ 就完事了。开销只是两位数级别。和 B 的大小相符。
+- 如果采用例二，那么就要 `R1 join R2`，开销就是 100 亿级别。**和 B 的大小严重不符。**
+
+Case 2: 我希望查询一个 A 属性对应的 C
+
+- 如果采用例一，那么就是 `R1 join R2`。开销是 100 亿级别。和 A 的大小相符。
+- 如果采用例二，那么就要 `R2`，开销也是 100 亿级别。并不比例一好。和 A 的大小相符。
+
+## Can We Always Arrive at a Dependency Preserved Solution?
+
+如果使用之前的 BNCF 方式，一定能够分解成满足 dependency preserved solution 吗？
+
+<iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsNSxbMCwwLCJBIl0sWzEsMCwiQiJdLFsyLDAsIkMiXSxbMiwxLCJEIl0sWzEsMiwiRSJdLFswLDFdLFsxLDJdLFsxLDNdLFs0LDNdXQ==&embed" width="375" height="200" style="border-radius: 8px; border: none;"></iframe>
+
+如上图所示，我们可以得到两种分解结果（黑体字为 superkey）：
+
+1. **B**CD, **A**B, **AE**
+2. **E**D, **B**C, **A**B, **AE**
+
+但是，由于原图的 $F = \set{A\to B, B \to CD, E \to D}$​，而 (1) 缺少 ED，(2) 缺少 BD。因此，使用这两种算法，都无法使得 dependency get preserved。
+
+---
+
+进一步，考虑
+
+- $R = \set{JKL}$
+- $F = \set{JK \to L, L \to K}$
+
+这个 $R$ 显然不是 BCNF。但是只要对其进行分解，就会使得这个 $JK\to L$ 无法被还原。因此，我们通过反例证伪：并非所有 $R$ 都可以同时满足 BCNF 和 DP。
+
+## 3NF
+
+既然已经通过反例证伪，我们就只能退而求其次，不用 BCNF，而用 3NF。
+
+3NF 相比 BCNF，对于一个函数 $\alpha \to \beta$，至少满足下列条件之一：
+
+- 是平凡函数
+- $\alpha$ 是 superkey
+- **$\beta$ 是 superkey 的子集**
+
+其中，最后一个条件就是松弛条件。
+
+### 3NF分解
+
+![img](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_0_25_12_202404160025003.webp)
+
+1. 先求出正则覆盖 $F_c$
+2. 对于 $F_c$ 里面的所有函数依赖 $a\to b$,均转化为 $R_i=ab$
+3. 对于所有的模式 $R_i$
+    1. 如果存在至少一个包含 superkey，进行第 4 步
+    2. 如果都不包含 superkey， 将任意一个候选码添加到模式Ri里面
+4. 如果一个模式被另一个模式包含，则去掉此被包含的模式。
+
+可以证明：这样的分解，满足 3NF，同时满足 DP。 
+
+### Example
+
+还是以上图为例。
+
+其正则覆盖是 $\set{A \to B, B \to CD, E \to D}$，superkey 是 $AE$
+
+因此，分为： 
+
+- $R_1 = \set{AB}$
+- $R_2 = \set{BCD}$
+- $R_3 = \set{ED}$
+
+由于没有 $R_i$ 包含 superkey，因此：$R_4 = \set{AE}$
+
+由于 $R_1 \sim R_4$ 之间没有包含关系，因此结束。
