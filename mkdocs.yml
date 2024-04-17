@@ -43,6 +43,7 @@ nav:
           - Rust:
               - Lec Note 1: "Technology/Rust/lec-note-1.md"
               - Lec Note 2: "Technology/Rust/lec-note-2.md"
+              - Lec Note 3: "Technology/Rust/lec-note-3.md"
       - 软件:
           - VS Code:
               - ssh:
