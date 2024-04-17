@@ -156,7 +156,7 @@ $$
 - 差商表的递推顺序，和 Neville 的递推顺序完全一样。差别就在于递推函数
 - 由于**差商即系数**，因此建表只需要 $\mathcal O(N^2)$，增加一个点只需要 $\mathcal O(N)$。从而，Newton 多项式的复杂度，和 Neville 的值的复杂度一样。（具体对比见下）
 
-# Comparison
+# Comparison of Neville and Newton
 
 **Newton vs Neville vs 待定系数: Matrix form**
 
@@ -174,3 +174,82 @@ $$
     - $[\dots]$ 是**系数（值）**，本质上也是多项式，但是多项式的各系数比例是**固定**的，因此可以用单一系数表示。
 - Neville 是 $p_{m, n} = \frac{(x-x_m) p_{m, n-1} - (x - x_n)p_{m+1,n}} {x_n - x_m}$
     - $p_{\dots}$ 是**值**或者**多项式**。如果 $p_{\dots}$ 是多项式，由于多项式的各系数比例是**不固定**的，因此必须用数组表示。从而造成了 $\mathcal O(N^3)$ 的复杂度。
+
+# Hermite Interpolation
+
+Hermite Interpolation 结合了 Na&iuml;ve Interpolation 以及 Taylor Expansion 两个多项式近似方法。也就是：在每一个插值点上，我们不仅要考虑零阶导数（i.e. 函数值），也要考虑一阶及以上的导数。
+
+## Example
+
+假设我们希望通过 $f(x_0), f(x_1), f(x_2), f'(x_1)$ 进行插值。那么，4 个约束，就对应 3 阶多项式。
+$$
+P_3 = f(x_0) h_0(x) + f(x_1)h_1(x) + f(x_2) h_2(x) + f'(x_1) \widehat h_1(x)
+$$
+其中：
+$$
+\begin{aligned}
+&h_i(x_j) = \delta_{ij}, h_1'(x_1) = 0 \\\\
+&\widehat h_1(x_j) = 0, \widehat h_1'(x_1) = 1
+\end{aligned}
+$$
+
+- 或者用下面的表格来形象说明（x 代表考虑这一项，i.e. 我希望函数在这里满足这样的条件）
+
+    |      | $x_0$ | $x_1$ | $x_2$ |
+    | ---- | ----- | ----- | ----- |
+    | $f$  | x     | x     | x     |
+    | $f'$ |       | x     |       |
+
+
+
+对于 $h_0(x)$，由于 $h_1'(x_1) = 0$，因此就是 $x=x_1$ 为双重根：
+$$
+h_i(x) = C_0(x-x_1)^2(x-x_2)
+$$
+同样：$h_2(x) = C_2(x-x_0)(x-x_1)^2$。
+
+对于 $h_1(x)$，由于 $h_1(x_1) = 1, h_1'(x_1) = 0$：
+$$
+h_1(x) = (Ax+B)(x-x_0)(x-x_2)
+$$
+对于 $\widehat h_1(x)$，则显然是：
+$$
+\widehat h_1(x) = C(x-x_0)(x-x_1)(x-x_2)
+$$
+最后，我们通过待定系数法解出其中的系数。注意 $h_1(x)$ 有两个系数。
+
+### Error
+
+误差也和 Lagrange 是类似的：
+$$
+\begin{aligned}
+R_3(x) &= f(x) - P_3(x) \\\\
+&= K(x)(x-x_0)(x-x_1)^2(x-x_2) \implies \\\\
+K(x) &= \frac {f^{(4)}(\xi_x)}{4!}
+\end{aligned}
+$$
+
+## 二重 Hermite 插值
+
+常用的插值方法，就是使用所有插值点的函数值和一阶导数值。
+$$
+H_{2 n+1}(x)=\sum_{i=0}^{n} y_{i} A_{i}(x)+\sum_{i=0}^{n} y_{i}^{\prime} B_{i}(x)\\
+$$
+容易证明：
+$$
+A_i(x) = (Ax+B)\prod_{j = 0 \land j \neq i}^n (x-x_j)^2
+$$
+
+- 因为除了 $x_i$ 以外，所有都是重根；$x_i$​ 处没有根，但是导数为 0。
+    - 所以无法直接求出在 $x_i$ 处的式子，必须用 $A, B$ 两个待定量
+
+$$
+B_i(x) = C(x-x_i) \prod_{j = 0 \land j \neq i}^n (x-x_j)^2
+$$
+
+- 因为除了 $x_i$ 以外，所有都是重根；$x_i$​ 处为单根。
+    - 所以可以直接求出在 $x_i$ 处的式子，只用 $C$ 一个待定量
+
+### Error 
+
+误差和 Lagragian 的形式类似。
