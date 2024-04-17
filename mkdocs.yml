@@ -108,6 +108,7 @@ nav:
               - 5. Iterative Techniques in Matrix Algebra: "School-Courses/SP-SU-2024/Numerical-Analysis/5-iterative-techniques-in-matrix-algebra.md"
               - 6. Approximating Eigenvalues: "School-Courses/SP-SU-2024/Numerical-Analysis/6-approximating-eigenvalues.md"
               - 7. Interpolation: "School-Courses/SP-SU-2024/Numerical-Analysis/7-interpolation.md"
+              - 8. Cubic Spline: "School-Courses/SP-SU-2024/Numerical-Analysis/8-cubic-spline.md"
           - 拓扑数据处理:
               - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
               - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
