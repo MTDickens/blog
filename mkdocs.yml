@@ -101,6 +101,7 @@ nav:
               - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
               - 2. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
               - 3. CPU Design: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/3-CPU-Design.md"
+              - 4. Interruption and Exception: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/4-Interruption-And-Exception.md"
           - 数值分析:
               - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-introduction.md"
               - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-equations.md"
@@ -117,6 +118,7 @@ nav:
               - 3. Graph, Curve and Complex: "School-Courses/SP-SU-2024/TDA/lec3.md"
               - 4. Algebraic Topology: "School-Courses/SP-SU-2024/TDA/lec4.md"
               - 5. Persistent Homology: "School-Courses/SP-SU-2024/TDA/lec5.md"
+              - 6. Computation Methods: "School-Courses/SP-SU-2024/TDA/lec6.md"
           - 数据库系统:
               - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
               - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
