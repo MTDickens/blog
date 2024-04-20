@@ -5,8 +5,46 @@
 对于一个类而言，构造函数的顺序是：
 
 1. 调用父类的构造函数；
+    - 默认情况下，调用的是 `ClassOfMyParent()` 这个默认构造函数
+    - 如果想使用其它构造函数，可以参考下面的代码    
 2. 调用成员变量的构造函数；
+    - 默认情况下，调用的是 `ClassOfThisMember()` 这个默认构造函数
+    - 如果想使用其它构造函数，可以参考下面的代码    
 3. 调用类自身的构造函数
+
+```c++
+class A {
+public:
+    A() = delete;
+    A(int i) {
+        std::cout << "A(int i)\n";
+    }
+};
+
+class B : public A {
+public:
+    // Use A(int i) instead of A(). OK.
+    // Use A(int i) for a_in_b. OK.
+    B(int i) : A(1), a_in_b(2) {
+        std::cout << "B(int i)\n";
+    }
+private:
+    A a_in_b;
+};
+
+class C : public A {
+public:
+    // Error: use A() by default, but A() is deleted
+    // Error: use A() for a_in_c by default, but A() is deleted
+    C(int i) {
+        std::cout << "C(int i)\n";
+    }
+private:
+    A a_in_c;
+};
+```
+
+---
 
 对于一个类而言，析构函数的顺序是：
 
@@ -222,3 +260,80 @@ class Shape {
 };
 ```
 
+## 一个有趣的例子
+
+~~（同时也是作业题）~~
+
+```c++
+#include <iostream>
+using namespace std;
+
+class A
+{
+public:
+  A(int i) : mi(i) {}
+  A(const A& rhs) : mi(rhs.mi)
+  {
+    cout << "A::A(&)" << endl;
+  }
+  A& operator=(const A&rhs)
+  {
+    mi = rhs.mi;
+    cout << "A::operator=()" << endl;
+    return *this;
+  }
+  virtual void f()
+  {
+    cout << "A::f(), " << mi << endl;
+  }
+protected:
+  int mi;
+};
+
+class B : public A
+{
+public:
+  B(int i, int j) : A(i), mj(j) {}
+  void f() override
+  {
+    cout << "B::f(), " << mi << ", " << mj << endl;
+  }
+private:
+  int mj;
+};
+
+int main()
+{
+  A a1(1);
+  B b(3,4);
+
+  A& ra = b;	// 1
+  ra.f();		// 2
+  ra = a1;		// 3		
+  ra.f();		// 4
+
+  A a2 = b;		// 5
+  a2.f();		// 6
+}
+```
+
+首先，`a1` 和 `b` 初始化，分别调用自身的构造函数。
+
+- 其中，`B::B(i, j)` 还调用了 `A::A(i)`，也就是选择使用 `A::A(i)`，而不是 `A::A()`
+
+接下来，我们逐行分析：
+
+1. 就是一个父类引用子类，本质上 `ra` 就是 `b` 的一个别名，因此没有任何行为
+    - 实际上，在汇编代码中，也没有任何行为
+2. 就是 `b` 调用 `f()`。由于 `class B` 已经 `override` 了 `f()`，因此调用的就是 `B::f()`
+    - **输出：**`B::f(), 3, 4`
+3. 就是 `b` 调用 `operator=()`。由于 `class B` 本身没有 `operator=`，因此使用继承自 `A` 的，也就是 `A::operator=()`
+    - **输出：**`A::operator=()`
+    - 同时将 `b.mi` 赋值为 `a1.mi`，也就是 1
+4. 同 (2)
+    - **输出：**`B::f(), 1, 4`
+5. 就是 `a2` 执行构造函数 `A::A(const A&rhs)`
+    - **输出：**`A:A(&)`
+    - 同时将 `a2.mi` 赋值为 `b.mi`
+6. 就是 `a2` 调用 `f()`。自然是调用 `A::f()`
+    - **输出：**`A::f(), 1`
