@@ -151,6 +151,7 @@ nav:
               - 11. Training - Dynamics and After It: "self-learning/dl4cv/11-training-dynamics-and-after-it.md"
               - 12. RNN: "self-learning/dl4cv/12-rnn.md"
               - 13. Attention: "self-learning/dl4cv/13-attention.md"
+              - 14. Visualizing and Understanding: "self-learning/dl4cv/14-visualizing-and-understanding.md"
           - CS 106L 课程:
               - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
