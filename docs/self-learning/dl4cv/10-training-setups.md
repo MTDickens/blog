@@ -122,10 +122,13 @@ Xavier 初始化适用于 zero-centered non-linear function。
 Key idea: initial weight of the current layer shouldn't change the **standard deviation** of the data of the previous layer.
 
 也就是说：给定一个数据 $\vec x$，对于任何输出 $\vec y$，有：
+
 $$
 y_j = \sum_{i=1}^{Din} x_i w_{ij}
 $$
+
 从而：
+
 $$
 \newcommand{Var}{\operatorname*{Var}}
 \newcommand{E}{\operatorname*{E}}
@@ -179,9 +182,11 @@ Dropout 的好处是：
 一、我们不希望在 predict 的时候出现随机性。因此，我们不可以在 predict 的时候又进行 random dropout。
 
 二、同时，由于我们是在子网上 train 的（输出比全网小），因此，我们不能够直接使用我们的全网来进行 predict。一个直观的想法是：用“所有子网的加权平均”来 predict，也就是：
+
 $$
 y = f(x) = E_{z}[f(x,z)] = \int p(z) f(x,z) \mathrm dz
 $$
+
 可惜，一共 $2^{4096}$ 个子网，我们无法 naively 加权平均。
 
 - 注意，上图中，我们通过 mask 来参数化了子网：
