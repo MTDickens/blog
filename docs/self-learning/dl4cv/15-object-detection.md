@@ -147,7 +147,7 @@ fn NMS(Category "c", Float "threshold") -> Array:
 
 ### Details of Pooling
 
-<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_16_42_0_202405071642881.png" alt="image-20240507164156902" style="zoom:25%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_0_25_6_202405070025739.png" alt="image-20240507002502297" style="zoom:22%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_16_42_0_202405071642881.png" alt="image-20240507164156902" style="zoom:20%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_0_25_6_202405070025739.png" alt="image-20240507002502297" style="zoom:20%;" />
 
 左侧是比较粗糙的 pooling，问题在于
 
