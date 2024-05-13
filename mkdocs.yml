@@ -133,6 +133,7 @@ nav:
               - 7. Storage: "School-Courses/SP-SU-2024/DBMS/7-Storage.md"
               - 8. DB Storage Structure: "School-Courses/SP-SU-2024/DBMS/8-DB-Storage-Structure.md"
               - 9. Indexing: "School-Courses/SP-SU-2024/DBMS/9-Indexing.md"
+              - 10. Query Processing: "School-Courses/SP-SU-2024/DBMS/10-Query-Processing.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
@@ -157,7 +158,7 @@ nav:
               - 14. Visualizing and Understanding: "self-learning/dl4cv/14-visualizing-and-understanding.md"
               - 15. Object Detection: "self-learning/dl4cv/15-object-detection.md"
               - 16. Segmentation: "self-learning/dl4cv/16-segmentation.md"
-              - 17. 3D vision: "self-learning/dl4cv/17-3d-vision.md"  
+              - 17. 3D vision: "self-learning/dl4cv/17-3d-vision.md"
           - CS 106L 课程:
               - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
