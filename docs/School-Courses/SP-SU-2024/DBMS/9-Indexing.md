@@ -100,12 +100,35 @@ Dense index: 每一个 table entry 的对应 attribute 都有一个 index record
 
 # Indexing Strings
 
-- 变长字符串
-    - 如果有变长字符串，那么就使用 variable fan out
-    - 而且，我们在 B+-Tree 上所说的 $n$，在变长字符串的意义下，可以当成**占用的空间大小**，而不是有多少个 entries
-- Prefix Compression
-    - 对于索引而言，其目的就是**能够区分不同的索引**。因此，我们可以使用字符串的**前缀**，as long as 能够起到区分作用。
-        - e.g. "Silas" and "Silberschatz" can be separated by "Silb"
+## 变长字符串
+
+- 如果有变长字符串，那么就使用 variable fan out
+- 而且，我们在 B+-Tree 上所说的 $n$，在变长字符串的意义下，可以当成**占用的空间大小**，而不是有多少个 entries
+
+## Prefix Compression
+
+前缀压缩，本质上的意思就是：non-leaf value 的唯一目的就是——确定将查询分流到左侧还是右侧。
+
+如果我们能够保证：
+
+1. 小于等于左树最大的字符串的，必须被分流到左侧
+2. 大于等于右树最小的字符串的，必须被分流到右侧
+3. 至于大于左树最大的字符串且小于等于右树最小的字符串的，就无所谓了
+
+那么，就可以用这个新的 value 来代替旧的 value。
+
+也就是说，改后的 value 必须：
+
+- 大于等于左树最大的字符串
+- 小于等于右树最小的字符串
+
+比如，左侧最大的是：
+
+右侧最小的是：pneumonoultramicroscopicsilicovolcanoconiosis
+
+左侧最大的是：pneumonia
+
+那么，value 就可以从 pneumonoultramicroscopicsilicovolcanoconiosis 改为 pneumono。
 
 # How to Bulk-Build a B+-Tree?
 
