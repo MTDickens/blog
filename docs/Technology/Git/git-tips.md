@@ -1,6 +1,4 @@
-# Tips for Git
-
-## 如何保存 Git 用户名和 token
+# 如何保存 Git 用户名和 token
 
 > Author: M.T.Dickens, ChatGPT Feb 13 Ver.
 
@@ -75,3 +73,16 @@ git config --global --unset https.https://github.com.proxy)
 !!! note 
     1. 可以在 `.gitconfig` 内直接修改代理设置
     2. 更详细的，参考[教程](https://gist.github.com/laispace/666dd7b27e9116faece6)
+
+# 大小写敏感
+
+git 默认对文件名不是大小写敏感的。这在 `mkdocs` 中就非常致命。
+
+- 比如说，我之前文件名的大小写搞错了
+- 然后我之后修改文件名的大小写，但是却无法将 change 上传到仓库
+
+我们可以通过以下命令来解决：
+
+```
+git config core.ignorecase false
+```
