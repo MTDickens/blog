@@ -139,6 +139,7 @@ nav:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
               - Alpha Beta Pruning: "School-Courses/SP-SU-2024/ADS/alpha-beta-pruning.md"
+              - Approximation: "School-Courses/SP-SU-2024/ADS/approximation.md"
           - OOP:
               - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
   - 自学课程:
