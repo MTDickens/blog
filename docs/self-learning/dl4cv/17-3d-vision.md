@@ -28,8 +28,8 @@
 **解决方法：**使用 scale-invariant loss
 $$
 \begin{align}
-D(y,y^\ast) &= \frac 1 {2n^2}\sum_{i,j}((\log y_i - \log y_j) - (\log y_i^\ast - \log y_j^\ast ))^2 \tag{2} \\
-&= \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \sum_{i,j} d_i d_j = \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \left(\sum_{i} d_i \right)^2 \tag{3}
+D(y,y^\ast) = \frac 1 {2n^2}\sum_{i,j}((\log y_i - \log y_j) - (\log y_i^\ast - \log y_j^\ast ))^2 \tag{2} \newline 
+= \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \sum_{i,j} d_i d_j = \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \left(\sum_{i} d_i \right)^2 \tag{3}
 \end{align}
 $$
 具体推导过程如下：
