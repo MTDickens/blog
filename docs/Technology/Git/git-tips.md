@@ -86,3 +86,61 @@ git 默认对文件名不是大小写敏感的。这在 `mkdocs` 中就非常致
 ```
 git config core.ignorecase false
 ```
+
+# 删除被 git 跟踪的文件
+
+> 更加详细的 `git rm` 用法，可以参考[菜鸟教程](https://www.runoob.com/git/git-rm.html)
+
+假如你在将一个文件添加进 Git 之后，又将其添加进 `.gitignore`。此时，即使你在 `.gitignore` 中添加了该文件，Git 依然会跟踪这个文件的变化。我们需要**手动**将 Git 对该文件的跟踪移除。下面是具体的操作步骤：
+
+1. **确认 `.gitignore` 文件中已经包含了要忽略的文件**：
+
+    首先，确保 `.gitignore` 文件中已经包含了你希望 Git 忽略的文件路径。例如，如果我们希望忽略 `.vscode/settings.json` 文件，应该在 `.gitignore` 中加入如下内容：
+
+    ```plaintext
+    .vscode/settings.json
+    ```
+
+2. **从 Git 仓库中删除对文件的跟踪**：
+
+    使用 `git rm --cached` 命令从 Git 仓库中删除对该文件的跟踪。注意，这个命令不会删除本地文件，只是将它从 Git 的跟踪列表中移除。
+
+    ```bash
+    git rm --cached .vscode/settings.json
+    ```
+
+3. **提交更改**：
+
+    提交这些更改，这样你的本地仓库和远程仓库都会更新为不再跟踪这个文件。
+
+    ```bash
+    git commit -m "Stop tracking .vscode/settings.json"
+    ```
+
+4. **验证更改**：
+
+    使用 `git status` 命令验证更改是否生效，确认文件已经从 Git 的跟踪列表中移除，并且不会再显示在 `git status` 输出中。
+
+    ```bash
+    git status
+    ```
+
+通过以上步骤，你就可以成功地从 Git 仓库中移除某个文件的跟踪，同时保持本地文件不被删除。这样，Git 就会忽略这些文件的后续更改。
+
+完整操作示例如下：
+
+```bash
+# 确保.gitignore文件中包含需要忽略的文件
+echo ".vscode/settings.json" >> .gitignore
+
+# 从Git仓库中删除对该文件的跟踪
+git rm --cached .vscode/settings.json
+
+# 提交更改
+git commit -m "Stop tracking .vscode/settings.json"
+
+# 验证更改
+git status
+```
+
+这样，`.vscode/settings.json` 文件的更改将不会再被 Git 跟踪和显示在 `git status` 中。
