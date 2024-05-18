@@ -337,3 +337,25 @@ int main()
     - 同时将 `a2.mi` 赋值为 `b.mi`
 6. 就是 `a2` 调用 `f()`。自然是调用 `A::f()`
     - **输出：**`A::f(), 1`
+
+## 其他知识点
+
+### 成员函数的 const 修饰符
+
+成员函数本身默认有一个参数，就是 `this`。对于显式的参数，我们可以显式地加上约束，如 `int List::operator[](int index)`；但是对于隐式的 `this`，如何加约束呢？这就要用到成员函数的 `const` 修饰符。这个 `const` 可以让 `*this` 不仅是一个顶层 const（i.e. 指针指向的地址不能变，所有的 `this` 都这样），而且还是底层 const（i.e. 指针指向的地址的值是常量）。
+
+e.g. 
+
+```cpp
+int& List::operator[](int index) const {
+    // 虽然 *this 是 const，但是这只是说明 this->val 是一个顶层 const
+    // 而 this->val 指向的值并不是 const
+    // 因此你可以返回一个非常量引用
+    return this->val[index];
+}
+
+// Equivalent function
+int& at(const List * _this, int index) {
+    return _this->val[index];
+}
+```
