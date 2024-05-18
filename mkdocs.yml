@@ -161,6 +161,7 @@ nav:
               - 15. Object Detection: "self-learning/dl4cv/15-object-detection.md"
               - 16. Segmentation: "self-learning/dl4cv/16-segmentation.md"
               - 17. 3D vision: "self-learning/dl4cv/17-3d-vision.md"
+              - 18. Videos: "self-learning/dl4cv/18-videos.md"
           - CS 106L 课程:
               - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
