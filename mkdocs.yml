@@ -135,6 +135,7 @@ nav:
               - 8. DB Storage Structure: "School-Courses/SP-SU-2024/DBMS/8-DB-Storage-Structure.md"
               - 9. Indexing: "School-Courses/SP-SU-2024/DBMS/9-Indexing.md"
               - 10. Query Processing: "School-Courses/SP-SU-2024/DBMS/10-Query-Processing.md"
+              - 11. Query Optimization: "School-Courses/SP-SU-2024/DBMS/11-Query-Optimization.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
