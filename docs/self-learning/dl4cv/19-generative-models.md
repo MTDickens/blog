@@ -55,3 +55,75 @@ By Bayesian Law:
 如上图，可以通过上述两个模型，加上 $p(y)$（直接统计各标签数量占总标签数量的比例即可），构建 conditional generative model。
 
 - 和 generative model 一样，conditional generative model 可以拒绝一张图片。比如说即使是 $\mathop{\max}_{y \in \mathcal Y} p(x | y)$ 也在 threshold 之下。
+
+## Comparison
+
+最根本的两种模型，就是 discriminative model 以及 generative model。
+
+<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240519191445966.png" alt="image-20240519191445966" style="zoom:50%;" />
+
+# Generative Models
+
+Generative model 的目标函数就是：
+$$
+\prod_i p(x^{(i)}) = \prod_i f(x^{(i)}, W)
+$$
+
+- 也就是假设所有样本均独立，然后采用最大似然推断
+
+或者可以转换一下：
+$$
+W^\ast = \mathop{\arg\max}_{W} \sum_i \log f(x^{(i)}, W)
+$$
+而对于某个 $x^{(i)} = (x^{(i)}_1, x^{(i)}_2, \dots)$，通过贝叶斯定律，有：
+$$
+\begin{aligned}
+p(x^{(i)}) &= p(x^{(i)}_1, x^{(i)}_2, \dots) \newline
+&= \prod_j p(x^{(i)}_j | x^{(i)}_{j-1}, \dots, x^{(i)}_1) \newline
+\end{aligned}
+$$
+而这样的依赖关系，和 RNN 完全一样：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_20_1_18_202405192001674.png" alt="image-20240519200115849" style="zoom:33%;" />
+
+因此，我们可以使用 RNN 来生成这些概率，然后取对数加起来，得到的就是 $\log p(x^{(i)})$
+
+然后，我们将每一张图片都这样做，然后加起来，就得到了 $\prod_i p(x^{(i)})$
+
+## Taxonomy
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_19_19_25_202405191919469.png" alt="image-20240519191919050" style="zoom: 50%;" />
+
+## Autoregressive Model
+
+### Pixel RNN
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_19_47_9_202405191947943.png" alt="image-20240519194705448" style="zoom: 33%;" />
+
+Pixel RNN，顾名思义，就是在 Pixel 上使用 RNN。给出依赖关系（i.e. 依赖左侧和上侧的 pixels），就可以像上图一样“泛洪式”地生成。
+
+**缺点：**速度太慢。
+
+### Pixel CNN
+
+另外还有一种 Pixel CNN，也就是 Mask CNN 的一个变种：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_20_15_45_202405192015271.png" alt="image-20240519201540204" style="zoom: 33%;" />
+
+基本想法就是：我们通过多个 resolution-preserving, masked convolution layer，在保持形状的同时（保证最后的输出中，每一个点对应着原始图片的一个点），遮盖住像素的后继（避免该像素看到后面的像素）进行卷积。最后，我们对输出取一个对数，然后将所有输出相加，就得到了这一张图片的“概率”。
+
+当然，这虽然相比 pixel RNN 有所进步，但是其实也并不快。
+
+### Pros and Cons
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_20_22_23_202405192022842.png" alt="image-20240519202220339" style="zoom:50%;" />
+
+当然，还有很多 tricks 可以提升这些 RNN 的效率。
+
+## Autoencoders
+
+Autoencoder 很简单，就是先通过 downsampling 将 vector 压缩，再通过 upsampling 将 vector 还原，然后 loss 就是 original vector 与 output vector 的 L2 metric。
+
+但是，这种 autoencoder 无法判断图片出现的概率，因此不是 generative model。
+
+想让 autoencoder 的变种具有概率推断的能力，就需要让 z 
