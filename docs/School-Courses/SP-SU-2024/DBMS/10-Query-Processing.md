@@ -372,24 +372,54 @@ $$
 也就是说（假设 s 比 r 的 cardinality 要小）：
 
 1. 通过一个粗糙的哈希函数，将 s 划分成 n 个 buckets
-    - 需要保证每一个 bucket 都可以**全部**放到内存中去
-        - 假设可用内存用 M blocks，那么起码需要 $n=\lceil b_s / M \rceil$。由于哈希函数一般做不到完全均匀，因此需要加一个修正系数 $f$，令 $n = f * \lceil b_s / M \rceil$。
-            - f 一般为 1.2
+    - 因为划分的时候，我们采用的方式是：将 s 逐一 load 进 in_bucket 中，然后对于每一个 attribute，通过哈希函数将其映射到 $0 \sim n-1$，然后就放到第 n 个 bucket 中。当一个 block 满了/所有 attribute 都被划分之后，就将其装回硬盘。
+        - 因此，如果划分成 $n$ 个 bucket，**由于一个 bucket 至少要 1 个 block 那么大**，因此 memory 就需要至少 $n+1$​ 个 block，1 个当作 in_bucket，n 个用于 index_buckets
 2. 对于 r 进行同样的划分
-    - 但是 bucket 可能无法放到内存中去
 3. 然后，对于第 i 个 r 和 s 的bucket
     1. 我们首先在 $s_i$ 上建立一个 **in-memory** hashing index
         - 所用哈希函数必须与之前的粗糙哈希函数不同
+        - 由于是 in-memory 的，因此 $s_i$ 必须能够被完全装到 memory 中（而且还要留下一个 in_block 用于装 $r_i$）
+            - 因此，必须有 $t_{s_i} \leq M - 1$。我们可以假定 $t_{s_i} \leq f * \lceil \frac {t_s} {n} \rceil$，$f$ 是因为哈希函数一般无法划分非常均匀
     2. 然后，从 disk 中，一条一条读取 $r_i$ 的 record，并通过 hashing index 查找 $s_i$ 中对应的 records。匹配并输出。
 
 因此，cost 就是三大部分：
 
-1. 划分 buckets
+1. 划分 s 和 r 的 buckets
 2. 建立 (in-memory) hash index
 3. 从 disk 中读取 $r_i$
     - 查找索引和比较的过程被忽略，因为是 in-memory 的，耗时很少
 
 ---
 
+不难发现，如果需要保证一次 hash 就足够，那么就需要：
+$$
+f * \lceil \frac {t_s} {n} \rceil \leq M - 1, n \leq M - 1
+$$
+也就是：$M \gtrapprox \sqrt{f * t_s}$。
+
+比如说：如果我们有 12 MB 的内存，块大小是一如既往的 4 KB，那么我们就有 $M = 3 \text{ K}$，从而 $t_s \lessapprox \frac {M^2} {f} = 9 \text{ M} / 1.2 =7.5 \text{ G blocks} = 30 \text{ GB}$。我们可以使用 12 MB 的内存，在避免 recursive hash 的情况下，处理高达 30GB 的 table。
+
+#### Recursive Hash Join
+
 如果一次哈希无法完成 in-memory，那么就两次（第二次与第一次的 hash function 应该不同）；两次不行，就三次；……。
 
+具体来说，就是通过多次的 hash，将大块分成 M-1 个小块（但是这小块仍然比内存更大），然后再将小块继续用不同的 hash 函数分下去，so on and so forth，直至小块足够小为止。
+
+#### Cost
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_12_22_1_202405191222348.png"/>
+
+我们这里做一个假设：我们这里假设**原始数据和通过哈希函数划分之后的数据占用的 block 是一样多的**。
+
+同时，我们这里暂时不考虑 (in-memory) hash index，而采用原始的顺序搜索。
+
+如上图所示：
+
+- 在划分 s 和 r 的阶段，需要
+    - $2(b_r + b_s)$ 次的 block transfer，目的是将 $r, s$​ 的所有数据先加载进内存，然后再写到对应的 block[index]，如果 block[index] 满了，就写回硬盘
+    - $2(\lceil b_r / b_b \rceil + \lceil b_s / b_b \rceil)$ 次的 seek，其中 $b_b$ 就是分配给每一个 in_bucket 以及 index_buckets 的 block 大小。
+        - 这是因为，每一个 bucket 满了之后，就必须装回硬盘，这就是一次 seek；然后 in_bucket 空了之后，又要从硬盘中读取，这又是一次 seek。
+- 将每一个 $s_i, r_i$ 读入内存
+    - 需要 $2(b_r + b_s)$​ 次 block transfer
+    - $2 n_h$ 次 seek，先 seek $s_i$ 的开头，全部读入内存之后，就去 seek $r_i$ 的开头
+        - 由于 $s_i, r_i$ 均是 read sequentially，因此只需要各 seek 一次
