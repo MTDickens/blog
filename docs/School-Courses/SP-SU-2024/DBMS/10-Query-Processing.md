@@ -409,17 +409,24 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_12_22_1_202405191222348.png"/>
 
-我们这里做一个假设：我们这里假设**原始数据和通过哈希函数划分之后的数据占用的 block 是一样多的**。
+**注意：**
 
-同时，我们这里暂时不考虑 (in-memory) hash index，而采用原始的顺序搜索。
+1. 我们这里暂时不考虑 (in-memory) hash index，而采用原始的顺序搜索。
+2. 对于 $r, s$ 而言，哈希划分之后的数据占用的 block，最多可能比 $b_r, b_s$ 多出 $n_h$ 个 blocks，因为每一个 hash index 的最后的一个 block 可能是不满的
+    - 因此，r 哈希之后，最多可能有 $b_r + n_h$ 个 blocks；s 哈希之后，最多可能有 $b_s + n_h$ 个 blocks
 
 如上图所示：
 
 - 在划分 s 和 r 的阶段，需要
-    - $2(b_r + b_s)$ 次的 block transfer，目的是将 $r, s$​ 的所有数据先加载进内存，然后再写到对应的 block[index]，如果 block[index] 满了，就写回硬盘
+    - $(b_r + b_s) + ((b_r + n_h) + (b_s + n_h)) = 2(b_r + b_s) + 2n_h$ 次的 block transfer，目的是将 $r, s$ 的所有数据先加载进内存，然后再写到对应的 block[index]，如果 block[index] 满了，就写回硬盘
     - $2(\lceil b_r / b_b \rceil + \lceil b_s / b_b \rceil)$ 次的 seek，其中 $b_b$ 就是分配给每一个 in_bucket 以及 index_buckets 的 block 大小。
         - 这是因为，每一个 bucket 满了之后，就必须装回硬盘，这就是一次 seek；然后 in_bucket 空了之后，又要从硬盘中读取，这又是一次 seek。
 - 将每一个 $s_i, r_i$ 读入内存
-    - 需要 $2(b_r + b_s)$​ 次 block transfer
+    - 需要 $((b_r + n_h) + (b_s + n_h)) = (b_r + b_s) + 2n_h$ 次 block transfer
     - $2 n_h$ 次 seek，先 seek $s_i$ 的开头，全部读入内存之后，就去 seek $r_i$ 的开头
         - 由于 $s_i, r_i$ 均是 read sequentially，因此只需要各 seek 一次
+
+一共需要
+
+- Block transfer: $3(b_r + b_s) + 4n_h$
+- Block seek: $2(\lceil b_r / b_b \rceil + \lceil b_s / b_b \rceil) + 2 n_h$
