@@ -304,7 +304,21 @@ $$
 ### Caveats of GAN
 
 1. 上文中说到：令 $D'(x) = \frac{p_{data}(x)}{p_{data}(x) + p_G(x)}$。但是，实际上 $D$ 可能根本表示不出来右边这个函数。
+
 2. 虽然取到最小值的时候，JSD 可以保证两个分布相等，但是这是非凸优化问题，不能保证收敛到最小值
+
+    - 特别是：JS Divergence 在两个分布相差很大的时候，很容易产生梯度消失的现象：
+
+        <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/21_10_8_18_202405211008943.png" style="zoom:50%;" />
+
+    - 我们可以通过 [Wasserstein GAN](https://en.wikipedia.org/wiki/Wasserstein_GAN) 来解决这个问题
+
+        - 期望最小化的目标函数不是 JSD，而是 Wasserstein Metric：$\text{arg min}_\theta W(p, p_\theta) = \text{arg min}_\theta \inf_{\pi \in \Pi(p,q)} \mathbb{E}_{(x,y) \sim \pi}$
+        - 通过 Kantorovich-Rubinstein对偶定理 ([Proof](https://courses.cs.washington.edu/courses/cse599i/20au/resources/L12_duality.pdf))，让 Wasserstein 距离更容易计算：$ W(p, q) = \inf_{\pi \in \Pi(p,q)} \mathbb{E}_{(x,y) \sim \pi} \left[ \|x - y\|^2 \right] = \sup_{\|h\|_L \leq 1} \left( \mathbb{E}_{x \sim p} [h(x)] - \mathbb{E}_{y \sim q} [h(y)] \right)$
+        - 从而，我们就可以优化 $\min_G \max_D (E_{x \sim p_{data}}[D(x)] - E_{z \sim p(z)}[D(G(z))])$
+        - 当然，需要保证 $\|D\|_L \leq 1$​。这一点可以采用简单暴力的 clip 操作完成。
+    
+3. 最后一点，JSD 并不是 metric，因为不满足三角形不等式。当然这一点貌似无关紧要。
 
 ### Practices of GAN
 
@@ -319,3 +333,5 @@ $$
 比如，可以通过下面的方式引入：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_22_8_16_202405202208493.png" alt="image-20240520220813596" style="zoom: 33%;" />
+
+当然，也可以直接将标签 concatenate 到生成器的随机向量 z 后面——这个标签可以是经过 embedding 的，从而有着更多的信息。
