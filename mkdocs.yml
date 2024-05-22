@@ -115,6 +115,7 @@ nav:
               - 8. Cubic Spline: "School-Courses/SP-SU-2024/Numerical-Analysis/8-cubic-spline.md"
               - 9. Approximation Theory: "School-Courses/SP-SU-2024/Numerical-Analysis/9-approximation-theory.md"
               - 10. Numerical Differentiation And Integration: "School-Courses/SP-SU-2024/Numerical-Analysis/10-numerical-diff-and-int.md"
+              - 11. ODE: "School-Courses/SP-SU-2024/Numerical-Analysis/11-ode.md"
           - 拓扑数据处理:
               - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
               - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"

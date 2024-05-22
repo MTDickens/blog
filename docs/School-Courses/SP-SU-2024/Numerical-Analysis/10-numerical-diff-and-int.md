@@ -569,3 +569,74 @@ end
 
 - 当然，上面的伪代码没有很好地用到之前的结果，因此并不是非常高效
 
+# Better Methods: Gaussian Quadrature
+
+对于**插值多项式**而言，插 $n+1$ 个点，只能达到 $n$ 的精度
+
+- i.e. 只能够完美拟合至多 $n$ 阶多项式
+
+但是，**插值积分**，在某一种意义来说，结果就是一个 value，而不是一个 function。因此，按理说，同样的插值点，也许可以比多项式做的更好一些。
+
+下面，我们就介绍 Gaussian Quadrature，它可以使用 $n+1$ 个点，就将精度提升到 $2n+1$​。
+
+---
+
+我们希望：
+$$
+\int_0^1 W(x)f(x) \mathrm dx \approx w_i'f(x_i)
+$$
+
+---
+
+而这个问题等价于：使用一种只需要 $n+1$ 个点的值的积分方法，就可以精确求出 $\int_a^b 1, x, x^2, x^3, \dots, x^{2n+1}$。
+
+我们为什么可以做到这一点呢？
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_19_11_36_202405221911421.png" style="zoom: 50%;" />
+
+如图，对于上图的积分，如果要求精度为 3，那么，由于实际上是有 4 个参数，因此显然可能解出来，也就是精度为 3 的要求是可能可以实现的。
+
+- 另，如果任意 $x_0, \dots, x_n$，搭配上某一组系数，可以达到 2n+1 的精度，我们就称其为“高斯点”
+
+**但是，由于直接解需要求解高阶方程，因此不是好方法。**
+
+---
+
+**定理：**$x_0, \dots, x_n$ 是高斯点，当且仅当 $W(x) = \prod_{k=0}^n (x - x_k)$ 与任何 n-1 阶及以下的多项式【在 $\int_0^1 w(x) * \cdot * \cdot \mathrm dx$ 内积意义下】正交。
+
+**证明：**
+
+LHS -> RHS: 如果是高斯点，那么对于任意的 n-1 阶及以下多项式 p(x)，有 p(x)W(x) 必为 2n-1 阶及以下的多项式，从而令 $f(x) = p(x) W(x)$，就有：
+$$
+\int_0^1 w(x) p(x) W(x) = \sum_{i=0}^n A_i p(x_i) W(x_i) = \sum_{i=0}^n A_i p(x_i) 0 = 0
+$$
+RHS -> LHS: 如果正交，那么对于任意的小于等于 2n-1 阶的 $f(x)$，都有 $f(x) = p(x) W(x) + r(x)$，其中 $r(x)$ 的阶数小于 n-1 阶。
+
+从而：
+$$
+\begin{aligned}
+    \int_0^1 w(x) f(x) &= \int_0^1 w(x) r(x) + \int_0^1 w(x) p(x) W(x) \newline
+                       &= \int_0^1 w(x) r(x) + 0 \newline
+                       &= \int_0^1 w(x) r(x) \newline
+                       &= \sum_{i=0}^n A_i r(x_i) \text{~~（显然我们可以通过简单的插值找到这样一组} A_i\text） \newline
+                       &= \sum_{i=0}^n A_i r(x_i) + \sum_{i=0}^n A_i p(x_i) 0 \newline
+                       &= \sum_{i=0}^n A_i r(x_i) + \sum_{i=0}^n A_i W(x_i) 0 \newline
+                       &= \sum_{i=0}^n A_i f(x)
+\end{aligned}
+$$
+因此，我们可以通过
+
+1. Gram-Schmidt 算法来求出一组正交（多项式）基
+2. 将最高阶的多项式的零点求出来，作为高斯点
+3. 通过解一些简单而实际的方程，将系数解出来
+    - 对于一个确定的 $w(x)$ 而言，高斯点也是确定的
+
+示例如下：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_19_51_29_202405221951578.png"/>
+
+## 各种不同 $w(x)$ 下的多项式
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_20_1_24_202405222001633.png"/>
+
+使用 Chebyshev 还有一个好处：如果用均匀采点的方法，那么必然会采到 $x = \pm 1$，而函数在这里是奇异的；如果用 Gauss-Chebyshev，那么就没有问题。
