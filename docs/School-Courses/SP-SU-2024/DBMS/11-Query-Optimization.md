@@ -155,3 +155,66 @@ WHERE temp.stat_description > 'book_id';
     - **注意：**$\theta_i$ 本身也可能是复合条件。
 
 但是变量之间往往是不独立的。因此 state-of-the-art cost est 其实是采用了大模型等方式进行估计。
+
+### Estimate the Size of `JOIN`s
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_21_17_11_202405222117726.png"/>
+
+如图：
+
+- 如果没有公共属性，那么就是简单的笛卡尔积，大小就**正好**是 n<sub>r</sub> &times; ns</sub>
+- 如果公共属性是某一个是某一个 table 的 primary key/unique key——不妨假设是 r，那么大小**最大**也就是另一个 table 的大小——也就是 n<sub>s</sub>
+    - 这是因为，如果公共属性是 r 的 primary key，那么 s 的每一个 row 至多匹配上 r 的一个 row
+- 如果公共属性是某一个 table 的 **foreign key** referencing 另一个 table——不妨假设是 s foreign key referencing r，那么大小就**正好**是 n<sub>s</sub>
+    - 这是因为，如果是 s 的 foreign key，那么 s 的每一 row 就必须**恰好**对应 r 的一个 row
+- 如果和 primary key/unique 无关的话，那么就只能使用更加粗糙的估计。如下图：假设 R 中每一个 row 都可以匹配上 S 的一个 row，那么我们就关心的是：R 上的 row 平均可以匹配 S 上几个 row？一个 feasible 的估计就是：n<sub>s</sub> 除以 V(A,s)，也就是 S 的 A 属性的每个不同值的平均行数；如果 S 中每一个 row 都可以匹配上 R 的一个 row，情况类似。
+    <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_21_42_56_202405222142583.png" style="zoom: 67%;" />
+
+### Estimate Distinct Values
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_22_20_42_202405222220058.png" style="zoom:80%;" />
+
+如图：对于一般的情况，我们就令 $V(A, \sigma_\theta(r)) = \min(V(A, r), n_{\sigma_\theta(r)})$。也就是说，selection 之后的 distinct values，一定既不大于比 selection 之前的，也肯定不会大于 select 之后的总条目数。
+
+---
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_22_25_25_202405222225540.png" style="zoom:80%;" />
+
+对于 JOIN 的 estimation，分上面两种情况。
+
+## 逻辑优化：语句优化
+
+## `JOIN`
+
+ <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_23_35_19_202405222335488.png" style="zoom: 80%;" />
+
+算法就是不断递归：对于每一个待 JOIN 的集合，都将其分成两个子集，然后继续递归。
+
+时间复杂度可以这么算：
+
+1. 首先，所有的 S 的子集都会被算一遍，因此这就是 $2^n$ 了
+2. 其次，对于每一个 findbestplan(S)，都会过一遍 each non-empty subset of S，这就是 $\mathcal O(2^\abs{S})$ 了
+3. 因此，总共就是 $\mathcal O(2^n + \sum_{i=1}^n \binom{n}{i} 2^i) = \mathcal O(2^n + 3^i) = \mathcal O(3^n)$​
+
+对于 n=10 的情况，只有“区区” 59000，而不是 1760 亿。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_23_28_20_202405222328946.png" alt="image-20240522232817587" style="zoom:67%;" />
+
+如果额外再加条件——每一次 join 的时候都需要包含一个 original relation，i.e. 不能是两个 intermediate relation join，那么，时间复杂度可以这么算：
+
+1. 首先，所有的 S 的子集都会被算一遍，因此这就是 $2^n$ 了
+2. 其次，对于每一个 findbestplan(S)，对其每一个节点执行，这就是 $\mathcal O(\abs{S})$ 了
+3. 因此，总共就是 $\mathcal O(2^n + \sum_{i=1}^n \binom{n}{i} i) = \mathcal O(2^n + n \sum_{i=1}^n \binom{n-1}{i-1}) = \mathcal O(2^n)$
+
+对于 n=10 的情况，只有 1024，真的是很小了。
+
+## 其它语句
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_0_4_36_202405230004458.png"/>
+
+对于 select 以外的其它语句，我们一般就直接使用 heuristic 方法了。
+
+- 尽早 select
+- 尽早 project
+- 如果有多个 select，先进行更加 "restrictive" 的，也就是 with smallest resulting size
+- 使用 left-deep join order 就行了，不需要使用 $\mathcal O(3^n)$ 的算法
