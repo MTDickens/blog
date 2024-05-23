@@ -149,7 +149,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 1. 可用的内存为 $M$ (blocks)
 2. 待排序数据为 $b_r$ (blocks)
-3. 单位为 disk block、
+3. 单位为 disk block
 4. buffer block size = disk block size。
 
 ---
@@ -184,7 +184,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 1. 可用的内存为 $M$ (blocks)
 2. 待排序数据为 $b_r$ (blocks)
-3. 单位为 disk block、
+3. 单位为 disk block
 4. **buffer block size = $b_b$**
     - i.e. buffer block 可以任意大
 
@@ -214,8 +214,8 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 - Merge Procedure: $2b_r \lceil \log_{M-1} (b_r / M) \rceil$ ***(decreased compared to simple version)***
     - 我们需要总共读入、写出 $b_r$ buffer blocks (that is made up of **consecutive** disk blocks)。
     - 虽然写入的块是连续的，读取的块也是连续的，但是读取和写入的 buffer 块并不在一起。因此最坏是可以有 $2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil$ 那么多次的 seek
-- 因此，in total，$2 b_r \lceil \log_{M-1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
-    - 如果该 sort 位于流水线的话，那么最后一次**写操作时的 seek** 就不算，总计就是 $2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
+- 因此，in total，$2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
+    - 如果该 sort 位于流水线的话，那么最后一次**写操作时的 seek** 就不算，总计就是 $2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil + \lceil b_r / M \rceil$
 
 > 不难发现：**block seek** 的次数，随着 $b_b$ 的增加而减少，根本原因是因为每一次是成批量地写入和读取连续的 disk block。
 
