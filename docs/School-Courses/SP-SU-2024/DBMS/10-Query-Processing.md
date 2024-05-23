@@ -211,11 +211,11 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 - Initial sort: $2\lceil b_r / M \rceil$
     - e.g. 第一次读取硬盘待排序数据到内存的时候，先 seek 到 $0$-th block，然后一直顺序读到 $M-1$-th block。然后，排好序之后，再 seek 到 $0$-th block，然后一直顺序写到 $M-1$-th block。而这行为需要重复 $2\lceil b_r / M \rceil$ 次
-- Merge Procedure: $2b_r \lceil \log_{M-1} (b_r / M) \rceil$ ***(decreased compared to simple version)***
+- Merge Procedure: $2 \lceil b_r / b_b \rceil \lceil \lceil \log_{\lfloor M / b_b\rfloor -1} (b_r / M) \rceil$ ***(decreased compared to simple version)***
     - 我们需要总共读入、写出 $b_r$ buffer blocks (that is made up of **consecutive** disk blocks)。
-    - 虽然写入的块是连续的，读取的块也是连续的，但是读取和写入的 buffer 块并不在一起。因此最坏是可以有 $2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil$ 那么多次的 seek
-- 因此，in total，$2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
-    - 如果该 sort 位于流水线的话，那么最后一次**写操作时的 seek** 就不算，总计就是 $2 \lceil b_r / b_b \rceil \lceil \log_{M-1} (b_r / M) \rceil + \lceil b_r / M \rceil$
+    - 虽然写入的块是连续的，读取的块也是连续的，但是读取和写入的 buffer 块并不在一起。因此最坏是可以有 $2 \lceil b_r / b_b \rceil \lceil \log_{\lfloor M / b_b\rfloor -1} (b_r / M) \rceil$ 那么多次的 seek
+- 因此，in total，$2 \lceil b_r / b_b \rceil \lceil \log_{\lfloor M / b_b\rfloor -1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
+    - 如果该 sort 位于流水线的话，那么最后一次**写操作时的 seek** 就不算，总计就是 $2 \lceil b_r / b_b \rceil \lceil \log_{\lfloor M / b_b\rfloor -1} (b_r / M) \rceil + \lceil b_r / M \rceil$
 
 > 不难发现：**block seek** 的次数，随着 $b_b$ 的增加而减少，根本原因是因为每一次是成批量地写入和读取连续的 disk block。
 
