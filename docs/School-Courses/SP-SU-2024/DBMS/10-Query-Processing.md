@@ -360,6 +360,19 @@ $$
 
 ### Hash Join
 
+> Hash Join 的目的就是，将 s 分成尽量少的块，但是要保证每一个块均可以放进内存。
+>
+> 然后，我们就可以 r 这个大块跟 s 的这一小块进行 "nested loop"。不同的是，此时的 loop 可以
+>
+> 1. 顺序读 r，不需要多次 seek
+> 2. 不用读 s，因为已经在内存里了
+>
+> 这样做，就类似于 nested-loop 内存足够大的情形。
+>
+> ---
+>
+> 而时间的主要开销，则是 build 时期。我们希望块尽量少，这样 build 时期的每个块的大小就会更大，seek 和 transfer 的次数就会更少。
+
 - Build：选择两个输入 relation 中 cardinality 较小的一个（一般称其为 build relation），使用一个或一簇 hash 函数将其中的每一条记录的主键 key 值计算为一个 hash 值，然后根据 hash 值将该记录插入到一张表中，这张表就叫做 hash 表；
 - Probe：选择另一个 cardinality 较大的 relation （一般称为 probe relation），针对其中的每一条记录，使用和 build 中相同的 hash 函数，计算出相应的 hash 值，然后根据 hash 值在 hash 表中寻找到需要比较的记录，一一比较，得到最终结果。
 
@@ -424,7 +437,8 @@ $$
 - 将每一个 $s_i, r_i$ 读入内存
     - 需要 $((b_r + n_h) + (b_s + n_h)) = (b_r + b_s) + 2n_h$ 次 block transfer
     - $2 n_h$ 次 seek，先 seek $s_i$ 的开头，全部读入内存之后，就去 seek $r_i$ 的开头
-        - 由于 $s_i, r_i$ 均是 read sequentially，因此只需要各 seek 一次
+        - 由于 $s_i, r_i$​ 均是 read sequentially，因此只需要各 seek 一次
+    - **这个阶段和 nested-loop 内存足够大的情况是类似的**
 
 一共需要
 
