@@ -14,11 +14,27 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_10_8_37_202405221008263.png" style="zoom: 67%;" />
 
-如上图，可以认为我们使用了函数构建了一个简单的流形。
+如上图，一个流形有一个图册，对流形上的函数 $f: M \to \mathbb R$ 在 $x \in M$ 点处求所谓的梯度，实际上是：
 
-如果一个点的所有偏导数的值均为 0，那么这个点就是**临界点**。
+- 给定图册中的一个包含 $x$ 的坐标卡，$\varphi: U (\subset M) \to \mathbb R^n, \text{ s.t. }x \in U$，我们求 $f \circ \varphi^{-1}: \mathbb R^n \to \mathbb R$ 在 $$ 的梯度。
 
-如果某个临界点处的 Hessian matrix 满秩，那么就称为**非退化**的。
+    - 假如 $f \circ \varphi^{-1}$ 在 $\varphi(x)$ 处梯度为 0，那么对于其它任意的坐标卡 $\xi: U \to \mathbb R^n$，一样梯度为 0：
+        $$
+        \begin{aligned}
+        \left[\grad (f\circ \varphi^{-1})\circ(\varphi \circ \xi^{-1})\right] (\xi(x)) &= \left[\grad (f\circ \varphi^{-1})\right]((\varphi \circ \xi^{-1}) (\xi(x))) \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
+        &= \left[\grad (f\circ \varphi^{-1})\right](\varphi(x)) \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
+        &= \mathrm O \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) = \mathrm O
+        \end{aligned}
+        $$
+
+    - 因此，$f$ 的临界点是良定义的。
+
+---
+
+当然，还有一种方法，就是将我们研究的流形限制为 Riemann 流形。
+
+- Riemann 流形具体定义我也不是非常清楚，但是直观想一想，我们平时用到的“性质良好”的流形，其“梯度”是显然的。
+    - 比如说一个流形上的函数，其函数值就是流形上的点的 height。那么，任意一个点的梯度，显然是“往上走”的。其临界点，就是最高的点。
 
 ---
 
@@ -232,4 +248,107 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
   </semantics>
 </math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e3f3991bf25064ad53405e00c6e2694ff8d6a83d" class="mwe-math-fallback-image-inline mw-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:8.03ex; height:2.843ex;" alt="{\displaystyle (2p-r)}"></span>称作符号差。
 </p>
+## 积分曲线
 
+积分曲线就是由实数 parameterize（i.e.实数到流形上的一个映射）的一个曲线。满足**积分曲线每一处的切向量都和 morse 函数的梯度方向是一致的**。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_14_45_202405262014531.png" style="zoom: 67%;" />
+
+- 注意，如果 $M \subset \mathbb R^m$，那么积分曲线是**向量值函数**，morse 函数是**多元函数**。因此，前者的“梯度”应该是纵坐标，后者的“梯度”应该是横坐标。
+
+积分线的性质如下：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_11_10_202405262011281.png" style="zoom: 67%;" />
+
+1. 第一条，可以通过常微分方程的性质得出
+2. 第二条，因为每一个点都有一条经过它的积分线，因此易得
+3. 第三条，直观上来看，好像挺有道理。但是仔细一看，为啥起点和终点必须在临界点处？还得是靠常微分方程的性质。
+
+### Example
+
+以 $f(x,y) = x^2 + y^2$ 为例，按照上面的说法，那就必须满足方程：
+$$
+[\grad f](\beta_x(x), \beta_y(x)) = (2\beta_x(x), 2\beta_y(x)) = \frac {\partial} {\partial x} \beta(x) = (\beta_x'(x), \beta_y'(x))
+$$
+显然，解就是：
+$$
+\beta(x) = (C e^{2x}, D e^{2x})
+$$
+也就是可以沿着任意从原点发出去的射线到达无穷远处。又 $\lim_{x \to -\infty}\beta(x) = (0,0), \lim_{x \to +\infty}\beta(x) = (+\infty, +\infty)$，因此显然是满足上图的三个要求的。
+
+## 流形稳定性
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_43_4_202405262043650.png" style="zoom: 67%;" />
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_48_37_202405262048877.png" style="zoom: 67%;" />
+
+如第一张图，稳定流形，就是**给定一个临界点（一般而言，要么是极小值，要么是极大值）**，我们可以得到一个区域。所有经过这个区域中某一个点的积分曲线，都以这个临界点为终点；不稳定流形的定义也类似。
+
+如第二张图，每一个左侧的区域（由实线包围起来），都是该区域中的极大值点的稳定流形；每一个右侧的区域（由虚线包围起来），都是该区域中的极小值点的稳定流形。
+
+## Morse-Smale 函数
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_21_1_55_202405262101426.png" style="zoom: 80%;" />
+
+如果两个流形的边界交于 p 点，那么，**两个子流形的边界的切线（i.e. 边界是线，而线的切空间就是切线）**，必须能够张成**流形的切空间**。
+
+- 也就是说：**两个切线不平行**
+    - 这样，两个流形的相交区间才是有形的
+
+## Morse-Smale 复形
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_21_25_13_202405262125342.png" style="zoom: 67%;" />
+
+由 Morse-Smale 的良好性质，对于任意两个 U(p) 和 S(q)，其相交区域就是一个 M-S 复形中的一个**四边形单元**（如右侧所示），而且这个单元必然由两个鞍点、一个极大值和一个极小值所构成。
+
+---
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_22_50_44_202405262250982.png" style="zoom:67%;" />
+
+如图，对于二维情况，就和上面所说的一样；对于三维情况，
+
+- 1-鞍点，就是惯性系数为 1（i.e. Hessian 矩阵的合同标准型有 1 个负号）
+- 2-鞍点，就是惯性系数为 2（i.e. Hessian 矩阵的合同标准型有 2 个负号）
+- ……
+
+# 离散情况：分片线性函数
+
+我们可以通过以下的方法获得分片线性函数：
+
+1. 在一个光滑流形上均匀采点，对每一个点算出对应的函数值
+2. 将这些点连线，建立一个 mesh
+3. 在每个三角网格中，采用重心坐标插值来近似函数值
+
+## 判断离散的临界点
+
+> Lower Link 的定义：
+> $$
+> Lk_u = \set{\sigma \in Lk_u | x \in \sigma \implies f(x) < f(u)}
+> $$
+> 这和 lower star（$Lk_u = \set{\sigma \in Lk_u | x \in \sigma \implies f(x) < f(u)}$）略有不同。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_15_41_202405270115970.png" style="zoom:80%;" />
+
+如上图，粉红色+黑线条的就是 lower star，仅黑线条的就是 lower link。
+
+对于极小值、鞍点、极大值，它们分别有不同的拓扑特征。
+
+## 分片线性函数的 morse 理论
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_50_202405270121874.png" style="zoom: 50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_26_202405270121820.png" style="zoom: 50%;" />
+
+对于不满足上面条件的函数，有时候可以通过一些小操作，就变成了满足条件的函数。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_25_47_202405270125190.png" style="zoom:67%;" />
+
+### Unfolding
+
+如图，中间的那一个点，旁边有**三个高点和三个矮点**，其 0 阶约化贝蒂数为 2（连通分支有 3 个）。
+
+- 因此，既不是一般点（不与单点同调）；也不是 PL 简单点（因为 0 阶约化贝蒂数为 2）
+
+但是，我们可以将中间点视作**重叠的两个点**，然后再进行计算。此时发现，这两个点分别都是鞍点。
+
+### Perturbation
+
+如果存在两个值一样的 PL 简单点，那么就加一个小扰动，让两个值不一样就好了。
