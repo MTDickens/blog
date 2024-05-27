@@ -16,8 +16,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 
 如上图，一个流形有一个图册，对流形上的函数 $f: M \to \mathbb R$ 在 $x \in M$ 点处求所谓的梯度，实际上是：
 
-- 给定图册中的一个包含 $x$ 的坐标卡，$\varphi: U (\subset M) \to \mathbb R^n, \text{ s.t. }x \in U$，我们求 $f \circ \varphi^{-1}: \mathbb R^n \to \mathbb R$ 在 $$ 的梯度。
-
+- 给定图册中的一个包含 $x$ 的坐标卡，$\varphi: U (\subset M) \to \mathbb R^n, \text{ s.t. }x \in U$，我们求 $f \circ \varphi^{-1}: \mathbb R^n \to \mathbb R$ 在 $\varphi(x)$ 的梯度。
     - 假如 $f \circ \varphi^{-1}$ 在 $\varphi(x)$ 处梯度为 0，那么对于其它任意的坐标卡 $\xi: U \to \mathbb R^n$，一样梯度为 0：
         $$
         \begin{aligned}
@@ -26,7 +25,6 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
         &= \mathrm O \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) = \mathrm O
         \end{aligned}
         $$
-
     - 因此，$f$ 的临界点是良定义的。
 
 ---
@@ -38,7 +36,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 
 ---
 
-称一个光滑函数是 morse 函数，如果其所有临界点满足以下条件：
+称一个光滑函数是 Morse 函数，如果其所有临界点满足以下条件：
 
 1. 非退化
 2. 函数值不同
@@ -248,13 +246,14 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
   </semantics>
 </math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e3f3991bf25064ad53405e00c6e2694ff8d6a83d" class="mwe-math-fallback-image-inline mw-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:8.03ex; height:2.843ex;" alt="{\displaystyle (2p-r)}"></span>称作符号差。
 </p>
+
 ## 积分曲线
 
-积分曲线就是由实数 parameterize（i.e.实数到流形上的一个映射）的一个曲线。满足**积分曲线每一处的切向量都和 morse 函数的梯度方向是一致的**。
+积分曲线就是由实数 parameterize（i.e.实数到流形上的一个映射）的一个曲线。满足**积分曲线每一处的切向量都和 Morse 函数的梯度方向是一致的**。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_14_45_202405262014531.png" style="zoom: 67%;" />
 
-- 注意，如果 $M \subset \mathbb R^m$，那么积分曲线是**向量值函数**，morse 函数是**多元函数**。因此，前者的“梯度”应该是纵坐标，后者的“梯度”应该是横坐标。
+- 注意，如果 $M \subset \mathbb R^m$，那么积分曲线是**向量值函数**，Morse 函数是**多元函数**。因此，前者的“梯度”应该是纵坐标，后者的“梯度”应该是横坐标。
 
 积分线的性质如下：
 
@@ -276,7 +275,7 @@ $$
 $$
 也就是可以沿着任意从原点发出去的射线到达无穷远处。又 $\lim_{x \to -\infty}\beta(x) = (0,0), \lim_{x \to +\infty}\beta(x) = (+\infty, +\infty)$，因此显然是满足上图的三个要求的。
 
-## 流形稳定性
+## 稳定和不稳定流形
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_43_4_202405262043650.png" style="zoom: 67%;" />
 
@@ -333,7 +332,7 @@ $$
 
 对于极小值、鞍点、极大值，它们分别有不同的拓扑特征。
 
-## 分片线性函数的 morse 理论
+## 分片线性函数的 Morse 理论
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_50_202405270121874.png" style="zoom: 50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_26_202405270121820.png" style="zoom: 50%;" />
 
@@ -352,3 +351,89 @@ $$
 ### Perturbation
 
 如果存在两个值一样的 PL 简单点，那么就加一个小扰动，让两个值不一样就好了。
+
+# Reeb 图
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_23_22_20_202405272322622.png"/>
+
+给定一个流形以及流形上的光滑实值函数，我们就可以求出每一个实数值对应的流形上的水平集（也就是函数值等于这个实值函数的点）。f
+
+我们将每一个水平集的连通关系当作等价类（通俗来说，就是**将圆圈缩成点**），就可以得到一个 Reeb 图。
+
+## Reeb 图的性质
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_23_40_15_202405272340426.png"/>
+
+## Morse 函数的 Reeb 图
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_13_12_202405280113316.png"/>
+
+Morse 函数相比一般函数性质更好，因此 Reeb 图也能更好地反映原始的拓扑信息。
+
+对于一个可定向的、有 g 个洞的二维流形，Morse 函数确定的 Reeb 图中有 g 个环路。
+
+因此，可以使用 Reeb 图，来快速地求出该二维流形的洞数，而不必仰仗计算同调。
+## 离散 Reeb 图的构造
+
+我们可以通过之前所说的分片线性函数，来构造离散的 Reeb 图。
+
+我们将所有点按照 Morse 函数的值从小往大排。然后，每一个值对应的水平集，实际上就是三角形面片上的点，也就对应着若干个三角形。随着值的增加，不断有三角形被移出，同时不断有三角形进入（我们可以构建一个循环链表来实现高效的移除、进入）。
+
+具体来说，每加入一个点的时候，就是对应以下几种情况：
+
+**极小值点**
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_0_39_4_202405280039620.png"/>
+
+**一般顶点**
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_0_41_34_202405280041157.png"/>
+
+**鞍点**
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_0_43_59_202405280043293.png"/>
+
+对于鞍点的情况，就是要么合并，要么分裂：
+1. 如果是合并，就将这个鞍点的对应的 lower star 在两个链表中分别删除，然后将两个循环链表”粘“起来，并且加入这个鞍点的 upper star
+2. 如果是分裂，就将这个链表对应的 lower star 删除，**然后不要把断开的部分连起来**，此时这个链表应该可以分裂成多个链表了。
+3. 假如说是一些奇葩的不可定向克莱因瓶之类的，可能会出现绕行方向的突变，此时需要重拍（**当然，图形学中，我们遇到的都是可定向的，因此不用在意这种情况**）
+
+**极大值点**
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_0_41_202405280100087.png"/>
+
+首先，我们先移除这个极大值点的 lower star 的三角形。而且此时，它的链表应该已经为空了。
+
+> [!note]+ 如何根据上面的信息绘制 Reeb 图？
+> 
+> 我们在 Reeb 中，绘制出所有临界点即可。然后对于临界点之间的连线，就是根据一个链表的出生到消亡来绘制的。
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_7_41_202405280107797.png"/>
+
+### 一些应用
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_27_23_202405280127731.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_27_13_202405280127704.png"/>
+
+> [!info]+ 几何图形骨架提取
+> 
+> 我们在关键点处（上图中，就是左脚、右脚、两手和头顶**共四个点**）设立一个热源，然后在流形上模拟热扩散。
+> 
+> 之后，加入这个温度标量场性质足够良好，就将它当作 Morse 函数。
+> 
+> 然后就是求出这个 Morse 函数的 Reeb 图。这个 Reeb 图就是其几何骨架。
+
+还可以进行 3D mesh 的匹配。众所周知，计算两个 3D 形状的相似性是困难的事情。因此，我们将 3D 形状通过某种离散 Morse 函数，构建出 Reeb 图。然后，我们就可以对两个不同的 Reeb 图之间进行匹配。
+
+# Morse 复形算法简介
+
+如何计算 Morse 复形？具体来说，如何在二维三角面片上，使用离散 Morse 函数，计算 Morse 复形？主要有下面三种方法：
+
+1. Boundary Based：就是试图计算出从极大/极小值点出发，到达鞍点的线。而这些线就能够分割出一个个（不）稳定流形
+2. Region Growth：从极大/极小点开始，逐渐加入临近的三角面片，从而逐渐得到该点对应的稳定/不稳定流形
+3. Watershed：将“一盆水”从极大值点“泼下去”，使之留到不同的极小值点。留到同一个极小值点的那些水，就属于同一个“流域”。而这个流域，就是一个 Morse 复形
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_52_8_202405280152938.png"/>
+
+***TODO***
