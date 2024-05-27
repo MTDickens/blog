@@ -144,6 +144,7 @@ nav:
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
               - Alpha Beta Pruning: "School-Courses/SP-SU-2024/ADS/alpha-beta-pruning.md"
               - Approximation: "School-Courses/SP-SU-2024/ADS/approximation.md"
+              - Parallel Computing: "School-Courses/SP-SU-2024/ADS/parallel-computing.md"
           - OOP:
               - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
   - 自学课程:
@@ -238,6 +239,7 @@ nav:
       - 2024 年:
           - 浅谈国内高校编程语言教育: "CS/24/programming-language-education-in-china.md"
           - 里奇微积分：一种计算向量求导，矩阵求导，张量求导的简单方法: "CS/24/ricci-calculus.md"
+          - 信息论: "CS/24/information-theory.md"
   - 数学:
       - 2023 年:
           - MIT牛人解说数学体系: "Mathematics/23/mathematical-system-explained-by-MIT-master.md"
@@ -321,6 +323,8 @@ plugins:
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
   - toc
+  - callouts
+
 markdown_extensions:
   - footnotes
   - admonition
