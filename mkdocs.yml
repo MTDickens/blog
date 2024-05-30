@@ -322,7 +322,6 @@ plugins:
       title_prefix: "[LOCKED]"
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
-  - toc
   - callouts
 
 markdown_extensions:
@@ -348,6 +347,9 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.arithmatex:
       generic: true
+  - toc:
+      permalink: true
+      toc_depth: 4
 
 extra_javascript:
   - javascripts/mathjax.js
