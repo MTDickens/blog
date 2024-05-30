@@ -279,18 +279,300 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 - 如果一个 exclusive lock 占据一个表现，那么其它 TXs 就无法获得任意 lock
     - 只有一个 TX 可以写
 
-### Two-Phase Protocal
+### Two-Phase Protocol
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_20_49_47_202405242049766.png"/>
 
----
+简单来说：**对于每一个 TX 而言，必须先上锁、把所有该做的事情都做完之后，才能一一把上的锁解开。也就是说，不能在使用完了一个资源之后，就解锁，而是要等到使用完了所有该使用的资源之后，才能解锁。**
 
-**证明：** Two-Phase Locking Protocol 可以保证 **conflict serializability**。
+两阶段协议可以保证**冲突可串行性**，证明如下。
 
-**（使用反证法）**
+> [!note]- 证明
+> 
+> **证明：** Two-Phase Locking Protocol 可以保证 **conflict serializability**。
+> 
+> **（使用反证法）**
+> 
+> 假如某几个 TXs 之间有 cycle。由于 T<sub>i</sub> 指向 T<sub>i+1</sub> 必须满足两者的操作其中至少有一是 WRITE，因此两锁之间必有至少一个是 lock-X，因此不能共存，也就是说：**必须等待 $T_i$ 解锁之后，才能让 $T_{i+1}$ 把锁锁上**。
+> 
+> 因此，T<sub>1</sub> 解锁 lock-u<sub>1</sub> 先于 T<sub>2</sub> 加 lock-l<sub>2</sub>，**由 two-phase 可知**，T<sub>2</sub> 加 lock-l<sub>2</sub> 必然先于 T<sub>2</sub> 解 lock-u<sub>2</sub>，而 T<sub>2</sub> 解 lock-u<sub>2</sub> 又先于 T<sub>3</sub> 加 lock-l<sub>3</sub>，……
+> 
+> 如此 induct，可以最终得到结论：T<sub>1</sub> 解 lock-u<sub>1</sub> 先于 T<sub>1</sub> 加 lock-l<sub>1</sub>。而这显然违反了 two-phase。因此，不可能存在 cycle。
 
-假如某几个 TXs 之间有 cycle。由于 T<sub>i</sub> 指向 T<sub>i+1</sub> 必须满足两者的操作其中至少有一是 WRITE，因此两锁之间必有至少一个是 lock-X，因此不能共存，也就是说：**必须等待 $T_i$ 解锁之后，才能让 $T_{i+1}$ 把锁锁上**。
+#### Extensions of Two-Phase Protocol
 
-因此，T<sub>1</sub> 解锁 lock-u<sub>1</sub> 先于 T<sub>2</sub> 加 lock-l<sub>2</sub>，**由 two-phase 可知**，T<sub>2</sub> 加 lock-l<sub>2</sub> 必然先于 T<sub>2</sub> 解 lock-u<sub>2</sub>，而 T<sub>2</sub> 解 lock-u<sub>2</sub> 又先于 T<sub>3</sub> 加 lock-l<sub>3</sub>，……
+上面的 two-phase protocol 只能保证 serializability，但是无法保证**可恢复性**。也就是说：没法保证如果 TX A 读取了 TX B 的数据，TX A 就必须在 TX B 之后 commit。
 
-如此 induct，可以最终得到结论：T<sub>1</sub> 解 lock-u<sub>1</sub> 先于 T<sub>1</sub> 加 lock-l<sub>1</sub>。而这显然违反了 two-phase。因此，不可能存在 cycle。
+因此，我们需要引入羡慕两个更加严格的 locking：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_18_55_23_202405301855476.png"/>
+
+如图：
+1. Strict two-phase locking: 就相当于，如果 TX B READ 了 **TX A WRITE** 的数据，那么，**由于 TX A WRITE 需要用到 exclusive lock**，因此在 TX B READ 的那一刻，**由该规则可知**，TX A 已经 commit/abort 了。因此是可恢复的。
+    - 同时，因为 TX A 已经 commit/abort 了，因此**假如 TX A 是 abort——也就是回滚**，那么由于 TX B 是在 TX A 回滚之后读取的数据，因此 TX B 必然无需回滚。也就是，**级联回滚可以避免**。
+2. Rigorous two-phase locking: 相比上面的更加严格，部分情况下会有用。
+
+> [!info]+
+> 
+> 对于“可串行化”事务隔离级别，**strict two-phase locking** 用的是最广泛的。
+
+#### Is Two-Phase Protocol Necessary?
+
+不妨思考下面这个例子：
+
+> [!example]+
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_6_38_202405301906633.png"/>
+> 
+> 
+
+显然，precedence graph 如下：
+
+```mermaid
+flowchart LR
+T3 --> T1 --> T2
+```
+
+显然是 conflict-serializable。
+
+但是，如果要实现上表的顺序，就必须按照下面的 lock/unlock 顺序：
+1. +C(T1)
+2. -C(T1)
+3. +C(T2)
+4. -C(T2)
+5. +A(T3)
+6. -A(T3)
+7. +A(T1)
+8. -A(T1)
+
+也就是下图的情形：
+
+> [!example]-
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_16_20_202405301916609.png"/>
+
+其中，-C(T1) 在 +C(T1) 和 +A(T1) 之间，违反了 two-phase locking protocol。**也就是说，一个 conflict-serializable 的 schedule 违反了 two-phase locking protocol**。
+
+因此，**two-phase locking protocol is not necessary**。
+
+### Two-Phase Protocol with Fined-Grained Lock Management
+
+直接上图。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_19_32_202405301919213.png"/>
+
+> [!info]+
+> 
+> 所谓 fined-grained，就是在 lock-X 和 lock-S 之外，另外加了一个 lock-U。
+> 
+> That is，上图的 **upgradable lock-S**，其实还有一个称呼就是 **lock-U(pgradable)**。
+> 
+> 也就是说，如果我们不知道我们之后只是读某个数据、还是要写某个数据，那么可以申请 U 锁，然后按需升级至 lock-U。
+> 
+> 同样，如果我们写完了，但是之后可能还需要读，那么可以先将 lock-X 降级至 lock-U，这样的话，就可以将资源更早地释放出去。
+
+### Automatic Lock in Real-World DBMS
+
+在数据库中，我们并不手动管理锁，DBMS 会帮我们管理，i.e. **锁是自动获得的**。下面就是 READ 和 WRITE 的伪代码：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_29_34_202405301929379.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_30_10_202405301930279.png"/>
+
+> [!abstract] 
+> 
+> 简单来说：有锁就用，没锁就申请，申请不了就等待。
+
+#### Locktable
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_48_45_202405301948799.png"/>
+
+我们使用 lock table 来管理锁。如图，lock table 可以作为 OOP 中的一个对象，有至少两个 methods：
+1. `Lock(Txn *tx, Obj *to_be_locked /* maybe row, table, column, etc */, LockType locktype, Lock *lock)`
+2. `Unlock(Txn *tx, Lock *lock)`
+
+返回值可以是 `bool`，意思是是否上锁成功。
+
+### Deadlock Problem
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_53_21_202405301953361.png"/>
+
+也就是说：T<sub>1</sub> 要了 lock-X on A，T<sub>2</sub> 要了 lock-X on B，然后两者分别又想要对方的锁，可惜都要不到，因此产生了 deadlock。
+
+> [!note]+ 根本原因
+> 
+> 其实，根本原因在于，如果 T<sub>1</sub> 要了 lock-X on A，T<sub>2</sub> 要了 lock-X on B，那么，由于 T<sub>1</sub> 之后还要 lock-X on B，而 T<sub>2</sub> 之后还要 lock-X on A，因此，**无论之后怎样的顺序，precedence graph 中，T1、T2 之间必然会形成一个环，从而必然违反 conflict-precedence。**
+> - 从而，使用基于满足 conflict-precedence 的 lock protocol，**必然无法继续下去**。
+> - 也可以说：**前面走错了一步（i.e. T<sub>1</sub> 要了 lock-X on A，紧接着 T<sub>2</sub> 要了 lock-X on B），后面无论怎么走，都是错的**。
+
+那么，如何改正错误呢？也是两种方法：
+1. 不要走错，i.e. 使用 deadlock prevention protocol
+    1. **Predeclaration:** 简单粗暴，就是 lock all its data items beforehand。但是很多时候，我们并不一定知道需要 lock 哪一些数据（e.g. 只知道之后会进行 write，但是 write 哪些数据，不知道），因此这个策略不是很实用。
+    2. **Graph-Based**: 很精巧，**而且可以不需要 Two-Phase，也能够实现 conflict-serializable 以及 deadlock-free；当然，如果需要 recoverable，还需要额外加限制**（见下面）
+2. 把走错的那一步退回去，i.e. 使用 timeout based protocol
+    - 实际上，也可以使用 deadlock detection based protocol（见下一段）
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_20_5_48_202405302005561.png"/>
+
+#### Deadlock Detection
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_5_37_202405302105693.png"/>
+
+如图：每一个时刻（或者说是每一个 TX 需要 wait 的时候），都可以作出这么一张图，显示的就是 wait 的依赖关系。如果发现有环，那么就说明死锁发生了。
+
+解决死锁的方式就是 **rollback**。
+- rollback 肯定会“牺牲”某一个 deadlock cycle 上的 TX。
+- rollback 分为 total rollback 和 as-far-as-necessary-to-break-deadlock rollback。第二种显然是更加 efficient
+- 如果某一个 TX **总是**被选为 victim，那么就发生了所谓的 starvation——某个 TX 总是获得不到所需的资源，因此这一条 TX 的执行时间远超预期
+
+#### Graph-Based Protocol
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_28_37_202405302128230.png"/>
+
+给定一个偏序关系（任意的偏序关系都可以，**不过只有一个有根的偏序关系，才有良好的性质，因此我们下文中讨论的都是有根的偏序关系**），我们加锁必须满足下面的条件：
+1. 只能加 lock-X
+2. 如果要某 TX 对 A 加锁，那么**必须保证该 TX 目前拥有 A 父节点的锁**
+3. 每一个节点，**至多加锁一次**
+4. 另外，与 2-phase 不同，可以**随时解锁**。
+
+假如说**偏序关系有根**，那么可以有以下的保证：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_32_5_202405302132211.png"/>
+
+> [!example]+
+> 
+> 对于我们前面举的 X, Y deadlock 的例子，你可以试一试下面两种偏序关系：
+> 1. $X \preceq Y$
+> 2. $X, Y \preceq Z$
+> 
+> 我们这里以第二种举例：假如说 TX1 希望获取 X 的锁，那么首先应该锁上 Z，然后再锁上 X。**由于 Z 只能锁一次，因此 TX1 在锁上 X 之后，就必须锁上 Y，然后才能解锁 Z；同时在 TX1 锁上 Y 之前，Z 尚未被 TX1 解锁，因此 TX2 也没法此时就锁上 Z，从而没法此时锁上 Y。因此，no deadlock。**
+
+> [!question]+ 如何实现 recoverability？
+> 
+> 由于 unlock 的时间没有控制，因此无法保证 dirty-read。我们还需要引入一些 commit dependency 机制（比如说如果检测到了 TX 1 读取了 TX 2 的脏数据，那么就必须强制 TX 1 在TX 2 之后提交。
+
+### Multiple Granularity
+
+> [!question]- 为何需要多粒度管理？
+> 
+> 想象一下，对于一个拥有多达 1 亿的数据的 table，我们如果希望 `SELECT * FROM table WHERE <cond>`，那么就必须对**全表加锁**（即使符合 `<cond>` 的数据寥寥无几，因为你需要查看整张表的数据来筛选；另外如果你实际上查找时用了红黑树，只看几个索引，也必须锁全表，因为整棵红黑树的索引就是基于全表数据的，改变了表的一个数据，就可能改动整个红黑树的索引）
+> 
+> 对全表加锁，和对全表的每一个 entries 加锁，在逻辑上是等价的，但是后者是 computational VERY EXPENSIVE。因此，显然需要提供“全表加锁”这种选项，也就是多粒度管理。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_47_9_202405302147272.png"/>
+
+如图：数据库管理是分多个层次的。
+
+比如，READ 的时候，我们需要对整个 table 加锁；但是 WRITE 的时候，我们只需要对整个 table 加 lock-S，然后对需要写入的数据加 lock-X 即可。因此，分层管理是很有必要的。
+
+同时，分层管理，又会引入一个问题：如果你对子层次加了锁，那么如果有某个 TX 要对其父层次加锁，怎么办？这里，可以通过 **lock-S/XI(ntention)** 来解决。
+
+#### Intention Lock Modes
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_52_52_202405302152392.png"/>
+
+简单来说：
+- IS: 我要**读**下面的**一些**数据了
+- IX: 我要**写**下面的**一些**数据了
+- SIX: 我**读整张表**，同时**写**下面的**一些**数据
+    - 其实，SIX = IX + S。但是由于 IX 和 S 是 incompatible，因此不能使用 IX+S，而是要单走一个 SIX
+
+其 compatibility 如下图所示：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_57_42_202405302157075.png"/>
+- 不难发现：$SIX = IX \land S$
+
+#### New Locking Scheme
+
+使用了新的锁，我们还需要新的 scheme。下面就是 Two-Phase Scheme 在多粒度管理下的变种：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_22_0_5_202405302200253.png"/>
+
+> [!warning]+
+> 
+> Multiple granularity 的 hierarchy 和之前的 graph-based hierarchy 不太一样：
+> - graph-based 只需要保证，在 lock 子节点的**瞬间**，父节点必须 lock
+> - multiple granularity 需要保证，在 lock 子节点的**所有时间**，父节点必须被相应地 lock
+>     - 也就是说，在某种子节点**全部**解锁之前，对应的父节点不可以解锁
+
+> [!note]+ Lock granularity escalation
+> 
+> 注意 lock granularity escalation：如果某个 TX 在某一层的锁太多了，会造成管理臃肿的情况。此时，直接移到上一层。
+
+### More Operations: `INSERT` and `DELETE`
+
+我们可以假设一个 table is infinitely large with `undefined` entries。然后，`INSERT` 就是将 undefined 改成一个有意义的值，而 `DELETE` 正好相反。
+
+我们现在先不考虑 multiple granularity。那么，假设我们有两个事务，第一个首先检查表中是否含有 primary key 为 114514 的 entry，如果没有，就插入 `(114514, Koji Tadokoro)`；第二个事务就是直接插入 `(114514, yaju senpai)`。
+
+执行的流程可能如下：
+1. 首先，TX 1 先给表中所有 entries 上 lock-S，然后判断是否存在 114514。
+2. 同时，TX 2 往表中插入数据，同时上 一个 lock-X。此时可以
+3. 最后，TX 1 插入数据，但是却导致了 primary key 重复。可是 TX 1 当时在读的时候，并没有读到 `(114514, <some name>)`。于是好似一个”114514 幽灵“产生了，此所谓幻读（phantom read）。
+
+当然，在这个例子中，也会存在 unrepeatable read 的问题。因为 TX 2 可以在插入之后立刻释放锁，TX 1 就可以再读一次，就会发现两次读的事情不一样。
+
+#### Lock the Table
+
+这是最暴力的方法：通过 multiple granularity，直接锁住整个 table——等价于将所有的 `undefined` entries 一并也锁上了。
+
+**缺点**：假如你要插入的是 `(1919810, <some name>)`，本来这个东西和 114514 毫无关系，却也插不进去了，造成了并行性下降。
+
+#### Lock the Value
+
+我们可以直接给 `<primary key name>: 114514` 这个 value with column 上一个锁。然后插入的时候，一个一个锁进行比较。
+
+**缺点**：在锁很多的时候，会造成大量的对比，并不划算。
+
+#### Lock the Leaf (Page)
+
+假如已经建立了索引，那么我们可以直接在 B+ 树的叶子上上锁，i.e. 将 lock-S 也锁在查询用到的叶子中。如下图：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_25_36_202405302325575.png"/>
+
+**缺点**：锁的太多了，不够精细。
+
+#### Next-Key Lock
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_26_38_202405302326821.png"/>
+
+我们希望更加精细地进行管理。因此，自然的想法就是：锁上对应访问过的值。但是，光是锁上值还不够，因为**值的范围**比**查询范围**要小。
+- 比如上图中，即使锁上了 14，如果插入的是 15（**在查询范围中，但是不在值的范围中**），那么也可以插入，从而照成 phantom/unrepeatable read。
+
+因此，必须要**把 next-key 也锁上**。
+- 如上图，锁上了 next-key 之后，x=15 和 x=7 这两个会造成 phantom/unrepeatable read 的插入，就插不进去了。
+- 但是，这样做，仍然也不是完美的——**如果决定插入 6，那么 lock-X 应该为 (6, 8)。因此 8 重复了，也插不进去。但是实际上 $6 \notin [7, 16]$。**
+
+#### Multiversion Lock
+
+多版本的方法，是目前工业界中最常用的。因为对并发性的支持最好（缺点就是多了一些 spatial overhead 罢了）。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_52_56_202405302352852.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_56_5_202405302356641.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_57_5_202405302357757.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_57_37_202405302357810.png"/>
+
+如图，有几个特点：
+1. 分成两种事务：读写、只读
+    - 这是因为只读事务在**实际中**占据了绝大多数的事务，因此我们可以进行优化
+2. 使用一个全局的时间戳，来标记不同的版本
+3. 使用 **rigorous two-phase protocol**
+
+对于**读写事务**：
+- 读的时候，加上 lock-S，且读取的是 **latest version**
+- 写的时候，加上 lock-X，且写到**无穷大时间戳**
+    - 因为还没有 commit，需要避免 dirty read
+- 在 commit 之后，把所有的 lock-X 的时间戳更改到**当前时间戳+1**。最后再将当前时间戳 +1。
+
+对于**只读事务**：
+- 建立的时候，记录下当前的时间戳
+- 读的时候，什么措施也不用，就读取**之前记录的时间戳的版本**即可
+
+另外，这样做显然会使得历史版本越来越多，从而占据无尽的空间。我们需要做的，就是时刻进行 garbage collection，将之后不可能再用到的 versions 的空间释放出来。
+
+> [!bug]+
+> 
+> 这种方法的正确性的证明，我还<del>没有写</del>不知道
+
