@@ -159,7 +159,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 我们可以用一个 precedence graph 来判断几个关系之间是否是冲突的：
 
-<img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240524172701545.png" alt="image-20240524172701545" style="zoom:50%;" />
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/31_0_39_57_202405310039192.png" style="zoom:50%;" />
 
 如图：
 
