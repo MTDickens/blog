@@ -308,8 +308,9 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_18_55_23_202405301855476.png"/>
 
 如图：
+
 1. Strict two-phase locking: 就相当于，如果 TX B READ 了 **TX A WRITE** 的数据，那么，**由于 TX A WRITE 需要用到 exclusive lock**，因此在 TX B READ 的那一刻，**由该规则可知**，TX A 已经 commit/abort 了。因此是可恢复的。
-    - 同时，因为 TX A 已经 commit/abort 了，因此**假如 TX A 是 abort——也就是回滚**，那么由于 TX B 是在 TX A 回滚之后读取的数据，因此 TX B 必然无需回滚。也就是，**级联回滚可以避免**。
+    - 同时，因为 TX A 已经 commit/abort 了，因此**假如 TX A 是 abort——也就是回滚**，那么由于 TX B 是在 TX A 回滚之后读取的数据，因此 TX B 必然无需回滚。也就是，**级联回滚可以避免，cascadeless**。
 2. Rigorous two-phase locking: 相比上面的更加严格，部分情况下会有用。
 
 > [!info]+
@@ -335,6 +336,7 @@ T3 --> T1 --> T2
 显然是 conflict-serializable。
 
 但是，如果要实现上表的顺序，就必须按照下面的 lock/unlock 顺序：
+
 1. +C(T1)
 2. -C(T1)
 3. +C(T2)
@@ -405,6 +407,7 @@ T3 --> T1 --> T2
 > - 也可以说：**前面走错了一步（i.e. T<sub>1</sub> 要了 lock-X on A，紧接着 T<sub>2</sub> 要了 lock-X on B），后面无论怎么走，都是错的**。
 
 那么，如何改正错误呢？也是两种方法：
+
 1. 不要走错，i.e. 使用 deadlock prevention protocol
     1. **Predeclaration:** 简单粗暴，就是 lock all its data items beforehand。但是很多时候，我们并不一定知道需要 lock 哪一些数据（e.g. 只知道之后会进行 write，但是 write 哪些数据，不知道），因此这个策略不是很实用。
     2. **Graph-Based**: 很精巧，**而且可以不需要 Two-Phase，也能够实现 conflict-serializable 以及 deadlock-free；当然，如果需要 recoverable，还需要额外加限制**（见下面）
@@ -429,6 +432,7 @@ T3 --> T1 --> T2
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_28_37_202405302128230.png"/>
 
 给定一个偏序关系（任意的偏序关系都可以，**不过只有一个有根的偏序关系，才有良好的性质，因此我们下文中讨论的都是有根的偏序关系**），我们加锁必须满足下面的条件：
+
 1. 只能加 lock-X
 2. 如果要某 TX 对 A 加锁，那么**必须保证该 TX 目前拥有 A 父节点的锁**
 3. 每一个节点，**至多加锁一次**
@@ -471,6 +475,7 @@ T3 --> T1 --> T2
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_52_52_202405302152392.png"/>
 
 简单来说：
+
 - IS: 我要**读**下面的**一些**数据了
 - IX: 我要**写**下面的**一些**数据了
 - SIX: 我**读整张表**，同时**写**下面的**一些**数据
@@ -479,6 +484,7 @@ T3 --> T1 --> T2
 其 compatibility 如下图所示：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_57_42_202405302157075.png"/>
+
 - 不难发现：$SIX = IX \land S$
 
 #### New Locking Scheme
@@ -490,6 +496,7 @@ T3 --> T1 --> T2
 > [!warning]+
 > 
 > Multiple granularity 的 hierarchy 和之前的 graph-based hierarchy 不太一样：
+> 
 > - graph-based 只需要保证，在 lock 子节点的**瞬间**，父节点必须 lock
 > - multiple granularity 需要保证，在 lock 子节点的**所有时间**，父节点必须被相应地 lock
 >     - 也就是说，在某种子节点**全部**解锁之前，对应的父节点不可以解锁
@@ -505,6 +512,7 @@ T3 --> T1 --> T2
 我们现在先不考虑 multiple granularity。那么，假设我们有两个事务，第一个首先检查表中是否含有 primary key 为 114514 的 entry，如果没有，就插入 `(114514, Koji Tadokoro)`；第二个事务就是直接插入 `(114514, yaju senpai)`。
 
 执行的流程可能如下：
+
 1. 首先，TX 1 先给表中所有 entries 上 lock-S，然后判断是否存在 114514。
 2. 同时，TX 2 往表中插入数据，同时上 一个 lock-X。此时可以
 3. 最后，TX 1 插入数据，但是却导致了 primary key 重复。可是 TX 1 当时在读的时候，并没有读到 `(114514, <some name>)`。于是好似一个”114514 幽灵“产生了，此所谓幻读（phantom read）。
@@ -536,9 +544,11 @@ T3 --> T1 --> T2
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_26_38_202405302326821.png"/>
 
 我们希望更加精细地进行管理。因此，自然的想法就是：锁上对应访问过的值。但是，光是锁上值还不够，因为**值的范围**比**查询范围**要小。
+
 - 比如上图中，即使锁上了 14，如果插入的是 15（**在查询范围中，但是不在值的范围中**），那么也可以插入，从而照成 phantom/unrepeatable read。
 
 因此，必须要**把 next-key 也锁上**。
+
 - 如上图，锁上了 next-key 之后，x=15 和 x=7 这两个会造成 phantom/unrepeatable read 的插入，就插不进去了。
 - 但是，这样做，仍然也不是完美的——**如果决定插入 6，那么 lock-X 应该为 (6, 8)。因此 8 重复了，也插不进去。但是实际上 $6 \notin [7, 16]$。**
 
@@ -555,18 +565,21 @@ T3 --> T1 --> T2
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_57_37_202405302357810.png"/>
 
 如图，有几个特点：
+
 1. 分成两种事务：读写、只读
     - 这是因为只读事务在**实际中**占据了绝大多数的事务，因此我们可以进行优化
 2. 使用一个全局的时间戳，来标记不同的版本
 3. 使用 **rigorous two-phase protocol**
 
 对于**读写事务**：
+
 - 读的时候，加上 lock-S，且读取的是 **latest version**
 - 写的时候，加上 lock-X，且写到**无穷大时间戳**
     - 因为还没有 commit，需要避免 dirty read
 - 在 commit 之后，把所有的 lock-X 的时间戳更改到**当前时间戳+1**。最后再将当前时间戳 +1。
 
 对于**只读事务**：
+
 - 建立的时候，记录下当前的时间戳
 - 读的时候，什么措施也不用，就读取**之前记录的时间戳的版本**即可
 
