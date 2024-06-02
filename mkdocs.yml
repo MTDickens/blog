@@ -126,6 +126,7 @@ nav:
               - 6. Computation Methods: "School-Courses/SP-SU-2024/TDA/lec6.md"
               - 7. Stability Theory: "School-Courses/SP-SU-2024/TDA/lec7.md"
               - 8. Morse Theory: "School-Courses/SP-SU-2024/TDA/lec8.md"
+              - 9. Vectorization of Persistence Diagrams: "School-Courses/SP-SU-2024/TDA/lec9.md"
           - 数据库系统:
               - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
               - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
