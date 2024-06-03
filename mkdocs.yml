@@ -231,6 +231,10 @@ nav:
               - 1. Introduction: "self-learning/USTC-Computer-Networking/1-Introduction.md"
               - 2. Application Layer: "self-learning/USTC-Computer-Networking/2-Application-Layer.md"
               - 3. Transport Layer: "self-learning/USTC-Computer-Networking/3-Transport-Layer.md"
+          - 算法博弈论:
+              - 1. Introduction: "self-learning/algorithmic-game-theory/1-introduction.md"
+              - 2. Basics of Mechanism Design: "self-learning/algorithmic-game-theory/2-basics-of-mechanism-design.md"
+              - 3. Myerson's Lemma: "self-learning/algorithmic-game-theory/3-myerson-s-lemma.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
