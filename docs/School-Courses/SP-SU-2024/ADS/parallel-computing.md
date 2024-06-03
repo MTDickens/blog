@@ -190,3 +190,88 @@ $$
 > 
 > 如果仿照 BPP 的话，就让 $P(n) = n^{-j} = \log \frac 23$ 即可。也就是 $j = \frac {\log \frac 32} {\log n}$。于是 $T(n) = O(\log\log n)$，和 Even Cleverer Parallel Method 一样。但是 $W(n)$ 好像不太好算，你可以试试用积分审敛法来计算一下 upper bound。
 
+# 续篇：外部排序
+
+## 模型
+
+我们这里的内存模型：
+
+1. 有一个内部内存，大小为 M cells
+    - 一个 cell 可以装一条数据
+2. 有若干个外部“内存”，大小不限制，每一块大小为 B cells。外部内存只能顺序读写。
+    - 需要保证 M >= 3B，否则内存太小了，没用
+3. 数据量为 N cells，其中 N >> M
+4. 内存的计算时间可以忽略，我们这里只考虑从外部内存传输到内部内存的时间。
+
+## 例子
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/3_18_33_27_202406031833083.png"/>
+
+如图：如果待排序的有 $N$ 条记录，而 working memory 只能装 $M$ 条记录。那么，
+
+- 如果一共使用 4 条磁带（含初始数据的磁带。每次归并用两条磁带，记作一组。两组之间交替储存数据），那么就是 2-way merge，也就是每一次将待 merge 的组数除以 2。一共需要 $\lceil \log_2 (N / M) \rceil$ 次
+- 加上初始在 T<sub>1</sub> 上的一次，总共需要 $1 + \lceil \log_2 (N / M) \rceil$ 次
+
+我们可以从哪里入手来加速排序呢？
+
+1. More ways: 使用 2k 条磁带，就可以将底数变成 k
+2. Less segments: 使用更多的内存，就可以在 N 不变时，让 N/M 更小
+
+> [!note]+ Time concerns
+> 
+> 我们关心下面的这几个次数：
+> 
+> 1. Seek time: 每一次 merge 中的一条磁带，对应一次 seek
+> 2. Block read: 读一个 block 的时间
+> 3. Internal sort time
+> 4. Merge N record time
+
+## Optimization
+
+### Reduce The \# of passes
+
+使用 k-way merge 可以 reduce the number of passes greatly。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/3_18_55_22_202406031855300.png"/>
+
+我们可以使用 k-way merge，从而可以让底数由 2 变成 k。
+
+- 但是必须保证：k <= M / B + 1（因为需要有一个格子放输出）。
+
+如果我们调小 B，那么可以使得 M / B 更大，从而 k 可以更大。但是，后果就是：N / B 也会随之变大，从而使得磁盘大小不好控制。
+
+### Heuristic Merge for Nearly-Sorted Data: Generating Longer Runs
+
+> [!note]+
+> 
+> 又称 replacement selection。
+
+如果我们可以创造出很长的 tape 的话，那么，排序时间就可以大大缩短：i.e. 其它短序列使用很少的时间合并之后，再和长序列进行一次合并。
+
+假如说我们的数据几乎排好了序，那么，我们可以使用这样的策略进行 exploit：
+
+1. 首先，读取前 M / B 个 blocks，然后将其中最小一个 M cells 当作 1 个 block 输出出去。
+2. 然后，再读入一个 blocks，然后将当前所有比之前 block 更大的（中最小的），组成一个 排好序的 block，并输出出去
+3. 如此往复，直到当前所有数据中，找不到一**整**个 block 比之前 block 更大的。就开下一个磁带
+4. ……
+
+然后，这样就会导致，磁带的长短不一。因此，我们采用**类似哈夫曼树的策略**，将磁带由短到长逐一合并。
+
+Example (假设一个 block 就是一个 cell)：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/4_4_46_21_202406040446450.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/4_4_47_6_202406040447495.png"/>
+
+这样做，每一个 block 只需要处理其深度次数（i.e. 2 -> 6 -> 11 -> 26，一共经历了 3 次排序），我们让更小的节点位于更深的位置，从而确保了总处理次数最小化：2 * 3 + 4 * 3 + 5 * 2 + 15 * 1 = 43。
+#### Use 3 Tapes to Sort Efficiently
+
+> [!abstract]+
+> 
+> 如上图：假如均匀划分的话（比如 6 runs on T2 and 7 runs on T3），那么一遍过之后，就会在 T1 上产生 6 个 runs，然后 T3 还剩 1 个 run。然后 T1 和 T3 在 T2 上产生 1 个 run，然后再 T1 和 T2 在 T3 上产生 1 个run……如此循环，就会导致 seek time 的显著增加。下面，我们介绍一种可以使用 3 条磁带，但是 seek time 比较有保证的一种方法。
+
+假设我们在 T1 处有 13 个 runs (i.e. blocks)，那么我们可以使用特殊的划分方法，让 3 条磁带就能跑。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/4_5_16_40_202406040516272.png"/>
+
+- 缺点：不难看出，上面采用的是斐波那契数，因此 seek  时间大概是 $\log_{1.6} N / M$。如果用 4 条磁带，就可以是 $\log_2 N/M$。Anyway，起码我们在 3 条磁带下实现了还算高效的方法。
