@@ -54,7 +54,7 @@
 同时，我们希望达成以下的目标：
 
 1. DSIC
-2. Optimal social surplus
+2. Optimal social surplus: $\sum_{i=1}^n\alpha_i v_i$ 最大化
 3. 同时，复杂度是多项式级别的，最好线性时间内完成
 
 至于细节如何，请看下一篇！

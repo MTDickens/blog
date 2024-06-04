@@ -15,3 +15,18 @@
 
 (2) 是重头戏，而我们可以通过 Myerson's Lemma 一窥究竟。
 
+# An Abstraction for Auctions
+
+为了更清晰地阐述 Myerson's Lemma，我们需要将一个 auction 进行形式化。在这里，我们使用 single-parameter environment abstraction。
+
+- 共有 n 个 bidders
+- 每个 bidder 有一个 private valuation
+- 我们将最终的拍卖结果，抽象成一个向量 $(x_1, x_2, \dots, x_n) \in X$，其中 $X$ 就是所有的可行解（i.e.可能出现的拍卖结果）。
+
+对于这个向量，不同的问题有不同的约束：
+
+1. Single-item auction: 0-1 向量，且 $\sum x_i = 1$
+2. Multiple-item auction (where each person can get at most 1 item): 0-1 向量，且 $\sum x_i = k$，k 为商品数
+3. **Sponsored search auction**: 如果第 i 个 bidder 申请到了第 j 个 slot，那么 $x_i = \alpha$
+4. ……
+
