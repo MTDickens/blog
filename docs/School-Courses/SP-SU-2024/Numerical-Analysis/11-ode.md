@@ -319,3 +319,170 @@ $$
 2. Explicit Method 先求一遍
 3. Implicit Method 再 correct 一遍
 
+# Higher Order ODE
+
+上面的若干个公式中，我们只考虑了 1 阶 ODE。下面我们拓展到任意阶的 ODE：
+
+$$
+y^{(m)}(t) = f(t, y, y', y'', \dots, y^{(m-1)})
+$$
+
+然后，我们可以将它变成一个**线性 ODE 方程组**，且里面的每一个 ODE 都是 1 阶的：
+
+$$
+\begin{aligned}
+u_1' &= y' = u_2 \newline
+u_2' &= y'' = u_3 \newline
+\vdots \newline
+u_{m-1}' &= y^{(m-1)} = u_m \newline
+u_{m}' &= y^{(m)} = f(\cdot, u_1, \dots, u_m)
+\end{aligned}
+$$
+
+- 同时，我们需要给出其初值：$u_1(a) = \alpha_1, \dots, u_m(a) = \alpha_m$。
+
+> [!info]+ A better formalization
+> 
+> 我们可以将上面的方程组，抽象成一个**多元向量值函数的方程**（$\vec y'(t) = \vec f(t, \vec y)$），然后**形式上**就和 1 阶 ODE 方程统一了。
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_9_25_202406052009915.png"/>
+## Example: Higher Order Modified Euler's Method
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_6_43_202406052006836.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_23_35_202406052023182.png"/>
+
+# Stability
+
+> [!abstract]+
+> 
+> 对于 one-step 和 multi-step 的方法，我们可以给出 consistent 和 convergent 的定义（这两个概念，对我们之后的分析有用）
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_38_53_202406052038749.png"/>
+
+下面是 **stability** 的定义，以及一个例子（有一个直观印象就好）：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_41_50_202406052041156.png"/>
+
+- 如图：可以发现 explicit 和 modified methods 的**趋势就是错的**，implicit method 的**趋势是正确的，虽然值差了不少**
+    - 其实，如果 $h > 1 / 15$，就会出现不断上升的情况；而如果 $h < 1 / 15$，那么就是不断下降。但是，implicit method 可以保证在 $h = 0.1$ 的情况下下降，说明 **implicit method has better *stability* than explicit/modified ones**。
+
+## Definition of Stability
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_13_18_202406052113093.png"/>
+
+上图的意思就是：
+
+- 给定一个 test equation $f(t, y) = y'(t) = \lambda y$，以及初值 $\alpha$（也就是 $y = \alpha e^{\lambda t}$）。
+- **给定一个 $\lambda$**，我们计算出来所有的步长 $h$，使得两个参数下，数值计算的误差可以越来越小
+    - 那么，对于每一组 $(\lambda, h)$，我们就称 this method is **absolute stable** w.r.t $H = \lambda h$
+- 所有的 H 组成一个 region of absolute stability。这个区域越大，则方法越稳定
+
+> [!question]+ 几个问题
+> 
+> 1. **为什么要求 $\Re(\lambda) < 0$**： 因为只有小于 0，才是右侧的图，真实函数值最终收敛到 0；大于 0，就是左侧的图，本身就是发散的。**本身就发散的函数，谈何“误差”能够收敛？只有本身能够收敛的函数，才能考虑其*误差*也收敛**
+> 2. **如何判断 initial error will decrease**：实际上，我们根本不需要判断 initial error。因为在 $\Re(\lambda) < 0$ 的情况下，**真实函数值**随着 $t_i$ 增大收敛到 0，所以只要**数值计算的一系列值 $\{w_i\}$ 也收敛到 0，就必然有 "initial error will decrease"**。
+
+## Example: Explicit & Implicit Euler's Method
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_25_19_202406052125824.png"/>
+
+对于 explicit method, 之前的 $y' = -30y$ 的例子，我们通过实验，发现 $h = 1/15$ 是分界线。由于 $1 + H = 1 + 1 / 15 * (-30) = -1$，不难发现我们的理论和实验是相符的。
+
+而对于 implicit method，即使 $h$ 比较大，也可以收敛。实际上，如果忽略除了 initial error 以外的一切 error，那么 implicit method 对于所有的 $(\lambda, h)$ 都收敛。
+
+- 因为 $\Re(\lambda) < 0, h \in \mathbb R^+$，因此 $\Re(H) = \Re(\lambda h) < 0$。而小于 0 的区域，不难看出，全部是蓝色的。
+- 也就是说：**unconditionally stable**
+## Example: Implicit & Explicit Runge-Kutta Method
+
+> [!note]+ **Implicit** 2nd-order Runge-Kutta method
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_37_48_202406052137503.png"/>
+> 
+> 上图是二阶的 implicit 方法，蓝色区域**恰好就是** $\Re(H) < 0$。因此也是 **unconditionally stable**。
+
+> [!note]+ **Explicit** Runge-Kutta Method
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_42_34_202406052142018.png"/>
+> 
+> 上面是 1 \~ 4 阶的 Runge-Kutta 的绝对收敛域，可以发现，虽然随着阶数的增大，收敛于也增大，但是**远远不及 implicit 方法的无条件收敛**
+
+因此，可以这么说。假如我们给定一个初值：
+
+- 如果只算很少几步，那么，基本上，**四阶显式 Runge-Kutta 比二阶隐式的更准**
+- 如果算成百上千步，那么，基本上，**二阶隐式 Runge-Kutta 比四阶显式的更准**
+
+> [!summary]+
+> 
+> 我们可以这么认为：隐式方法的**贪心策略**比显式的**更优**。虽然 4 阶在一步之内更准，但是其**误差偏的方向不好**，百步之外就会明显恶化；2 阶虽然不那么准，但是**误差偏的方向好**，百步之外也不错。
+> 
+> 另外，这还说明了：local truncation error **has nothing to do with** stability
+
+## Stability of Linear System
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_22_18_1_202406052218308.png"/>
+
+考虑上面的线性系统就是：
+
+$$
+\mathrm u' = 
+\begin{pmatrix}
+u_1' \newline
+u_2' \newline
+\end{pmatrix} + \mathrm b(t) = 
+\begin{pmatrix}
+9 & 24 \newline
+-24 & -51 \newline
+\end{pmatrix} \mathrm u + \mathrm b(t)
+$$
+进行特征值分解：
+
+$$
+\begin{aligned}
+&\mathrm u' = \mathrm W 
+\begin{pmatrix}
+-3 & 0 \newline
+0 & -39 \newline
+\end{pmatrix} \mathrm W^{-1} \mathrm u + \mathrm b(t) \newline
+\implies & (\mathrm W^{-1} u)' = \mathrm W^{-1} (u)' = \begin{pmatrix}
+-3 & 0 \newline
+0 & -39 \newline
+\end{pmatrix} \mathrm W^{-1} \mathrm u + \mathrm W^{-1} \mathrm b(t) \newline
+\implies& \mathrm v' = 
+\begin{pmatrix}
+-3 & 0 \newline
+0 & -39 \newline
+\end{pmatrix} \mathrm v + \mathrm c(t) \newline
+\implies& 
+\left\{\begin{matrix} v_1' = -3 v_1 + c_1(t) \newline v_2' = -39 v_2 + c_2(t) \end{matrix}\right.
+\end{aligned}
+$$
+
+从而，我们得到了两个 decoupled 方程。两个方程分别是 $\lambda_1 = -3, \lambda_2 = -39$。
+
+**假如说不进行 decoupling**，且采用 explicit Runge-Kutta method 进行计算，那么就必须有：
+
+$$
+h < \min(2 / 3, 2 / 39) = 2 / 39
+$$
+
+从而，就造成了浪费，因为本来第一个迭代方程只需要 $h_1 < 2 / 3$。
+
+> [!info]+ 实际的例子
+> 
+> ***一***、很多实际中的计算，矩阵的特征值分布是**小特征值很多，大特征值很少**。因此会感觉“很浪费”。
+> 
+> ***二***、在实际的工业软件中，假如说 h 本来可以为 4 mm，但是现在由于精度问题，必须为 2 mm，那么就会导致：
+> 
+> 1. 同样的体积，有限元数量增加到了 8 倍
+> 2. 从而，进行一次矩阵运算，就需要 8<sup>3</sup>  倍的运算量
+> 3. 然后，由于自由度增加了，最大的 eigenvalue 又飙升。总共，导致了 8<sup>4</sup> 的运算量
+> 
+> 总共就是 4096 倍的运算量。假如说 4 mm 可以在 1 天算完，2 mm 就要用 11.2 年算完，前者非常 trivial，后者完全是 intractable。
+> 
+
+> [!note]+ Observation
+> 
+> 1. 特征值之间的分布越不均匀，这样的浪费越大。
+> 2. 矩阵的**条件数**和**步长浪费**一般而言是一起出现的，也就是说，**特征值相差太大的矩阵，不管是在动力系统中，还是在解线性方程组中，都是非常不受喜欢的**。
+
