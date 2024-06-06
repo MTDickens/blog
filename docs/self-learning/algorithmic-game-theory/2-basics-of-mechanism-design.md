@@ -50,6 +50,8 @@
 2. $\alpha_i$ has nothing to do with bidder, i.e. the advertisement it shows.
     - 其实这个假设很不靠谱，但是解决方法很容易：只要将每一个 bidder 的广告质量进行量化，然后乘以 $\alpha_i$，就可以计算出实际的点击率。当然，算法与简单假设下的不太一样。
 3. Bidder 关心的是 $\alpha_i (v_i - p)$ 最大化，i.e. 点击率越大越好，同时每次点击的价格 p 不能太大
+    - 题外话：这里的 $\alpha_i (v_i - p)$ ，在我们之后的“标准表达式”中，其实应该记作 $\alpha_i v_i - p_i$
+        - 其中 $p_i := a_i * p$，也就是点击率乘以每一次点击需支付的费用，也就是总费用
 
 同时，我们希望达成以下的目标：
 
