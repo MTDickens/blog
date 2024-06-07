@@ -71,3 +71,47 @@ $$
 
 但是：满足 **DSIC** 的方法（换言之：monotone functions）无穷无尽，如何找到最好的那一个呢？
 
+# Expected Revenue Equals Expected Virtual Welfare
+
+> [!info]+
+>
+> Virtual surplus: $\varphi(v_i) = v_i - \frac {1-F_i(v_i)} {f_i(v_i)}$ 
+
+**Given that all bids are truthful**, 我们可以推出以下的结论：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/8_2_49_44_202406080249545.png"/>
+
+## Optimization
+
+如果我们希望最优化上面的 expectation，实际上就是**对于每一个 $\vec v$ 都进行最优化**，i.e. $\forall \vec v \in ([0, v_\max])^n: \underset{x(\vec v)}{\text{maximize}} \sum_{i=1}^n \varphi_i(v_i) x_i(\vec v)$。
+
+- 注意：有时候，$\varphi_i(v_i)$ 会全为负数。此时，按照上面的说法，就应该让 $x(\vec v)$ 全是 0。这也印证了**设立最低价格的方法**是合理的。
+
+同时，我们还希望所有的 $x_i(z;\vec v_{-i})$ 是 monotone function。不难看出，**充分条件就是：$\varphi_i(z)$ is monotone**。
+
+- 对于高斯、指数、均匀分布而言，$\varphi_i(z)$ is indeed monotone, which is perfect since these two distributions are often used.
+- 对于双峰分布和一些非常重尾的分布，可能也会让 $\varphi_i(z)$ 变成非 monotone
+
+## Example: Revenue Maximization in the Context of Uniform i.i.d
+
+对于 single item auction 而言，假设所有的 bidder 都是 i.i.d，那么，我们可以很容易地进行 revenue maximization auction：
+
+1. 出价后，然后剔除其中 $v_i < v_\max / 2$ 的（i.e. $\varphi(v_i) < 0$ 的）
+2. 然后，**如果有剩余**，就选出最大的，然后按照传统的 Vickery auction 来决定 payment 即可；**如果没有剩余，就不卖了**
+
+此处相比传统意义上的 single item auction，就在于
+
+1. 如果出价均低于 $v_\max/2$，就**不卖了**，从而 social surplus 为 0。
+    - 因此，**我们在 revenue maximization 的同时，并没有实现 social surplus maximization**。
+2. 如果**只有一人**出价大于等于 $v_\max/2$，那么表面上看来没有 second price。但是，实际上，由于 $X(z; \vec v_{-i} \text{ whose components are all less than }v_\max / 2)$ 在 $z = v_\max / 2$ 的时候会有一次阶跃（从 0 到 1），因此 $p_i(v_i) = v_\max / 2$，**也就相当于设置了一个 minimum price**
+
+因此，是非常合理的拍卖规则。
+
+> [!note]+ 一些 disadvantage
+> 
+> 对于某些分布而言，
+> 
+> 1. 有可能出价最高的 bidder 并没有获得最高的收益，因此**并不合理**。
+> 2. 有可能**规则非常怪异繁琐**，解释性不强，人们不喜欢。
+>    
+> 因此，有必要放弃 optimal auction 的条件，使用更加合理+解释性好的算法，来实现 nearly optimal auction. And this will be discussed in our next lecture.
