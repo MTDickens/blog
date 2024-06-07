@@ -236,6 +236,7 @@ nav:
               - 2. Basics of Mechanism Design: "self-learning/algorithmic-game-theory/2-basics-of-mechanism-design.md"
               - 3. Myerson's Lemma: "self-learning/algorithmic-game-theory/3-myerson-s-lemma.md"
               - 4. Algorithmic Mechanism Design: "self-learning/algorithmic-game-theory/4-algorithmic-mechanism-design.md"
+              - 5. Revenue Maximization Auctions: "self-learning/algorithmic-game-theory/5-revenue-maximization-auctions.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
