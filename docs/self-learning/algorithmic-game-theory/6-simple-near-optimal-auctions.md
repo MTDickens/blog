@@ -15,6 +15,10 @@ $$
 
 # Prophet Inequality
 
+> [!abstract]+
+> 
+> Prophet Inequality 的意思就是：假如有一个全知的 prophet, 我们也有一种策略，使得我们的收益可以达到 prophet 的至少 1/2。
+
 **Theorem 2.1 (Prophet Inequality)** For every sequence $G_1, \dots, G_n$ of independent distributions, there is strategy that guarantees expected reward $\frac 1 2 \E_\pi[\max_i \pi_i ]$. In fact, there is such a very simple threshold strategy $t$, which accepts prize $i$ if and only if $\pi_i \geq t$.
 
 *Proof*: 
@@ -50,6 +54,7 @@ $$
 > **其次**，我们还可以得出更强的结论：如果不是取 the first value that is above the threshold，而是取 the **worst** value (among all values) that are above the threshold，也是 1/2 的 bound。
 > 
 > - 具体来说，证明的时候，只需要把第二行改成 $(1-q(t)) * t + \sum_{i=1}^n \E[\pi_i - t | \forall j \neq i: \pi_j < t, \pi_i \geq t] * \Pr[\forall j \neq i: \pi_j < t, \pi_i \geq t]$（也就是用 $j \neq i$ 代替 $j < i$），即可
+
 ## Example: Single-Item Auction
 
 对于 single-item auction 而言，由于 $\E_\v[\sum_{i=1}^n p_i(\v)] = \E_\v[\sum_{i=1}^n \varphi_i(\v) x_i(\v)]$，因此我们所需要的，就是最大化右侧：$\max_x \E_\v[\sum_{i=1}^n \varphi_i(\v) x_i(\v)] = \E_\v[\max_i (\varphi_i(\v))^+]$。
@@ -68,6 +73,25 @@ $$
 > 
 > - 具体详见 [timroughgarden.org/f13/l/l6.pdf](https://timroughgarden.org/f13/l/l6.pdf)
 
+## Case Study: Reserve Prices in Yahoo! Keyword Auctions
+
+### 理论依据
+
+假设所有 bidder 均为 i.i.d. subject to $F$, where $F$ is a [regular distribution](https://en.wikipedia.org/wiki/Regular_distribution_(economics))，那么，利润最优的策略就是：rank bidders by bid (from the best slot to the worst) after applying the monopoly reserve price $\varphi^{-1}(0)$ to all bidders, where $\varphi$ is the virtual valuation function of $F$.
+
+### 计算过程
+
+首先，如何求出每个关键字的 $\varphi_{keyword}^{-1}(0)$？Yahoo 采用了**对数正态分布**来对 $F_{keyword}$ 进行建模（this is somewhat ad hoc, but really doesn't matter）。通过统计历史上的出价信息，求出该分布的 $\mu, \sigma$。从而得到 $\varphi_{keyword}$，从而可以反求 $\varphi_{keyword}^{-1}(0)$。
+
+> [!info]+ 实际的统计
+> 
+> 由于 Yahoo! 使用的是 Generalized Second Price auction，因此
+### 结论
+
+通过理论计算，可以发现之前的 reserve price 过低（$0.1 左右，而理论上的 optimal reserve price 是 $0.3 \~ $0.4）。
+
+提高 reserve price 之后，keywords with **thin market** 的利润有明显的上升。这是因为对于竞争激烈的市场，往往 reserve price 起不到作用（因为很大概率，会有至少两个 bids 的价格大于等于 reserve price），而 thin market 可以起到很好的作用。
+
 # Prior-Independent Auctions
 
 > [!abstract]+
@@ -76,7 +100,7 @@ $$
 
 我们不妨退回到最基础的 single-item auction with i.i.d. $v_i$。在这个条件下，我们可以得到一个很经典 yet 很 fancy 的结论。
 
-**Theorem 4.1 (Bulow-Klemperer Theorem)** Let $F$ be a [regular distribution](https://en.wikipedia.org/wiki/Regular_distribution_(economics)) and $n$ a positive integer. If we only consider those DSIC mechanisms, then:
+**Theorem 4.1 (Bulow-Klemperer Theorem)** Suppose all $v_i$'s are i.i.d.'s. Let $F$ be a regular distribution and $n$ a positive integer. If we only consider those DSIC mechanisms, then:
 
 $$
 \E_{v_1,\dots, v_{n+1} \sim F} [Rev(\mathrm {VA}) (n + 1 \text{ bidders})] ≥ \E_{v_1,\dots, v_{n+1} \sim F}  [Rev(\mathrm{OPT}_F ) (n \text{ bidders})]
@@ -103,4 +127,3 @@ Auxiliary auction 是：
 
 
 由于 auxiliary auction **一定会将物品分配给某个人**，因此，Vickrey auction (LHS) 必然不差于 auxiliary auction。$\blacksquare$
-
