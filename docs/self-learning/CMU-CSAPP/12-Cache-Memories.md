@@ -85,7 +85,7 @@ Write is somewhat more complicated than read, since we have **multiple copies** 
 So, there are two problems we have to consider:
 
 1. What to do on a write-hit?
-   - Write-through (i.e. write immediately to memory)
+   - Write-through (i.e. write immediately to memory as well as cache)
    - Write-back (i.e. defer write to memory **until replacement of line**)
      - and this needs a dirty bit
 2. What to do on a write-miss?

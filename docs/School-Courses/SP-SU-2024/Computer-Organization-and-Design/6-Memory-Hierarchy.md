@@ -223,19 +223,20 @@ $$
 
 # Write Strategies of Cache
 
-可以参考 [csapp notes](/self-learning/CMU-CSAPP/12-Cache-Memories/#cache-write)。这里简单说一说：
+可以参考 [csapp notes](/self-learning/CMU-CSAPP/12-Cache-Memories/#cache-write)。这里的四种策略，其实要分为两组，每组两个。每一组分别对应 hit 和 miss 两种情况：
 
-Write back: **写操作**的时候，写到 cache；如果替换掉的 cache is valid and dirty，那么这时候才将原先的 cache 写到内存中
+**Cache 中已经有数据: Hit**
 
-Write through: **写操作**的时候直接写回内存
+- Write through: 同时写到 cache 以及 memory
+- Write back: 只写到 cache，且 mark it as dirty；直到被替换了，才写进内存
 
-Write allocate: **写操作**的时候，如果对应内存不在 cache 中，那么就将这一个内存取到 cache
+**Cache 中还没有数据: Miss**
 
-No-write allocate: **写操作**的时候，如果对应内存不在 cache 中，那么也不取来
+- Write allocate: 分配一个 block（有必要可以替换），将 memory data fetch 进这个 block，然后再修改其中的对应的数据，并 mark as dirty
+    - 既然数据已被修改，为何还需要 fetch original data into block？因为**我们只修改 block 中的一小部分**，并不是整个 block。未修改的部分，就是 original data
+- Non-Write allocate: 直接写进内存
 
-
-
-可以发现：write through 就是和 no-write allocate 搭配着用的（i.e. 直接写回内存，也无需加载到 cache）；write back 和 write allocate 也一样（i.e. 为了写到 cache，首先这个内存地址得在 cache 里面；而通过 write allocate 的方式，我们确实就将这个内存地址加载到了 cache 里面去）。
+不难发现：Write through 和 non-allocate 都是**每一次都直接写入内存**；而 write back 和 write allocate 就是**能不写则不写**。因此，"write through + non-allocate" 和 "write back + write allocate" 是相配的。
 
 # Replacement Strategies of Cache
 
