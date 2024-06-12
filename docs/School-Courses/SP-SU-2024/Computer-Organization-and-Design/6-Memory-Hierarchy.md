@@ -238,6 +238,47 @@ $$
 
 不难发现：Write through 和 non-allocate 都是**每一次都直接写入内存**；而 write back 和 write allocate 就是**能不写则不写**。因此，"write through + non-allocate" 和 "write back + write allocate" 是相配的。
 
+> [!info]+ Inclusive, Exclusive and NI/NE Caching
+> 
+> 这里假设只有 L1, L2 and memory.
+> 
+> #### Inclusive Cache（包容性缓存）
+> 
+> 包容性缓存的主要特点是：**L1 缓存中的数据地址也必须在 L2 缓存中存在（即 $L_1 \subset L_2$）**，但是不要求数据**内容**一样。
+> 
+> - **兼容性**：
+>     - **Write Through:** 包容性缓存适合 Write Through 策略，因为每次写操作都会直接写入主存储器，这与缓存层级之间的包容性保持一致。
+>     - **Write Back:** 包容性缓存与 Write Back 策略兼容，因为数据可以在 L1 中进行多次修改，最终会写回 L2 和主存储器。
+>     - **Write Allocate:** 包容性缓存支持 Write Allocate，因为新数据会分配到 L1 和 L2 缓存中。
+>     - **Non-Write Allocate:** 包容性缓存同样支持 Non-Write Allocate 策略，因为不需要将数据块加载到缓存中就可以直接写入主存储器。
+> - **Read and Flush**:
+>     - Read 的时候，应该 L1 和 L2 均有一个备份
+>     - Flush 的时候，如果 L2 被 flush，那么 L1 的对应地址也应该被 invalidate
+> 
+> #### Exclusive Cache（独占性缓存）
+> 
+> 独占性缓存的主要特点是：**L1 缓存中的数据不在 L2 缓存中存在（即 $L_1 \cap L_2 = \emptyset$）**。L1 和 L2 缓存共同利用缓存空间，不会存储重复的数据块。
+> 
+> - **兼容性**：
+>     - **Write Through:** 独占性缓存很不适合 Write Through 策略。原因很简单：write through 就是需要同时写 L1 和 L2 的，但是 exclusive 又要求同一个地址不能在这两块中同时出现。
+>         - i.e. L1 write hit 是，要同时写入 L1 和 L2，但是此处 L2 对应的地址，由 exclusive 可知，**根本就不存在**
+>     - **Write Back:** 独占性缓存与 Write Back 策略非常兼容，L1 中的数据在需要时才会写入 L2，充分利用缓存空间。
+>         - i.e. L1 write hit 是，只写入 L1，从而不会造成重复数据
+>     - **Write Allocate:** 独占性缓存支持 Write Allocate，因为新数据会分配到 L1 缓存中，腾出 L2 缓存空间给其他数据。
+>         - i.e. L1 write miss 时，会删除 L2 中的对应数据（如果存在），然后将该数据加载到 L1 中
+>     - **Non-Write Allocate:** 独占性缓存支持 Non-Write Allocate，因为它能够直接在主存储器中写入数据，而不需要占用缓存空间。
+>         - i.e. L1 write miss 时，直接写到 L2 去。不会造成重复数据。
+> - **Read and Flush**:
+>     - Read 的时候，数据应该直接写到 L1 中，不应该经 L2 的手
+>     - Flush 的时候，如果 L1 被 flush，那么把 L1 的数据存到 L2
+>         - 这不是强制要求。只是这样做，能够在保证 exclusive 的同时，访问速度也有保证
+> 
+> #### NI/NE Cache（非包容性/非排他性缓存）
+> 
+> 非包容性/非排他性缓存是一种灵活的缓存策略：**L1 和 L2 缓存中的数据既可以重叠也可以独立存在**。这种缓存策略不强制要求包容性或排他性。
+> 
+> - **兼容性**：肯定都是兼容的
+> - **Read and Flush**: 策略可以非常随意
 # Replacement Strategies of Cache
 
 一般而言，有 LRU (Least Recently Used) 和 FIFO 两种策略。
