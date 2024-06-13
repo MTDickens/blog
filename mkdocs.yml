@@ -241,6 +241,8 @@ nav:
               - 5. Revenue Maximization Auctions: "self-learning/algorithmic-game-theory/5-revenue-maximization-auctions.md"
               - 6. Simple Near-Optimal Auctions: "self-learning/algorithmic-game-theory/6-simple-near-optimal-auctions.md"
               - 7. Multi-parameter Mechanism Design: "self-learning/algorithmic-game-theory/7-multi-parameter-mechanism-design.md"
+              - 8. Beyond Quasi-Linearity: "self-learning/algorithmic-game-theory/8-beyond-quasi-linearity.md"
+              - 9. Mechanism Design w/o Money: "self-learning/algorithmic-game-theory/9-mechanism-design-w-o-money.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
