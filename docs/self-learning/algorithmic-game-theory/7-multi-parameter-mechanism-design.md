@@ -300,4 +300,36 @@ A second approach is to **predefine a limited set of allowable package bids**, r
 
 # Case Study: Reverse Auction by FCC
 
-***TODO***
+**Reverse auction 相比前面的 SAA，有着截然不同的机制。**
+
+> [!note]+ Objective
+> 
+> FCC 的目标如下图所示：
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/12_20_56_53_202406122056930.png"/>
+> 
+> **解释**: 假设 38~51 波段，在全国范围内都被占用。我们希望通过收购+再分配，使得 47~51 波段可以空出来，然后 FCC 会将这些波段进行再次拍卖。
+
+FCC 的目标是：
+
+1. 购买部分 TV station 的 license（越便宜越好）
+2. 然后将剩下的波段**重新分配**，从而得以全部 pack 到一个更窄的区间内（比如 38 ~ 46）
+3. 这样，就有一些全国范围内连续的波段可以被 freed，从而得以再次拍卖
+
+同时，FCC 购买的波段应该 welfare-maximizing and feasible。
+
+**Feasible**: 就是说，在**重新分配**阶段，对于某一个 bidder，我们只能更改其拥有的波段，但是不能更改其拥有的地区。同时，two TV stations with overlapping geographic areas cannot be assigned the same or adjacent channels。因此这是一个 NP-hard 问题（根据 lecture note 上所说，是一个 graph coloring problem）。
+
+- 由于规模不算特别大，我们就用指数级别的方法来求解
+
+**Welfare-maximizing**: 采用以下 greedy algorithm:
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/12_21_21_9_202406122121920.png"/>
+
+>[!note]+ 补充说明
+> 
+> 如果有多个 $i$，我们就可以用各种 heuristic 来删除——价格最高的、波段平均价格最高的优先删除等等。最后就看哪一种 heuristic 最能够 maximize welfare，就用哪个
+> 
+> 不难发现，我们提到的上面两种 heuristic 都是（在 reverse auction 意义下）monotone 的。因此也是 DSIC。
+> 
+> 现实中，我们更希望用 ascending auction。把当前贪心算法中的 seal-bid 改成 ascending auction 的机制，也可以实现 monotone。
