@@ -83,7 +83,6 @@ $$
 > $$
 > \begin{aligned}
 > p_i(\mathbf b) &= \underbrace{b_i(\omega^\ast)}_\text{bid} - \underbrace{\left[\sum_{j = 1}^n b_j(\omega^\ast) - \underset{\omega \in \Omega} {\max} \left(\sum_{j \neq i} b_j(\omega) \right) \right]}_\text{rebate}, \text{ where } \omega^\ast := \mathbf{x(b)} \newline
-> 
 > &= \underbrace{b_i(\omega^\ast)}_\text{bid} - \underbrace{\left[ \underset{\omega \in \Omega} {\max} \left(\sum_{j = 1}^n b_j(\omega) \right) - \underset{\omega \in \Omega} {\max} \left(\sum_{j \neq i} b_j(\omega) \right) \right]}_\text{rebate}, \text{ where } \omega^\ast := \mathbf{x(b)}
 > \end{aligned}
 > $$
