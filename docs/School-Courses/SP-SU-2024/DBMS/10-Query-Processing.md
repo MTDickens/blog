@@ -240,7 +240,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
     - 而每一次内循环结束之后，此时磁盘读写头在 $s$ 的最后一块处。因此，如果下一个 record of r 不在内存中，则需要通过 seek 来移动到下一个 record of r 所在 block 开始处。
         - 总共 $b_r$​ 次
 
-不难看出：**小**关系适合做外层循环。
+不难看出：**小**关系适合做内层循环。
 
 #### Optimization: Per-Block Loop
 
