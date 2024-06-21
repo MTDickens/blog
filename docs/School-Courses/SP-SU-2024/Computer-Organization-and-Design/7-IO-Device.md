@@ -165,19 +165,13 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 
 只能够 large write。而不能 small write。
 - 这是因为 RAID 3 是 **byte-条带化**的，从而逻辑中的一块是分布在物理上的所有块上的。
+- 因此，如果你希望写**逻辑中的**一块进入磁盘，那么必须**在物理上**将数据同时写入所有磁盘。
 
 ## RAID 4
 
 RAID 4 和 RAID 3 的差别是：
 1. RAID 4 是 block 条带化的，而 RAID 3 是 byte 条带化的。
 2. RAID 4 支持 small write。由于 $P_\text{old} = \text{other tables} \oplus \text{old data of this table}$，因此，$P_\text{new} = \text{other tables} \oplus \text{new data} = \text{other tables} \oplus \text{old data} \oplus \text{old data} \oplus \text{new data} = P_\text{old} \oplus \text{old data} \oplus \text{new data}$。我们只需要通过该块的旧数据、新数据和奇偶校验块本身，就可以计算得出。
-
-> [!warning]+ 注意
-> 
-> RAID 3 和 4 的**每一个 block 里面有一个自带的奇偶校验位**，这样，在读取的时候，就不需要依赖其它盘。
-> 
-> 但是，如果一个盘损坏的话（可以通过盘内的奇偶校验位查出来），还是必须依靠其它所有的盘来恢复数据。
-> 
 
 ### RAID 4 的不足
 
