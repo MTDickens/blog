@@ -9,6 +9,7 @@ IO 也是 memory 组成的一部分。我们使用 mapped memory 方式来访问
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_15_17_55_202405281517841.png"/>
 
 IO 有三种：
+
 1. 只读：比如鼠标、键盘
 2. 只写：比如显示器
 3. 可读写：比如硬盘、网络接口
@@ -81,6 +82,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 ## Availability Metric
 
 主要有三个概念：
+
 1. MTTF: Mean Time To Failure
 2. MTTR: Mean Time To Repair
 3. MTBF: Mean Time Between Failures
@@ -111,6 +113,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 通过小磁盘 + 磁盘并行访问，我们可以做到成倍地加快磁盘速度。
 
 问题就在于：通过现有的策略（RAID0，我们之后会讲到），
+
 1. 如果有一个磁盘坏了，那么所有硬盘上的数据都会损坏
 2. 同时，一个硬盘坏了，整个阵列都会无法使用。而增加磁盘的数量，将会成倍地减小 MTTF。
 
@@ -152,6 +155,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_17_30_37_202405281730871.png"/>
 
 如图，如果
+
 - 只有一个盘损坏
 - **我们知道损坏的是哪一个盘**
 
@@ -164,15 +168,20 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 ### RAID 3 的不足
 
 只能够 large write。而不能 small write。
+
 - 这是因为 RAID 3 是 **byte-条带化**的，从而逻辑中的一块是分布在物理上的所有块上的。
 - 因此，如果你希望写**逻辑中的**一块进入磁盘，那么必须**在物理上**将数据同时写入所有磁盘。
 
 ## RAID 4
 
 RAID 4 和 RAID 3 的差别是：
+
 1. RAID 4 是 block 条带化的，而 RAID 3 是 byte 条带化的。
 2. RAID 4 支持 small write。由于 $P_\text{old} = \text{other tables} \oplus \text{old data of this table}$，因此，$P_\text{new} = \text{other tables} \oplus \text{new data} = \text{other tables} \oplus \text{old data} \oplus \text{old data} \oplus \text{new data} = P_\text{old} \oplus \text{old data} \oplus \text{new data}$。我们只需要通过该块的旧数据、新数据和奇偶校验块本身，就可以计算得出。
 
+> [!warning]+ RAID 4 相比 RAID 3 的缺点
+> 
+> 缺点很简单：假如说需要反复读某些块，而这些块在硬盘阵列上分布得不均匀。那么，就很容易导致硬盘之间的损耗不均匀（i.e. 某些硬盘比其他硬盘更早坏）。
 ### RAID 4 的不足
 
 虽然可以 small write，但是 write 的时候，奇偶校验盘和数据盘都会受影响，因此无法并行写两个盘。
@@ -180,6 +189,7 @@ RAID 4 和 RAID 3 的差别是：
 ## RAID 5
 
 RAID 5 就是在 RAID 4 的基础上，将奇偶校验盘均匀分布到了多个盘上。从而使得 small write 的并行性更好了（当然也无法保证一定可以并行）。
+
 - 比如说：可以同时 small write D0, D0<sub>P</sub> 以及 D5, D5<sub>P</sub> 这四个磁盘，也就是逻辑上并行 small write D0, D5
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_18_44_15_202405281844839.png"/>
@@ -217,6 +227,7 @@ RAID 6 就是采用两个奇偶校验盘，分别采用不同的奇偶校验算�
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_19_29_44_202405281929564.png"/>
 
 简单来说：
+
 1. IO 设备给出 ReadReq 和内存地址。内存接收到了 ReadReq 之后，读取内存地址，然后返回 ack（表明我已经读完了，用不着了）
 2. IO 设备接收到 ack，就停止 ReadReq 和内存地址
 3. 内存发现 ReadReq 停止了，就知道 IO 设备已经接收到了 ack 信号，于是停止了 ack 信号
