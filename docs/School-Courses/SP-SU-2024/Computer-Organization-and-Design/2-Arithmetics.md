@@ -73,7 +73,7 @@ Naive Multiplier V3 的流程如下：
 | $(1,0)$      | Substract multiplicand |
 | $(1,1)$      | No operation           |
 
-- **注意：**最开始的时候，由于 $\vc$ 之前并没有值，我们约定 $\vp$ 最初为 0。
+- **注意**：最开始的时候，由于 $\vc$ 之前并没有值，我们约定 $\vp$ 最初为 0。
 
 #### 例子
 
