@@ -13,9 +13,9 @@ $$
 我们不断对 $\vec{x_0}$ 乘上 $A$，从而：
 $$ { }
 \begin{aligned}
-\vec{x_k} &= A^k \vec{x_0} \\
-&= \sum_{i=1}^n \beta_i \lambda_i^k \vec{v_i} \\
-&= \lambda_1^k \sum_{i=1}^n \beta_i \left(\frac{\lambda_i}{\lambda_1}\right)^k \vec{v_i} \\
+\vec{x_k} &= A^k \vec{x_0} \newline
+&= \sum_{i=1}^n \beta_i \lambda_i^k \vec{v_i} \newline
+&= \lambda_1^k \sum_{i=1}^n \beta_i \left(\frac{\lambda_i}{\lambda_1}\right)^k \vec{v_i} \newline
 &\approx \lambda_1^k * \beta_1 * \vec{v_1}, \text{ when k is large}
 \end{aligned}
 $$
