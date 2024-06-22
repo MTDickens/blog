@@ -23,6 +23,7 @@ if (sign(b) * sign(a) > 0) // Don't use b * a / 2, in case that a * b == 0
 我们从 $p_0$ 开始，按照上述递推关系，求出一个序列 $\{p_i\}_{i \in \N}$，使得：$p_{i+1} = g(p_i)$
 
 如果 $\lim_{i \to \infty} p_i = p^*$，且 $g$ 连续，那么：
+
 $$
 g(p^*) = g(\lim_{i \to \infty} p_i) = \lim_{i \to \infty} g(p_i) = \lim_{i \to \infty} p_{i+1} = p^* 
 $$
