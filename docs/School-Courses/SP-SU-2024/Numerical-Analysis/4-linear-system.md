@@ -115,6 +115,7 @@ Partial pivoting 是最快的方法，因为不涉及浮点除法（常数很大
 
 但是，complete pivoting 虽然不会增加 Gaussian Elimination 的渐进复杂度，但是会造成以下后果：
 
+>[!info]+ 后果
 >There is an apparent misunderstanding of how pivoting is used in the LU factorization. It is not used to permute the original matrix before the actual elimination algorithm, but instead to choose pivots by permuting the "intermediate" partially eliminated matrices generated during the individual steps of the elimination.
 >
 >A step of an LU factorization can be expressed as $A_k = L_k'A_{k-1}$, where $A_0:=A$ and $L_k'$ is an elementary unit lower triangular matrix introducing zeros below the diagonal of the $k$-th column of $A_{k-1}$, eventually meaning that $A_n:=U$ is upper triangular.
@@ -172,13 +173,12 @@ i.e. $L_n \dots L_2 L_1 A = U \implies A = (IL_1^{-1}\dots L_n^{-1}) U = LU$
 LLT和LDLT都是矩阵分解的方法，用于解决线性方程组和矩阵求逆的问题。它们之间的主要区别在于对称正定矩阵的处理方式。
 
 1. **LLT分解**：
-   - LLT分解是对称正定矩阵的Cholesky分解的一种形式。
-   - Cholesky分解是将对称正定矩阵分解为下三角矩阵和其转置的乘积的过程。即，如果 \( A \) 是对称正定矩阵，则存在一个下三角矩阵 \( L \)，使得 \( A = LL^T \)。
-   - LLT分解的优点是计算相对简单，并且能够利用对称性节省计算量。
-
+    - LLT分解是对称正定矩阵的Cholesky分解的一种形式。
+    - Cholesky分解是将对称正定矩阵分解为下三角矩阵和其转置的乘积的过程。即，如果 \( A \) 是对称正定矩阵，则存在一个下三角矩阵 \( L \)，使得 \( A = LL^T \)。
+    - LLT分解的优点是计算相对简单，并且能够利用对称性节省计算量。
 2. **LDLT分解**：
-   - LDLT分解也是对称正定矩阵的分解方法，但它将矩阵分解为一个单位下三角矩阵、对角矩阵和其转置的乘积。即，如果 \( A \) 是对称正定矩阵，则存在一个单位下三角矩阵 \( L \) 和对角矩阵 \( D \)，使得 \( A = LDL^T \)，其中 \( D \) 的对角线元素是正的。
-   - LDLT分解相比于Cholesky分解，具有更好的数值稳定性，在某些情况下可能更适合使用。
+    - LDLT分解也是对称正定矩阵的分解方法，但它将矩阵分解为一个单位下三角矩阵、对角矩阵和其转置的乘积。即，如果 \( A \) 是对称正定矩阵，则存在一个单位下三角矩阵 \( L \) 和对角矩阵 \( D \)，使得 \( A = LDL^T \)，其中 \( D \) 的对角线元素是正的。
+    - LDLT分解相比于Cholesky分解，具有更好的数值稳定性，在某些情况下可能更适合使用。
 
 总的来说，LLT和LDLT分解都是用于解决对称正定矩阵的分解问题的方法，选择哪种方法取决于具体的应用场景和数值计算的需求。
 
