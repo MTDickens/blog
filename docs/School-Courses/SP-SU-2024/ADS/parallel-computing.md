@@ -83,7 +83,7 @@ Rank 的定义如下：
 ***第一步：*** 对于每一个 subarray，我们都要找到其 RankSubArray(B/A, A/B<sub>i</sub>)，也就是，**这个 subarray 的第一个数应该插在哪一个对方的数的前面**。
 
 - time: $O(\log n)$
-- workload: $O(n / f(n) * \log n) = O(n / \log n * f(n))$
+- workload: $O(n / f(n) * \log n) = O(n * \log n / f(n))$
 
 > [!note]- 细节实现：如何让每一个 element 知道自己应该放在哪一个位置？
 > 我们只要知道自己位于哪一个组（具体来说，是知道自己位于哪一个组的箭头，就是
@@ -95,9 +95,9 @@ Rank 的定义如下：
 ***第二步：*** 就是每一个 element，按照自己的所在组（**上图中每一个绿色的部分，对应一个分组**），复制到对应的位置。然后每一个机器找到自己的待排序组，然后开始 serial method 排序。
 
 - time: $\mathcal O(f(n))$
-- workload: $\mathcal O(n / f(n) * \log n)$ = $\mathcal O(n * \log n / f(n))$
+- workload: $\mathcal O((n / f(n) * f(n)) = \mathcal O(n)$
 
-从而，很显然，当且仅当 f(n) = &Omega;(log n) 的时候，time 和 workload 均可以实现最优化。其中，time 跟 serial method 一样；workload 比 serial method 更好。
+从而，很显然，当且仅当 f(n) = Ω(log n) 的时候，time 和 workload 均可以实现最优化。其中，time 跟 serial method 一样；workload 比 serial method 更好。
 
 - time: O(log n)
 - workload: O(n)
