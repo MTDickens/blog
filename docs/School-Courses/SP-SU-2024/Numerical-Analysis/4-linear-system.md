@@ -73,7 +73,7 @@ x1 = 10.00
 
 这样就对了。
 
-**注意：**Scaled Partial Pivoting 需要提前计算好每一行的最大值。并且之后即使发生了变化，也还是沿用这个最大值。
+**注意**：Scaled Partial Pivoting 需要提前计算好每一行的最大值。并且之后即使发生了变化，也还是沿用这个最大值。
 
 - 额外操作的时间复杂度是：$\mathcal O(n^2 + \sum_i^n (n-i)^2) = \mathcal O(n^2)$。其中，需要 $\mathcal O(n^2)$ 的比较和浮点除法。
 

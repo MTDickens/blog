@@ -25,7 +25,9 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/20_21_23_49_202404202123647.png" style="zoom:50%;" />
 
-从而，我们可以通过绿线部分的公式，推出我们需要的矩阵：
+- **注意**：$b_i = \frac {y_{i+1} - y_i} {\Delta x_i} - m_i \frac {\Delta x_i} 3 - m_{i+1} \frac {\Delta x_i} 6$，不要忘记前面的 $\frac {y_{i+1} - y_i} {\Delta x_i}$！
+
+从而，我们可以通过**绿色波浪线处的公式**，推出我们需要的矩阵：
 $$
 \begin{bmatrix}
 \text{TODO} \newline
@@ -45,10 +47,10 @@ m_{n}
 \end{bmatrix} = 
 \begin{bmatrix}
 \text{TODO} \newline
-\frac{y_2 - y_1}{\Delta_1} - \frac{y_1 - y_0} {\Delta_0} \newline
-\frac{y_3 - y_2}{\Delta_2} - \frac{y_2 - y_1} {\Delta_1} \newline
+6\left(\frac{y_2 - y_1}{\Delta_1} - \frac{y_1 - y_0} {\Delta_0}\right) \newline
+6\left(\frac{y_3 - y_2}{\Delta_2} - \frac{y_2 - y_1} {\Delta_1}\right) \newline
 \vdots \newline
-\frac{y_{n} - y_{n-1}}{\Delta_{n-1}} - \frac{y_{n-1} - y_{n-2}} {\Delta_{n-2}} \newline
+6\left(\frac{y_{n} - y_{n-1}}{\Delta_{n-1}} - \frac{y_{n-1} - y_{n-2}} {\Delta_{n-2}}\right) \newline
 \text{TODO}
 \end{bmatrix}
 $$
@@ -83,7 +85,7 @@ m_2 \newline
 m_{n-1} \newline
 m_{n}
 \end{bmatrix} = 
-\begin{bmatrix}
+6 * \begin{bmatrix}
 0 \newline
 \frac{y_2 - y_1}{\Delta_1} - \frac{y_1 - y_0} {\Delta_0} \newline
 \frac{y_3 - y_2}{\Delta_2} - \frac{y_2 - y_1} {\Delta_1} \newline
@@ -95,6 +97,8 @@ $$
 显然是三对角矩阵。
 
 ### 夹持边界
+
+夹持边界，就是强迫两端点的导数分别为 $a$ 和 $b$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/20_21_23_18_202404202123120.png" style="zoom: 80%;" />
 
@@ -118,12 +122,12 @@ m_2 \newline
 m_{n-1} \newline
 m_{n}
 \end{bmatrix} = 
-\begin{bmatrix}
-6 \left(\frac{y_1 - y_0} {\Delta x_0} - a \right) \newline
+6 * \begin{bmatrix}
+\left(\frac{y_1 - y_0} {\Delta x_0} - a \right) \newline
 \frac{y_2 - y_1}{\Delta_1} - \frac{y_1 - y_0} {\Delta_0} \newline
 \frac{y_3 - y_2}{\Delta_2} - \frac{y_2 - y_1} {\Delta_1} \newline
 \vdots \newline
 \frac{y_{n} - y_{n-1}}{\Delta_{n-1}} - \frac{y_{n-1} - y_{n-2}} {\Delta_{n-2}} \newline
-6 \left(\frac{y_n - y_{n-1}} {\Delta x_{n-1}} - b \right)
+\left(\frac{y_n - y_{n-1}} {\Delta x_{n-1}} - b \right)
 \end{bmatrix}
 $$
