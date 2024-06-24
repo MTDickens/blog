@@ -35,7 +35,7 @@ $$
 
 我们的目标就是：让 $|\lambda_2 / \lambda_1|$ 尽可能小。
 
-实际上，如果我们令 $B = A - pI$，那么，就会有 $\lambda_1' = \lambda_1 - p, \lambda_2' = \lambda_2 - p$，从而可能 $|\lambda_2' / \lambda_1'|$ 会更小。
+实际上，如果我们知道 $p$ 离 $\lambda_1$ 非常近，那么可以令 $B = A - pI$，从而就会有 $\lambda_1' = \lambda_1 - p, \lambda_2' = \lambda_2 - p$，从而可能 $|\lambda_2' / \lambda_1'|$ 会更小。
 
 - i.e. $|0.98 / 1.00| > |0.01 / 0.03|$
 

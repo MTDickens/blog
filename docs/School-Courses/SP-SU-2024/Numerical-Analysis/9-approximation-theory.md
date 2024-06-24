@@ -45,6 +45,7 @@ $$
 
 
 矩阵的形式就变为：
+
 $$
 \vec \varphi_i\vec \varphi_i^T=\begin{bmatrix}
 1 & \varphi_1(x_i) & \varphi_2(x_i)  & \cdots & \varphi_n(x_i) \newline
@@ -53,6 +54,7 @@ $$
 \varphi_n(x_i) & \varphi_1(x_i)\varphi_n(x_i) & \varphi_2(x_i)\varphi_n(x_i) & \cdots & \varphi_n(x_i)^2
 \end{bmatrix}
 $$
+
 假如我们有一组正交多项式的话，那么就可以保证除了对角线上的元素以外，$\sum_{i=1}^m \vec \varphi_i\vec \varphi_i^T$ 的其它元素均为 0。
 
 采用 Gram-Schmidt 正交化方法，我们可以在 $\mathcal O(n^3)$ 的时间内算出。
@@ -62,9 +64,11 @@ $$
 # General Least Squares Problem
 
 目标：
+
 $$
 \mathop{\arg\min}_{p \in \mathbb P_n} \norm{f - p}_\infty
 $$
+
 **Chebyshev Theorem**: Let $f$ be a continuous function from $[a,b]$ to $\mathbb{R}$. Among all the polynomials of degree $\le n$, the polynomial $g$ minimizes the uniform norm of the difference $\| f - g \| _\infty$ if and only if there are $n+2$ points $a \le x_0 < x_1 < \cdots < x_{n+1} \le b$ such that $f(x_i) - g(x_i) = \sigma (-1)^i \| f - g \|_\infty$ where $\sigma$ is either -1 or +1.
 
 - 也就是说：需要存在 $n+2$ 个交错的最大/小值，且最大/小值必须绝对值相同。
@@ -74,6 +78,7 @@ $$
 ---
 
 因此，这 $n+1$ 个点，唯一决定了 $p$。从而，我们的目标转化为：
+
 $$
 \mathop{\arg\min}_{x_0, \dots, x_n \in [a,b]} \norm{(f - p_{x_0, \dots, x_n})(x)}_\infty = \norm{R_n(x)}_\infty = \norm{\frac 1 {(n+1)!} f^{(n+1)}(\xi_x) \prod_{i=0}^n (x - x_i)}_\infty
 $$
