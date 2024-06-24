@@ -124,13 +124,17 @@ $$
 ## Problem With Multiple Roots
 
 对于 $k$ 重根的情况：
+
 $$
-f(x) = (x-x_0)^kq(x) \implies f'(x) = k(x-x_0)^{k-1} q(x) + (x-x_0)^{k}q'(x) \newline
-\implies f'(x_0) = 
+\begin{aligned}
+&f(x) = (x-x_0)^kq(x) \newline
+\implies &f'(x) = k(x-x_0)^{k-1} q(x) + (x-x_0)^{k}q'(x) \newline
+\implies& f'(x_0) = 
 \begin{cases}
 0 \quad \text{if }k \geq 2 \newline
 q(x_0) \neq 0 \quad \text{if } k = 1
 \end{cases}
+\end{aligned}
 $$
 因此，对于多重根的情况，牛顿迭代法的性能会迅速下降。
 
@@ -144,9 +148,11 @@ $$
 
 如果 $f(x) = (x-x_n)^kq(x)$，而且 $q(x_n) \neq 0$那么：
 $$
-\mu(x) = \frac{(x-x_n)^kq(x)}{k(x-x_n)^{k-1}q(x) + (x-x_n)^{k}q'(x)} = \frac{(x-x_n)q(x)}{kq(x) + (x-x_n)q'(x)} \implies \newline
-\mu'(x) = \frac{[q(x) + (x-x_n)q'(x)][kq(x) + (x-x_n)q'(x)] - [(k+1)q'(x) + (x-x_n)q''(x)][(x-x_n)q(x)]}{\left[kq(x) + (x-x_n)q'(x)\right]^2} \implies \newline
-\mu'(x_n) = \frac{kq^2(x_n)}{k^2q^2(x_n)} = \frac{1}{k}
+\begin{aligned}
+&\mu(x) = \frac{(x-x_n)^kq(x)}{k(x-x_n)^{k-1}q(x) + (x-x_n)^{k}q'(x)} = \frac{(x-x_n)q(x)}{kq(x) + (x-x_n)q'(x)} \newline
+\implies &\mu'(x) = \frac{[q(x) + (x-x_n)q'(x)][kq(x) + (x-x_n)q'(x)] - [(k+1)q'(x) + (x-x_n)q''(x)][(x-x_n)q(x)]}{\left[kq(x) + (x-x_n)q'(x)\right]^2} \newline
+\implies &\mu'(x_n) = \frac{kq^2(x_n)}{k^2q^2(x_n)} = \frac{1}{k}
+\end{aligned}
 $$
 从而，满足了 $\mu'(x_0) \neq 0$ 的性质，使得迭代速率仍然可以为二阶。
 
@@ -159,7 +165,7 @@ $$
 
 # Accelerating Methods
 
-## Aitken's &Delta;<sup>2</sup> Method
+## Aitken's Δ<sup>2</sup> Method
 
 ### Intuition
 
@@ -168,23 +174,22 @@ $$
 \frac { p _ { n + 1 } - p } { p _ { n } - p } \approx \lambda \newline
 \frac { p _ { n + 2 } - p } { p _ { n + 1 } - p } \approx \lambda
 $$
+
 因此，直觉上，两个式子应该也“差不多”。
+
 $$
 \begin{aligned}
 \frac { p _ { n + 1 } - p } { p _ { n } - p } &\approx \frac { p _ { n + 2 } - p } { p _ { n + 1 } - p } \newline
-
 ( p _ { n + 1 } - p ) ( p _ { n + 1 } - p ) &\approx ( p _ { n + 2 } - p ) ( p _ { n } - p ) \newline
-
  p _ { n + 1 } ^ { 2 } - 2 p _ { n + 1 } p + p ^ { 2 } &\approx p _ { n + 2 } p _ { n } - ( p _ { n + 2 } + p _ { n } ) p + p ^ { 2 } \newline
-
  - 2 p _ { n + 1 } p + ( p _ { n + 2 } + p _ { n } ) p &\approx p _ { n + 2 } p _ { n } - p _ { n + 1 } ^ { 2 } \newline
-
  p &\approx \frac { p _ { n + 2 } p _ { n } - p _ { n + 1 } ^ { 2 } } { - 2 p _ { n + 1 } + ( p _ { n + 2 } + p _ { n } ) } \newline
-
  p &\approx p _ { n } - \frac { ( p _ { n + 1 } - p _ { n } ) ^ { 2 } } { p _ { n + 2 } - 2 p _ { n + 1 } + p _ { n } }
 \end{aligned}
 $$
+
 从而，我们得到了一个关于 $p$ 的 intuitive 的式子。我们不妨就直接用右边的式子代替 $g(x)$：
+
 $$
 \widehat p_n = p _ { n } - \frac { ( p _ { n + 1 } - p _ { n } ) ^ { 2 } } { p _ { n + 2 } - 2 p _ { n + 1 } + p _ { n } }
 $$
@@ -214,9 +219,15 @@ $$
 
 ## Steffensen’s Method
 
-虽然 Aitken's &Delta;<sup>2</sup> Method 不可以混用，但是，不能混用的原因是混用可能会导致 $\set{p_n}$ 不再是线性数列。
+> [!note]
+> 
+> 就是三个一组的反复加深式的 Aitken's Δ<sup>2</sup> Method。
+> 
+> - 颇有 Romberg Integration (见 Lec 9: approximation theory) 这种将梯形近似反复精细化的味道。
 
-Aitken's &Delta;<sup>2</sup> Method 最少需要 3 个数来计算出来 $\widehat p_0$，因此，我们可以三个一组，每组均采用递推的方法计算（**保证是线性数列**），然后得到 $\widehat p_0$，当作”新的起点“，然后再用 $\widehat p_0$ 继续这样做，so on and so forth。
+虽然 Aitken's Δ<sup>2</sup> Method 不可以混用，但是，不能混用的原因是混用可能会导致 $\set{p_n}$ 不再是线性数列。
+
+Aitken's Δ<sup>2</sup> Method 最少需要 3 个数来计算出来 $\widehat p_0$，因此，我们可以三个一组，每组均采用递推的方法计算（**保证是线性数列**），然后得到 $\widehat p_0$，当作”新的起点“，然后再用 $\widehat p_0$ 继续这样做，so on and so forth。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131558426.png" alt="image-20240313155847725" style="zoom:67%;" />
 

@@ -529,7 +529,7 @@ $$
 \varepsilon(f, a, b) = \int_a^b f(x) \mathrm dx - S(a,b) = \frac {h^5} {90} f^{(4)}(\xi)
 $$
 
-- &epsilon; 在这里就是 $f$ 在 [a,b] 区间上使用 Simpson Integration 的误差
+- ε 在这里就是 $f$ 在 [a,b] 区间上使用 Simpson Integration 的误差
 
 然后进行细化，i.e. 在 [a, (a+b)/2], [(a+b)/2, b] 上也使用，那么误差就缩小为：
 $$

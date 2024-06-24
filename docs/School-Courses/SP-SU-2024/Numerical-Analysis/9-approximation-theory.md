@@ -1,3 +1,7 @@
+$$
+\newcommand{norm}[1]{\left|#1\right|}
+$$
+
 # Discrete Least Square Approximation
 
 ## Definition
