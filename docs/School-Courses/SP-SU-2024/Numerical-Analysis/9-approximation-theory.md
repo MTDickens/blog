@@ -42,9 +42,7 @@ $$
 $$
 从而，如果我们取 $\set{\varphi_i(x)}$ 为一组基（而不是 $1, x, x^2, \dots, x^n$），那么，$P_i(x) := a_0 \varphi_0(x_i) + a_1 \varphi_1(x_i) + \dots + a_n \varphi_n(x_i)$
 
-
-
-矩阵的形式就变为：
+$\vec \varphi_i\vec \varphi_i^T$ 这个矩阵的形式就变为：
 
 $$
 \vec \varphi_i\vec \varphi_i^T=\begin{bmatrix}
@@ -55,11 +53,13 @@ $$
 \end{bmatrix}
 $$
 
-假如我们有一组正交多项式的话，那么就可以保证除了对角线上的元素以外，$\sum_{i=1}^m \vec \varphi_i\vec \varphi_i^T$ 的其它元素均为 0。
+假如我们（在 $\left<f, g\right> := \sum_{i=1}^n f(x_i) g(x_i)$ 这个内积意义下）**有一组标准正交 (i.e. orthonormal) 多项式**的话，那么就可以保证 **$\sum_{i=1}^m \vec \varphi_i\vec \varphi_i^T$ 就是单位矩阵**。
 
 采用 Gram-Schmidt 正交化方法，我们可以在 $\mathcal O(n^3)$ 的时间内算出。
 
-相比矩阵计算而言，这种方法起码可以节省空间。
+> [!note]+ 能否节省时间？
+> 
+> 如果我们需要在同一组 $x_1, x_2, \dots, x_n$ 上，使用大量不同的 $y_1, y_2, \dots, y_n$ 来拟合大量不同的多项式，那么就可以**重复利用上面的矩阵**，从而节省时间。
 
 # General Least Squares Problem
 
@@ -131,6 +131,19 @@ $f(\theta) = \cos(n\theta)$​ 是一个非常好的多根函数，可惜不是�
 我们只需要计算这几个点的插值就行了。
 
 ## Economization of Power Series
+
+> [!note]+ 目标
+> 
+> 在一个区间上，给定阶数，**找到使得最大误差最小化的该阶数多项式**
+
+> [!question]+ 为何 economization of power series 做的比泰勒展开好？
+> 
+> 这是因为：
+> 
+> - 泰勒展开考虑的仅仅是**展开点处的一个邻域内误差尽量小**
+> - 而 economization of power series 则是要求**在某个*区间*内最大误差最小**
+>   
+> 如果我们让这个无限缩小这个区间，那么 **economization 将与泰勒展开趋同**。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/8_22_55_29_202405082255199.png"/>
 

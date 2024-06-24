@@ -339,6 +339,7 @@ u_{m}' &= y^{(m)} = f(\cdot, u_1, \dots, u_m)
 \end{aligned}
 $$
 
+- 其中：$u_i := y^{(i - 1)}$
 - 同时，我们需要给出其初值：$u_1(a) = \alpha_1, \dots, u_m(a) = \alpha_m$。
 
 > [!info]+ A better formalization
