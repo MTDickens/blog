@@ -52,18 +52,21 @@ $$
 从而：$\exists \xi_x \in (x_0, x_n): g_n^{(n+1)}(\xi_x) = 0$
 
 从而：
+
 $$
 \begin{aligned}
-0 &= R_n^{(n+1)}(\xi_x) - (n+1)!K(x') \\
-&= f^{(n+1)}(\xi_x) - P^{(n+1)}(\xi_x) - (n+1)!K(x') \\
+0 &= R_n^{(n+1)}(\xi_x) - (n+1)!K(x') \newline
+&= f^{(n+1)}(\xi_x) - P^{(n+1)}(\xi_x) - (n+1)!K(x') \newline
 &= f^{(n+1)}(\xi_x)  - (n+1)!K(x')
 \end{aligned}
 $$
+
 从而：
+
 $$
 \begin{aligned}
-R_n(x') &= K(x')\prod_{i=0}^n (x' - x_i) \\
-&= \frac 1 {(n+1)!} f^{(n+1)}(\xi_x) \prod_{i=0}^n (x' - x_i) \\
+R_n(x') &= K(x')\prod_{i=0}^n (x' - x_i) \newline
+&= \frac 1 {(n+1)!} f^{(n+1)}(\xi_x) \prod_{i=0}^n (x' - x_i) \newline
 \end{aligned}
 $$
 
