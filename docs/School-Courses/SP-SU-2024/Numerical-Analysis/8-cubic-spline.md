@@ -112,7 +112,7 @@ $$
 0 & \Delta x_1 & 2(\Delta x_1 + \Delta x_2) & \Delta x_2 &  \cdots & 0 \newline
 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \newline
 0 & 0 & 0 & 0 & \cdots & \Delta x_{n-1} \newline
-0&0&0&\cdots&\Delta x_{n-1} &-2\Delta x_{n-1}
+0&0&0&\cdots&\Delta x_{n-1} &2\Delta x_{n-1}
 \end{bmatrix}
 \begin{bmatrix}
 m_0 \newline
@@ -128,6 +128,6 @@ m_{n}
 \frac{y_3 - y_2}{\Delta_2} - \frac{y_2 - y_1} {\Delta_1} \newline
 \vdots \newline
 \frac{y_{n} - y_{n-1}}{\Delta_{n-1}} - \frac{y_{n-1} - y_{n-2}} {\Delta_{n-2}} \newline
-\left(\frac{y_n - y_{n-1}} {\Delta x_{n-1}} - b \right)
+\left(b - \frac{y_n - y_{n-1}} {\Delta x_{n-1}}\right)
 \end{bmatrix}
 $$
