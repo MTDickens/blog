@@ -42,6 +42,8 @@ nav:
                   - yt-dlp: "Technology/Python/yt-dlp.md"
               - Python tips: "Technology/Python/python-tips.md"
               - SymPy 使用指南: "Technology/Python/sympy-guide.md"
+              - Conda:
+                  - MinoConda 初学者指南: "Technology/Python/Conda/miniconda-beginner-guide.md"
           - Rust:
               - Lec Note 1: "Technology/Rust/lec-note-1.md"
               - Lec Note 2: "Technology/Rust/lec-note-2.md"
@@ -143,6 +145,7 @@ nav:
               - 10. Query Processing: "School-Courses/SP-SU-2024/DBMS/10-Query-Processing.md"
               - 11. Query Optimization: "School-Courses/SP-SU-2024/DBMS/11-Query-Optimization.md"
               - 12. Transaction: "School-Courses/SP-SU-2024/DBMS/12-Transaction.md"
+              - 13. Recovery: "School-Courses/SP-SU-2024/DBMS/13-Recovery.md"
           - ADS:
               - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
               - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
@@ -378,5 +381,5 @@ markdown_extensions:
       toc_depth: 4
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
