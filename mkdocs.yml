@@ -153,7 +153,7 @@ nav:
               - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
               - Hazards of Smart Pointers: "School-Courses/SP-SU-2024/OOP/hazards-of-smart-pointers.md"
   - 自学课程:
-      - 2024 年:
+      - AI:
           - EECS 498-007 / 598-005:
               - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
               - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
@@ -174,6 +174,18 @@ nav:
               - 18. Videos: "self-learning/dl4cv/18-videos.md"
               - 19. Generative Models: "self-learning/dl4cv/19-generative-models.md"
               - 20. Reinforcement Learning: "self-learning/dl4cv/20-reinforcement-learning.md"
+      - PL & SA:
+          - PKU 编程语言理论:
+              - 0+. OCaml Basics: "self-learning/PKU-PLT/ch0+.md"
+              - 1-2. Introduction: "self-learning/PKU-PLT/ch1-2.md"
+              - 3. Untyped Arithmetic Expressions: "self-learning/PKU-PLT/ch3.md"
+              - 4. Lambda Calculus: "self-learning/PKU-PLT/ch4.md"
+          - NJU 软件分析:
+              - 1. Introduction: "self-learning/static-program-analysis/1-introduction.md"
+              - 2. Intermediate Representation: "self-learning/static-program-analysis/2-intermediate-representation.md"
+              - 3. Data Flow Analysis I: "self-learning/static-program-analysis/3-data-flow-analysis-i.md"
+              - 4. Data Flow Analysis II: "self-learning/static-program-analysis/4-data-flow-analysis-ii.md"
+              - 5-6. DFA Foundations I & II: "self-learning/static-program-analysis/5-6-dfa-foundations-i-ii.md"
           - CS 106L 课程:
               - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
               - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
@@ -190,6 +202,11 @@ nav:
               - 14. std::optional and Type Safety: "self-learning/Stanford-CS106L/14-std-optional-and-Type-Safety.md"
               - 15. RAII, Smart Pointers, and Building C++ Projects: "self-learning/Stanford-CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
               - "Guest Lecture: Template Metaprogramming": "self-learning/Stanford-CS106L/GL-Template-Metaprogramming.md"
+          - TAPL:
+              - 1. Mathematical Preliminaries: "self-learning/types-and-programming-languages/mathematical-preliminaries.md"
+              - 2. Untyped Arithmetic Expressions: "self-learning/types-and-programming-languages/untyped-arithmetic-expressions.md"
+              - 3. Untyped Lambda Calculus: "self-learning/types-and-programming-languages/untyped-lambda-calculus.md"
+      - 系统:
           - CS 15-445 课程:
               - 3-4. Database Storage: "self-learning/CMU-CS15-445/3-4-Database-Storage.md"
           - CSAPP 课程:
@@ -212,6 +229,11 @@ nav:
               - 18. Virtual Memory System: "self-learning/CMU-CSAPP/18-Virtual-Memory-System.md"
               - 19-20. Storage Allocation: "self-learning/CMU-CSAPP/19-20-Storage-Allocation.md"
               - 21-22. Network Programming: "self-learning/CMU-CSAPP/21-22-Network-Programming.md"
+          - USTC 计网:
+              - 1. Introduction: "self-learning/USTC-Computer-Networking/1-Introduction.md"
+              - 2. Application Layer: "self-learning/USTC-Computer-Networking/2-Application-Layer.md"
+              - 3. Transport Layer: "self-learning/USTC-Computer-Networking/3-Transport-Layer.md"
+      - 其它:
           - GAMES101 课程:
               - 12. Geometry: "self-learning/GAMES101/12-Geometry.md"
               - 13. Ray Tracing 1: "self-learning/GAMES101/13-Ray-Tracing-1.md"
@@ -220,21 +242,6 @@ nav:
               - 19. Cameras, Lenses And Light Fields: "self-learning/GAMES101/19-Cameras-Lenses-And-Light-Fields.md"
               - 20. Color And Perception: "self-learning/GAMES101/20-Color-And-Perception.md"
               - 21-22. Animation: "self-learning/GAMES101/21-22-Animation.md"
-          - PKU 编程语言理论:
-              - 0+. OCaml Basics: "self-learning/PKU-PLT/ch0+.md"
-              - 1-2. Introduction: "self-learning/PKU-PLT/ch1-2.md"
-              - 3. Untyped Arithmetic Expressions: "self-learning/PKU-PLT/ch3.md"
-              - 4. Lambda Calculus: "self-learning/PKU-PLT/ch4.md"
-          - NJU 软件分析:
-              - 1. Introduction: "self-learning/static-program-analysis/1-introduction.md"
-              - 2. Intermediate Representation: "self-learning/static-program-analysis/2-intermediate-representation.md"
-              - 3. Data Flow Analysis I: "self-learning/static-program-analysis/3-data-flow-analysis-i.md"
-              - 4. Data Flow Analysis II: "self-learning/static-program-analysis/4-data-flow-analysis-ii.md"
-              - 5-6. DFA Foundations I & II: "self-learning/static-program-analysis/5-6-dfa-foundations-i-ii.md"
-          - USTC 计网:
-              - 1. Introduction: "self-learning/USTC-Computer-Networking/1-Introduction.md"
-              - 2. Application Layer: "self-learning/USTC-Computer-Networking/2-Application-Layer.md"
-              - 3. Transport Layer: "self-learning/USTC-Computer-Networking/3-Transport-Layer.md"
           - 算法博弈论:
               - 1. Introduction: "self-learning/algorithmic-game-theory/1-introduction.md"
               - 2. Basics of Mechanism Design: "self-learning/algorithmic-game-theory/2-basics-of-mechanism-design.md"
