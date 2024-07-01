@@ -151,6 +151,7 @@ nav:
               - Parallel Computing: "School-Courses/SP-SU-2024/ADS/parallel-computing.md"
           - OOP:
               - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
+              - Hazards of Smart Pointers: "School-Courses/SP-SU-2024/OOP/hazards-of-smart-pointers.md"
   - 自学课程:
       - 2024 年:
           - EECS 498-007 / 598-005:

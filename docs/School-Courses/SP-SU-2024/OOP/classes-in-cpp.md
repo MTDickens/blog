@@ -124,7 +124,7 @@ class <派生类名>:<继承方式1><基类名1>,<继承方式2><基类名2>,…
 ```cpp
 #include <iostream> 
 using namespace std;
- 
+
 class Shape {
    protected:
       int width, height;
@@ -136,12 +136,12 @@ class Shape {
       }
       int area()
       {
-         cout << "Parent class area :" <<endl;
+         cout << "Parent class, area unknown" <<endl;
          return 0;
       }
       virtual int virtual_area()
       {
-         cout << "Parent class area :" <<endl;
+         cout << "Parent class, area unknown" <<endl;
          return 0; 
       }
 };
@@ -150,12 +150,12 @@ class Rectangle: public Shape{
       Rectangle( int a=0, int b=0):Shape(a, b) { }
       int area ()
       { 
-         cout << "Rectangle class area :" <<endl;
+         cout << "Rectangle class area :" << width * height << endl;
          return (width * height); 
       }
       int virtual_area()
       { 
-         cout << "Rectangle class area :" <<endl;
+         cout << "Rectangle class area :" << width * height <<endl;
          return (width * height); 
       }
 };
@@ -164,12 +164,12 @@ class Triangle: public Shape{
       Triangle( int a=0, int b=0):Shape(a, b) { }
       int area ()
       { 
-         cout << "Triangle class area :" <<endl;
+         cout << "Triangle class area :" << width * height / 2 <<endl;
          return (width * height / 2); 
       }
       int virtual_area()
       { 
-         cout << "Triangle class area :" <<endl;
+         cout << "Triangle class area :" << width * height / 2 <<endl;
          return (width * height / 2); 
       }
 };
@@ -179,7 +179,7 @@ int main( )
    Shape *shape;
    Rectangle rec(10,7);
    Triangle  tri(10,5);
- 
+
    // 存储矩形的地址
    shape = &rec;
    // 调用矩形的求面积函数 area
@@ -187,7 +187,7 @@ int main( )
    shape->area();
    cout << "shape->virtual_area: ";
    shape->virtual_area();
- 
+
    // 存储三角形的地址
    shape = &tri;
    // 调用三角形的求面积函数 area
@@ -195,7 +195,7 @@ int main( )
    shape->area();
    cout << "shape->virtual_area: ";
    shape->virtual_area();
-   
+
    return 0;
 }
 ```
@@ -203,10 +203,10 @@ int main( )
 输出：
 
 ```
-shape->area: Parent class area :
-shape->virtual_area: Rectangle class area :
-shape->area: Parent class area :
-shape->virtual_area: Triangle class area :
+shape->area: Parent class, area unknown
+shape->virtual_area: Rectangle class area :70
+shape->area: Parent class, area unknown
+shape->virtual_area: Triangle class area :25
 ```
 
 如上，我们可以发现虚函数和一般成员函数并不完全一样。具体地：
@@ -217,8 +217,12 @@ shape->virtual_area: Triangle class area :
 
 说人话就是：
 
-- 如果基类希望派生类指针使用的成员函数是派生类的而不是基类的话，就要用虚函数。
+- 如果希望**在基类引用派生类对象，或者基类指针指向派生类对象的情况下**，**区分**派生类中和基类**同名的方法函数**，需要将基类的成员函数类型声明为 virtual 
+    - 显然，**析构函数必须是 virtual**，否则会出大问题
+    - 同时，构造函数**不能**是虚函数（C++ 语法规定）
 - 虚函数并不是说基类的函数时虚的，而是告诉编译器，让编译器不要静态绑定，而是要动态绑定。
+    - 静态绑定：编译器判断指针类型，然后在该语句位置，使用汇编调用**你的类型对应的**函数
+    - 动态绑定：编译器在每一次指针赋值的时候，都会将该指针指向对象的对应位置
 
 ---
 
@@ -238,7 +242,7 @@ shape->virtual_area: Triangle class area :
 
 可见动态链接（下面）和静态链接（上面）的区别。
 
-- 具体地，如果采用 `virtual` 进行动态链接，compiler 就会为每一个派生类的变量添加一个 vtable，里面有对应的 virtual_area() 的地址（i.e. 要么是 Rectangle::virtual_area()，要么是 Triangle::virtual_area()）。
+- 具体地，如果采用 `virtual` 进行动态链接，compiler 就会为每一个派生类的变量添加一个 vtable，里面有对应的 `virtual_area()` 的地址（i.e. 要么是 `Rectangle::virtual_area()`，要么是 `Triangle::virtual_area()`）。
     - 寻址的时候，就是通过上面 `lw` 进行寻址。
 
 ### 纯虚函数
