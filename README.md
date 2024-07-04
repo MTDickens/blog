@@ -1,3 +1,3 @@
 # blog
 
-This is the main page of my blog 😃
+This is the home page of my blog 😃
