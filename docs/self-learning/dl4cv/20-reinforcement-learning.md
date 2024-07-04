@@ -31,7 +31,7 @@ Reinforcement learning 的基本流程就是：
 
 ---
 
-**问题：**如果状态空间和动作空间太大，那么计算量就会非常大；甚至，如果状态和动作是连续而不是离散的，那么根本无从计算。
+**问题**：如果状态空间和动作空间太大，那么计算量就会非常大；甚至，如果状态和动作是连续而不是离散的，那么根本无从计算。
 
 # Deep Q-Learning
 
@@ -73,7 +73,7 @@ Reinforcement learning 的基本流程就是：
 
 目前的问题就是：$\frac{\partial} {\partial \theta} \log p_\theta (x)$ 如何计算？
 
----
+### $\frac{\partial} {\partial \theta} \log p_\theta (x)$ 的计算
 
 我们令 $x = (s_0, a_0, s_1, a_1, \dots)$，这就是遵循 $\pi_\theta(a|s)$ 策略之后的轨迹，也是一个随机向量。
 
@@ -90,17 +90,22 @@ $$
 $$
 从而：
 $$
-\frac{\partial J} {\partial \theta} = \mathbb E_{x \sim p_\theta}[\left(\sum_{j \geq 0} r_j\right) \left(\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i) \right)]
+\begin{aligned}
+\frac{\partial J} {\partial \theta} &= \mathbb E_{x \sim p_\theta} \left[ (f(x)) \left(\frac \partial {\partial \theta}\log p_\theta(x)\right) \right] \newline
+&= \mathbb E_{x \sim p_\theta}\left[\left(\sum_{t \geq 0} \gamma^t r_t\right) \left(\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i) \right)\right] \newline
+&\approx \frac 1 N \sum_{j = 1}^N \left(\sum_{t \geq 0} \gamma^t r_t^{(j)}\right) \left(\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i^{(j)} | s_i^{(j)}) \right) \newline
+&= \frac{\partial} {\partial \theta} \left[ \frac 1 N \sum_{j = 1}^N \left(\sum_{t \geq 0} \gamma^t r_t^{(j)}\right) \left(\sum_{i \geq 0} \log \pi_\theta (a_i^{(j)} | s_i^{(j)}) \right) \right]
+\end{aligned}
 $$
 
----
+### PyTorch 实现
 
 我们要做的，就是
 
-1. 通过 $\pi(a_i | s_i)$，在 $x \sim p_\theta$ 中选取若干的 $(s_0, a_0, s_1, a_1, \dots)$
-2. 对于每一个 $x$，计算出 $\sum_{j \geq 0} r_j$ 以及 $\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i)$，并相乘得到 $\left(\sum_{j \geq 0} r_j\right) \left(\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i) \right)$
-3. 将每一个 $x$ 的 $\left(\sum_{j \geq 0} r_j\right) \left(\sum_{i \geq 0} \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i) \right)$ 平均起来，就得到了我们最终的导数
-4. 最后使用梯度进行更新即可
+1. 通过当前策略 $\pi_\theta(a_i | s_i)$，在 $x \sim p_\theta$ 这个分布中，进行 N 次抽样，获得若干的 $x^{(j)} \mathop{:=} (s_0^{(j)}, a_0^{(j)}, s_1^{(j)}, a_1^{(j)}, \dots)$
+2. 然后，令 `loss = ...`
+    - 其中 ... 就是 $\frac 1 N \sum_{j = 1}^N \left(\sum_{t \geq 0} \gamma^t r_t^{(j)}\right) \left(\sum_{i \geq 0} \log \pi_\theta (a_i^{(j)} | s_i^{(j)}) \right)$
+3. 最后，`loss.backward()`，求导、更新即可
 
 # Other Approaches of RL
 
@@ -244,12 +249,15 @@ print(f"新状态: {new_state}, 新动作: {new_action}, 预测的奖励: {predi
 ## 5. Adversarial Learning（对抗学习）
 
 ### 概念
+
 对抗学习通常用于生成对抗网络（GANs），但在 RL 中也有应用。智能体（生成器）与环境或其他智能体（判别器）进行对抗，以提高策略的鲁棒性。
 
 ### 实例
+
 在游戏 AI 中，一个智能体尝试赢得游戏（生成器），而另一个智能体尝试阻止其获胜（判别器），通过这种对抗训练，智能体不断改进。
 
 ### 代码示例
+
 ```python
 import numpy as np
 
@@ -270,7 +278,3 @@ for _ in range(10):
     state, reward = env.step(action)
     print(f"动作: {action}, 新状态: {state}, 奖励: {reward}")
 ```
-
-# Stochastic Computation Graphs
-
-​                                                            

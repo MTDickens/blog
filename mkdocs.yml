@@ -209,6 +209,7 @@ nav:
               - 1. Mathematical Preliminaries: "self-learning/types-and-programming-languages/mathematical-preliminaries.md"
               - 2. Untyped Arithmetic Expressions: "self-learning/types-and-programming-languages/untyped-arithmetic-expressions.md"
               - 3. Untyped Lambda Calculus: "self-learning/types-and-programming-languages/untyped-lambda-calculus.md"
+              - 4. Nameless Representation of Terms: "self-learning/types-and-programming-languages/nameless-representation-of-terms.md"
       - 系统:
           - CS 15-445 课程:
               - 3-4. Database Storage: "self-learning/CMU-CS15-445/3-4-Database-Storage.md"
