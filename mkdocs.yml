@@ -353,6 +353,10 @@ plugins:
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
   - callouts
+  - toc-md:
+      toc_page_title: Contents
+      toc_page_description: Usage mkdocs-toc-md
+      header_level: 3
 
 markdown_extensions:
   - footnotes
@@ -377,10 +381,6 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.arithmatex:
       generic: true
-  - toc-md:
-      toc_page_title: Contents
-      toc_page_description: Usage mkdocs-toc-md
-      header_level: 3
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
