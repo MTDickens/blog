@@ -146,11 +146,9 @@ $$
 > \begin{aligned}
 > \frac{\partial J'} {\partial \theta}
 > & = \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N \left(f(x^{(j)}) - \overline {f(x^{(j)})} \right) \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] \newline
-> 
 > & = \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N\left(f(x^{(j)}) -  \left[\frac{\sum_{i=1}^N f(x^{(i)})}{N}\right]\right) \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right]
 > \end{aligned}
 > $$
->  
 > 
 > 不难证明：
 > 
@@ -159,8 +157,7 @@ $$
 > \frac{\partial J'} {\partial \theta} 
 > =& \frac 1 N \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N\left(f(x^{(j)}) -  \left[\frac{\sum_{i=1}^N f(x^{(i)})}{N}\right]\right) \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] \newline
 > = & \frac 1 N 
-> \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N f(x^{(j)}) \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] 
-> - \newline 
+> \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N f(x^{(j)}) \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] - \newline 
 > & \frac 1 N \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N \left[\frac{\sum_{i=1}^N f(x^{(i)})}{N}\right] \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] \newline
 > = & \frac{\partial J} {\partial \theta} - \frac 1 N \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d} \left[ \sum_{j=1}^N \left[\frac{\sum_{i=1}^N f(x^{(i)})}{N}\right] \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] \newline
 > = & \frac{\partial J} {\partial \theta} - \frac 1 {N^2} \mathbb E_{\{x_1, x_2, \dots, x_N\} \sim p_\theta, i.i.d}  \left[\sum_{i=1}^N f(x^{(i)}) \sum_{j=1}^N \left(\frac \partial {\partial \theta}\log p_\theta(x^{(j)})\right) \right] \newline
@@ -169,8 +166,6 @@ $$
 > = & \frac {N-1} {N} \frac{\partial J} {\partial \theta} \newline
 > \end{aligned}
 > $$
-> 
-> 
 
 ## 改进二：离策略梯度
 
