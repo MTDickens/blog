@@ -17,9 +17,9 @@ $$
 其次，不妨假设四面八方的相同强度的光线照射一个漫反射物体，从而，由于能量守恒，物体也必须反射那么多的光线。因此所有角度入射、出射的 radiance 均相同。通过积分：
 $$
 \begin{aligned}
-L_o(\omega_o) &= \int_{H^2} f_r L_i(\omega_i) \cos \theta \mathrm d\omega_i \\
-&= f_r L_i \int_{H^2} \cos \theta \mathrm d\omega_i \\
-&= f_r L_o \int_{H^2} \cos \theta \mathrm d\omega_i \\
+L_o(\omega_o) &= \int_{H^2} f_r L_i(\omega_i) \cos \theta \mathrm d\omega_i \newline
+&= f_r L_i \int_{H^2} \cos \theta \mathrm d\omega_i \newline
+&= f_r L_o \int_{H^2} \cos \theta \mathrm d\omega_i \newline
 &= \pi f_r L_o
 \end{aligned}
 $$
@@ -88,7 +88,7 @@ Schlick 近似结果见下图。可以发现不论对于绝缘体还是导体，
 $$
 \begin{aligned}
 f_s(\omega_i, \omega_o) = 
-&\rho_{reflection} * F(\theta) * \delta(\theta_o - \theta_i) \delta ((\phi_o + \pi - \phi_i) \operatorname{mod} 2\pi) \\ 
+&\rho_{reflection} * F(\theta) * \delta(\theta_o - \theta_i) \delta ((\phi_o + \pi - \phi_i) \operatorname{mod} 2\pi) \newline 
 + &\rho_{refraction} * (1 - F(\theta)) \delta ( \theta_o + \arcsin(\frac{\eta_i}{\eta_t}\sin\theta_i ) - \pi) \delta ((\phi_o + \pi - \phi_i) \operatorname{mod} 2\pi)
 \end{aligned}
 $$
