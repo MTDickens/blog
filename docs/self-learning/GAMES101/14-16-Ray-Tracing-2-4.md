@@ -17,7 +17,7 @@
 格子太稀疏，固然判断不好；太密集，计算量也会较大。一个好用的 heuristic 是：
 
 - $\#cells = C * \#objs$
-  - $C \approx 27 $ in 3D
+  - $C \approx 27$ in 3D
 
 #### 网格适用范围
 
@@ -239,7 +239,7 @@ $$
 渲染方程可以进一步简化：
 $$
 \begin{aligned}
-l(u) &= e(u) + \int_{\Omega^+} l(v) K(u,v) \mathrm dv \\
+l(u) &= e(u) + \int_{\Omega^+} l(v) K(u,v) \mathrm dv \newline
 &\text{where } K(u,v) = (\mathbf n \cdot u) f_r(\mathrm p, v, u) 
 \end{aligned}
 $$
@@ -254,9 +254,9 @@ $$
 从而：
 $$
 \begin{aligned}
-(I-K) L &= E \\
-L &= (I - K)^{-1} E \\
-&= (I + K + K^2 + K^3 + \cdots) E \\
+(I-K) L &= E \newline
+L &= (I - K)^{-1} E \newline
+&= (I + K + K^2 + K^3 + \cdots) E \newline
 &= (\sum_{i=0}^\infty K^i) E
 \end{aligned}
 $$
@@ -375,7 +375,7 @@ shade(p, wo):
 假设只有一个光源，且没有其它反光物体。令 $\xi' \sim \operatorname{Uniform}(A)$，从而：
 $$
 \begin{aligned}
-\lVert x'-x\rVert^2 \mathrm d\omega &= \cos \theta' \mathrm d A \\
+\lVert x'-x\rVert^2 \mathrm d\omega &= \cos \theta' \mathrm d A \newline
 \frac{\mathrm d A}{\mathrm d\omega} &= \frac{\lVert x'-x\rVert^2}{\cos \theta'} 
 \end{aligned}
 $$
