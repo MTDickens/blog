@@ -274,9 +274,11 @@ $$
 \end{aligned}
 $$
 又由于：
+
 $$
 \mathop{\arg\max}_{D(x)} p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx = \frac{p_{data}(x)}{p_{data}(x) + p_G(x)}
 $$
+
 因此，令 $D'(x) = \frac{p_{data}(x)}{p_{data}(x) + p_G(x)}$，就有 $\int p_{data}(x) \log D'(x) + p_G(x) \log(1-D'(x)) \mathrm dx = \int \max_{D(x)} p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx$，从而：
 
 - $\max_D \int p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx = \int \max_{D(x)} p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx$
@@ -314,7 +316,7 @@ $$
     - 我们可以通过 [Wasserstein GAN](https://en.wikipedia.org/wiki/Wasserstein_GAN) 来解决这个问题
 
         - 期望最小化的目标函数不是 JSD，而是 Wasserstein Metric：$\text{arg min}_\theta W(p, p_\theta) = \text{arg min}_\theta \inf_{\pi \in \Pi(p,q)} \mathbb{E}_{(x,y) \sim \pi}$
-        - 通过 Kantorovich-Rubinstein对偶定理 ([Proof](https://courses.cs.washington.edu/courses/cse599i/20au/resources/L12_duality.pdf))，让 Wasserstein 距离更容易计算：$ W(p, q) = \inf_{\pi \in \Pi(p,q)} \mathbb{E}_{(x,y) \sim \pi} \left[ \|x - y\|^2 \right] = \sup_{\|h\|_L \leq 1} \left( \mathbb{E}_{x \sim p} [h(x)] - \mathbb{E}_{y \sim q} [h(y)] \right)$
+        - 通过 Kantorovich-Rubinstein对偶定理 ([Proof](https://courses.cs.washington.edu/courses/cse599i/20au/resources/L12_duality.pdf))，让 Wasserstein 距离更容易计算：$W(p, q) = \inf_{\pi \in \Pi(p,q)} \mathbb{E}_{(x,y) \sim \pi} \left[ \|x - y\|^2 \right] = \sup_{\|h\|_L \leq 1} \left( \mathbb{E}_{x \sim p} [h(x)] - \mathbb{E}_{y \sim q} [h(y)] \right)$
         - 从而，我们就可以优化 $\min_G \max_D (E_{x \sim p_{data}}[D(x)] - E_{z \sim p(z)}[D(G(z))])$
         - 当然，需要保证 $\|D\|_L \leq 1$​。这一点可以采用简单暴力的 clip 操作完成。
     
