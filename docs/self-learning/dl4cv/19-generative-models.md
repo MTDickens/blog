@@ -72,16 +72,19 @@ $$
 - 也就是假设所有样本均独立，然后采用最大似然推断
 
 或者可以转换一下：
+
 $$
 W^\ast = \mathop{\arg\max}_{W} \sum_i \log f(x^{(i)}, W)
 $$
 而对于某个 $x^{(i)} = (x^{(i)}_1, x^{(i)}_2, \dots)$，通过贝叶斯定律，有：
+
 $$
 \begin{aligned}
 p(x^{(i)}) &= p(x^{(i)}_1, x^{(i)}_2, \dots) \newline
 &= \prod_j p(x^{(i)}_j | x^{(i)}_{j-1}, \dots, x^{(i)}_1) \newline
 \end{aligned}
 $$
+
 而这样的依赖关系，和 RNN 完全一样：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_20_1_18_202405192001674.png" alt="image-20240519200115849" style="zoom:33%;" />
