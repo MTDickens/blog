@@ -1,3 +1,6 @@
 site
 .venv
 .obsidian
+*.cache
+.DS_Store
+.crossnote

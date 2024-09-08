@@ -157,6 +157,12 @@ nav:
           - OOP:
               - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
               - Hazards of Smart Pointers: "School-Courses/SP-SU-2024/OOP/hazards-of-smart-pointers.md"
+          - 短学期 MARL:
+              - 1. 连续控制: "School-Courses/SP-SU-2024/RL/continuous-control.md"
+              - 2. TRPO 和 PPO: "School-Courses/SP-SU-2024/RL/trpo-entropy-and-ppo.md"
+              - 3. 多智能体: "School-Courses/SP-SU-2024/RL/multi-agents.md"
+          - CMU SU24 暑校:
+              - Lecture 2: "School-Courses/SU24-CMU/lec-2.md"
   - 自学课程:
       - AI:
           - EECS 498-007 / 598-005:
@@ -212,6 +218,8 @@ nav:
               - 2. Untyped Arithmetic Expressions: "self-learning/types-and-programming-languages/untyped-arithmetic-expressions.md"
               - 3. Untyped Lambda Calculus: "self-learning/types-and-programming-languages/untyped-lambda-calculus.md"
               - 4. Nameless Representation of Terms: "self-learning/types-and-programming-languages/nameless-representation-of-terms.md"
+              - 5. Typed Lambda Calculus: "self-learning/types-and-programming-languages/typed-lambda-calculus.md"
+              - 6. References: "self-learning/types-and-programming-languages/references.md"
       - 系统:
           - CS 15-445 课程:
               - 3-4. Database Storage: "self-learning/CMU-CS15-445/3-4-Database-Storage.md"
@@ -258,6 +266,8 @@ nav:
               - 7. Multi-parameter Mechanism Design: "self-learning/algorithmic-game-theory/7-multi-parameter-mechanism-design.md"
               - 8. Beyond Quasi-Linearity: "self-learning/algorithmic-game-theory/8-beyond-quasi-linearity.md"
               - 9. Mechanism Design w/o Money: "self-learning/algorithmic-game-theory/9-mechanism-design-w-o-money-an-introduction.md"
+              - 13. A Hierarchy of Equilibria: "self-learning/algorithmic-game-theory/13-a-hierarchy-of-equilibria.md"
+              - 14. Robust POA Bounds in Smooth Games: "self-learning/algorithmic-game-theory/14-robust-poa-bounds-in-smooth-games.md"
   - 计算机科学:
       - 2023 年:
           - 图灵机代码: "CS/23/codes-for-turing-machine.md"
@@ -375,8 +385,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.inlinehilite
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -386,6 +396,7 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 
+
 extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
