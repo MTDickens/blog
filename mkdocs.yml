@@ -161,8 +161,12 @@ nav:
               - 1. 连续控制: "School-Courses/SP-SU-2024/RL/continuous-control.md"
               - 2. TRPO 和 PPO: "School-Courses/SP-SU-2024/RL/trpo-entropy-and-ppo.md"
               - 3. 多智能体: "School-Courses/SP-SU-2024/RL/multi-agents.md"
-          - CMU SU24 暑校:
-              - Lecture 2: "School-Courses/SU24-CMU/lec-2.md"
+      - CMU SU24 暑校:
+          - Lecture 2: "School-Courses/SU24-CMU/lec-2.md"
+      - Fall/Winter 2024:
+          - OS:
+              - Introduction: "School-Courses/FA-WINTER-2024/OS/Introduction.md"
+
   - 自学课程:
       - AI:
           - EECS 498-007 / 598-005:
@@ -295,6 +299,11 @@ nav:
   - 转载:
       - 知乎:
           - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish-between-library-framework-architecture-platform.md"
+          - 类脑计算的困境与出路:
+              - 一: "Repost/zhihu/brain-inspired-computing/post-1.md"
+              - 二: "Repost/zhihu/brain-inspired-computing/post-2.md"
+              - 三: "Repost/zhihu/brain-inspired-computing/post-3.md"
+              - 四: "Repost/zhihu/brain-inspired-computing/post-4.md"
           - 拓扑数据分析 - 持续同调:
               - 一: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (1).md"
               - 二: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (2).md"
@@ -368,10 +377,10 @@ plugins:
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
   - callouts
-  - toc-md:
-      toc_page_title: Contents
-      toc_page_description: Usage mkdocs-toc-md
-      header_level: 3
+#   - toc-md:
+#       toc_page_title: Contents
+#       toc_page_description: Usage mkdocs-toc-md
+#       header_level: 3
 
 markdown_extensions:
   - footnotes
