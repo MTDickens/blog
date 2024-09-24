@@ -187,9 +187,10 @@
 
 **Rules of thumb**:
 
-1. log（包含 `printk` 和 core dump 等等）为主，gdb 为辅
-2. 不要在代码中用 tricks，尽量多加注释、简洁明了
-3. 推荐工具
+1. Remember the separation of policy and mechanism
+2. log（包含 `printk` 和 core dump 等等）为主，gdb 为辅
+3. 不要在代码中用 tricks，尽量多加注释、简洁明了
+4. 推荐工具
 	- `strace` - trace system calls invoked by a process
 	- `gdb` - source-level debugger
 	- `perf` - collection of Linux performance tools
