@@ -4,368 +4,373 @@ site_author: "mtdickens"
 site_description: "mtdicken's blog"
 
 nav:
-  - 主页: "index.md"
-  - 建议:
-      - Tim Roughgarden:
-          - How To Read A Paper: "Advice/Professors/Tim Roughgarden/paper-reading-survival-kit.md"
-      - 丁尧相老师:
-          - 总体建议:
-              - 书籍建议: "Advice/Professors/Yaoxiang Ding/advice-on-books.md"
-              - 课程建议: "Advice/Professors/Yaoxiang Ding/advice-on-courses.md"
-          - 2023 年:
-              - 1 月:
-                  - 阅读建议: "Advice/Professors/Yaoxiang Ding/advice on reading.md"
-                  - 听讲记录: "Advice/Professors/Yaoxiang Ding/23/01/note.md"
-              - 2 月:
-                  - 听讲 23-02-23: "Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md"
-              - 3 月:
-                  - 线下交流 23-03-18: "Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md"
-                  - 线下交流 23-03-25: "Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md"
-              - 5 月:
-                  - 线下交流 23-05-05: "Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md"
-  - 技术:
-      - AI:
-          - Chatgpt Lawyer: "Technology/ai/chatgpt-lawyer.md"
-      - 网络:
-          - Cloudflare:
-              - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"
-          - SSH:
-              - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh-via-password-or-public-key.md"
-              - Mosh 使用指南: "Technology/Internet/SSH/mosh-guide.md"
-          - JS:
-              - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA-script.md"
-      - 编程语言:
-          - Haskell:
-              - How to use GHCup and Stack: "Technology/Haskell/how-to-use-ghcup-and-stack.md"
-          - Python:
-              - Python 插件:
-                  - yt-dlp: "Technology/Python/yt-dlp.md"
-              - Python tips: "Technology/Python/python-tips.md"
-              - SymPy 使用指南: "Technology/Python/sympy-guide.md"
-              - Conda:
-                  - MinoConda 初学者指南: "Technology/Python/Conda/miniconda-beginner-guide.md"
-          - Rust:
-              - Lec Note 1: "Technology/Rust/lec-note-1.md"
-              - Lec Note 2: "Technology/Rust/lec-note-2.md"
-              - Lec Note 3: "Technology/Rust/lec-note-3.md"
-      - 软件:
-          - VS Code:
-              - ssh:
-                  - VS Code 中为 ssh 配置代理: "Technology/VS-Code/ssh/ssh-via-proxy.md"
-              - 插件推荐: "Technology/VS-Code/plugins-recommendation.md"
-              - 提高文件树的可读性: "Technology/VS-Code/readable-explorer-tree/readable-explorer-tree.md"
-      - Git:
-          - Git 备忘录: "Technology/Git/git-tips.md"
-          - Git-crypt 插件: "Technology/Git/git-crypt.md"
-      - CI/CD:
-          - Gitlab CI/CD: "Technology/ci-cd/gitlab.md"
-          - Github CI/CD: "Technology/ci-cd/github.md"
-      - CMake:
-          - CMake 教程: "Technology/cmake/tutorial.md"
-      - GNU:
-          - GDB 备忘录: "Technology/gdb-tips.md"
-      - Docker:
-          - Docker 备忘录: "Technology/docker-tips.md"
-      - 博客:
-          - MkDocs:
-              - 插件:
-                  - mkdocs-encryptcontent 插件使用: "Technology/OS/Linux/mkdocs/plugins/mkdocs-encryptcontent.md"
-      - VPS:
-          - Microsoft Azure:
-              - Azure 使用避雷: "Technology/VPS/Azure/azure-using-guide.md"
-              - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh-via-root.md"
-      - 操作系统:
-          - Linux:
-              - FAQ:
-                  - 设置 Linux ipv4 优先的方法: "Technology/OS/Linux/FAQ/ipv4-first.md"
-                  - Ubuntu 中更改 Shell: "Technology/OS/Linux/FAQ/change shell in Ubuntu.md"
-              - Linux tips: "Technology/OS/Linux/Linux-tips.md"
-              - Linux 常用软件: "Technology/OS/Linux/frequently-used-softwares-in-Linux.md"
-              - Linux 必备软件: "Technology/OS/Linux/must-install-softwares-in-Linux.md"
-              - Linux 各个主要目录的作用: "Technology/OS/Linux/FAQ/Linux-directories.md"
-              - Linux 软件介绍:
-                  - fail2ban 使用: "Technology/OS/Linux/Softwares/fail2ban/fail2ban.md"
-                  - rlwrap 使用: "Technology/OS/Linux/Softwares/rlwrap/rlwrap-manual.md"
-                  - V2rayA 使用: "Technology/OS/Linux/Softwares/v2raya/v2raya.md"
-          - Windows:
-              - Windows tips: "Technology/OS/Windows/faq.md"
-      - 浏览器:
-          - Chrome 插件:
-              - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
-              - Glarity: "Technology/Chrome-addons/glarity.md"
-      - PDF 处理:
-          - 给 PDF 文件添加目录: "Technology/PDF/Add-contents-to-a-PDF-file.md"
-          - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
-      - 网络代理:
-          - V2Ray+ws+tls+nginx(web) 全解析: "Technology/Proxy/v2ray-ws-tls-web.md"
-          - Clash 订阅转换: "Technology/Proxy/clash-converter.md"
-  - 学校课程:
-      - Spring/Summer 2024:
-          - Reinforcement Learning:
-              - 1. Policy Gradient And Actor-Critic: "School-Courses/SP-SU-2024/RL/policy-gradient-and-actor-critic.md"
-          - 计算机组成与设计:
-              - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
-              - 2. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
-              - 3. CPU Design: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/3-CPU-Design.md"
-              - 4. Interruption and Exception: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/4-Interruption-And-Exception.md"
-              - 5. CPU Optimization: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/5-CPU-Optimization.md"
-              - 6. Memory Hierarchy: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/6-Memory-Hierarchy.md"
-              - 7. I/O Device: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/7-IO-Device.md"
-          - 数值分析:
-              - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-introduction.md"
-              - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-equations.md"
-              - 3. Linear Error Analysis: "School-Courses/SP-SU-2024/Numerical-Analysis/3-linear-error-analysis.md"
-              - 4. Linear System: "School-Courses/SP-SU-2024/Numerical-Analysis/4-linear-system.md"
-              - 5. Iterative Techniques in Matrix Algebra: "School-Courses/SP-SU-2024/Numerical-Analysis/5-iterative-techniques-in-matrix-algebra.md"
-              - 6. Approximating Eigenvalues: "School-Courses/SP-SU-2024/Numerical-Analysis/6-approximating-eigenvalues.md"
-              - 7. Interpolation: "School-Courses/SP-SU-2024/Numerical-Analysis/7-interpolation.md"
-              - 8. Cubic Spline: "School-Courses/SP-SU-2024/Numerical-Analysis/8-cubic-spline.md"
-              - 9. Approximation Theory: "School-Courses/SP-SU-2024/Numerical-Analysis/9-approximation-theory.md"
-              - 10. Numerical Differentiation And Integration: "School-Courses/SP-SU-2024/Numerical-Analysis/10-numerical-diff-and-int.md"
-              - 11. ODE: "School-Courses/SP-SU-2024/Numerical-Analysis/11-ode.md"
-          - 拓扑数据处理:
-              - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
-              - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
-              - 2. Applications: "School-Courses/SP-SU-2024/TDA/lec2.md"
-              - 3. Graph, Curve and Complex: "School-Courses/SP-SU-2024/TDA/lec3.md"
-              - 4. Algebraic Topology: "School-Courses/SP-SU-2024/TDA/lec4.md"
-              - 5. Persistent Homology: "School-Courses/SP-SU-2024/TDA/lec5.md"
-              - 6. Computation Methods: "School-Courses/SP-SU-2024/TDA/lec6.md"
-              - 7. Stability Theory: "School-Courses/SP-SU-2024/TDA/lec7.md"
-              - 8. Morse Theory: "School-Courses/SP-SU-2024/TDA/lec8.md"
-              - 9. Vectorization of Persistence Diagrams: "School-Courses/SP-SU-2024/TDA/lec9.md"
-          - 数据库系统:
-              - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
-              - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
-              - 3. SQL Syntax: "School-Courses/SP-SU-2024/DBMS/3-SQL-Syntax.md"
-              - 4. Advanced SQL: "School-Courses/SP-SU-2024/DBMS/4-Advanced-SQL.md"
-              - 5. E-R Relationship: "School-Courses/SP-SU-2024/DBMS/5-ER-Relationship.md"
-              - 6. Database Design: "School-Courses/SP-SU-2024/DBMS/6-Database-Design.md"
-              - 7. Storage: "School-Courses/SP-SU-2024/DBMS/7-Storage.md"
-              - 8. DB Storage Structure: "School-Courses/SP-SU-2024/DBMS/8-DB-Storage-Structure.md"
-              - 9. Indexing: "School-Courses/SP-SU-2024/DBMS/9-Indexing.md"
-              - 10. Query Processing: "School-Courses/SP-SU-2024/DBMS/10-Query-Processing.md"
-              - 11. Query Optimization: "School-Courses/SP-SU-2024/DBMS/11-Query-Optimization.md"
-              - 12. Transaction: "School-Courses/SP-SU-2024/DBMS/12-Transaction.md"
-              - 13. Recovery: "School-Courses/SP-SU-2024/DBMS/13-Recovery.md"
-          - ADS:
-              - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
-              - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
-              - Alpha Beta Pruning: "School-Courses/SP-SU-2024/ADS/alpha-beta-pruning.md"
-              - Approximation: "School-Courses/SP-SU-2024/ADS/approximation.md"
-              - Parallel Computing: "School-Courses/SP-SU-2024/ADS/parallel-computing.md"
-          - OOP:
-              - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
-              - Hazards of Smart Pointers: "School-Courses/SP-SU-2024/OOP/hazards-of-smart-pointers.md"
-          - 短学期 MARL:
-              - 1. 连续控制: "School-Courses/SP-SU-2024/RL/continuous-control.md"
-              - 2. TRPO 和 PPO: "School-Courses/SP-SU-2024/RL/trpo-entropy-and-ppo.md"
-              - 3. 多智能体: "School-Courses/SP-SU-2024/RL/multi-agents.md"
-      - CMU SU24 暑校:
-          - Lecture 2: "School-Courses/SU24-CMU/lec-2.md"
-      - Fall/Winter 2024:
-          - OS:
-              - Introduction: "School-Courses/FA-WINTER-2024/OS/Introduction.md"
+- 主页: "index.md"
+- 建议:
+  - Tim Roughgarden:
+    - How To Read A Paper: "Advice/Professors/Tim Roughgarden/paper-reading-survival-kit.md"
+  - 丁尧相老师:
+    - 总体建议:
+      - 书籍建议: "Advice/Professors/Yaoxiang Ding/advice-on-books.md"
+      - 课程建议: "Advice/Professors/Yaoxiang Ding/advice-on-courses.md"
+    - 2023 年:
+      - 1 月:
+        - 阅读建议: "Advice/Professors/Yaoxiang Ding/advice on reading.md"
+        - 听讲记录: "Advice/Professors/Yaoxiang Ding/23/01/note.md"
+      - 2 月:
+        - 听讲 23-02-23: "Advice/Professors/Yaoxiang Ding/23/02/23-02-23.md"
+      - 3 月:
+        - 线下交流 23-03-18: "Advice/Professors/Yaoxiang Ding/23/03/23-03-18.md"
+        - 线下交流 23-03-25: "Advice/Professors/Yaoxiang Ding/23/03/23-03-25.md"
+      - 5 月:
+        - 线下交流 23-05-05: "Advice/Professors/Yaoxiang Ding/23/05/23-05-05.md"
+- 技术:
+  - AI:
+    - Chatgpt Lawyer: "Technology/ai/chatgpt-lawyer.md"
+  - 网络:
+    - Cloudflare:
+      - Cloudflare Pages 部署: "Technology/Internet/Cloudflare/Cloudflare Pages deployment.md"
+    - SSH:
+      - 使用密钥登录 ssh: "Technology/Internet/SSH/ssh-via-password-or-public-key.md"
+      - Mosh 使用指南: "Technology/Internet/SSH/mosh-guide.md"
+    - JS:
+      - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA-script.md"
+  - 编程语言:
+    - Haskell:
+      - How to use GHCup and Stack: "Technology/Haskell/how-to-use-ghcup-and-stack.md"
+    - Python:
+      - Python 插件:
+        - yt-dlp: "Technology/Python/yt-dlp.md"
+      - Python tips: "Technology/Python/python-tips.md"
+      - SymPy 使用指南: "Technology/Python/sympy-guide.md"
+      - Conda:
+        - MinoConda 初学者指南: "Technology/Python/Conda/miniconda-beginner-guide.md"
+    - Rust:
+      - Lec Note 1: "Technology/Rust/lec-note-1.md"
+      - Lec Note 2: "Technology/Rust/lec-note-2.md"
+      - Lec Note 3: "Technology/Rust/lec-note-3.md"
+  - 软件:
+    - VS Code:
+      - ssh:
+        - VS Code 中为 ssh 配置代理: "Technology/VS-Code/ssh/ssh-via-proxy.md"
+      - 插件推荐: "Technology/VS-Code/plugins-recommendation.md"
+      - 提高文件树的可读性: "Technology/VS-Code/readable-explorer-tree/readable-explorer-tree.md"
+  - Git:
+    - Git 备忘录: "Technology/Git/git-tips.md"
+    - Git-crypt 插件: "Technology/Git/git-crypt.md"
+  - CI/CD:
+    - Gitlab CI/CD: "Technology/ci-cd/gitlab.md"
+    - Github CI/CD: "Technology/ci-cd/github.md"
+  - CMake:
+    - CMake 教程: "Technology/cmake/tutorial.md"
+  - GNU:
+    - GDB 备忘录: "Technology/gdb-tips.md"
+  - Docker:
+    - Docker 备忘录: "Technology/docker-tips.md"
+  - 博客:
+    - MkDocs:
+      - 插件:
+        - mkdocs-encryptcontent 插件使用: "Technology/OS/Linux/mkdocs/plugins/mkdocs-encryptcontent.md"
+  - VPS:
+    - Microsoft Azure:
+      - Azure 使用避雷: "Technology/VPS/Azure/azure-using-guide.md"
+      - Azure 如何启用 root 用户登录: "Technology/VPS/Azure/ssh-via-root.md"
+  - 操作系统:
+    - Linux:
+      - FAQ:
+        - 设置 Linux ipv4 优先的方法: "Technology/OS/Linux/FAQ/ipv4-first.md"
+        - Ubuntu 中更改 Shell: "Technology/OS/Linux/FAQ/change shell in Ubuntu.md"
+      - Linux tips: "Technology/OS/Linux/Linux-tips.md"
+      - Linux 常用软件: "Technology/OS/Linux/frequently-used-softwares-in-Linux.md"
+      - Linux 必备软件: "Technology/OS/Linux/must-install-softwares-in-Linux.md"
+      - Linux 各个主要目录的作用: "Technology/OS/Linux/FAQ/Linux-directories.md"
+      - Linux 软件介绍:
+        - fail2ban 使用: "Technology/OS/Linux/Softwares/fail2ban/fail2ban.md"
+        - rlwrap 使用: "Technology/OS/Linux/Softwares/rlwrap/rlwrap-manual.md"
+        - V2rayA 使用: "Technology/OS/Linux/Softwares/v2raya/v2raya.md"
+    - Windows:
+      - Windows tips: "Technology/OS/Windows/faq.md"
+  - 浏览器:
+    - Chrome 插件:
+      - Google 输入工具: "Technology/Chrome-addons/google-input-tools.md"
+      - Glarity: "Technology/Chrome-addons/glarity.md"
+  - PDF 处理:
+    - 给 PDF 文件添加目录: "Technology/PDF/Add-contents-to-a-PDF-file.md"
+    - Sioyek 使用指南: "Technology/PDF/a-short-guide-of-sioyek.md"
+  - 网络代理:
+    - V2Ray+ws+tls+nginx(web) 全解析: "Technology/Proxy/v2ray-ws-tls-web.md"
+    - Clash 订阅转换: "Technology/Proxy/clash-converter.md"
+- 学校课程:
+  - Spring/Summer 2024:
+    - Reinforcement Learning:
+      - 1. Policy Gradient And Actor-Critic: "School-Courses/SP-SU-2024/RL/policy-gradient-and-actor-critic.md"
+    - 计算机组成与设计:
+      - 1. Introduction: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/1-Introduction.md"
+      - 2. Arithmetics: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/2-Arithmetics.md"
+      - 3. CPU Design: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/3-CPU-Design.md"
+      - 4. Interruption and Exception: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/4-Interruption-And-Exception.md"
+      - 5. CPU Optimization: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/5-CPU-Optimization.md"
+      - 6. Memory Hierarchy: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/6-Memory-Hierarchy.md"
+      - 7. I/O Device: "School-Courses/SP-SU-2024/Computer-Organization-and-Design/7-IO-Device.md"
+    - 数值分析:
+      - 1. Introduction: "School-Courses/SP-SU-2024/Numerical-Analysis/1-introduction.md"
+      - 2. Equations: "School-Courses/SP-SU-2024/Numerical-Analysis/2-equations.md"
+      - 3. Linear Error Analysis: "School-Courses/SP-SU-2024/Numerical-Analysis/3-linear-error-analysis.md"
+      - 4. Linear System: "School-Courses/SP-SU-2024/Numerical-Analysis/4-linear-system.md"
+      - 5. Iterative Techniques in Matrix Algebra: "School-Courses/SP-SU-2024/Numerical-Analysis/5-iterative-techniques-in-matrix-algebra.md"
+      - 6. Approximating Eigenvalues: "School-Courses/SP-SU-2024/Numerical-Analysis/6-approximating-eigenvalues.md"
+      - 7. Interpolation: "School-Courses/SP-SU-2024/Numerical-Analysis/7-interpolation.md"
+      - 8. Cubic Spline: "School-Courses/SP-SU-2024/Numerical-Analysis/8-cubic-spline.md"
+      - 9. Approximation Theory: "School-Courses/SP-SU-2024/Numerical-Analysis/9-approximation-theory.md"
+      - 10. Numerical Differentiation And Integration: "School-Courses/SP-SU-2024/Numerical-Analysis/10-numerical-diff-and-int.md"
+      - 11. ODE: "School-Courses/SP-SU-2024/Numerical-Analysis/11-ode.md"
+    - 拓扑数据处理:
+      - 0. Foundamentals of TDA: "School-Courses/SP-SU-2024/TDA/lec0.md"
+      - 1. Introduction: "School-Courses/SP-SU-2024/TDA/lec1.md"
+      - 2. Applications: "School-Courses/SP-SU-2024/TDA/lec2.md"
+      - 3. Graph, Curve and Complex: "School-Courses/SP-SU-2024/TDA/lec3.md"
+      - 4. Algebraic Topology: "School-Courses/SP-SU-2024/TDA/lec4.md"
+      - 5. Persistent Homology: "School-Courses/SP-SU-2024/TDA/lec5.md"
+      - 6. Computation Methods: "School-Courses/SP-SU-2024/TDA/lec6.md"
+      - 7. Stability Theory: "School-Courses/SP-SU-2024/TDA/lec7.md"
+      - 8. Morse Theory: "School-Courses/SP-SU-2024/TDA/lec8.md"
+      - 9. Vectorization of Persistence Diagrams: "School-Courses/SP-SU-2024/TDA/lec9.md"
+    - 数据库系统:
+      - 1. Introduction: "School-Courses/SP-SU-2024/DBMS/1-Introduction.md"
+      - 2. SQL Basics: "School-Courses/SP-SU-2024/DBMS/2-SQL-Basics.md"
+      - 3. SQL Syntax: "School-Courses/SP-SU-2024/DBMS/3-SQL-Syntax.md"
+      - 4. Advanced SQL: "School-Courses/SP-SU-2024/DBMS/4-Advanced-SQL.md"
+      - 5. E-R Relationship: "School-Courses/SP-SU-2024/DBMS/5-ER-Relationship.md"
+      - 6. Database Design: "School-Courses/SP-SU-2024/DBMS/6-Database-Design.md"
+      - 7. Storage: "School-Courses/SP-SU-2024/DBMS/7-Storage.md"
+      - 8. DB Storage Structure: "School-Courses/SP-SU-2024/DBMS/8-DB-Storage-Structure.md"
+      - 9. Indexing: "School-Courses/SP-SU-2024/DBMS/9-Indexing.md"
+      - 10. Query Processing: "School-Courses/SP-SU-2024/DBMS/10-Query-Processing.md"
+      - 11. Query Optimization: "School-Courses/SP-SU-2024/DBMS/11-Query-Optimization.md"
+      - 12. Transaction: "School-Courses/SP-SU-2024/DBMS/12-Transaction.md"
+      - 13. Recovery: "School-Courses/SP-SU-2024/DBMS/13-Recovery.md"
+    - ADS:
+      - Inverted File Index: "School-Courses/SP-SU-2024/ADS/inverted-file-index.md"
+      - Binomial Queue: "School-Courses/SP-SU-2024/ADS/binomial-queue.md"
+      - Alpha Beta Pruning: "School-Courses/SP-SU-2024/ADS/alpha-beta-pruning.md"
+      - Approximation: "School-Courses/SP-SU-2024/ADS/approximation.md"
+      - Parallel Computing: "School-Courses/SP-SU-2024/ADS/parallel-computing.md"
+    - OOP:
+      - C++ 的类: "School-Courses/SP-SU-2024/OOP/classes-in-cpp.md"
+      - Hazards of Smart Pointers: "School-Courses/SP-SU-2024/OOP/hazards-of-smart-pointers.md"
+    - 短学期 MARL:
+      - 1. 连续控制: "School-Courses/SP-SU-2024/RL/continuous-control.md"
+      - 2. TRPO 和 PPO: "School-Courses/SP-SU-2024/RL/trpo-entropy-and-ppo.md"
+      - 3. 多智能体: "School-Courses/SP-SU-2024/RL/multi-agents.md"
+  - CMU SU24 暑校:
+    - Lecture 2: "School-Courses/SU24-CMU/lec-2.md"
+  - Fall/Winter 2024:
+    - 计网:
+      - Basics: "School-Courses/FA-WINTER-2024/Computer-Network/Basics.md"
+    - OS:
+      - Introduction: "School-Courses/FA-WINTER-2024/OS/Introduction.md"
+      - OS Structures: "School-Courses/FA-WINTER-2024/OS/OS-Structures.md"
+    - 优化理论:
+      - Lec-2: "School-Courses/FA-WINTER-2024/Optimization/lec-2.md"
 
-  - 自学课程:
-      - AI:
-          - EECS 498-007 / 598-005:
-              - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
-              - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
-              - 2. Image Classification: "self-learning/dl4cv/2-image-classification.md"
-              - 4. Optimization: "self-learning/dl4cv/4-optimization.md"
-              - 5. Neural Networks: "self-learning/dl4cv/5-neural-networks.md"
-              - 7. CNN: "self-learning/dl4cv/7-cnn.md"
-              - 8. CNN Architectures: "self-learning/dl4cv/8-cnn-architectures.md"
-              - 9. Hardware and Software: "self-learning/dl4cv/9-hardware-and-software.md"
-              - 10. Training - Setups: "self-learning/dl4cv/10-training-setups.md"
-              - 11. Training - Dynamics and After It: "self-learning/dl4cv/11-training-dynamics-and-after-it.md"
-              - 12. RNN: "self-learning/dl4cv/12-rnn.md"
-              - 13. Attention: "self-learning/dl4cv/13-attention.md"
-              - 14. Visualizing and Understanding: "self-learning/dl4cv/14-visualizing-and-understanding.md"
-              - 15. Object Detection: "self-learning/dl4cv/15-object-detection.md"
-              - 16. Segmentation: "self-learning/dl4cv/16-segmentation.md"
-              - 17. 3D vision: "self-learning/dl4cv/17-3d-vision.md"
-              - 18. Videos: "self-learning/dl4cv/18-videos.md"
-              - 19. Generative Models: "self-learning/dl4cv/19-generative-models.md"
-              - 20. Reinforcement Learning: "self-learning/dl4cv/20-reinforcement-learning.md"
-      - PL & SA:
-          - PKU 编程语言理论:
-              - 0+. OCaml Basics: "self-learning/PKU-PLT/ch0+.md"
-              - 1-2. Introduction: "self-learning/PKU-PLT/ch1-2.md"
-              - 3. Untyped Arithmetic Expressions: "self-learning/PKU-PLT/ch3.md"
-              - 4. Lambda Calculus: "self-learning/PKU-PLT/ch4.md"
-          - NJU 软件分析:
-              - 1. Introduction: "self-learning/static-program-analysis/1-introduction.md"
-              - 2. Intermediate Representation: "self-learning/static-program-analysis/2-intermediate-representation.md"
-              - 3. Data Flow Analysis I: "self-learning/static-program-analysis/3-data-flow-analysis-i.md"
-              - 4. Data Flow Analysis II: "self-learning/static-program-analysis/4-data-flow-analysis-ii.md"
-              - 5-6. DFA Foundations I & II: "self-learning/static-program-analysis/5-6-dfa-foundations-i-ii.md"
-          - CS 106L 课程:
-              - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
-              - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
-              - 4. Streams: "self-learning/Stanford-CS106L/4-Streams.md"
-              - 5. Containers: "self-learning/Stanford-CS106L/5-Containers.md"
-              - 6. Iterators and Pointers: "self-learning/Stanford-CS106L/6-Iterators-and-Pointers.md"
-              - 7. Classes: "self-learning/Stanford-CS106L/7-Classes.md"
-              - 8. Template Classes and Const Correctness: "self-learning/Stanford-CS106L/8-Template-Classes-and-Const-Correctness.md"
-              - 9. Template Functions: "self-learning/Stanford-CS106L/9-Template-Functions.md"
-              - 10. Functions and Lambdas: "self-learning/Stanford-CS106L/10-Functions-and-Lambdas.md"
-              - 11. Operators: "self-learning/Stanford-CS106L/11-Operators.md"
-              - 12. Special Member Functions: "self-learning/Stanford-CS106L/12-Special-Member-Functions.md"
-              - 13. Move Semantics: "self-learning/Stanford-CS106L/13-Move-Semantics.md"
-              - 14. std::optional and Type Safety: "self-learning/Stanford-CS106L/14-std-optional-and-Type-Safety.md"
-              - 15. RAII, Smart Pointers, and Building C++ Projects: "self-learning/Stanford-CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
-              - "Guest Lecture: Template Metaprogramming": "self-learning/Stanford-CS106L/GL-Template-Metaprogramming.md"
-          - TAPL:
-              - 1. Mathematical Preliminaries: "self-learning/types-and-programming-languages/mathematical-preliminaries.md"
-              - 2. Untyped Arithmetic Expressions: "self-learning/types-and-programming-languages/untyped-arithmetic-expressions.md"
-              - 3. Untyped Lambda Calculus: "self-learning/types-and-programming-languages/untyped-lambda-calculus.md"
-              - 4. Nameless Representation of Terms: "self-learning/types-and-programming-languages/nameless-representation-of-terms.md"
-              - 5. Typed Lambda Calculus: "self-learning/types-and-programming-languages/typed-lambda-calculus.md"
-              - 6. References: "self-learning/types-and-programming-languages/references.md"
-      - 系统:
-          - CS 15-445 课程:
-              - 3-4. Database Storage: "self-learning/CMU-CS15-445/3-4-Database-Storage.md"
-          - CSAPP 课程:
-              - 1. Course Overview: "self-learning/CMU-CSAPP/1-Course-Overview.md"
-              - 2-3. Bits, Bytes And Integers: "self-learning/CMU-CSAPP/2-3-Bits-Bytes-And-Integers.md"
-              - 4. Floating Points: "self-learning/CMU-CSAPP/4-Floating-Points.md"
-              - 5. Machine Level Programming - Basics: "self-learning/CMU-CSAPP/5-MLP-Basics.md"
-              - 6. Machine Level Programming - Control: "self-learning/CMU-CSAPP/6-MLP-Control.md"
-              - 7. Machine Level Programming - Procedure: "self-learning/CMU-CSAPP/7-MLP-Proc.md"
-              - 8. Machine Level Programming - Data: "self-learning/CMU-CSAPP/8-MLP-Data.md"
-              - 9. Machine Level Programming - Advanced: "self-learning/CMU-CSAPP/9-MLP-Advanced.md"
-              - 10. Program Optimization: "self-learning/CMU-CSAPP/10-Program-Optimization.md"
-              - 11. The Memory Hierarchy: "self-learning/CMU-CSAPP/11-The-Memory-Hierarchy.md"
-              - 12. Cache Memories: "self-learning/CMU-CSAPP/12-Cache-Memories.md"
-              - 13. Linking: "self-learning/CMU-CSAPP/13-Linking.md"
-              - 14. Exceptional Control Flow - Exceptions and Processes: "self-learning/CMU-CSAPP/14-ECF-Exceptions-And-Processes.md"
-              - 15. Exceptional Control Flow - Signals and Nonlocal Jumps: "self-learning/CMU-CSAPP/15-ECF-Signals-And-Nonlocal-Jumps.md"
-              - 16. System-Level I/O: "self-learning/CMU-CSAPP/16-System-Level-IO.md"
-              - 17. Virtual Memory: "self-learning/CMU-CSAPP/17-Virtual-Memory.md"
-              - 18. Virtual Memory System: "self-learning/CMU-CSAPP/18-Virtual-Memory-System.md"
-              - 19-20. Storage Allocation: "self-learning/CMU-CSAPP/19-20-Storage-Allocation.md"
-              - 21-22. Network Programming: "self-learning/CMU-CSAPP/21-22-Network-Programming.md"
-          - USTC 计网:
-              - 1. Introduction: "self-learning/USTC-Computer-Networking/1-Introduction.md"
-              - 2. Application Layer: "self-learning/USTC-Computer-Networking/2-Application-Layer.md"
-              - 3. Transport Layer: "self-learning/USTC-Computer-Networking/3-Transport-Layer.md"
-      - 其它:
-          - GAMES101 课程:
-              - 12. Geometry: "self-learning/GAMES101/12-Geometry.md"
-              - 13. Ray Tracing 1: "self-learning/GAMES101/13-Ray-Tracing-1.md"
-              - 14-16. Ray Tracing 2-4: "self-learning/GAMES101/14-16-Ray-Tracing-2-4.md"
-              - 17. Materials and Appearances: "self-learning/GAMES101/17-Materials-And-Appearances.md"
-              - 19. Cameras, Lenses And Light Fields: "self-learning/GAMES101/19-Cameras-Lenses-And-Light-Fields.md"
-              - 20. Color And Perception: "self-learning/GAMES101/20-Color-And-Perception.md"
-              - 21-22. Animation: "self-learning/GAMES101/21-22-Animation.md"
-          - 算法博弈论:
-              - 1. Introduction: "self-learning/algorithmic-game-theory/1-introduction.md"
-              - 2. Basics of Mechanism Design: "self-learning/algorithmic-game-theory/2-basics-of-mechanism-design.md"
-              - 3. Myerson's Lemma: "self-learning/algorithmic-game-theory/3-myerson-s-lemma.md"
-              - 4. Algorithmic Mechanism Design: "self-learning/algorithmic-game-theory/4-algorithmic-mechanism-design.md"
-              - 5. Revenue Maximization Auctions: "self-learning/algorithmic-game-theory/5-revenue-maximization-auctions.md"
-              - 6. Simple Near-Optimal Auctions: "self-learning/algorithmic-game-theory/6-simple-near-optimal-auctions.md"
-              - 7. Multi-parameter Mechanism Design: "self-learning/algorithmic-game-theory/7-multi-parameter-mechanism-design.md"
-              - 8. Beyond Quasi-Linearity: "self-learning/algorithmic-game-theory/8-beyond-quasi-linearity.md"
-              - 9. Mechanism Design w/o Money: "self-learning/algorithmic-game-theory/9-mechanism-design-w-o-money-an-introduction.md"
-              - 13. A Hierarchy of Equilibria: "self-learning/algorithmic-game-theory/13-a-hierarchy-of-equilibria.md"
-              - 14. Robust POA Bounds in Smooth Games: "self-learning/algorithmic-game-theory/14-robust-poa-bounds-in-smooth-games.md"
-  - 计算机科学:
-      - 2023 年:
-          - 图灵机代码: "CS/23/codes-for-turing-machine.md"
-          - 和 ChatGPT 的一次交流: "CS/23/chatgpt-mutual-communication.md"
-          - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
-          - 如何阅读源码: "CS/23/how-to-read-source-code.md"
-      - 2024 年:
-          - 浅谈国内高校编程语言教育: "CS/24/programming-language-education-in-china.md"
-          - 里奇微积分：一种计算向量求导，矩阵求导，张量求导的简单方法: "CS/24/ricci-calculus.md"
-          - 信息论: "CS/24/information-theory.md"
-  - 数学:
-      - 2023 年:
-          - MIT牛人解说数学体系: "Mathematics/23/mathematical-system-explained-by-MIT-master.md"
-          - 图解对偶映射: "Mathematics/23/dual-map-explained.md"
-          - Youtube 的数学频道: "Mathematics/23/math-channels-on-youtube.md"
-          - 知乎用户收集: "Mathematics/23/good-users-on-zhihu.md"
-  - 随记:
-      - 2023 年:
-          - 学习常用网站: "Notes/23/often-used-websites-in-study.md"
-          - 关于在 Chatgpt 上执行代码: "Notes/23/run-code-on-chat-gpt.md"
-          - 如何高效阅读论文: "Notes/23/how-to-read-papers-efficiently.md"
-          - 如何祛费拉化: "Notes/23/how-to-not-be-a-fellah.md"
-      - 2024 年:
-          - 模拟计算: "Notes/24/analog-computing.md"
-  - 转载:
-      - 知乎:
-          - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish-between-library-framework-architecture-platform.md"
-          - 类脑计算的困境与出路:
-              - 一: "Repost/zhihu/brain-inspired-computing/post-1.md"
-              - 二: "Repost/zhihu/brain-inspired-computing/post-2.md"
-              - 三: "Repost/zhihu/brain-inspired-computing/post-3.md"
-              - 四: "Repost/zhihu/brain-inspired-computing/post-4.md"
-          - 拓扑数据分析 - 持续同调:
-              - 一: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (1).md"
-              - 二: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (2).md"
-              - 三: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (3).md"
-              - 四: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (4).md"
-              - 五（上）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5a).md"
-              - 五（下）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5b).md"
-          - 什么是代数: "Repost/zhihu/what-is-algebra.md"
-          - 论数学教育: "Repost/zhihu/on-teaching-mathematics-v-i-arnold.md"
-          - 个人谈 中西方一起在工业化上撒的慌: "Repost/zhihu/lies-that-china-and-the-west-have-made.md"
-          - 西方媒体: "Repost/zhihu/western-media.md"
-          - 《资本论》谁能读: "Repost/zhihu/das-kapital.md"
-      - linux.do:
-          - Claude 3.5 Sonnet 模仿任何写作风格的简易操作过程: "Repost/linux-do/claude-3-5-sonnet-mimicking-any-writing-style-simple-operation-process.md"
-      - 哲学:
-          - 汉哲学:
-              - 文化危机: "Repost/philosophy/han-philosophy/cultural-crisis.md"
-              - 传统汉文明的基本特征: "Repost/philosophy/han-philosophy/basic-characteristics-of-traditional-han-civilization.md"
-      - 其它:
-          - 开源推荐: "Repost/others/open-source-recommendation.md"
-          - 周小平：美国对华文化冷战的九大绝招: "Repost/others/us-cultural-cold-war-against-china.md"
-          - 扒一扒“肖慕漪们”的总后台: "Repost/others/behind-the-scenes-of-ny-chinese-culture-salon.md"
-          - 为什么我认为学生应该作弊: "Repost/others/why-i-think-students-should-cheat.md"
-      - Hostloc:
-          - 樱花妹 (NSFW): "Repost/hostloc/23-10-08.md"
-  - 音乐:
-      - 特辑：前苏联:
-          - 加盟共和国国歌选: "Music/USSR/national-anthems-of-union-republics.md"
-      - 阿富汗: "Music/Afghanistan.md"
-      - 伊朗: "Music/Iran.md"
-      - 高加索:
-          - 阿塞拜疆: "Music/Caucasia/Azerbaijan.md"
-      - 中亚五国: "Music/Central-asia.md"
-  - 美食:
-      - 意大利:
-          - Bolognese Sauce (番茄肉酱): "food/italy/bolognese-sauce.md"
-          - Spaghetti Carbonara (培根蛋酱意大利面): "food/italy/spaghetti-carbonara.md"
-          - Spaghetti al Limone: "food/italy/spaghetti-al-limone.md"
-          - 如何选择意面: "food/italy/best-pasta-to-buy-in-store.md"
+- 自学课程:
+  - AI:
+    - EECS 498-007 / 598-005:
+      - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
+      - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
+      - 2. Image Classification: "self-learning/dl4cv/2-image-classification.md"
+      - 4. Optimization: "self-learning/dl4cv/4-optimization.md"
+      - 5. Neural Networks: "self-learning/dl4cv/5-neural-networks.md"
+      - 7. CNN: "self-learning/dl4cv/7-cnn.md"
+      - 8. CNN Architectures: "self-learning/dl4cv/8-cnn-architectures.md"
+      - 9. Hardware and Software: "self-learning/dl4cv/9-hardware-and-software.md"
+      - 10. Training - Setups: "self-learning/dl4cv/10-training-setups.md"
+      - 11. Training - Dynamics and After It: "self-learning/dl4cv/11-training-dynamics-and-after-it.md"
+      - 12. RNN: "self-learning/dl4cv/12-rnn.md"
+      - 13. Attention: "self-learning/dl4cv/13-attention.md"
+      - 14. Visualizing and Understanding: "self-learning/dl4cv/14-visualizing-and-understanding.md"
+      - 15. Object Detection: "self-learning/dl4cv/15-object-detection.md"
+      - 16. Segmentation: "self-learning/dl4cv/16-segmentation.md"
+      - 17. 3D vision: "self-learning/dl4cv/17-3d-vision.md"
+      - 18. Videos: "self-learning/dl4cv/18-videos.md"
+      - 19. Generative Models: "self-learning/dl4cv/19-generative-models.md"
+      - 20. Reinforcement Learning: "self-learning/dl4cv/20-reinforcement-learning.md"
+  - PL & SA:
+    - PKU 编程语言理论:
+      - 0+. OCaml Basics: "self-learning/PKU-PLT/ch0+.md"
+      - 1-2. Introduction: "self-learning/PKU-PLT/ch1-2.md"
+      - 3. Untyped Arithmetic Expressions: "self-learning/PKU-PLT/ch3.md"
+      - 4. Lambda Calculus: "self-learning/PKU-PLT/ch4.md"
+    - NJU 软件分析:
+      - 1. Introduction: "self-learning/static-program-analysis/1-introduction.md"
+      - 2. Intermediate Representation: "self-learning/static-program-analysis/2-intermediate-representation.md"
+      - 3. Data Flow Analysis I: "self-learning/static-program-analysis/3-data-flow-analysis-i.md"
+      - 4. Data Flow Analysis II: "self-learning/static-program-analysis/4-data-flow-analysis-ii.md"
+      - 5-6. DFA Foundations I & II: "self-learning/static-program-analysis/5-6-dfa-foundations-i-ii.md"
+    - CS 106L 课程:
+      - 2. Types and Structs: "self-learning/Stanford-CS106L/2-Types-and-Structs.md"
+      - 3. Initialization and References: "self-learning/Stanford-CS106L/3-Initialization-and-References.md"
+      - 4. Streams: "self-learning/Stanford-CS106L/4-Streams.md"
+      - 5. Containers: "self-learning/Stanford-CS106L/5-Containers.md"
+      - 6. Iterators and Pointers: "self-learning/Stanford-CS106L/6-Iterators-and-Pointers.md"
+      - 7. Classes: "self-learning/Stanford-CS106L/7-Classes.md"
+      - 8. Template Classes and Const Correctness: "self-learning/Stanford-CS106L/8-Template-Classes-and-Const-Correctness.md"
+      - 9. Template Functions: "self-learning/Stanford-CS106L/9-Template-Functions.md"
+      - 10. Functions and Lambdas: "self-learning/Stanford-CS106L/10-Functions-and-Lambdas.md"
+      - 11. Operators: "self-learning/Stanford-CS106L/11-Operators.md"
+      - 12. Special Member Functions: "self-learning/Stanford-CS106L/12-Special-Member-Functions.md"
+      - 13. Move Semantics: "self-learning/Stanford-CS106L/13-Move-Semantics.md"
+      - 14. std::optional and Type Safety: "self-learning/Stanford-CS106L/14-std-optional-and-Type-Safety.md"
+      - 15. RAII, Smart Pointers, and Building C++ Projects: "self-learning/Stanford-CS106L/15-RAII-Smart-Pointers-and-Building-CPP-Projects.md"
+      - "Guest Lecture: Template Metaprogramming": "self-learning/Stanford-CS106L/GL-Template-Metaprogramming.md"
+    - TAPL:
+      - 1. Mathematical Preliminaries: "self-learning/types-and-programming-languages/mathematical-preliminaries.md"
+      - 2. Untyped Arithmetic Expressions: "self-learning/types-and-programming-languages/untyped-arithmetic-expressions.md"
+      - 3. Untyped Lambda Calculus: "self-learning/types-and-programming-languages/untyped-lambda-calculus.md"
+      - 4. Nameless Representation of Terms: "self-learning/types-and-programming-languages/nameless-representation-of-terms.md"
+      - 5. Typed Lambda Calculus: "self-learning/types-and-programming-languages/typed-lambda-calculus.md"
+      - 6. References: "self-learning/types-and-programming-languages/references.md"
+  - 系统:
+    - CS 15-445 课程:
+      - 3-4. Database Storage: "self-learning/CMU-CS15-445/3-4-Database-Storage.md"
+    - CSAPP 课程:
+      - 1. Course Overview: "self-learning/CMU-CSAPP/1-Course-Overview.md"
+      - 2-3. Bits, Bytes And Integers: "self-learning/CMU-CSAPP/2-3-Bits-Bytes-And-Integers.md"
+      - 4. Floating Points: "self-learning/CMU-CSAPP/4-Floating-Points.md"
+      - 5. Machine Level Programming - Basics: "self-learning/CMU-CSAPP/5-MLP-Basics.md"
+      - 6. Machine Level Programming - Control: "self-learning/CMU-CSAPP/6-MLP-Control.md"
+      - 7. Machine Level Programming - Procedure: "self-learning/CMU-CSAPP/7-MLP-Proc.md"
+      - 8. Machine Level Programming - Data: "self-learning/CMU-CSAPP/8-MLP-Data.md"
+      - 9. Machine Level Programming - Advanced: "self-learning/CMU-CSAPP/9-MLP-Advanced.md"
+      - 10. Program Optimization: "self-learning/CMU-CSAPP/10-Program-Optimization.md"
+      - 11. The Memory Hierarchy: "self-learning/CMU-CSAPP/11-The-Memory-Hierarchy.md"
+      - 12. Cache Memories: "self-learning/CMU-CSAPP/12-Cache-Memories.md"
+      - 13. Linking: "self-learning/CMU-CSAPP/13-Linking.md"
+      - 14. Exceptional Control Flow - Exceptions and Processes: "self-learning/CMU-CSAPP/14-ECF-Exceptions-And-Processes.md"
+      - 15. Exceptional Control Flow - Signals and Nonlocal Jumps: "self-learning/CMU-CSAPP/15-ECF-Signals-And-Nonlocal-Jumps.md"
+      - 16. System-Level I/O: "self-learning/CMU-CSAPP/16-System-Level-IO.md"
+      - 17. Virtual Memory: "self-learning/CMU-CSAPP/17-Virtual-Memory.md"
+      - 18. Virtual Memory System: "self-learning/CMU-CSAPP/18-Virtual-Memory-System.md"
+      - 19-20. Storage Allocation: "self-learning/CMU-CSAPP/19-20-Storage-Allocation.md"
+      - 21-22. Network Programming: "self-learning/CMU-CSAPP/21-22-Network-Programming.md"
+    - USTC 计网:
+      - 1. Introduction: "self-learning/USTC-Computer-Networking/1-Introduction.md"
+      - 2. Application Layer: "self-learning/USTC-Computer-Networking/2-Application-Layer.md"
+      - 3. Transport Layer: "self-learning/USTC-Computer-Networking/3-Transport-Layer.md"
+  - 其它:
+    - GAMES101 课程:
+      - 12. Geometry: "self-learning/GAMES101/12-Geometry.md"
+      - 13. Ray Tracing 1: "self-learning/GAMES101/13-Ray-Tracing-1.md"
+      - 14-16. Ray Tracing 2-4: "self-learning/GAMES101/14-16-Ray-Tracing-2-4.md"
+      - 17. Materials and Appearances: "self-learning/GAMES101/17-Materials-And-Appearances.md"
+      - 19. Cameras, Lenses And Light Fields: "self-learning/GAMES101/19-Cameras-Lenses-And-Light-Fields.md"
+      - 20. Color And Perception: "self-learning/GAMES101/20-Color-And-Perception.md"
+      - 21-22. Animation: "self-learning/GAMES101/21-22-Animation.md"
+    - 算法博弈论:
+      - 1. Introduction: "self-learning/algorithmic-game-theory/1-introduction.md"
+      - 2. Basics of Mechanism Design: "self-learning/algorithmic-game-theory/2-basics-of-mechanism-design.md"
+      - 3. Myerson's Lemma: "self-learning/algorithmic-game-theory/3-myerson-s-lemma.md"
+      - 4. Algorithmic Mechanism Design: "self-learning/algorithmic-game-theory/4-algorithmic-mechanism-design.md"
+      - 5. Revenue Maximization Auctions: "self-learning/algorithmic-game-theory/5-revenue-maximization-auctions.md"
+      - 6. Simple Near-Optimal Auctions: "self-learning/algorithmic-game-theory/6-simple-near-optimal-auctions.md"
+      - 7. Multi-parameter Mechanism Design: "self-learning/algorithmic-game-theory/7-multi-parameter-mechanism-design.md"
+      - 8. Beyond Quasi-Linearity: "self-learning/algorithmic-game-theory/8-beyond-quasi-linearity.md"
+      - 9. Mechanism Design w/o Money: "self-learning/algorithmic-game-theory/9-mechanism-design-w-o-money-an-introduction.md"
+      - 13. A Hierarchy of Equilibria: "self-learning/algorithmic-game-theory/13-a-hierarchy-of-equilibria.md"
+      - 14. Robust POA Bounds in Smooth Games: "self-learning/algorithmic-game-theory/14-robust-poa-bounds-in-smooth-games.md"
+- 计算机科学:
+  - 2023 年:
+    - 图灵机代码: "CS/23/codes-for-turing-machine.md"
+    - 和 ChatGPT 的一次交流: "CS/23/chatgpt-mutual-communication.md"
+    - 神经网络简介: "CS/23/introduction-to-neuron-network/introduction-to-neuron-network.md"
+    - 如何阅读源码: "CS/23/how-to-read-source-code.md"
+  - 2024 年:
+    - 浅谈国内高校编程语言教育: "CS/24/programming-language-education-in-china.md"
+    - 里奇微积分：一种计算向量求导，矩阵求导，张量求导的简单方法: "CS/24/ricci-calculus.md"
+    - 信息论: "CS/24/information-theory.md"
+- 数学:
+  - 2023 年:
+    - MIT牛人解说数学体系: "Mathematics/23/mathematical-system-explained-by-MIT-master.md"
+    - 图解对偶映射: "Mathematics/23/dual-map-explained.md"
+    - Youtube 的数学频道: "Mathematics/23/math-channels-on-youtube.md"
+    - 知乎用户收集: "Mathematics/23/good-users-on-zhihu.md"
+- 随记:
+  - 2023 年:
+    - 学习常用网站: "Notes/23/often-used-websites-in-study.md"
+    - 关于在 Chatgpt 上执行代码: "Notes/23/run-code-on-chat-gpt.md"
+    - 如何高效阅读论文: "Notes/23/how-to-read-papers-efficiently.md"
+    - 如何祛费拉化: "Notes/23/how-to-not-be-a-fellah.md"
+  - 2024 年:
+    - 模拟计算: "Notes/24/analog-computing.md"
+- 转载:
+  - 知乎:
+    - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish-between-library-framework-architecture-platform.md"
+    - 类脑计算的困境与出路:
+      - 一: "Repost/zhihu/brain-inspired-computing/post-1.md"
+      - 二: "Repost/zhihu/brain-inspired-computing/post-2.md"
+      - 三: "Repost/zhihu/brain-inspired-computing/post-3.md"
+      - 四: "Repost/zhihu/brain-inspired-computing/post-4.md"
+    - 拓扑数据分析 - 持续同调:
+      - 一: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (1).md"
+      - 二: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (2).md"
+      - 三: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (3).md"
+      - 四: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (4).md"
+      - 五（上）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5a).md"
+      - 五（下）: "Repost/zhihu/topological-data-analysis/topological-data-analysis-homology (5b).md"
+    - 什么是代数: "Repost/zhihu/what-is-algebra.md"
+    - 论数学教育: "Repost/zhihu/on-teaching-mathematics-v-i-arnold.md"
+    - 个人谈 中西方一起在工业化上撒的慌: "Repost/zhihu/lies-that-china-and-the-west-have-made.md"
+    - 西方媒体: "Repost/zhihu/western-media.md"
+    - 《资本论》谁能读: "Repost/zhihu/das-kapital.md"
+  - linux.do:
+    - Claude 3.5 Sonnet 模仿任何写作风格的简易操作过程: "Repost/linux-do/claude-3-5-sonnet-mimicking-any-writing-style-simple-operation-process.md"
+  - 哲学:
+    - 汉哲学:
+      - 文化危机: "Repost/philosophy/han-philosophy/cultural-crisis.md"
+      - 传统汉文明的基本特征: "Repost/philosophy/han-philosophy/basic-characteristics-of-traditional-han-civilization.md"
+  - 其它:
+    - 开源推荐: "Repost/others/open-source-recommendation.md"
+    - 周小平：美国对华文化冷战的九大绝招: "Repost/others/us-cultural-cold-war-against-china.md"
+    - 扒一扒“肖慕漪们”的总后台: "Repost/others/behind-the-scenes-of-ny-chinese-culture-salon.md"
+    - 为什么我认为学生应该作弊: "Repost/others/why-i-think-students-should-cheat.md"
+  - Hostloc:
+    - 樱花妹 (NSFW): "Repost/hostloc/23-10-08.md"
+- 音乐:
+  - 特辑：前苏联:
+    - 加盟共和国国歌选: "Music/USSR/national-anthems-of-union-republics.md"
+  - 阿富汗: "Music/Afghanistan.md"
+  - 伊朗: "Music/Iran.md"
+  - 高加索:
+    - 阿塞拜疆: "Music/Caucasia/Azerbaijan.md"
+  - 中亚五国: "Music/Central-asia.md"
+- 美食:
+  - 意大利:
+    - Bolognese Sauce (番茄肉酱): "food/italy/bolognese-sauce.md"
+    - Spaghetti Carbonara (培根蛋酱意大利面): "food/italy/spaghetti-carbonara.md"
+    - Spaghetti al Limone: "food/italy/spaghetti-al-limone.md"
+    - 如何选择意面: "food/italy/best-pasta-to-buy-in-store.md"
 
 theme:
   name: "material"
   palette: #切换昼夜模式的颜色，审美差就用默认，专业点就自定义
-    - media: "(prefers-color-scheme: light)"
-      scheme: default #配色方案：浅色模式
-      primary: Brown #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
-      accent: Brown #强调色，默认蓝，可以交互的元素如悬停链接、按钮和滚动条
-      toggle:
-        icon: material/weather-sunny #图标，太阳
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate #配色方案：深色模式
-      # primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
-      toggle:
-        icon: material/weather-night #图标，月亮
-        name: Switch to light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default #配色方案：浅色模式
+    primary: Brown #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
+    accent: Brown #强调色，默认蓝，可以交互的元素如悬停链接、按钮和滚动条
+    toggle:
+      icon: material/weather-sunny #图标，太阳
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate #配色方案：深色模式
+    # primary: Brown  #原色，默认蓝，用于标题、侧边栏、文本链接和其他几个组件
+    toggle:
+      icon: material/weather-night #图标，月亮
+      name: Switch to light mode
   features:
-    - content.code.copy
-    - navigation.instant
-    - navigation.tabs
+  - content.code.copy
+  - navigation.instant
+  - navigation.tabs
   extra_javascript:
-    - javascripts/extra.js
+  - javascripts/extra.js
 
 plugins:
   - search
@@ -377,10 +382,10 @@ plugins:
       summary: "This content is PROTECTED"
       encryption_info_message: "Contact me for access to this page."
   - callouts
-#   - toc-md:
-#       toc_page_title: Contents
-#       toc_page_description: Usage mkdocs-toc-md
-#       header_level: 3
+  #   - toc-md:
+  #       toc_page_title: Contents
+  #       toc_page_description: Usage mkdocs-toc-md
+  #       header_level: 3
 
 markdown_extensions:
   - footnotes
