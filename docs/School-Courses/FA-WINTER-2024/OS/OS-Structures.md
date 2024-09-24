@@ -89,15 +89,108 @@
 `a.dynamic` 就是动态编译（也是默认编译选项）的产物。其中 `.interp` 段指定了解释器。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_14_32_22_20240919143221.png"/>
+
+## Running a binary
+
+对于动态加载库的 elf 文件，在操作系统上运行，初始化如下：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_22_33_10_20240924223309.png"/>
+
+- Who setups ELF file mapping
+	- Kernel: exec `syscall`
+- Who setups stack and heap
+	- Kernel: exec `syscall`
+- Who setups libraries
+	- Loader: `ld-xxx`
+
+
+> [!example]+ 动态/静态链接的 `syscall` 对比
+> 
+> 执行 `a.dynamic` 的时候，可以看到用到了 `ld.so`
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_22_39_17_20240924223916.png"/>
+> 
+> 至于 `a.static`（左图），相比 `a.dynamic`（右图），就会少很多各种加载
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_0_6_20_20240925000618.png"/>
+
+> [!example]+ 动态/静态链接的内存布局对比
+> 
+> `a.static` 如下，很干净：
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_0_17_18_20240925001718.png"/>
+> 
+> `a.dynamic` 如下，在 `heap` 和 `vvar` 之间，有 `libc` 的动态链接库（不同虚拟内存，映射到同一个文件，但是权限不同）；在 `vdso` 和 `stack` 之间，就是 loader 的动态链接库（同上）
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_0_17_42_20240925001742.png"/>
+
+> [!example]+ 动态/静态链接执行流程对比
+> 
+> 如图：上面是静态，下面是动态。区别就一点：动态的时候，`load_elf_binary` 直接跳转至 loader 的起始地址（而不是二进制程序的起始地址）。
+> 
+> 然后 loader 进行一通操作（i.e. `mmap`），将动态链接库文件（e.g. `libc`）映射到内存中，最后再跳至 `_start`。
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_1_48_20240925020147.png"/>
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_3_14_20240925020313.png"/>
+
 # Why Applications are Operating System Specific Operating-System Design and Implementation
 
 # Operating System Structure
 
+> [!info]- TL;DR
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_15_7_20240925021506.png"/>
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_25_23_20240925022522.png"/>
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_26_16_20240925022615.png"/>
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_26_42_20240925022641.png"/>
+
+> [!note]- Linux Kernel 一览
+> 
+> <iframe src="https://makelinux.github.io/kernel/map/" width="100%" height="600px"></iframe>
+
+## Different Kernels
+
+- 宏内核（Monolithic Structure）：各种 driver 等等辅助组件都在 kernel 内部，并且通过 privileged mode 运行
+	- PROS
+		- 速度快
+	- CONS
+		- 内核代码多，不易移植和扩展
+		- 如果 driver 在内核态运行过程中崩溃，那么就容易导致整个系统崩溃，稳定性差
+		- 安全性相对差
+- 微内核（Microkernel）：不那么重要而 drivers，就不在 kernel 内部，并且在用户态下运行
+	- PROS
+		- 内核代码少，易于移植和扩展
+		- 尽量不在内核态中执行，稳定性好
+		- 安全性好
+	- CONS
+		- 由于很多模块位于用户态中，但是又必须通过 `syscall` 来执行关键步骤、传递信息，因此调用链长，速度慢（如下图）
+- hybrid kernel：前两者混合，取长补短
+
+> [!note] 微内核调用链
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_11_52_20240925021151.png" scale='50%'/>
+
+
 # Building and Booting an Operating System
+
+（略，见 lab0）
 
 # Operating System Debugging
 
+> [!note]- 工具一览
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_32_32_20240925023231.png"/>
 
+**Rules of thumb**:
 
-
-
+1. log（包含 `printk` 和 core dump 等等）为主，gdb 为辅
+2. 不要在代码中用 tricks，尽量多加注释、简洁明了
+3. 推荐工具
+	- `strace` - trace system calls invoked by a process
+	- `gdb` - source-level debugger
+	- `perf` - collection of Linux performance tools
+	- `tcpdump` - collects network packets
