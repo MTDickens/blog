@@ -194,6 +194,8 @@ nav:
       - 18. Videos: "self-learning/dl4cv/18-videos.md"
       - 19. Generative Models: "self-learning/dl4cv/19-generative-models.md"
       - 20. Reinforcement Learning: "self-learning/dl4cv/20-reinforcement-learning.md"
+    - RAIL RL:
+      - 13-14. Exploration and Exploitation: "self-learning/rail-rl/lec-13-14.md"
   - PL & SA:
     - PKU 编程语言理论:
       - 0+. OCaml Basics: "self-learning/PKU-PLT/ch0+.md"
