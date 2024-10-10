@@ -169,6 +169,7 @@ nav:
     - OS:
       - Introduction: "School-Courses/FA-WINTER-2024/OS/Introduction.md"
       - OS Structures: "School-Courses/FA-WINTER-2024/OS/OS-Structures.md"
+      - Processes: "School-Courses/FA-WINTER-2024/OS/Processes.md"
     - 优化理论:
       - Lec-2: "School-Courses/FA-WINTER-2024/Optimization/lec-2.md"
 
