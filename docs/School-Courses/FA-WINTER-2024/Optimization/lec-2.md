@@ -145,7 +145,7 @@ $$
 
 ## Class $C_L^{k,p} (\mathbb R^n)$
 
-Let $Q$ be a subset of $\mathbb R^n$。A function $f \in _L^{k,p} (\mathbb R^n)$ should have the following properties:
+Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)$ should have the following properties:
 
 1. $f$ is **k** times continuously differentiable on $Q$
 2. It's **p**-th derivative is Lipschitz continuous on Q with constant $L$:
