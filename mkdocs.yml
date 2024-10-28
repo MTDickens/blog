@@ -166,12 +166,16 @@ nav:
   - Fall/Winter 2024:
     - 计网:
       - Basics: "School-Courses/FA-WINTER-2024/Computer-Network/Basics.md"
+      - Physical Layer: "School-Courses/FA-WINTER-2024/Computer-Network/Physical-Layer.md"
     - OS:
       - Introduction: "School-Courses/FA-WINTER-2024/OS/Introduction.md"
       - OS Structures: "School-Courses/FA-WINTER-2024/OS/OS-Structures.md"
       - Processes: "School-Courses/FA-WINTER-2024/OS/Processes.md"
     - 优化理论:
       - Lec-2: "School-Courses/FA-WINTER-2024/Optimization/lec-2.md"
+      - Lec-3: "School-Courses/FA-WINTER-2024/Optimization/lec-3.md"
+    - 理论计算机:
+      - Decidability and Semi-Decidability: "School-Courses/FA-WINTER-2024/TCS/decidability-and-semi-decidability.md"
 
 - 自学课程:
   - AI:

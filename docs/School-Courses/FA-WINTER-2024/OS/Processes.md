@@ -3,9 +3,9 @@
 - Process Concept
 - Process Control Block
 - Process State
-	- ﻿﻿Process Creation
-	- ﻿﻿Process Termination
-	- ﻿﻿Process and Signal
+	- Process Creation
+	- Process Termination
+	- Process and Signal
 - Process Scheduling
 
 # Process Concept
@@ -197,6 +197,123 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/10_20_31_12_20241010203111.png"/>
 
+> [!warning]
+> 
+> 上图其实根本不是经典的队列。
+> 
+> Linux 内核中有各种的 `xxx_struct`，为了方便将每一个 struct 变成链表，Linux 采用的策略是：**如果 `xxx_struct` 希望变成链表，那么就在其结构体定义中，加入 `list_head` 这个成员**，如：
+> 
+> ```c
+> struct task_struct {
+> // other members ...
+> 	struct list_head tasks;
+> // other members ...
+> }
+> ```
+> 
+> 然后，每一个 `list_head`，指向链表下一个 `xxx_struct` 的 `list_head` 成员。为了计算出下一个结构体的指针位置（而不是下一个结构体的 `list_head` 成员的指针位置），我们还需要减去一个 offset。
+> 
+> - 有一说一，在这个加加减减+类型强制转换的过程中，很容易出错
+
+
 ## 进程在不同队列之间迁移
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/10_20_32_0_20241010203159.png"/>
+
+如图：
+
+- 如果进程只进行了计算，而没有进行交互，那么就是 time slice expired——结束之后，进程仍然被加入到 ready queue 中
+- 如果发起了某些的系统调用，那么可能就会被加到 waiting queue，然后直到这些调用完成的之后，才从 waiting queue 中删去，并放到 ready queue
+	- 注意：waiting queue 的数量，等于 waiting targets 的数量
+
+## Context Switch
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/11_4_37_32_20241011043732.png"/>
+
+**原因**：因为**寄存器只有一组**，因此我们需要 context switch，从而保存下来上一个 context 的 structure。
+
+**Trade-off**: 不难看出，context switch 是纯粹的 overhead，因此我们要尽量减小这一部分时间——不论是软件层面上（优化调度），还是硬件层面上（CPU 加速）。
+
+> [!info]+ Linux 内核 RISC-V 架构 context switch
+> 
+> ```c
+> /*
+>  * Integer register context switch
+>  * The callee-saved registers must be saved and restored.
+>  *
+>  *   a0: previous task_struct (must be preserved across the switch)
+>  *   a1: next task_struct
+>  *
+>  * The value of a0 and a1 must be preserved by this function, as that's how
+>  * arguments are passed to schedule_tail.
+>  */
+> SYM_FUNC_START(__switch_to)
+> 	/* Save context into prev->thread */
+> 	li    a4,  TASK_THREAD_RA
+> 	add   a3, a0, a4
+> 	add   a4, a1, a4
+> 	REG_S ra,  TASK_THREAD_RA_RA(a3)
+> 	REG_S sp,  TASK_THREAD_SP_RA(a3)
+> 	REG_S s0,  TASK_THREAD_S0_RA(a3)
+> 	REG_S s1,  TASK_THREAD_S1_RA(a3)
+> 	REG_S s2,  TASK_THREAD_S2_RA(a3)
+> 	REG_S s3,  TASK_THREAD_S3_RA(a3)
+> 	REG_S s4,  TASK_THREAD_S4_RA(a3)
+> 	REG_S s5,  TASK_THREAD_S5_RA(a3)
+> 	REG_S s6,  TASK_THREAD_S6_RA(a3)
+> 	REG_S s7,  TASK_THREAD_S7_RA(a3)
+> 	REG_S s8,  TASK_THREAD_S8_RA(a3)
+> 	REG_S s9,  TASK_THREAD_S9_RA(a3)
+> 	REG_S s10, TASK_THREAD_S10_RA(a3)
+> 	REG_S s11, TASK_THREAD_S11_RA(a3)
+> 	/* Save the kernel shadow call stack pointer */
+> 	scs_save_current
+> 	/* Restore context from next->thread */
+> 	REG_L ra,  TASK_THREAD_RA_RA(a4)
+> 	REG_L sp,  TASK_THREAD_SP_RA(a4)
+> 	REG_L s0,  TASK_THREAD_S0_RA(a4)
+> 	REG_L s1,  TASK_THREAD_S1_RA(a4)
+> 	REG_L s2,  TASK_THREAD_S2_RA(a4)
+> 	REG_L s3,  TASK_THREAD_S3_RA(a4)
+> 	REG_L s4,  TASK_THREAD_S4_RA(a4)
+> 	REG_L s5,  TASK_THREAD_S5_RA(a4)
+> 	REG_L s6,  TASK_THREAD_S6_RA(a4)
+> 	REG_L s7,  TASK_THREAD_S7_RA(a4)
+> 	REG_L s8,  TASK_THREAD_S8_RA(a4)
+> 	REG_L s9,  TASK_THREAD_S9_RA(a4)
+> 	REG_L s10, TASK_THREAD_S10_RA(a4)
+> 	REG_L s11, TASK_THREAD_S11_RA(a4)
+> 	/* The offset of thread_info in task_struct is zero. */
+> 	move tp, a1
+> 	/* Switch to the next shadow call stack */
+> 	scs_load_current
+> 	ret
+> SYM_FUNC_END(__switch_to)
+> ```
+> 
+> 不难看出，就是将  callee saved regs 以及 `ra`，旧的存到旧进程的 PCB 中，新的从新进程的 PCB 中取出来
+> 
+> - 我们注意到，stack pointer 也改变了，这就是栈本身的切换
+> - 实际上，除了 `ra` 以外的 caller saved regs，也会被 interrupt 存起来，但是不放在 `task_struct` 结构体中
+> - 而 context switch 时候寄存器，都是 PCB 中要用到的，因此存取都在 `task_struct` 结构体中
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/11_6_25_24_20241011062523.png"/>
+
+> [!info]+ 一个进程的 kernel stack
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/11_5_57_49_20241011055749.png"/>
+> 
+> 如图：进程会在内核栈底保存“全局”寄存器值（就是在 context switch 之前，需要把寄存器存到这里）。然后 `thread_info` 就存 PCB，里面就包含 cpu context。
+
+# How Does `fork` Work
+
+一言以蔽之：内核在复制进程的时候，已经将子进程的 `pt_regs` 以及 `task_struct` 设置好了。
+
+- For child process, how does `fork` return zero?
+	- Also via `pt_regs`, `pt_regs[0] = 0`; set the return value to 0
+- When does child process start to run and from where?
+	- When forked, child is **READY** → context switch to **RUN**
+	- After context switch, run from `ret_to_fork`
+		- `ret_from_fork` -> `ret_to_user` -> `kernel_exit` who restores the `pt_regs`
+- 至于 `fork` system call 本身，其核心组成就是 `copy_process` 函数，而 `copy_process` 中有很多 `copy_xxx` 的调用，其中一个就是 `copy_thread`
+
