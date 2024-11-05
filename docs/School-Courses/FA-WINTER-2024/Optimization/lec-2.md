@@ -10,7 +10,7 @@ $$
 	3. 1-st order
 	4. 2-nd order
 2. Classes of differentiable functions
-	1. Class $C^{k,p}_L(\mathbb R^n)$
+	1. Class $C^{k,p}_L(\mathbb R^n)$%%  %%
 	2. Class $C^{1,1}_L(\mathbb R^n)$
 	3. Class $C^{2,2}_M(\mathbb R^n)$
 
@@ -153,6 +153,7 @@ Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)
     $$
     \norm{f^{(p)}(x) - f^{(p)}(y)} \leq L \norm{x-y}
     $$
+    
 	for all $x, y \in Q$.
 
 **注意**：上面的 $f^{(p)}(x)$，$p=1$ 时，是向量；$p=2$ 时，是矩阵；$p \geq 3$ 时，是高阶张量。我们显然需要用到（通过向量范数诱导出的）矩阵乃至张量的范数
@@ -174,6 +175,7 @@ Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)
 > $$
 > \forall x \in \mathbb R^n: \norm{\nabla^2 f(x)} \leq L
 > $$
+> 
 > *Proof*: 
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_16_49_6_JPEG%E5%9B%BE%E5%83%8F-472F-A728-90-0.jpeg"/>
@@ -225,7 +227,7 @@ $$
 > 
 > 如图：$g = \phi_1, h = \phi_2$
 
-## Class $C_M^{1,1}(\mathbb R^n)$
+## Class $C_M^{2,2}(\mathbb R^n)$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_16_13_7_20240924161307.png"/>
 
