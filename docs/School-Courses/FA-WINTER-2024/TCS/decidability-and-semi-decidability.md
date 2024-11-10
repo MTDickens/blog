@@ -83,6 +83,7 @@ A &\to a : x_A\newline
 A &\to BC: x_B \land x_C \to x_A
 \end{aligned}
 $$
+
 $G \in E_{CFG}$，当且仅当 $G$ 中规则所代表的逻辑，最终可以推出 $x_S$。这个判定甚至是 $\mathcal O(n)$ 的。
 
 ## $A_{TM}$ is recursively enumerate
