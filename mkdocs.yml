@@ -34,6 +34,7 @@ nav:
       - Mosh 使用指南: "Technology/Internet/SSH/mosh-guide.md"
     - JS:
       - 浙大 GPA 计算脚本: "Technology/Internet/JS/GPA-script.md"
+    - iptables 使用指南: "Technology/Internet/iptables.md"
   - 编程语言:
     - Haskell:
       - How to use GHCup and Stack: "Technology/Haskell/how-to-use-ghcup-and-stack.md"
@@ -176,7 +177,6 @@ nav:
       - Lec-3: "School-Courses/FA-WINTER-2024/Optimization/lec-3.md"
     - 理论计算机:
       - Decidability and Semi-Decidability: "School-Courses/FA-WINTER-2024/TCS/decidability-and-semi-decidability.md"
-
 - 自学课程:
   - AI:
     - EECS 498-007 / 598-005:
