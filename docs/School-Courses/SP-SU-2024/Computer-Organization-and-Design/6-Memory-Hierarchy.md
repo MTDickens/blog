@@ -223,7 +223,7 @@ $$
 
 # Write Strategies of Cache
 
-可以参考 [csapp notes](/self-learning/CMU-CSAPP/12-Cache-Memories/#cache-write)。这里的四种策略，其实要分为两组，每组两个。每一组分别对应 hit 和 miss 两种情况：
+可以参考 [csapp notes](../../../self-learning/CMU-CSAPP/12-Cache-Memories.md#cache-write)。这里的四种策略，其实要分为两组，每组两个。每一组分别对应 hit 和 miss 两种情况：
 
 **Cache 中已经有数据: Hit**
 
