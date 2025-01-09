@@ -295,6 +295,7 @@
 > 
 > - 我们注意到，stack pointer 也改变了，这就是栈本身的切换
 > - 实际上，除了 `ra` 以外的 caller saved regs，也会被 interrupt 存起来，但是不放在 `task_struct` 结构体中
+> 	- 实际上是因为 timer 到时了之后，就会跳到 `_trap` 去。然后寄存器都存在那里
 > - 而 context switch 时候寄存器，都是 PCB 中要用到的，因此存取都在 `task_struct` 结构体中
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/11_6_25_24_20241011062523.png"/>
@@ -304,6 +305,10 @@
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/11_5_57_49_20241011055749.png"/>
 > 
 > 如图：进程会在内核栈底保存“全局”寄存器值（就是在 context switch 之前，需要把寄存器存到这里）。然后 `thread_info` 就存 PCB，里面就包含 cpu context。
+
+## Scheduling 的细节
+
+在 Linux 中，早期实现中，PRIORITY 越**大**，优先级越大。在 Linux 0.11 中，就是简单的：PRIORITY 正比于分配的时间片（具体见 lab 2）。
 
 # How Does `fork` Work
 
@@ -317,3 +322,18 @@
 		- `ret_from_fork` -> `ret_to_user` -> `kernel_exit` who restores the `pt_regs`
 - 至于 `fork` system call 本身，其核心组成就是 `copy_process` 函数，而 `copy_process` 中有很多 `copy_xxx` 的调用，其中一个就是 `copy_thread`
 
+# 进程间通信 (Inter-Process Communication)
+
+主要有四种方法：
+
+1. Shared Memory (与内核无关，只在把同一块物理地址 share 成多个不同进程下的虚拟地址的时候，需要 system call 一下。之后这些进程使用 shared memory 的时候，不需要 system call)
+2. Message Passing（每次 passing 的时候，都需要 system call）
+3. Pipe
+4. 广义上的 IPC，因为是跑在两个物理机器上的交互
+	- Sockets
+	- RPCs (Remote Process Communication)
+		所有的交互都是和 stub 通信，stub 会和远端的 server 通信。 存在网络问题，如丢包。
+	- Java RMI
+		RPC in Java
+
+具体详见 [hobbitqia 的博客](https://note.hobbitqia.cc/OS/chap03)。

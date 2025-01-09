@@ -10,7 +10,7 @@ $$
 	3. 1-st order
 	4. 2-nd order
 2. Classes of differentiable functions
-	1. Class $C^{k,p}_L(\mathbb R^n)$%%  %%
+	1. Class $C^{k,p}_L(\mathbb R^n)$
 	2. Class $C^{1,1}_L(\mathbb R^n)$
 	3. Class $C^{2,2}_M(\mathbb R^n)$
 
@@ -209,6 +209,12 @@ Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)
 > *Proof*: 
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_16_49_58_JPEG%E5%9B%BE%E5%83%8F-423B-90AA-8E-0.jpeg"/>
+> 
+> 实际上，还有：
+> 
+> $$
+> f(y) \leq f(x) + \innerprod{\nabla f(x)}{y-x} + \frac L 2 \norm{y-x}^2
+> $$
 
 一个直接推论就是：如果我们构造两个函数
 

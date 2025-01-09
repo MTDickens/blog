@@ -92,5 +92,30 @@ $G \in E_{CFG}$，当且仅当 $G$ 中规则所代表的逻辑，最终可以推
 
 ## $A_{TM}$ is *NOT* recursive
 
-***TODO***
+通过证明 Rice's Theorem（见下），这就是推论。
 
+## $ALL_{PDA}$ is *NOT* recursive
+
+**证明方法**：将停机问题规约到 $ALL_{PDA}$。
+
+**思路**：虽然 PDA 不能像图灵机一样计算，但是**给出计算过程，PDA 可以判断这个计算过程是否 valid，以及最终是否 accept**。
+
+我们的 PDA 可以这样：如果
+
+# Rice's Theorem
+
+**定义（$L(P)$）**：$P$ 是一个性质（比如“L(M) 为空”“L(M) 有限”等等），$L(P)$ 是**所有满足**条件 $P$ 的递归可枚举语言。
+
+**定理**： $L(P) \neq \emptyset \land L(P) \neq \textbf{All enumerable recursive languages} \implies \{M: M \text{ is Turing machine} \land L(M) \in L(P)\}$ 是不可判定的。
+
+**Lemma**: $ALL_{TM}, E_{TM}, A_{TM}, EQ_{TM}$ 等等都不可被判定。
+
+# 规约
+
+不妨假设我们现在的规约都是在图灵机计算模型之下（对于 PDA、DFA 等等其它计算模型，也可类比）：
+
+存在 A 到 B 的规约，就相当于：$\exists f \text{ computable}, \forall x: x \in A \iff f(x) \in B$。
+
+因此，为了判断 $x$ 在不在 $A$ 中，我们只需要将 $f(x)$ 在 $M_B$ 中跑一遍就行。显然，$B$ 的难度至少和 $A$ 相当，记为 $A \preceq B$。
+
+因此，如果 $M_B$ 具有怎样的能力，那么一定存在 $M_A$ 存在这样的能力——只需要让 $M_A$ 先运行 $f$，然后再运行 $M_B$ 即可。

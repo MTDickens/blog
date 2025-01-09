@@ -46,7 +46,7 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_6_13_21_202405070613609.png" alt="image-20240507061318805" style="zoom:33%;" />
 
-如图，我们通过**ground truth (i.e. boxes of training set)**来将 box 划分成不同类别：positive, neutral and negative。
+如图，我们通过 **ground truth (i.e. boxes of training set)** 来将 box 划分成不同类别：positive, neutral and negative。
 
 其中，
 
@@ -120,6 +120,13 @@ fn NMS(Category "c", Float "threshold") -> Array:
 
 然后，将**当前的 precision-recall ratio** 作图到 P-R 图上。
 
+> [!info]- 什么是 P-R 图
+> 
+> 1. 设想一下，我们有若干个正负样本，每一个样本有一个分数值。
+> 2. 我们设计一个简单的二分类器：如果分数值大于等于 threshold，就是正样本；否则就是负样本。
+> 3. 然后，将 threshold 从 0% 增加到 100%。对于每一个 threshold，都有可以计算出来一个 recall 和 precision。我们将所有这些点连起来，就得到了上图中的曲线。
+> 4. 实际上，由于 recall 和 precision 只会在 threshold 达到了其中一点分数的时候，才会变化，因此，我们只需要求出 threshold 等于每一个点分数时的 `(recall, precision)`，然后将这些离散的点在上图连起来，就能得到这个 graph
+
 之后，我们
 
 - 对所有的 category 都这样计算，从而求出 mean average performance (mAP)
@@ -185,18 +192,75 @@ RPN的工作流程大概是这样的（如下图所示）：
 - 第二个 stage 就是判断**第一轮中通过的 anchors** 是否含有 object，以及 transformation
     - 由于第二个 stage 依赖第一个 stage 的判断，因此，含有 object 的 anchors 是会动态发生变化的，实现起来有一定难度
 
-
-
 - 当然，实际上，也可以将两个 stage 合二为一：第一个 stage 处理 RPN 的时候，与其判断 "anchor is an object?"，不如判断 "what category does this object belong to?"。
     - 同时，我们需要加上一个 background category，从而模仿 one stage
     - 效果一般来说比 two stages 差一些，但是速度更快
 - 同时，我们的 box transforms 可以为 $C \times 4K \times 20 \times 15$，从而每一个类别都有其不同的 box transformation 参数，在实际中更加准确。
+
+> [!info]- RPN *训练*时的一些细节
+> 
+> **问题 1**：在 first stage 训练的时候，我们必须选出部分 anchor 参与 loss 的计算，怎么选出这些 anchors？
+> 
+> RPN每次从待选anchor中抽取256个anchors，每次让正负样本比为1：1。如果正样本少于128，假设为x，那么我们就让负样本为256-x。
+> 
+> **问题 1.1**：这里是怎么定义正负样本的呢？
+> 
+> - 正样本： 我们的anchor与ground-truth box最大的IoU>0.7,那么就可以认为是正样本，如果最大的都不大于0.7，那么我们就把IoU最大的Anchor作为正样本即可。
+> - 负样本： 我们的anchor与所有的ground-truth box的IoU<0.3,那么就可以认为是负样本。
+> - 正负样本之外的我们就会丢弃掉。
+>   
+> **问题 1.2**：最终公式是啥？
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/17_22_5_53_20241217220552.png"/>
 
 ### Takeaways
 
 - Two stage method (Faster-CNN) get the best accuracy, but are slower
 - Single-stage methods (SSD) are much faster, but don't perform as well
 - Bigger backbones (e.g. Resnet instead of MobileNet) improve performance, but are slower
+
+## YOLO: You Only Look Once
+
+Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，所以寄希望于 one stage。YOLO 就是 one stage 的模型架构。
+
+### Architecture
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_12_3_20241218021203.png" width="70%"/>
+
+如上图：YOLO 将图片划分为 SxS 个格子。对于每一个格子，我们生成 B 个 anchor box。
+
+- 对于每个 anchor box，我们生成一个 confidence 和一个 position
+- 对于每个格子，我们生成一个种类
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_11_21_20241218021120.png" width="70%"/>
+
+上图就是每一个格子的参数数量，以及每个格子的 output tensor 的格式。
+
+### Prediction
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_17_49_20241218021749.png" width="70%"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_19_39_20241218021939.png" width="70%"/>
+
+如上图：
+
+- 首先生成 bounding boxes 以及对应的 confidence
+- 然后 filter 掉 confidence 小的，再进行极大值抑制
+- 最后，剩下的 bounding box 就是 prediction
+	- 每个 bounding box 的 category 就是所属格子的 category
+
+### Losses
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_21_13_20241218022112.png"/>
+
+> [!info]+ $\mathbb 1^{obj}_{ij}$ 和 $\mathbb 1^{obj}_{i}$ 的意思
+> 
+> 图片的标注信息只有每个 object 的 bounding box。
+> 
+> 我们找出每一个 object 的 bounding box 中心点，则这个中心点所在的格子的 $i$，决定了 $\mathbb 1^{obj}_{i}$
+> 
+> 对于格子 $i$ 而言，里面有 $B$ 个 anchor，其中 IOU 最高的那个 anchor $j$，决定了 $\mathbb 1^{obj}_{ij}$
+
 
 ## CornerNet: multi-object detection without anchors
 

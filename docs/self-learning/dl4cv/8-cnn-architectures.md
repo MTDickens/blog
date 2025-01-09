@@ -7,15 +7,15 @@ Take AlexNet as example:
 Terminology:
 
 - Memory: the memory that the **output of this layer** uses
-    - Conv: **Memory = C_out * H_out * W_out * sizeof(data type)**
+    - Conv: **Memory = C_out \* H_out \* W_out \* sizeof(data type)**
         - e.g. 64 * 56 * 56 * 4 = 802816 bytes &approx; 784 KiB
 
 - Params: the number of parameters of this layer
-    - Conv: **Params = C_out * C_in * kernel_size**
+    - Conv: **Params = C_out \* C_in \* kernel_size**
         - e.g. 64 * 3 * 121 = 23232 &approx; 23K
 
 - Flop (Floating-point operations): the number of multiplicative flops needed for this layer
-    - Conv: **Flop = C_out * H_out * W_out * C_in * kernel_size**
+    - Conv: **Flop = C_out \* H_out \* W_out \* C_in \* kernel_size = Params \* H_out \* W_out**
         - e.g. 64 * 56 * 56 * 3 * 121 = 72855552 &approx; 73M
 
 
@@ -30,7 +30,7 @@ Terminology:
 3. （浮点乘法）计算主要被**卷积层**使用
     - 特别是卷积核比较大\+通道数比较多\+图片尺寸比较大的层
 
-**注意：**由于池化层不会占用参数，几乎不怎么消耗算力，所以我们在直方图中忽略它（
+**注意**：由于池化层不会占用参数，几乎不怎么消耗算力，所以我们在直方图中忽略它（
 
 # Famous CNN Architectures
 
@@ -74,6 +74,8 @@ Terminology:
 
 ## 2015: ResNet
 
+> [!question]+ Does scaling always work?
+> 
 > 根据以往的经验，人们发现，似乎层数越多，in/out-of-sample error 就都越小。
 >
 > 但是，当层数从 20 层上升至 56 层的时候，层数的增加，反而使得 out-of-sample error 更大。这难道是因为传说中的 over-fitting？
