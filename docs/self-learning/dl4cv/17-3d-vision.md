@@ -156,7 +156,7 @@ $$
 
 核心步骤是：
 
-1. 将椭圆形的 mesh (i.e. initial value) 逐渐 deform 成期望的形状，然后再进行细化（具体可以参考图形学上的[细化](../../GAMES101/12-Geometry/#mesh-subdivision-upsampling)）
+1. 将椭圆形的 mesh (i.e. initial value) 逐渐 deform 成期望的形状，然后再进行细化（具体可以参考图形学上的[细化](../GAMES101/12-Geometry.md#mesh-subdivision-upsampling)）
 2. 如何进行 deform？还是使用 CNN，只不过这一次的 reception field 是 adjacent vertices：对于 vertex i，$f'_i = W_0 f_i + \sum_{j \text{ adjacent to }i} W_1 f_j$
 3. 如何把 2D 图片的信息引入？我们设定一个 camera angle，将 3D 图像投影到 2D 平面上去。具体来说，就是把 3D 的每一个 vertex 投影到某一个卷积层上去，同时采用 bilinear interpolation 的方式，将卷积层上的 feature vector 附加到 vertex i 上
     <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_8_0_22_202405140800954.png" alt="image-20240514080019700" style="zoom:50%;" />
