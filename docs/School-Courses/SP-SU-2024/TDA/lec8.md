@@ -18,13 +18,15 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 
 - 给定图册中的一个包含 $x$ 的坐标卡，$\varphi: U (\subset M) \to \mathbb R^n, \text{ s.t. }x \in U$，我们求 $f \circ \varphi^{-1}: \mathbb R^n \to \mathbb R$ 在 $\varphi(x)$ 的梯度。
     - 假如 $f \circ \varphi^{-1}$ 在 $\varphi(x)$ 处梯度为 0，那么对于其它任意的坐标卡 $\xi: U \to \mathbb R^n$，一样梯度为 0：
+        
         $$
         \begin{aligned}
-        \left[\grad (f\circ \varphi^{-1})\circ(\varphi \circ \xi^{-1})\right] (\xi(x)) &= \left[\grad (f\circ \varphi^{-1})\right]((\varphi \circ \xi^{-1}) (\xi(x))) \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
-        &= \left[\grad (f\circ \varphi^{-1})\right](\varphi(x)) \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
-        &= \mathrm O \times \left[\grad (\varphi \circ \xi^{-1})\right] (\xi(x)) = \mathrm O
+        \left[\nabla (f\circ \varphi^{-1})\circ(\varphi \circ \xi^{-1})\right] (\xi(x)) &= \left[\nabla (f\circ \varphi^{-1})\right]((\varphi \circ \xi^{-1}) (\xi(x))) \times \left[\nabla (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
+        &= \left[\nabla (f\circ \varphi^{-1})\right](\varphi(x)) \times \left[\nabla (\varphi \circ \xi^{-1})\right] (\xi(x)) \newline
+        &= \mathrm O \times \left[\nabla (\varphi \circ \xi^{-1})\right] (\xi(x)) = \mathrm O
         \end{aligned}
         $$
+        
     - 因此，$f$ 的临界点是良定义的。
 
 ---
@@ -268,7 +270,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 以 $f(x,y) = x^2 + y^2$ 为例，按照上面的说法，那就必须满足方程：
 
 $$
-[\grad f](\beta_x(x), \beta_y(x)) = (2\beta_x(x), 2\beta_y(x)) = \frac {\partial} {\partial x} \beta(x) = (\beta_x'(x), \beta_y'(x))
+[\nabla f](\beta_x(x), \beta_y(x)) = (2\beta_x(x), 2\beta_y(x)) = \frac {\partial} {\partial x} \beta(x) = (\beta_x'(x), \beta_y'(x))
 $$
 
 显然，解就是：
