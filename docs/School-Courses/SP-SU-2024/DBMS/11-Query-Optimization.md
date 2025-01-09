@@ -151,7 +151,7 @@ WHERE temp.stat_description > 'book_id';
 
 对于多变量的情况，**假设不同变量之间相互独立**，那么就可以通过上面的方法来进行估计。
 
-- 其中，中选率就是 $\frac{s_i}{n_r}$。如果 $\theta_i$​ 本身是简单条件，那么就可以通过 [`SELECT` Size Estimation](#`SELECT` Size Estimation) 估计出来
+- 其中，中选率就是 $\frac{s_i}{n_r}$。如果 $\theta_i$​ 本身是简单条件，那么就可以通过 [`SELECT` Size Estimation](#select-size-estimation) 估计出来
     - **注意：**$\theta_i$ 本身也可能是复合条件。
 
 但是变量之间往往是不独立的。因此 state-of-the-art cost est 其实是采用了大模型等方式进行估计。

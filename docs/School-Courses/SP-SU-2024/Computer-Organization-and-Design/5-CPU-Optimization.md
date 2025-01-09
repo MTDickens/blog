@@ -52,7 +52,7 @@
 5. 在 1 ~ 1.99         clk cycle 期间，`dmem[0]` **完成**将自己更新到 `sd x1, 0(x0)` 操作后的值
 6. 在 1.99 \~ 1.995 clk cycle 期间，**组合电路**将 `dmem[0]`  完成将自己更新到 `sd x1, 0(x0)` 操作后的值
 7. 在 2.000             clk cycle 瞬间，**组合电路**将 `dmem[0]` 的值写进了 `MEM/WB(rd_val)`
-8. ***下面的情况详见 [Double Bump Details](#1.3.1.2 Implementation Details (Cont.))***
+8. ***下面的情况详见 [Double Bump Details](#1312-implementation-details-cont)***
 
 # 1 Hazards of Pipelining
 
@@ -123,7 +123,7 @@
 
 #### 1.3.1.2 Implementation Details (Cont.)
 
-前情请见 [Pipeline CPU](#0.1 Implementation Details)。
+前情请见 [Pipeline CPU](#01-implementation-details)。
 
 1. 在 2.00 \~ 2.01 clk cycle 期间，`MEM/WB` 才将自己更新到了最新值。其中我们关注的就是 `MEM/WB[rd_val]`
 2. **假如*没*有 double bump**
