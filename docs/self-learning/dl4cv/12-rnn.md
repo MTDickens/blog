@@ -22,13 +22,17 @@ Deep neural network，本质上还是一种**前馈神经网络**。因此，一
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270158124.png" alt="image-20240327015854923" style="zoom:33%;" />
 
 RNN 和状态机类似，不过状态是连续的（理论上）。使用数学语言表达，就是：
+
 $$
 h_t = f_W(h_{t-1}, x_t)
 $$
+
 而输出就是：
+
 $$
 y_t = g_V(h_t)
 $$
+
 ## RNN Computational Graph
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270254186.png" alt="image-20240327025423104" style="zoom:33%;" />

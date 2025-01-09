@@ -1,11 +1,13 @@
 $$
 \newcommand{abs}[1]{|#1|}
 $$
+
 # Numerical Differentiation
 
 我们可以将函数进行泰勒展开，比如：$f(x_0 + h) = 1\left[f(x_0)\right] + 1 \left[hf'(x_0)\right] + \frac 1 2 \left[h^2 f''(x_0)]\right] + \mathcal o(h^3)$，从而如果给定了 $f(x_0), f(x_0 + h), f(x_0 + 2h)$，我们就可以忽略三阶小量，然后消去 $f(x_0), h^2 f''(x_0)$，只留下 $hf'(x_0)$，从而求出导数。
 
 i.e. 
+
 $$
 \begin{pmatrix}
 1 & 0 & 0 \newline
@@ -23,6 +25,7 @@ f(x_0 + h) \newline
 f(x_0 + 2h) \newline
 \end{pmatrix}
 $$
+
 从而，$hf' \approx 2f(x_0+h) - 0.5 f(x_0 + 2h) - 1.5 f(x_0)$。
 
 ---
