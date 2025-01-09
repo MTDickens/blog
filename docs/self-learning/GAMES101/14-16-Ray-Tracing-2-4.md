@@ -126,6 +126,7 @@ KD-Tree 在 2D 上交替地沿着 x-axis 和 y-axis 进行划分，在 3D 上交
 #### Radiant Energy and Flux
 
 Definition: Radiant flux (power) is the energy emitted, reflected, transmitted or received, per unit time.
+
 $$
 \Phi \equiv \frac{\mathrm dQ}{\mathrm dt} \ [\text{W = Watt}]\ [\text{lm = lumen}]^ *
 $$
@@ -135,6 +136,7 @@ $$
 #### Radiant Intensity
 
 Definition: The radiant (luminous) intensity is the **power per unit solid angle** emitted by a point light source.
+
 $$
 I(\omega) = \frac {\mathrm d \Phi} {\mathrm d\omega}
 $$
@@ -146,9 +148,11 @@ $$
 ##### Intensity of Uniformly Radiating Point Light Source
 
 假如一个点光源均匀发光，那么：
+
 $$
 I = \frac{\phi}{4\pi}
 $$
+
 因为球面的立体角为 $4\pi$。
 
 #### Differential Solid Angles
@@ -164,7 +168,6 @@ $$
 $$
 \mathrm d\omega = \frac{\mathrm dA}{r^2} = \sin \theta \mathrm d\theta \mathrm d\phi
 $$
-
 
 #### Irradiance 
 
@@ -215,9 +218,11 @@ Differential irradiance incoming: $\mathrm dE(\omega_i) = L(\omega_i) \cos\theta
 ### BRDF
 
 The Bidirectional Reflectance Distribution Function (BRDF) represents **how much light is reflected into each outgoing direction** $\omega_r$ **from each incoming direction**
+
 $$
 f_r(\omega_i \to \omega_r) = \frac{\mathrm dL_r(\omega_r)}{\mathrm dE_i(\omega_i)} = \frac{\mathrm dL_r(\omega_r)}{L_i(\omega_i)\cos\theta_i\mathrm d\omega_i} \ \left[\frac 1 {\operatorname{sr}}\right]
 $$
+
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127151658624.png" alt="image-20240127151658624" style="zoom:50%;" />
 
 为了计算一个方向上的 $L_r$:
@@ -229,29 +234,36 @@ $$
 ### 渲染方程
 
 对于自身会发光的物体，还要加上自身的 radiance。从而，最终的方程为：
+
 $$
 L_r(\mathbf p, \omega_o) = L_e(\mathbf p, \omega_o) + \int_{\Omega^+} L_i(\mathbf p, \omega_i) f_r(\mathbf p, \omega_i, \omega_o) (\mathbf n \cdot \omega_i) \mathrm d\omega_i
 $$
+
 其中，$\Omega^+$ 指的是上半球。
 
 #### 线性算子方程
 
 渲染方程可以进一步简化：
+
 $$
 \begin{aligned}
 l(u) &= e(u) + \int_{\Omega^+} l(v) K(u,v) \mathrm dv \newline
 &\text{where } K(u,v) = (\mathbf n \cdot u) f_r(\mathrm p, v, u) 
 \end{aligned}
 $$
+
 对于某一点 $\mathbf p$ 而言，可以把原方程转换成 Fredholm integral equation。
 
 从而，可以进一步转换成：
+
 $$
 L = E + KL
 $$
+
 其中，$K$ 就是函数空间上的一个线性算子（因为 $\int_{\Omega^+} l(v) K(u,v) \mathrm dv$ 也是关于 $u$ 的一个函数，再加上积分的双线性性，因此可以这样说）。
 
 从而：
+
 $$
 \begin{aligned}
 (I-K) L &= E \newline
@@ -260,10 +272,13 @@ L &= (I - K)^{-1} E \newline
 &= (\sum_{i=0}^\infty K^i) E
 \end{aligned}
 $$
+
 也就是说：
+
 $$
 l(u) = e(u) + \int_{\Omega^+} e(v) K(u,v) \mathrm dv
 $$
+
 直观意义上，就是将无限多次的折射相加，从而得到真实的光照。
 
 实际上，我们无法做到无限多次，只能做到有限多次，从而只能进行固定次数的迭代。
@@ -299,10 +314,12 @@ $L_r(\mathbf p, \omega_o) = L_e(\mathbf p, \omega_o) + \int_{\Omega^+} L_i(\math
 对于这个方程，我们希望求出的就是 $L_r(\mathbf p, \omega_o)$，未知量是 $L_i(\mathbf p, \omega_i)$。
 
 如果我们有一个随机向量 $\mathbf \xi \in \Omega^+$，那么：
+
 $$
 \mathbb E \left[\frac{f(\mathbf\xi)}{p_\mathbf\xi(\mathbf\xi)}\right] = \int_{\Omega^+} p_\mathbf\xi(\mathbf x) \frac{f(\mathbf x)}{p_\mathbf\xi(\mathbf x)} \mathrm d\mathbf x
  = \int_{\Omega^+} f(\mathbf x) \mathrm d\mathbf x
 $$
+
 从而，我们可以通过多次采样的方式，来近似 RHS。
 
 ---
@@ -310,6 +327,7 @@ $$
 在这里，我们不妨直接让 $\mathbf \xi$ 在 $\Omega^+$ 上均匀采样。
 
 从而：
+
 $$
 \int_{\Omega^+} L_i(\mathbf p, \omega_i) f_r(\mathbf p, \omega_i, \omega_o) (\mathbf n \cdot \omega_i) \mathrm d\omega_i \approx \frac 1 N \sum_{i = 1}^N L_i(\mathbf p, \xi_i) f_r(\mathbf p, \xi_i, \omega_o) (\mathbf n \cdot \xi_i)
 $$
@@ -373,16 +391,20 @@ shade(p, wo):
 
 
 假设只有一个光源，且没有其它反光物体。令 $\xi' \sim \operatorname{Uniform}(A)$，从而：
+
 $$
 \begin{aligned}
 \lVert x'-x\rVert^2 \mathrm d\omega &= \cos \theta' \mathrm d A \newline
 \frac{\mathrm d A}{\mathrm d\omega} &= \frac{\lVert x'-x\rVert^2}{\cos \theta'} 
 \end{aligned}
 $$
+
 从而，
+
 $$
 p_\xi(\mathbf x) = p_{\xi'}(\mathbf y) \frac{\lVert x'-x\rVert^2}{\cos \theta'}
 $$
+
 其中，$\mathbf y$ 就是与立体角坐标 $\mathbf x$ 对应的面积坐标。
 
 **注意：**

@@ -1,9 +1,9 @@
 <!-- Macros Begin -->
 $$
-\newcommand{\bx}{\boldsymbol{x}}
-\newcommand{\by}{\boldsymbol{y}}
-\newcommand{\bz}{\boldsymbol{z}}
-\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bv}{\mathbf{v}}
 \newcommand{\dt}{\mathrm dt}
 \newcommand{\Dt}{\Delta t}
 \newcommand{\bxt}{\bx^t}
@@ -21,22 +21,24 @@ $$
 对于如上的弹簧，我们考虑二阶力（弹簧势能）和一阶力（摩擦力）：
 
 - 二阶力
-  $$
-  \begin{aligned}
-  \boldsymbol f_{a \to b} &= k_s \frac{\boldsymbol {b-a}}{\lVert\boldsymbol{b-a}\rVert}(\lVert\boldsymbol{b-a}\rVert - l)  =k_s \widehat{\boldsymbol {b-a}}(\lVert\boldsymbol{b-a}\rVert - l) \newline
-  \boldsymbol f_{b \to a} &= -\boldsymbol f_{a \to b}
-  \end{aligned}
-  $$
+
+    $$
+    \begin{aligned}
+    \mathbf f_{a \to b} &= k_s \frac{\mathbf {b-a}}{\lVert\mathbf{b-a}\rVert}(\lVert\mathbf{b-a}\rVert - l)  =k_s \widehat{\mathbf {b-a}}(\lVert\mathbf{b-a}\rVert - l) \newline
+    \mathbf f_{b \to a} &= -\mathbf f_{a \to b}
+    \end{aligned}
+    $$
 
   - 其中，$l$ 是 rest length
 
 - 一阶力
-  $$
-  \begin{aligned}
-  \boldsymbol f_{b} = -k_d (\widehat{\boldsymbol {b-a}} \cdot (\boldsymbol{\dot b - \dot a}) )\widehat{\boldsymbol {b-a}} \newline
-  \boldsymbol f_{a} = -\boldsymbol f_{b}  
-  \end{aligned}
-  $$
+
+    $$
+    \begin{aligned}
+    \mathbf f_{b} = -k_d (\widehat{\mathbf {b-a}} \cdot (\mathbf{\dot b - \dot a}) )\widehat{\mathbf {b-a}} \newline
+    \mathbf f_{a} = -\mathbf f_{b}  
+    \end{aligned}
+    $$
 
   - 括号里就是 a, b 相对速度**在弹簧方向上**的大小。
 
@@ -112,25 +114,28 @@ Subject to very simple forces:
 - 直接欧拉法（i.e. naive Euler method），$\bxtt = \bxt + \bv(\bxt) \Dt$
 
 - 中点法
-  $$
-  \begin{aligned}
-  \newcommand{\bxmid}{\bxt + \bv(\bxt)\Dt / 2}
-  \bx_{mid} &= \bxmid \newline
-  \bxtt &= \bxt + \bv(\bx_{mid}) \Dt = \bxt + \bv(\bxmid) \Dt
-  \end{aligned}
-  $$
+
+    $$
+    \begin{aligned}
+    \newcommand{\bxmid}{\bxt + \bv(\bxt)\Dt / 2}
+    \bx_{mid} &= \bxmid \newline
+    \bxtt &= \bxt + \bv(\bx_{mid}) \Dt = \bxt + \bv(\bxmid) \Dt
+    \end{aligned}
+    $$
 
   - 中点法很多情况下等价于一个抛物线
 
 - 隐式欧拉法
   
-  通过求解方程（$\bxtt$ 是未知数）
-  $$
-  \begin{aligned}
-  \bxtt = \bxt + \Dt ~\dbxtt = \bxt + \Dt ~\bv(\bxtt)
-  \end{aligned}
-  $$
-  我们可以通过牛顿迭代法等方法求出 $\bxtt$ 的值
+    通过求解方程（$\bxtt$ 是未知数）
+
+    $$
+    \begin{aligned}
+    \bxtt = \bxt + \Dt ~\dbxtt = \bxt + \Dt ~\bv(\bxtt)
+    \end{aligned}
+    $$
+
+    我们可以通过牛顿迭代法等方法求出 $\bxtt$ 的值
   
   - 通常，隐式欧拉法比直接（显式）欧拉法更加稳定
   

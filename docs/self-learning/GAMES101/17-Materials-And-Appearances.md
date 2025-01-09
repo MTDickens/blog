@@ -3,18 +3,23 @@
 ## Diffuse/Lambertian Material
 
 对于漫反射的材质而言，其遵循 Lambert's Cosine Law，也就是其 radiant intensity 在不同的立体角上不一样：
+
 $$
 I_\theta \sim \cos \theta
 $$
+
 从而，其所有方向的 radiance 都相同（也就是说，人眼从任何方向看过去，亮度都一样）：
+
 $$
 L_\theta = \frac{\mathrm dI_\theta}{\mathrm dA \cos \theta} \equiv C
 $$
+
 我们如何计算一个材质的 BRDF 呢？
 
 首先，由于漫反射性质，所有角度出射的 radiance 都必须相同。从而，无论怎样改变 $\omega_o$，$f_r(\omega_i, \omega_o) \equiv \text{constant}$。另外，由于所有入射光线都对出射没有影响，所以进一步，改变 $\omega_i$，也是常数。从而，$f_r(\omega_i, \omega_o)$ 就是常数。
 
 其次，不妨假设四面八方的相同强度的光线照射一个漫反射物体，从而，由于能量守恒，物体也必须反射那么多的光线。因此所有角度入射、出射的 radiance 均相同。通过积分：
+
 $$
 \begin{aligned}
 L_o(\omega_o) &= \int_{H^2} f_r L_i(\omega_i) \cos \theta \mathrm d\omega_i \newline
@@ -23,9 +28,11 @@ L_o(\omega_o) &= \int_{H^2} f_r L_i(\omega_i) \cos \theta \mathrm d\omega_i \new
 &= \pi f_r L_o
 \end{aligned}
 $$
- 从而，$f_r = \frac 1 \pi$。
+
+从而，$f_r = \frac 1 \pi$。
 
 对于一般情况，能量可能不守恒。此时我们定义反射率 $\rho$，从而得到最终的 Lambertian BRDF：
+
 $$
 f_r = \frac \rho \pi
 $$
@@ -50,6 +57,7 @@ $$
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240129225926690.png" alt="image-20240129225926690" style="zoom:50%;" />
 
 另外，反射的 BDRF 是 Dirac 函数：
+
 $$
 f_r(\omega_i, \omega_o) = \rho * \delta(\theta_o - \theta_i) \delta ((\phi_o + \pi - \phi_i) \operatorname{mod} 2\pi)
 $$
@@ -85,6 +93,7 @@ Schlick 近似结果见下图。可以发现不论对于绝缘体还是导体，
 ---
 
 对于只包含反射和折射的表面：
+
 $$
 \begin{aligned}
 f_s(\omega_i, \omega_o) = 
@@ -125,6 +134,7 @@ $$
 各项异性，使用 BRDF 的语言来说，就是 reflection depends on azimuthal angle（方位角）$\phi$。
 
 即：
+
 $$
 \exists \theta_i,\phi_i, \theta_r,\phi_r, \Delta \phi: f_r(\theta_i,\phi_i;\theta_r,\phi_r) \neq f_r(\theta_i,\phi_i + \Delta \phi;\theta_r,\phi_r + \Delta \phi)
 $$

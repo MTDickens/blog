@@ -56,6 +56,7 @@ $$
 $$
 1 - \frac {H(x)} {\log_2 |A_X|}
 $$
+
 > [!note]- Observation
 > 
 > 1. redundancy 必然是正的，因为 H(x) 最大也就是均匀分布，而均匀分布的 entropy 就是 $\log_2 |A_X|$

@@ -62,9 +62,11 @@ For each natural number $i$, define set $S_i$ as follows:
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402231641305.png" alt="image-20240223164107703" style="zoom:50%;" />
 
 最后，令
+
 $$
-S = \bigcup_{i \in \N} S_i
+S = \bigcup_{i \in \mathbb{N}} S_i
 $$
+
 即可。
 
 ---
@@ -75,7 +77,7 @@ $$
    \begin{aligned}\ord{S_0} &= 0 \\ \ord{S_i} &= 3 + 3 \ord{S_{i-1}} + \ord{S_{i-1}}^ 3 \end{aligned}
    $$
 
-2. $\forall i \in \N: S_i \subseteq S_{i+1}$
+2. $\forall i \in \mathbb{N}: S_i \subseteq S_{i+1}$
 
 ## Induction on Terms
 

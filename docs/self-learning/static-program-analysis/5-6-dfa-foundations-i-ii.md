@@ -4,9 +4,11 @@
 Given a CFG (program) with k nodes, the iterative algorithm updates `OUT[n]` for every node n in each iteration.
 
 Assume the domain of the values in data flow analysis is $V$,then we can define a $k$-tuple
+
 $$
 OUT[n_1],OUT[n_2],\dots,OUT[n_k]
 $$
+
 as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the values of the analysis after each iteration.
 
 因此，每一次 iteration 可以抽象为函数 $F: V^k \to V^k$
@@ -57,9 +59,11 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 ## Fix-Point Theorem
 
 定义（单调性）：A function $F: L \to L$ is monotonic if 
+
 $$
 \forall a, b: a \sqsubseteq b \implies f(a) \sqsubseteq f(b)
 $$
+
 定理：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_47_202404091758112.png" alt="image-20240402011819457" style="zoom:50%;" />
@@ -94,6 +98,7 @@ F 可以认为是
 **由于格上的偏序关系，就是集合的包含于关系**，因此
 
 奇数步（只是粗略证明）：
+
 $$
 \begin{aligned}
 &(a_1 , a_2, \dots) \par (b_1, b_2, \dots) \\ 
@@ -102,6 +107,7 @@ $$
 \iff& (\bigcup a_i) \par (\bigcup b_i)
 \end{aligned}
 $$
+
 偶数步（易证）。
 
 #### Answer to the first two questions
@@ -190,10 +196,13 @@ else:
 ---
 
 **证明：**
+
 $$
 f(x) = (x - kill) + gen
 $$
+
 从而：
+
 $$
 \begin{aligned}
 f(x + y) &= ((x + y) - kill) + gen \\
@@ -202,6 +211,7 @@ f(x + y) &= ((x + y) - kill) + gen \\
 &= f(x) + f(y)
 \end{aligned}
 $$
+
 上面讨论的是 join 的情况，对于 meet 同理。
 
 Q.E.D.
@@ -245,6 +255,7 @@ meet 的运算是：
 如上图，令 $f$ 为语句 `c = a + b` 的转移函数。
 
 则：
+
 $$
 \newcommand{nac}{\text{nac}}
 \newcommand{undef}{\text{undef}}
@@ -254,7 +265,9 @@ f(X \sqcap Y) &= f((a=1, b=9, c=\undef) \sqcap (a=9, b=1, c=\undef)) \\
 &= (a=\nac, b=\nac, c=\nac)
 \end{aligned}
 $$
+
 但是：
+
 $$
 \newcommand{nac}{\text{nac}}
 \newcommand{undef}{\text{undef}}
@@ -264,6 +277,7 @@ f(X) \sqcap f(Y) &= f((a=1, b=9, c=\undef)) \sqcap f((a=9, b=1, c=\undef)) \\
 &= (a=\nac, b=\nac, c=10)
 \end{aligned}
 $$
+
 因此，$F$ 并不是这个 lattice 上的同态。
 
 - 不过，还是可以证明：$f(X \sqcap Y) \sqsubseteq f(X) \sqcap f(Y)$​，也就是说，使用 iterative method 的分析方式，不会优于 meet over all paths 的分析方式。也就是说：iterative method 肯定不会比 MOP 更准。

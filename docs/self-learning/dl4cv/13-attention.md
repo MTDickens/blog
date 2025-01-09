@@ -95,6 +95,7 @@ you can often use some kind of attention mechanism to cause the model to focus o
 首先，上面一行只有 1 个 query。我们难道不能用多个 queries 吗？
 
 也就是
+
 $$
 ans = X^t \operatorname*{softmax}(XQ/\sqrt{D_Q}, \dim=0)
 $$

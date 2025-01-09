@@ -53,7 +53,7 @@ $$
 
 假设不存在这样的 $C_1$，那么，
 $$
-\forall n \in \N, \exists x(n) \in \R^n, s.t. \|x(n)\|_1 = 1: \frac 1 n = \frac 1 n \|x(n)\|_1 > \|x(n)\|_A
+\forall n \in \mathbb{N}, \exists x(n) \in \R^n, s.t. \|x(n)\|_1 = 1: \frac 1 n = \frac 1 n \|x(n)\|_1 > \|x(n)\|_A
 $$
 从而：$\lim_{n \to \infty} \|x(n)\|_A = 0$。由于 $\|x(n)\|_1 = 1 \implies x(n) \text{ is bounded}$，由 Bolzano-Weierstrass 定理可知：存在收敛子列，这个收敛子列必然收敛至 $x^*$。
 

@@ -30,6 +30,7 @@ CPU vs GPU
 $$
 FLOPS(A*B) + FLOPS(+C) = [(4 + 4 - 1)  * 4 * 4] + [4 * 4] = 128
 $$
+
 次浮点运算。
 
 因此，如果考虑张量运算，就有：72 SM &times; 8 tensor cores per SM &times; 128 FLOPscycle &times; 1.77 Gcycle/sec &approx; 130.5 TFLOP
@@ -99,10 +100,12 @@ def sigmoid(x):
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403202106036.png" alt="image-20240320210617589" style="zoom: 33%;" />
 
 计算导数的时候，就是：
+
 $$
 \newcommand{sgm}{\operatorname*{sigmoid}}
 \frac{\partial \sgm(x)}{\partial x} = \frac{\partial \sgm(x)}{\partial e^{-x}+1} \frac{\partial e^{-x}+1}{\partial e^{-x}} \frac{\partial e^{-x}}{\partial (-x)} \frac{\partial (-x)}{\partial x} = -\frac 1 { (e^{-x}+1)^2} * e^{-x} * -1 = \frac 1 {(e^{-x}+1)^2} * e^{-x}
 $$
+
 这样做就会导致计算量增加，且数值不稳定。
 
 通常的做法是：$\frac {\partial \sgm(x)} {\partial x} = \sgm(x) (1-\sgm(x))$

@@ -81,6 +81,7 @@ Now its linear separable, and the boundary is non-linear.
     - 从聚合到输出，经历了一个 ReLU 函数
 
 从而：
+
 $$
 \newcommand{\par}[2]{\frac{\partial #1}{\partial #2}}
 \begin{aligned}
@@ -88,6 +89,7 @@ $$
 \par C {a_i} &= \sum \par C {a_{i+1}} \par {a_{i+1}} z \par z {a_i}
 \end{aligned}
 $$
+
 其中，我们传播时要记录的就是 $\par C a, \par C w$。
 
 由于我们用的是 ReLU 激活函数，故 $\par a z$ 很简单，i.e. $\par a z := \par {\operatorname*{ReLU}(z)}{z} := \text{if z > 0 then 1 else 0}$

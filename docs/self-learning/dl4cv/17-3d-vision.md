@@ -25,12 +25,14 @@
 **问题：**由于 depth ambiguity（也就是远处的大物体，和近处的小物体，本质上没有区别），因此一张图片，我们只能够判断出相对的距离（比如 A 物体是 B 物体的 2 倍远），而绝对的距离（比如 A 物体是 1m，B 物体是 2m）是判断不出的。
 
 **解决方法：**使用 scale-invariant loss
+
 $$
 \begin{align}
 D(y,y^\ast) = \frac 1 {2n^2}\sum_{i,j}((\log y_i - \log y_j) - (\log y_i^\ast - \log y_j^\ast ))^2 \tag{2} \newline 
 = \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \sum_{i,j} d_i d_j = \frac 1 n \sum_i d_i^2 - \frac 1 {n^2} \left(\sum_{i} d_i \right)^2 \tag{3}
 \end{align}
 $$
+
 具体推导过程如下：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/12_23_40_21_202405122340533.png" style="zoom:50%;" />

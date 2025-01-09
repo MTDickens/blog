@@ -85,17 +85,22 @@ Reinforcement learning 的基本流程就是：
 我们令 $x = (s_0, a_0, s_1, a_1, \dots)$，这就是遵循 $\pi_\theta(a|s)$ 策略之后的轨迹，也是一个随机向量。
 
 那么：
+
 $$
 \begin{aligned}
 \log p_\theta(x) &= \log \prod_i P(s_{i+1} | s_i, a_i) \pi_\theta(a_i | s_i) \newline 
 &= \sum_i \log P(s_{i+1} | s_i, a_i) + \log \pi_\theta(a_i | s_i) \newline
 \end{aligned}
 $$
+
 由于 $\log P(s_{i+1} | s_i, a_i)$ 与 $\theta$ 无关，因此：
+
 $$
 \frac{\partial} {\partial \theta} \log p_\theta (x) = \frac{\partial} {\partial \theta} \sum_i \log \pi_\theta(a_i | s_i) = \sum_i \frac{\partial} {\partial \theta} \log \pi_\theta (a_i | s_i)
 $$
+
 从而：
+
 $$
 \begin{aligned}
 \frac{\partial J} {\partial \theta} &= \mathbb E_{x \sim p_\theta} \left[ (f(x)) \left(\frac \partial {\partial \theta}\log p_\theta(x)\right) \right] \newline

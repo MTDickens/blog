@@ -13,9 +13,11 @@ Problems:
 #### Problem 1
 
 对于一个神经元而言：
+
 $$
 output = f(\sum_i w_ix_i + b)
 $$
+
 如果它的输入也是 sigmoid，那么，所有 $x_i$ 都是正数。
 
 从而：$\frac {\partial loss}{\partial w_i} = \frac {\partial loss}{\partial sum} \frac {\partial sum}{\partial w_i} = x_i \frac {\partial loss}{\partial sum}$。因此，由于 $\frac{\partial loss}{\partial sum}$ 固定，所有的 $\frac{\partial loss}{\partial w_i}$ 要么全正、要么全负。
@@ -69,9 +71,11 @@ However, in practice, all ReLUs (including ReLU itself and its variations) are j
 ---
 
 具体来说，对于 zero-centered data，如果我们希望求 $\vec a, \vec b$ 两轴的均方差，那么：
+
 $$
 E(ab) - E(a) E(b) = E(ab) \propto \vec \sum_{i=1}^N (W_i\vec a ) ( W_i\vec b)  = \vec a^t W^t W \vec b = \vec a^t V \Sigma V^t \vec b
 $$
+
 如上，如果我们让所有的标正基在经过 $V^t$ 变换之后，就是一组自然基，就可以。
 
 因此，我们只需要求逆矩阵 ${(V^t)}^{-1} = V$，让 $V$ 构成这组标准正交基即可。

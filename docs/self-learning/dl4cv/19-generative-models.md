@@ -65,6 +65,7 @@ By Bayesian Law:
 ## Generative Models
 
 Generative model 的目标函数就是：
+
 $$
 \prod_i p(x^{(i)}) = \prod_i f(x^{(i)}, W)
 $$
@@ -76,6 +77,7 @@ $$
 $$
 W^\ast = \mathop{\arg\max}_{W} \sum_i \log f(x^{(i)}, W)
 $$
+
 而对于某个 $x^{(i)} = (x^{(i)}_1, x^{(i)}_2, \dots)$，通过贝叶斯定律，有：
 
 $$
@@ -148,10 +150,13 @@ Autoencoder 很简单，如上图，就是先通过 downsampling 将 vector 压�
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_17_13_38_202405201713739.png" alt="image-20240520171335813" style="zoom: 33%;" />
 
 然后，我们就可以得出：
+
 $$
 p_\theta(x) = \frac {p_\theta(x|z)p(z)} {p_\theta(z|x)} \approx \frac {p_\theta(x|z) p(z)} {q_\phi(z|x)}
 $$
+
 然后，我们使用 expectation trick:
+
 $$
 \begin{aligned}
 \log p_\theta(x) &= \log p_\theta(x) (\int q_\phi(z|x) \mathrm dz) \newline 
@@ -164,6 +169,7 @@ $$
 &\geq \mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL} [q_\phi(z|x) \parallel p(z)]
 \end{aligned}
 $$
+
 因此，我们找到了目标：找到这样的 encoder 和 decoder，使之能够最大化 $\mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL} [q_\phi(z|x) \parallel p(z)]$。
 
 ### VAE
@@ -213,6 +219,7 @@ $$
 ##### $\mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)]$
 
 我们使用数据集中的 $x$，通过 encoder $q_\phi(z|x)$，生成若干个 $z$ 出来（记作 $Z$），然后就是：
+
 $$
 \mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] \approx \frac1{|Z|}\sum_{z \in Z} \log p_\theta(x|z)
 $$
@@ -269,16 +276,20 @@ GAN 使用一个生成器和一个判别器：
 我们再训练一个鉴别器 D。
 
 我们的目标函数就是：
+
 $$
 \min_G \max_D (E_{x \sim p_{data}}[\log D(x)] + E_{z \sim p(z)}[\log(1-D(G(z)))])
 $$
+
 其中：
+
 $$
 \begin{aligned}
 \max_D (E_{x \sim p_{data}}[\log D(x)] + E_{z \sim p(z)}[\log(1-D(G(z)))]) &= \max_D \int p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx \newline
 &\leq \int \max_{D(x)} p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx
 \end{aligned}
 $$
+
 又由于：
 
 $$
@@ -290,6 +301,7 @@ $$
 - $\max_D \int p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx = \int \max_{D(x)} p_{data}(x) \log D(x) + p_G(x) \log(1-D(x)) \mathrm dx$
 
 因此：
+
 $$
 \begin{aligned}
 &\max_D (E_{x \sim p_{data}}[\log D(x)] + E_{z \sim p(z)}[\log(1-D(G(z)))]) \newline
@@ -297,6 +309,7 @@ $$
 = &\int p_{data}(x) \log \frac{p_{data}(x)}{p_{data}(x) + p_G(x)} + p_{G}(x) \log (1-\frac{p_{data}(x)}{p_{data}(x) + p_G(x)}) \mathrm dx \newline
 \end{aligned}
 $$
+
 进一步的推导如下：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_21_35_57_202405202135936.png" alt="image-20240520213543743" style="zoom: 33%;" />

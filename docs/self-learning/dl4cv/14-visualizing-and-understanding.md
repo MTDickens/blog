@@ -101,9 +101,11 @@
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_11_25_28_202404281125901.png" alt="image-20240428112519334" style="zoom: 50%;" />
 
 如下图，使用 L2 regularizer，我们通过梯度上升求：
+
 $$
 \arg \max_I Score_c(I) - \lambda \norm{I}_2^2
 $$
+
 从而得到以上的图片。可以看出，图片虽然混乱，但是已经有了所属类别的雏形。
 
 - 当然，通过一些 hack on regularizers，我们可以得到更加 realistic 的图片。
@@ -136,6 +138,7 @@ $$
 2. "looks natural" (image prior regularization)
 
 也就是：
+
 $$
 \mathrm x^\ast = \mathop{\arg \min}_{x \in \mathbb R^{H\times W\times C}} \ell(\Phi(\mathrm x), \Phi_0) + \lambda \mathcal R(\mathrm x)
 $$

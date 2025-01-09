@@ -5,9 +5,11 @@
 ### Stochastic Gradient Descent
 
 Normal Gradient Descent:
+
 $$
 w_{t+1} = w_{t} - \alpha \nabla F(w_t)
 $$
+
 where $F(w) := \frac 1 N \sum_{i=1}^N L(x_i; y_i; w)$ is a multivariable function that take account for the whole dataset.
 
 But actually, you can use **a random minibatch** of the whole set.
@@ -41,10 +43,12 @@ x_{t+1} = x_t + v_{t+1}
 $$
 
 We can simplify it by a change of variable $\widetilde x_{t} := x_t + \rho v_t$, then:
+
 $$
 v_{t+1} = \rho v_{t} - \alpha \nabla f(\widetilde x_t) \newline
 \widetilde x_{t+1} = \widetilde x_t + \alpha v_{t+1} + \rho(v_{t+1} - v_{t})
 $$
+
 You can see the difference is that Nesterov momentum has $v_{t+1} - v_t$.
 
 ### AdaGrad & RMSDrop
@@ -55,10 +59,12 @@ x_{t+1} := x_t - \frac {\alpha\nabla f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
 $$
 
 但是，这样的话，$s_t$ 只增不减，因此我们需要 decay rate $\rho$。这就是新方法 RMSDrop：
+
 $$
 s_{t+1} := \rho s_{t} + (1-\rho)\nabla f^2(w_t) \newline
 x_{t+1} := x_t - \frac {\alpha\nabla f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
 $$
+
 这样，$s_t$ 就可以自适应地增减。
 
 ### Adam
@@ -76,6 +82,7 @@ $$
 - 自适应学习率
 
 从而得到 Adam 最优化方法（$\sone$ 就是动量，$\stwo$ 就是自适应变量）：
+
 $$
 \begin{aligned}
 \sone_{t+1} &:= \rone \sone_{t} + (1-\rone) \nabla f(\sone_t) \newline
@@ -83,6 +90,7 @@ $$
 x_{t+1} &:= x_t - \frac {\alpha \sone_{t+1}}{\sqrt{\stwo_{t+1}} + 10^{-7}}
 \end{aligned}
 $$
+
 不过，这样还不够。因为初始的时候，如果 $\rtwo$ 太小，那么 $\sqrt{\stwo_{t+1}}$ 就可能会比 $\sone_{t+1}$ 小得多。因此实际算法中，还会有一个 bias correction。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403110144027.png" alt="image-20240311014405721" style="zoom: 50%;" />
@@ -114,6 +122,7 @@ L(w) \approx L(w_0) + (w-w_0)^T \nabla_w L(w_0) + \frac 1 2 (w-w_0)^T \mathrm{H}
 $$
 
 从而，该二次曲面的最小值点就在：
+
 $$
 \nabla_w L(w_0) + (w - w_0)^T \mathrm{H}_wL(w_0)= w_0 - (L(w_0)\mathrm{H}_w)^{-1}\nabla_wL(w_0)
 $$

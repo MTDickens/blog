@@ -114,6 +114,7 @@ Pooling layer 只有两个超参数：K 和 S。意义同 convolution layer。
 2. 我们可以认为：保持分布的一阶、二阶矩不变，并且防止梯度爆炸/消失
 
 方法：
+
 $$
 \widehat x^{(k)} = \frac {x^{(k)} - \mathrm E[x^{(k)}]} {\sqrt{\mathrm{Var}[x^{(k)}]}}
 $$
