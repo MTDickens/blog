@@ -1,4 +1,3 @@
-[TOC]
 
 # Activation Functions
 

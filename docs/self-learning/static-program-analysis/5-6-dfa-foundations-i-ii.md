@@ -1,4 +1,3 @@
-[TOC]
 
 # View the Iterative Algorithm in Another Way
 

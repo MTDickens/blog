@@ -4,7 +4,6 @@ $$
 \newcommand{N}{\mathbb N}
 $$
 
-[TOC]
 
 > [!abstract]+ 本章思路
 > 

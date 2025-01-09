@@ -1,4 +1,3 @@
-[TOC]
 
 # Recap: Gaussian Elimination
 

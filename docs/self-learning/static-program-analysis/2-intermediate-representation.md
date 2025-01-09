@@ -1,4 +1,3 @@
-[TOC]
 
 # Compilers and Static Analyzers: Difference
 

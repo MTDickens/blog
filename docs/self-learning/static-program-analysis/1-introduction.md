@@ -1,4 +1,3 @@
-[TOC]
 
 # PL and Static Analysis
 

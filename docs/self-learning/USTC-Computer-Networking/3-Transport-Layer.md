@@ -1,4 +1,3 @@
-[TOC]
 
 # Lec 2.8: TCP Socket Programming
 
