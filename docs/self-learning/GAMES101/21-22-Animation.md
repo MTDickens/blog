@@ -50,7 +50,7 @@ $$
 
 - （各向同性）抗剪切
 - 抗弯折
-- ……
+- 
 
 的特性。因此，横平竖直的弹簧系统肯定是不行的。
 
@@ -78,6 +78,7 @@ but it does have challenges
 ### Particle System Animations
 
 For each frame in animation
+
 - [If needed] Create new particles
 - Calculate forces on each particle
 - Update each particle’s position and
@@ -88,13 +89,18 @@ velocity
 ### Particle System Forces
 
 Attraction and repulsion forces
-- Gravity, electromagnetism, …
-- Springs, propulsion, …
+
+- Gravity, electromagnetism, 
+- Springs, propulsion, 
+
 Damping forces
-- Friction, air drag, viscosity, …
+
+- Friction, air drag, viscosity, 
+
 Collisions
-- Walls, containers, fixed objects, …
-- Dynamic objects, character body parts, …
+
+- Walls, containers, fixed objects, 
+- Dynamic objects, character body parts, 
 
 ### 例子：bird flock simulation (as ODE)
 
