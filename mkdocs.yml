@@ -408,16 +408,6 @@ plugins:
   - search
   - mermaid2
   - callouts
-  # - encryptcontent:
-  #     # use_secret: 'ENCRYPTCONTENT_PASSWORD'
-  #     remember_password: True
-  #     title_prefix: "[LOCKED]"
-  #     summary: "This content is PROTECTED"
-  #     encryption_info_message: "Contact me for access to this page."
-  #   - toc-md:
-  #       toc_page_title: Contents
-  #       toc_page_description: Usage mkdocs-toc-md
-  #       header_level: 3
 
 markdown_extensions:
   - footnotes
