@@ -5,7 +5,7 @@ $$
 
 
 
-# 大纲
+## 大纲
 
 1. 图、曲面与复形 
 2. 同调、上同调与对偶 
@@ -15,19 +15,19 @@ $$
 6. 持续同调的向量化 
 7. Mapper及持续同调的应用 
 
-# 拓扑空间
+## 拓扑空间
 
-## 定义
+### 定义
 
 <img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240327215559636.png" alt="image-20240327215559636" style="zoom:33%;" />
 
 如图，一个集合的一个拓扑，就是这个集合的**子集的集合**。
 
-## 连续性
+### 连续性
 
 对于 $f: X \to Y$，如果所有开集的原象为开集，那么就称 $f$ is a continuous mapping between $X$ and $Y$。
 
-## 同胚
+### 同胚
 
 定义：若映射 $f:X \to Y$ 是连续双射，且逆映射 $f^{-1}$也连续，则称 $f$ 是一个同胚映射 (Homeomorphism)。
 
@@ -35,9 +35,9 @@ $$
 
 - 本质上，同胚就相当于：**两个集合之间的开集的一一对应关系**。
 
-# 图论
+## 图论
 
-## 平面图
+### 平面图
 
 平面图的欧拉示性数是。因为，一个含有 $n$ 个顶点的平面图的生成树只有
 
@@ -51,7 +51,7 @@ $$
 
 另外，$E \leq 3V-6$（可以通过【如果 $E \geq 3$】一个面至少有 3 条边环绕，以及一条边至多与两面相交得到） 
 
-## $K_5$ 和 $K_{3,3}$
+### $K_5$ 和 $K_{3,3}$
 
 对于 $K_5$ 而言，$10 > 3 * 5 - 6$，因此绝对不是平面图。
 
@@ -61,25 +61,25 @@ $$
 
 之后还有一个 Kuratowski 定理：一个简单图是平面图 &iff; 它不存在与上述两图同胚的子图。
 
-# 拓扑
+## 拓扑
 
-## 可定向性
+### 可定向性
 
 通俗来说，就是一个箭头平滑地绕行，能否箭头指向的方向与箭头位置无关。
 
 - 莫比乌斯环就是反例
 
-## 连通和
+### 连通和
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290752873.png" alt="image-20240329075246942" style="zoom:50%;" />
 
 如图，分别从 A、B 处挖去一个“开”洞，然后将两者粘在一起，就是连通和，记作 $A \# B$。
 
-## 紧可定向 2-流形的分类
+### 紧可定向 2-流形的分类
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290758906.png" alt="image-20240329075830813" style="zoom:33%;" />
 
-## 亏格
+### 亏格
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290802685.png" alt="image-20240329080227778" style="zoom: 67%;" />
 
@@ -89,7 +89,7 @@ $$
 
 - 注意：亏格仅仅定义在 2-流形上，而 Betti Number 适用于所有的流形。
 
-### 紧可定向 2-流形的欧拉示性数
+#### 紧可定向 2-流形的欧拉示性数
 
 ![image-20240329081517419](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290815469.png)
 
@@ -99,13 +99,13 @@ $$
 
 - 注意：$边 \backslash 点$ 和 $面 \backslash (边 \cup 点)$ 都必须是开集。因此圆柱面必须要有 1 条边，才能将这个圆柱面“切开”，变成一个开矩形。
 
-### 例子
+#### 例子
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290833406.png" alt="image-20240329083349651" style="zoom: 50%;" />
 
 如图，球面的示性数是 2，环面是 0。由于做了三次连通和（三个圆柱面），因此欧拉示性数是 2 + 0 + 3 * (-2) = -4，从而亏格就是 3。
 
-## 紧不可定向 2-流形
+### 紧不可定向 2-流形
 
 交叉帽是莫比乌斯环的二维紧流形的形式，如下图所示。
 
@@ -117,7 +117,7 @@ $$
 
 - 可以想象，由于环面上关于原点对称的两个圆的点是顺时针一一对应的，因此不能把两个圆“对着”接在一起，而要“顺着”接在一起。所以必须要穿过瓶身，做成 Klein Bottle 的样子。
 
-### 分类
+#### 分类
 
 所有紧不可定向 2-流形都与
 
@@ -130,9 +130,9 @@ $$
 
 性质 3：紧不可定向 2-流形不可嵌入 $\mathbb R^3$，i.e. 必然存在自相交
 
-# 复形
+## 复形
 
-## 单纯形
+### 单纯形
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310149274.png" alt="image-20240331014929415" style="zoom:50%;" />
 
@@ -148,7 +148,7 @@ $$
 - 正因为单形和点集是一一对应的，利用点集构造出来的单形的面、余面和恰当面才是良定义的。
 - 同时，正是因为单形实际上是（无穷）点集，我们才能利用它以及它的边界来构造出它的“内部”
 
-## 单纯复形（Simplicial Complex）
+### 单纯复形（Simplicial Complex）
 
 单纯复形就是单纯形的一个有限集（注意是以单纯形为对象的集合，而不是单纯形的点集的并集啥的【后者是底空间】）。
 
@@ -166,7 +166,7 @@ $$
 1. 靠左的单纯复形包含了 2-单形，却没有包含作为其边界的 1-单形
 2. 靠右的单纯复形中，左右两个 2-单形的交集是中间的短线段。可惜，这条线段虽然也是 1-单形，但是不是他们俩的边界。
 
-### 若干定义
+#### 若干定义
 
 1. 单纯复形的**维数** $\dim \mathcal K := \max_{\sigma \in \mathcal K} \sigma$​
 2. **底空间**：$\abs{K} = \bigcup_{\sigma \in \mathcal K} \sigma$
@@ -176,7 +176,7 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310222945.png" alt="image-20240331022158051" style="zoom:50%;" />
 
-## 抽象单纯复形
+### 抽象单纯复形
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310229858.png" alt="image-20240331022918797" style="zoom:50%;" />
 
@@ -184,15 +184,15 @@ $$
 
 - 但是，抽象单纯复形的**点**也是抽象的，i.e. 不考虑仿射相关等等问题
 
-### 几何实现定理
+#### 几何实现定理
 
 ![image-20240331030633947](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310306812.png)
 
-## 若干种（抽象）复形
+### 若干种（抽象）复形
 
 **注意：** VR 复形和 &Ccaron;ech 复形都是**抽象复形**（因为我们无法保证点之间的仿射独立性）。
 
-### &Ccaron;ech Complex 和 VR 复形的对比
+#### &Ccaron;ech Complex 和 VR 复形的对比
 
 VR 复形是包含 &Ccaron;ech 复形的，因为：
 
@@ -221,7 +221,7 @@ $\blacksquare$
 
 因此，切赫复形和 VR 复形之间，差的只是一个常数倍数，并没有本质的巨大差异。
 
-### &Ccaron;ech 复形的计算
+#### &Ccaron;ech 复形的计算
 
 Helly Theorem：如果 $F$ 是有限个 $\mathbb R^n$ 中的闭凸集的集合，那么：F 中所有集合的并非空，等价于 F 中任意 (d+1) 个集合的并非空。
 
@@ -245,7 +245,7 @@ Helly Theorem：如果 $F$ 是有限个 $\mathbb R^n$ 中的闭凸集的集合�
 > 1. 最开始，$\tau = S, v = \emptyset$，很显然，$\emptyset$ 一定待在边界上（空集是任何集合的子集）
 > 2. ……
 
-### VR 复形的计算
+#### VR 复形的计算
 
 1. 通过 $\epsilon$​ 算出邻接图
     - 从而，我们已经知道了 0 和 1 单形
@@ -264,17 +264,17 @@ Helly Theorem：如果 $F$ 是有限个 $\mathbb R^n$ 中的闭凸集的集合�
 
 
 
-### Voronoi Diagram
+#### Voronoi Diagram
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403310440972.png" alt="image-20240331044007632" style="zoom:50%;" /> 
 
 如图，实际上，每一次 k\-means （硬）聚类的时候，就会出现这种情况。
 
-### Delaunay 三角剖分 / Delaunay 复形
+#### Delaunay 三角剖分 / Delaunay 复形
 
 ![image-20240401010938390](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010109839.png)
 
-### Alpha 复形
+#### Alpha 复形
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010117567.png" alt="image-20240401011738037" style="zoom: 67%;" />
 
@@ -286,6 +286,6 @@ Helly Theorem：如果 $F$ 是有限个 $\mathbb R^n$ 中的闭凸集的集合�
 
 **注：** 实际上，我们还可以给 Delaunay 复形进行加权，i.e. $V_u = \set{x \in \mathbb R^d: \| x - u \| + w_u \leq \| x - v \| + w_v}$，从而可以构造加权的 Alpha 复形。
 
-### 滤子
+#### 滤子
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010134229.png" alt="image-20240401013355470" style="zoom: 50%;" />

@@ -1,4 +1,4 @@
-# 如何保存 Git 用户名和 token
+## 如何保存 Git 用户名和 token
 
 > Author: M.T.Dickens, ChatGPT Feb 13 Ver.
 
@@ -42,7 +42,7 @@ git config --global credential.helper store
 !!! warning
     需要注意安全性问题，尽量避免将凭证保存在明文文件中。
 
-# 设置代理
+## 设置代理
 
 如果要设置全局代理：
 
@@ -51,7 +51,7 @@ git config --global http.proxy http://127.0.0.1:10809
 
 git config --global https.proxy http://127.0.0.1:10809
 
-# 以下为取消代理命令
+## 以下为取消代理命令
 git config --global --unset http.proxy
 
 git config --global --unset https.proxy
@@ -63,7 +63,7 @@ git config --global --unset https.proxy
 git config --global http.https://github.com.proxy http://127.0.0.1:10809
 git config --global https.https://github.com.proxy http://127.0.0.1:10809
 
-# 以下为取消代理命令
+## 以下为取消代理命令
 
 git config --global --unset http.https://github.com.proxy)
 
@@ -74,7 +74,7 @@ git config --global --unset https.https://github.com.proxy)
     1. 可以在 `.gitconfig` 内直接修改代理设置
     2. 更详细的，参考[教程](https://gist.github.com/laispace/666dd7b27e9116faece6)
 
-# 大小写敏感
+## 大小写敏感
 
 git 默认对文件名不是大小写敏感的。这在 `mkdocs` 中就非常致命。
 
@@ -87,7 +87,7 @@ git 默认对文件名不是大小写敏感的。这在 `mkdocs` 中就非常致
 git config core.ignorecase false
 ```
 
-# 删除被 git 跟踪的文件
+## 删除被 git 跟踪的文件
 
 > 更加详细的 `git rm` 用法，可以参考[菜鸟教程](https://www.runoob.com/git/git-rm.html)
 
@@ -130,16 +130,16 @@ git config core.ignorecase false
 完整操作示例如下：
 
 ```bash
-# 确保.gitignore文件中包含需要忽略的文件
+## 确保.gitignore文件中包含需要忽略的文件
 echo ".vscode/settings.json" >> .gitignore
 
-# 从Git仓库中删除对该文件的跟踪
+## 从Git仓库中删除对该文件的跟踪
 git rm --cached .vscode/settings.json
 
-# 提交更改
+## 提交更改
 git commit -m "Stop tracking .vscode/settings.json"
 
-# 验证更改
+## 验证更改
 git status
 ```
 

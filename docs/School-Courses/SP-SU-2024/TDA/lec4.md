@@ -5,9 +5,9 @@ $$
 
 
 
-# 代数拓扑简介
+## 代数拓扑简介
 
-## 简介
+### 简介
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010139284.png" alt="image-20240401013904533" style="zoom:50%;" />
 
@@ -15,11 +15,11 @@ $$
 - 与点集拓扑相比，代数拓扑具有可计算性，更易用于研究具体的拓扑空间，并能设计算法进行计算
 - 代数拓扑是计算拓扑与拓扑数据分析的主要理论基础
 
-## 主要分支
+### 主要分支
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010218812.png" alt="image-20240401021803426" style="zoom:67%;" />
 
-## 基本群
+### 基本群
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010241701.png" alt="image-20240401024154382" style="zoom:67%;" />
 
@@ -36,7 +36,7 @@ $$
 
 然后通过群运算，得到了（也许）无穷无尽的同伦等价类。
 
-## 同伦群的问题
+### 同伦群的问题
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010341383.png" alt="image-20240401034057443" style="zoom: 67%;" />
 
@@ -46,13 +46,13 @@ $$
 - 难以离散化，不利于计算机的实现
 - 可能非交换，难以应用到实际的问题中
 
-# 链复形与同调群
+## 链复形与同调群
 
-## 闭链
+### 闭链
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010434203.png" alt="image-20240401043443027" style="zoom:50%;" />
 
-## 同调
+### 同调
 
 如果两个闭链是某个拓扑子空间的所有边界，那么称这两个闭链是同调的 (homologous)。
 
@@ -60,19 +60,19 @@ $$
 
 - 如上图，对于拓扑空间 $X$​，黄色部分就是一个拓扑子空间
 
-## 链群
+### 链群
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010453459.png" alt="image-20240401045324557" style="zoom:67%;" />
 
 - 注意：**不同维数的单形组成不同的链群**
 
-## 边界算子: $\partial_k: C_k \to C_{k-1}$
+### 边界算子: $\partial_k: C_k \to C_{k-1}$
 
 边界算子把**不同维数**的链群关联在了一起。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010459258.png" alt="image-20240401045942180" style="zoom:50%;" />
 
-## 链复形
+### 链复形
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010515753.png" alt="image-20240401051550803" style="zoom: 50%;" />
 
@@ -82,7 +82,7 @@ $$
     - 当然，边界算子满足“相邻两个的复合式零映射”，因此边界算子可以用来构建一种特殊的同调群——链复形
 - 其中，$C_p$ 就是第 $p$ 个链群；$Z_p$ 就是 $\ker\partial_p$；$B_p$ 就是 $\operatorname*{im}\partial_{p+1}$​
 
-### 几何意义
+#### 几何意义
 
 我们称：
 
@@ -93,11 +93,11 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010537496.png" alt="image-20240401053700092" style="zoom:33%;" />
 
-## 同调群
+### 同调群
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404010552103.png" alt="image-20240401055208445" style="zoom:50%;" />
 
-### 欧拉示性数
+#### 欧拉示性数
 
 $$
 \chi(K) = \sum_{i=0}^\infty (-1)^i n_i
@@ -113,7 +113,7 @@ $$
 $$
 其中，$\beta_i := \dim H_k(X; \mathbb{Q})$ 就是贝蒂数。
 
-### 其他同调群
+#### 其他同调群
 
 以上定义同调群的方法，为**单纯同调**，单纯同调构造了一个从**单纯形**到**交换群**的桥梁。
 
@@ -123,9 +123,9 @@ $$
 - 胞腔同调 (Cellular Homology)：在比单纯复形更广义的CW复形上构造的同调
 - 方形同调 (Cubical Homology)：在方形阵列上构造的同调，在图像处理中经常使用
 
-# 同调群计算
+## 同调群计算
 
-## Smith 标准型
+### Smith 标准型
 
 史密斯标准形（SNF）是**适用于所有元素都位于主理想域（PID）的矩阵的标准形（不必是方阵）**
 $$
@@ -141,7 +141,7 @@ $$
 $$
 其中，$\forall 1 \leq i < r, \alpha_i | \alpha_{i+1}$。
 
-### $\mathbb Z_2$ 上的 Smith 标准型
+#### $\mathbb Z_2$ 上的 Smith 标准型
 
 由于 $\mathbb Z_2 = \set{0,1}$，因此，对角线上只能是 0, 1。从而，就是 $\alpha_1 = \alpha_2 = \dots = \alpha_r = 1$。也就是：
 $$
@@ -156,7 +156,7 @@ $$
 \end{pmatrix}
 $$
 
-### $\partial_k$ 的矩阵表达（关键概念）
+#### $\partial_k$ 的矩阵表达（关键概念）
 
 不难发现，不管是 $\mathbb Z$ 还是 $\mathbb Z_2$，都是环（而且还是主理想整环），因此和所有 $k$-单形生成的链群本质上是一个**主理想整环（有限生成）模**。我们不妨直接使用矩阵来表示。
 
@@ -175,7 +175,7 @@ $$
 - 纵向的 ones 就是像空间——(k-1)-边缘群，i.e. $B_{k-1}$
 - 横向的 zeros 就是核空间——k-闭链群，i.e. $Z_k$
 
-### 基底转换
+#### 基底转换
 
 但是，不难发现，我们通过：
 
@@ -184,11 +184,11 @@ $$
 
 但是，$N_k$（的横向基底）和 $N_{k+1}$​ （的纵向基底）不一定相同。因此，我们还需要进行基底的转换。
 
-### 例子：正四面体
+#### 例子：正四面体
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_2_50_26_202404050250459.png" alt="image-20240405025023329" style="zoom:50%;" />
 
-#### 1. 求边界算子的矩阵
+##### 1. 求边界算子的矩阵
 
 如图，我们以 $\partial_1$ 为例（在 $\mathbb Z_2$ 下）：
 
@@ -204,7 +204,7 @@ $$
 
 - 比如，$ab \to a + b$
 
-#### 2. Smith 分解算法
+##### 2. Smith 分解算法
 
 然后，我们可以通过 $\mathbb Z_2$ 上的 Smith 分解算法（此处略）来进行分解，得到：
 $$
@@ -235,7 +235,7 @@ $$
 
 - 其中：$V$ 便是 Smith Normal Form (SNF) 的横向基，$U$ 便是 Smith 标准型的纵向基。
 
-#### 3. 求出 1-单形的闭链群 $Z_1$ 和 0-单形的边缘群 $B_0$
+##### 3. 求出 1-单形的闭链群 $Z_1$ 和 0-单形的边缘群 $B_0$
 
 由于 SNF 的后三列为空，因此就是 $Z_1$。对应到 $V$ 上，我们取后三列，就是：
 $$
@@ -289,9 +289,9 @@ $$
 
 不难发现，这就分别是正四面体的三条棱的顶点，而且另外三条棱的顶点也可以由其组合而成。符合直觉。
 
-# 上同调与对偶
+## 上同调与对偶
 
-## 上同调
+### 上同调
 
 上同调就是同调的对偶，上同调的映射就是同调映射的对偶映射。
 
@@ -317,7 +317,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_6_31_45_202404050631140.png" style="zoom: 67%; border: 3px solid; padding: 10px" />
 
-### 例子
+#### 例子
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/5_7_34_21_202404050734608.png" alt="image-20240405073419747" style="zoom: 50%;" />
 
@@ -329,7 +329,7 @@ $$
     - 直观而言：就是图中的黑色边，都是蓝色区域和红色区域的跨边
 - 另外，直观而言：由于所有三角面片经过两次 $\partial$ 之后，都会变成 2 &times; (3 个顶点) &equiv; 0 &times; (3 个顶点) &equiv; 0，因此，$\delta^{k}\circ\delta^{k-1} \equiv 0$，也就是说，必然有 $B_k \subseteq Z_k$。
 
-### 上边缘矩阵
+#### 上边缘矩阵
 
 由于上边缘算子是边缘算子的对偶映射，自然，上边缘矩阵就是边缘矩阵的 Hermitian 转置：$M(\delta^k) := M(\partial_{k+1})$。
 
@@ -339,9 +339,9 @@ $$
 
 - 毕竟 $\rank H^i = \rank Z^k - \rank B^k = (\rank C_p - \rank B_k) - (\rank C_p - \rank Z_k) = \rank Z_k - \rank B_k = rank H_i$
 
-## 对偶块
+### 对偶块
 
-### 重心细分
+#### 重心细分
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_21_44_55_202404102144543.png" style="zoom:80%;" />
 
@@ -349,7 +349,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_21_53_41_202404102153729.png" style="zoom: 67%;" />
 
-### 对偶块的建立
+#### 对偶块的建立
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_22_11_38_202404102211321.png" style="zoom:80%;" />
 

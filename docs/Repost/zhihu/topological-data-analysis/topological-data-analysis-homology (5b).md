@@ -12,7 +12,7 @@ data = np.array([[1,4],[1,1],[6,1],[6,4]])
 ```
 
 ```
-#for example... this is with a small epsilon, to illustrate the presence of a 1-dimensional cycle
+##for example... this is with a small epsilon, to illustrate the presence of a 1-dimensional cycle
 graph = SimplicialComplex.buildGraph(raw_data=data, epsilon=5.1)
 ripsComplex = SimplicialComplex.rips(nodes=graph[0], edges=graph[1], k=3)
 SimplicialComplex.drawComplex(origData=data, ripsComplex=ripsComplex, axes=[0,7,0,5])
@@ -40,7 +40,7 @@ def euclidianDist(a,b): #this is the default metric we use but you can use whate
     return np.linalg.norm(a - b) #euclidian distance metric
 
 
-#Build neighorbood graph
+##Build neighorbood graph
 def buildGraph(raw_data, epsilon = 3.1, metric=euclidianDist): #raw_data is a numpy array
     nodes = [x for x in range(raw_data.shape[0])] #initialize node set, reference indices from original data array
     edges = [] #initialize empty edge array
@@ -164,7 +164,7 @@ ripsComplex2
 ```
 
 ```
-#return the n-simplices and weights in a complex
+##return the n-simplices and weights in a complex
 def nSimplices(n, filterComplex):
     nchain = []
     nfilters = []
@@ -176,7 +176,7 @@ def nSimplices(n, filterComplex):
     if (nchain == []): nchain = [0]
     return nchain, nfilters
 
-#check if simplex is a face of another simplex
+##check if simplex is a face of another simplex
 def checkFace(face, simplex):
     if simplex == 0:
         return 1
@@ -184,7 +184,7 @@ def checkFace(face, simplex):
         return 1
     else:
         return 0
-#build boundary matrix for dimension n ---> (n-1) = p
+##build boundary matrix for dimension n ---> (n-1) = p
 def filterBoundaryMatrix(filterComplex):
     bmatrix = np.zeros((len(filterComplex[0]),len(filterComplex[0])), dtype='>i8')
     #bmatrix[0,:] = 0 #add "zero-th" dimension as first row/column, makes algorithm easier later on
@@ -225,7 +225,7 @@ array([[0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
 下面的函数是用来减化前面描述的边界矩阵 (当我们手工计算的时候)。
 
 ```
-#returns row index of lowest "1" in a column i in the boundary matrix
+##returns row index of lowest "1" in a column i in the boundary matrix
 def low(i, matrix):
     col = matrix[:,i]
     col_len = len(col)
@@ -233,7 +233,7 @@ def low(i, matrix):
         if col[i] == 1: return i
     return -1 #if no lowest 1 (e.g. column of all zeros), return -1 to be 'undefined'
 
-#checks if the boundary matrix is fully reduced
+##checks if the boundary matrix is fully reduced
 def isReduced(matrix):
     for j in range(matrix.shape[1]): #iterate through columns
         for i in range(j): #iterate through columns before column j
@@ -243,7 +243,7 @@ def isReduced(matrix):
                 return i,j #return column i to add to column j
     return [0,0]
 
-#the main function to iteratively reduce the boundary matrix
+##the main function to iteratively reduce the boundary matrix
 def reduceBoundaryMatrix(matrix): 
     #this refers to column index in the boundary matrix
     reduced_matrix = matrix.copy()
@@ -484,7 +484,7 @@ persist2b
 ```
 cycle1 = intervals2b[6]
 cycle1
-#So birth index is 10
+##So birth index is 10
 ```
 
 ```
@@ -512,7 +512,7 @@ ptsOnCycle
 ```
 
 ```
-#so the simplices with indices 7,8,9,10 lie on our 1-dimensional cycle, let's find what those simplices are
+##so the simplices with indices 7,8,9,10 lie on our 1-dimensional cycle, let's find what those simplices are
 rips2b[0][7:11] #range [start:stop], but stop is non-inclusive, so put 11 instead of 10
 ```
 
@@ -528,12 +528,12 @@ rips2b[0][7:11] #range [start:stop], but stop is non-inclusive, so put 11 instea
 
 ```
 n = 30 #number of points to generate
-#generate space of parameter
+##generate space of parameter
 theta = np.linspace(0, 2.0*np.pi, n) 
 a, b, r = 0.0, 0.0, 5.0
 x = a + r*np.cos(theta)
 y = b + r*np.sin(theta)
-#code to plot the circle for visualization
+##code to plot the circle for visualization
 plt.plot(x, y)
 plt.show()
 xc = np.random.uniform(-0.25,0.25,n) + x #add some "jitteriness" to the points (but less than before, reduces memory)
@@ -558,8 +558,8 @@ SimplicialComplex.drawComplex(origData=circleData, ripsComplex=rips4[0], axes=[-
 
 ```
 len(rips4[0])
-#On my laptop, a rips filtration with more than about 250 simplices will take >10 mins to compute persistent homology
-#anything < ~220 only takes a few minutes or less
+##On my laptop, a rips filtration with more than about 250 simplices will take >10 mins to compute persistent homology
+##anything < ~220 only takes a few minutes or less
 ```
 
 ```
@@ -593,7 +593,7 @@ graph_barcode(persist4, 1)
 ```
 n = 50
 t = np.linspace(0, 2*np.pi, num=n)
-#equations for lemniscate
+##equations for lemniscate
 x = np.cos(t) / (np.sin(t)**2 + 1)
 y = np.cos(t) * np.sin(t) / (np.sin(t)**2 + 1)
 

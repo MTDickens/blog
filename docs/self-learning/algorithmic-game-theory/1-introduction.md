@@ -1,4 +1,4 @@
-# Goals and Their Killer Apps
+## Goals and Their Killer Apps
 
 1. When selfish behavior is benign - that is, acquire a bit more computational power, but the rule-maker's goal can be achieved.
     1. 竞价排名
@@ -16,13 +16,13 @@
 > 
 > e.g. Braess's paradox 的 POA 就是 $\frac{2}{\frac 43} = \frac 34$
 
-# Proof Goal
+## Proof Goal
 
 通常，我们希望证明（**如果存在纳什均衡，**）**participants 的最终行为就必然满足 Nash Equilibrium**。
 
 当然，可以减弱：就是 when you have dominant strategy (i.e. if everybody have their dominant strategy, it can easily be the Nash Equilibrium), people will play it.
 
-# Yet Another Goal
+## Yet Another Goal
 
 How do players reach Nash equilibrium? Or do they? And can computational complexity shed some light on this question?
 
@@ -30,7 +30,7 @@ How do players reach Nash equilibrium? Or do they? And can computational complex
 
 ***Example of "complexity"***: some games (auctions) are hard to play, and you can see the analysis in the later courses.
 
-### Computational Tractability and Intractability
+#### Computational Tractability and Intractability
 
 ***Existence (Nash's theorem)***: if 
 1. [**mixed strategies**](https://en.wikipedia.org/wiki/Strategy_(game_theory)#Pure_and_mixed_strategies "Strategy (game theory)") (where a player chooses probabilities of using various pure strategies) **are allowed**, 

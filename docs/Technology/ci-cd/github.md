@@ -1,8 +1,8 @@
-# 基于 Github Action 的 CI/CD 流程
+## 基于 Github Action 的 CI/CD 流程
 
 > 本文转载自[知乎](https://zhuanlan.zhihu.com/p/250534172)
 
-## 前言
+### 前言
 
 在大型的开源项目或者软件开发过程中， 很多开发者都会去提交`PR`或者进行代码的 `push`操作。如果对于每次代码合并都需要项目的核心维护者进行 `code review`，这项工作是及其困难而且耗时的。因此许多团队都会指定一套代码规范, 然后编写测试用例严格的检查每次代码修改， 这样能够非常有效的减少后期代码维护的成本。
 
@@ -12,11 +12,11 @@ Github Actions 的最大优势就是它是与 GitHub 高度整合的，只需一
 
 本篇文章将介绍 GitHub Ac­tions 的基本使用方法。
 
-### CI (Continuous integration)
+#### CI (Continuous integration)
 
 互联网软件的开发和发布，已经形成了一套标准流程，最重要的组成部分就是持续集成（Continuous integration，简称CI）
 
-#### 概念
+##### 概念
 
 持续集成指的是，频繁地（一天多次）将代码集成到主干。 它的好处主要有两个
 
@@ -25,17 +25,17 @@ Github Actions 的最大优势就是它是与 GitHub 高度整合的，只需一
 
 持续集成的目的，就是让产品可以快速迭代，同时还能保持高质量。它的核心措施是，代码集成到主干之前，必须通过自动化测试。只要有一个测试用例失败，就不能集成。
 
-#### 持续交付
+##### 持续交付
 
 持续交付（Continuous delivery）指的是，频繁地将软件的新版本，交付给质量团队或者用户，以供评审。如果评审通过，代码就进入生产阶段。 持续交付可以看作持续集成的下一步。它强调的是，不管怎么更新，软件是随时随地可以交付的。
 
-#### 持续部署
+##### 持续部署
 
 持续部署（continuous deployment）是持续交付的下一步，指的是代码通过评审以后，自动部署到生产环境。
 
 持续部署的目标是，代码在任何时刻都是可部署的，可以进入生产阶段。
 
-#### 流程
+##### 流程
 
 根据持续集成的设计，代码从提交到生产，整个过程有以下几步。
 
@@ -76,9 +76,9 @@ Github Actions 的最大优势就是它是与 GitHub 高度整合的，只需一
 
 一旦当前版本发生问题，就要回滚到上一个版本的构建结果。最简单的做法就是修改一下符号链接，指向上一个版本的目录。
 
-## [Github Action](https://link.zhihu.com/?target=https%3A//github.com/features/actions)
+### [Github Action](https://link.zhihu.com/?target=https%3A//github.com/features/actions)
 
-### GitHub Actions 是什么？
+#### GitHub Actions 是什么？
 
 Github Actions是由Github创建的 CI/CD服务。 它的目的是使所有软件开发工作流程的自动化变得容易。 直接从GitHub构建，测试和部署代码。CI（持续集成）由很多操作组成，比如代码合并、运行测试、登录远程服务器，发布到第三方服务等等。GitHub 把这些操作就称为 actions。
 
@@ -88,7 +88,7 @@ Github Actions是由Github创建的 CI/CD服务。 它的目的是使所有软�
 
 GitHub 做了一个[GitHub Marketplace](https://link.zhihu.com/?target=https%3A//github.com/marketplace%3Ftype%3Dactions) ，可以搜索到他人提交的 actions。另外，还有一个[Awesome Actions](https://link.zhihu.com/?target=https%3A//github.com/sdras/awesome-actions)的仓库，也可以找到不少 action。
 
-#### 基础概念
+##### 基础概念
 
 GitHub Actions 有一些自己的术语。
 
@@ -97,7 +97,7 @@ GitHub Actions 有一些自己的术语。
 - step（步骤）：每个 job 由多个 step 构成，一步步完成。
 - action （动作）：每个 step 可以依次执行一个或多个命令（action）。
 
-#### 虚拟环境
+##### 虚拟环境
 
 GitHub Ac­tions 为每个任务 (job) 都提供了一个虚拟机来执行，每台虚拟机都有相同的硬件资源：
 
@@ -115,7 +115,7 @@ GitHub Ac­tions 为每个任务 (job) 都提供了一个虚拟机来执行，�
 
 > TIPS： 虽然名称叫持续集成，但当所有任务终止和完成时，虚拟环境内的数据会随之清空，并不会持续。即每个新任务都是一个全>新的虚拟环境。
 
-#### workflow 文件
+##### workflow 文件
 
 GitHub Ac­tions 的配置文件叫做 work­flow 文件，存放在代码仓库的`.github/workflows` 目录中。
 
@@ -148,7 +148,7 @@ jobs:
         echo My name is $MY_NAME
 ```
 
-#### workflow 语法
+##### workflow 语法
 
 (1) name
 
@@ -220,7 +220,7 @@ steps 字段指定每个任务的运行步骤，可以包含一个或多个步�
 - run：该步骤运行的 bash 命令。
 - env：该步骤所需的环境变量。 其中 uses 和 run 是必填字段，每个步骤只能有其一。同样名称也是可以忽略的。
 
-#### action
+##### action
 
 action 是 GitHub Ac­tions 中的重要组成部分，这点从名称中就可以看出，actions 是 action 的复数形式。它是已经编写好的步骤脚本，存放在 GitHub 仓库中。
 
@@ -233,9 +233,9 @@ steps:
   - uses: actions/setup-node@master  # 指定一个分支
 ```
 
-## [Git hooks](https://link.zhihu.com/?target=https%3A//githooks.com)
+### [Git hooks](https://link.zhihu.com/?target=https%3A//githooks.com)
 
-### 1. 什么是 Git hooks
+#### 1. 什么是 Git hooks
 
 Git hooks 是 Git 在事件之前或之后执行的脚本, 用于控制 git 工作的流程。`Git hooks` 脚本对于我们提交`code review` 之前识别一些简单的问题很有用。 我们在每次提交代码时都会触发这些 hooks，以自动指出代码中的问题，例如缺少分号，尾随空白和调试语句。通过在`code review` 之前指出这些问题，代码审阅者可以专注于代码结构和功能的更改，而不需要浪费时间来审查这些格式问题。
 
@@ -250,7 +250,7 @@ Git hooks 分为客户端钩子和服务端钩子。客户端钩子由诸如提�
 - post-commit: Email/SMS team members of a new commit.
 - post-receive: Push the code to production.
 
-### 2. Git hooks 如何工作？
+#### 2. Git hooks 如何工作？
 
 每个Git存储库都有一个`.git/hooks`文件夹，其中包含可以绑定到的每个钩子的脚本。您可以根据需要随意更改或更新这些脚本，Git将在这些事件发生时执行它们。进去`.git/hooks` 后会看到一些 `hooks` 的官方示例，他们都是以`.sample`结尾的文件名。
 
@@ -285,7 +285,7 @@ Git hooks 分为客户端钩子和服务端钩子。客户端钩子由诸如提�
 -rwxrwxr-x 1 robin robin 3610 Sep  7 10:25 update.sample*
 ```
 
-### 3.[pre-commit](https://link.zhihu.com/?target=https%3A//pre-commit.com) 简介
+#### 3.[pre-commit](https://link.zhihu.com/?target=https%3A//pre-commit.com) 简介
 
 `pre-commit`是客户端hooks之一，`pre-commit` 在 `git add`提交之后，然后执行 `git commit` 时执行, 实现对代码的审查。 脚本执行没报错就继续提交，反之就驳回提交的操作。
 
@@ -293,14 +293,14 @@ Git hooks 分为客户端钩子和服务端钩子。客户端钩子由诸如提�
 
 Git钩子。我们在每次提交时运行我们的钩子，以。本文以python 项目为例。
 
-#### (1).安装
+##### (1).安装
 
 ```bash
-## 使用 pip 安装:
+### 使用 pip 安装:
 pip install pre-commit
 ```
 
-#### (2). 配置
+##### (2). 配置
 
 在项目根目录填加 `.pre-commit-config.yaml` 文件, 这里以 `mmdetection` 的配置文件为例来做说明：
 
@@ -344,17 +344,17 @@ repos:
 
 其中 flake8 根据 flake8 给出的代码规则检查代码.
 
-#### (3). 安装 git hook scripts
+##### (3). 安装 git hook scripts
 
 ```bash
-# pre-commit install
+## pre-commit install
 pre-commit install
-# pre-commit installed at .git/hooks/pre-commit
+## pre-commit installed at .git/hooks/pre-commit
 ```
 
 第一次 pre-commit 运行时，将会自动下载、安装并且运行 hook。安装完成之后，`pre-commit` 将会在每次运行`git commit`命令时自动执行。 注意： 每次 clone 代码后，都需要执行 `pre-commit install`。
 
-#### (4). 手动触发
+##### (4). 手动触发
 
 第一次，需要触发全部：
 
@@ -383,7 +383,7 @@ docformatter.............................................................Passed
 
 可以看到， 我的文档中， 存在一些 `trailing whitespace`
 
-#### (5). 支持语言
+##### (5). 支持语言
 
 ```
 docker

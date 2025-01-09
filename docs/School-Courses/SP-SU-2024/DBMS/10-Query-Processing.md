@@ -1,5 +1,5 @@
 
-# Basics
+## Basics
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_5_21_55_202405130521125.png"/>
 
@@ -20,7 +20,7 @@
 1. 学习每一种算子对应的常见算法
 2. 学会如何衡量（每一种算法的）查询代价
 
-# Measures of Query Cost
+## Measures of Query Cost
 
 Cost contains many factors:
 
@@ -30,7 +30,7 @@ Cost contains many factors:
 
 一般而言，disk access 是 predominant cost，而且也比较容易衡量
 
-## Disk Access
+### Disk Access
 
 Disk access 分为三部分
 
@@ -61,13 +61,13 @@ Number of seeks 和 number of transfers 如下：
 - 我们一般都是用 worst case estimates
     - 比如，可能数据已经存到了 buffer 中，但是 worse case 中并没有，因此也算一次 disk I/O
 
-# Operations
+## Operations
 
-## `SELECT` operation
+### `SELECT` operation
 
 我们这里所谓的 `SELECT` 指的是 `SELECT ... FROM <SOME TABLE> WHERE <SOME CONDS>` 这样的语法。考虑的具体内容是”如何处理 `<CONDS>`“。
 
-### Linear Scan
+#### Linear Scan
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_6_45_32_202405130645872.png" style="zoom: 80%;" />
 
@@ -78,7 +78,7 @@ Number of seeks 和 number of transfers 如下：
     - 之后就线性地读下去就好
 2. 如果查找任务是“某 primary key（或者其它的 `UNIQUE` 属性）上的**等值查找**”，那么只要找到了一个就可以了，因此，**平均**情况是：$b_r / 2 * t_T + t_S$
 
-### Using *Primary* Index on *Key*
+#### Using *Primary* Index on *Key*
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_6_50_49_202405130650324.png" style="zoom: 80%;" />
 
@@ -86,7 +86,7 @@ Number of seeks 和 number of transfers 如下：
 
 1. 因为在查找到 leaf node 之后，我们得到的结果只是指向真实数据的指针，因此，还需要再 seek+transfer 一次，也就是 $h_i + 1$
 
-### Using *Primary* Index on *Non-Key*
+#### Using *Primary* Index on *Non-Key*
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_6_57_0_202405130657160.png" style="zoom:80%;" />
 
@@ -96,13 +96,13 @@ Number of seeks 和 number of transfers 如下：
 2. 在找到第一个 record 之后，由于是 **primary key**，search key 在内存中是有序的，i.e. 相同的值会排在一起。因此我们只需要顺序查找就好
     - 具体的 $b$ 需要根据实际情况估计
 
-### Using *Secondary* Index on *Key*
+#### Using *Secondary* Index on *Key*
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_7_5_37_202405130705373.png" style="zoom:80%;" />
 
 只要是 key（或者更宽泛的说，只要是 `UNIQUE`），查找起来就很快，因为是唯一的。
 
-### Using *Secondary* Index on *Non-Key*
+#### Using *Secondary* Index on *Non-Key*
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_7_8_52_202405130708759.png" style="zoom:80%;" />
 
@@ -116,7 +116,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 2. 甚至，列表本身可能也一个 block 装不下
 3. 一般而言，在重复 records 很多的时候，$n$ 是 predominant 的
 
-## Sorting
+### Sorting
 
 如果内存足够，直接读到内存再排就行了。
 
@@ -142,7 +142,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 **注意：**如果增加 buffer block 的大小，那么就会减少归并的段数，从而可能需要增加归并的次数。
 
-### Cost Analysis: Simple Version
+#### Cost Analysis: Simple Version
 
 我们假设
 
@@ -177,7 +177,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 - 因此，in total，$2 b_r \lceil \log_{M-1} (b_r / M) \rceil + 2\lceil b_r / M \rceil$
     - 如果该 sort 位于流水线的话，那么最后一次**写操作时的 seek** 就不算，总计就是 $b_r (2\lceil \log_{M-1} (b_r / M) \rceil - 1) + 2\lceil b_r / M \rceil$
 
-### Cost Analysis: Advanced Version
+#### Cost Analysis: Advanced Version
 
 我们假设
 
@@ -218,11 +218,11 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 > 不难发现：**block seek** 的次数，随着 $b_b$ 的增加而减少，根本原因是因为每一次是成批量地写入和读取连续的 disk block。
 
-## `JOIN` operation
+### `JOIN` operation
 
 **注意：**由于在流水线上，我们并不需要将结果写回文件（硬盘），
 
-### Nested-Loop Join
+#### Nested-Loop Join
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_0_19_41_202405140019991.png" style="zoom: 80%;" />
 
@@ -241,7 +241,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 不难看出：**小**关系适合做内层循环。
 
-#### Optimization: Per-Block Loop
+##### Optimization: Per-Block Loop
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_0_37_8_202405140037602.png" style="zoom:80%;" />
 
@@ -255,7 +255,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 不难发现，就相当于把 nested-loop join estimation 中的所有 $n_r$ 替换成了 $b_r$。同时，仍然是**小**关系适合做外层循环。
 
-#### Advanced Analysis: Sufficient Memory
+##### Advanced Analysis: Sufficient Memory
 
 当然，不管哪一种情形，best case scenario 下，当内存足够大，我们直接将所有都读进去即可。也就是：
 
@@ -263,7 +263,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 - block seek: $2$
 
-#### Advanced Analysis: Memory with the Size of $M$ (blocks)
+##### Advanced Analysis: Memory with the Size of $M$ (blocks)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_1_2_9_202405140102491.png"/>
 
@@ -286,7 +286,7 @@ Warning :warning:: This is **damn** expensive. 可能 more expensive than linear
 
 - Seek cost: $2$
 
-### Indexed Nested-Loop Join
+#### Indexed Nested-Loop Join
 
 要求：
 
@@ -301,7 +301,7 @@ Cost:
     - where c is the transfer time of 
 - Seek: $b_r + n_r * c_{seek}$
 
-### Merge Join
+#### Merge Join
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_5_30_30_202405140530788.png" style="zoom:80%;" />
 
@@ -329,7 +329,7 @@ x_s = \sqrt{b_s} * M / (\sqrt{b_r} + \sqrt{b_s}) \newline
 $$
 在这种情况下，worse case seek 就 $\approx \frac{(\sqrt{b_r} + \sqrt{b_s})^2} {M}$。
 
-#### Hyper Merge Join
+##### Hyper Merge Join
 
 对于未排序的，就要采用这样的步骤。
 
@@ -357,7 +357,7 @@ $$
 
 这样做，就是一次 merge，附加一次外部排序，最后再进行一次简单的取址操作。
 
-### Hash Join
+#### Hash Join
 
 > Hash Join 的目的就是，将 s 分成尽量少的块，但是要保证每一个块均可以放进内存。
 >
@@ -411,13 +411,13 @@ $$
 
 比如说：如果我们有 12 MB 的内存，块大小是一如既往的 4 KB，那么我们就有 $M = 3 \text{ K}$，从而 $t_s \lessapprox \frac {M^2} {f} = 9 \text{ M} / 1.2 =7.5 \text{ G blocks} = 30 \text{ GB}$。我们可以使用 12 MB 的内存，在避免 recursive hash 的情况下，处理高达 30GB 的 table。
 
-#### Recursive Hash Join
+##### Recursive Hash Join
 
 如果一次哈希无法完成 in-memory，那么就两次（第二次与第一次的 hash function 应该不同）；两次不行，就三次；……。
 
 具体来说，就是通过多次的 hash，将大块分成 M-1 个小块（但是这小块仍然比内存更大），然后再将小块继续用不同的 hash 函数分下去，so on and so forth，直至小块足够小为止。
 
-#### Cost
+##### Cost
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_12_22_1_202405191222348.png"/>
 
@@ -444,9 +444,9 @@ $$
 - Block transfer: $3(b_r + b_s) + 4n_h$
 - Block seek: $2(\lceil b_r / b_b \rceil + \lceil b_s / b_b \rceil) + 2 n_h$
 
-# Appendix
+## Appendix
 
-## Extendible Hashing
+### Extendible Hashing
 
 > 设计思想：
 >
@@ -458,11 +458,11 @@ $$
 >     - 同时每一个 hash index （*尽量*）只占用一个 block
 >         - 我们之后会说到必须占用多个 blocks，使用链表的情况
 
-### 在哪里用？
+#### 在哪里用？
 
 首先明确这是一种【存数据】的方法。比如有100个文件，有方法的找肯定比一个一个找要快。聪明的前辈们想出很多方法，有二分法，B-Tree，Hash等等。这些方法也被叫做“索引”（Index）。
 
-## 重要概念
+### 重要概念
 
 Extensible Hashing 有三个重要的变量：
 
@@ -474,7 +474,7 @@ Extensible Hashing 有三个重要的变量：
 
 其中，前两个是**全局的**，第三个是每个 bucket 各自拥有的。
 
-### 怎么用？
+#### 怎么用？
 
 我们通过某个 hashing 函数（往往是 mod 2<sup>k</sup>），将数据变成 hash。
 

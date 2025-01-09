@@ -1,4 +1,4 @@
-# 计算模型
+## 计算模型
 
 我们采用 PRAM 的计算模型。
 
@@ -20,7 +20,7 @@
 - 第二种是经典的情况，读取用共享锁，写入用独享锁
 - 第三种就是为了更加高效。我们对写入的数据进行判断，保证写入的数据是真实的
 
-# 例子：前缀和
+## 例子：前缀和
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_15_54_23_202405271554017.png"/>
 
@@ -33,16 +33,16 @@
 3. 这样，我们使用大约 $4n$ 的 workload 以及 $2 \log n$​ 的时间，就可以算出 n 个数的前缀和（**假设共享内存足够多**）。
     - 如果采用简单的前向加法，虽然 workload 是 $n$（同数量级，稍小一些），但是时间也是 $n$（数量级不同）
 
-# 例子：归并
+## 例子：归并
 
-## Serial Method
+### Serial Method
 
 对于数列 A, B，假设分别有 $n, m$ 个数，已经排好序，且两两不相同。那么，如果希望归并两个序列的话，使用单核 CPU 执行：
 
 - workload: O(n+m)
 - time: O(n+m)
 
-## Naive Parallel Method (via Binary Search)
+### Naive Parallel Method (via Binary Search)
 
 如果是多核 CPU（假设核的数量足够多），那么，我们可以分别处理两列**（我们这里以 A 为例）**，然后对其中每一个数，找到其 Rank(B, A<sub>i</sub>)。
 
@@ -71,7 +71,7 @@ Rank 的定义如下：
 
 可以看到，其实效果也不尽人意，因为 workload 多了一个指数项。
 
-## Clever Parallel Method (via Binary Search)
+### Clever Parallel Method (via Binary Search)
 
 > 这里先假设 A, B 的长度一样，都是 n。
 
@@ -101,13 +101,13 @@ Rank 的定义如下：
 
 - time: O(log n)
 - workload: O(n)
-# 例子: Maximum Finding
+## 例子: Maximum Finding
 
-## Serial Method
+### Serial Method
 
 很简单，就是 $T(n) = O(n), W(n) = O(n)$。
 
-## Naive Parallel Method
+### Naive Parallel Method
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_18_36_51_202405271836440.png" style="zoom:80%"/>
 
@@ -120,7 +120,7 @@ Rank 的定义如下：
 4. 然后，所有机器同时检测对应处是否值为 1，如果为 1，就将某处对应的原始值输出
     - 写的有点抽象，第 4 条的具体情况可以参考源代码
 
-## Clever Parallel Method
+### Clever Parallel Method
 
 还是利用分治的思想。
 
@@ -136,7 +136,7 @@ W(n) &= \frac {n} {f(n)} W(f(n)) + O\left((\frac {n} {f(n)})^2\right)
 $$
 如果令 $f(n) = \sqrt n$，那么显然有 $T(n) = O(\log\log n), W(n) = O(n \log\log n)$。
 
-## Even Cleverer Parallel Method
+### Even Cleverer Parallel Method
 
 我们能不能把 $W$ 后面的 $\log \log n$ 拿掉呢？答案是可以的。方法如下：
 
@@ -157,7 +157,7 @@ $$
 
 从而：$T'(n) = O(\log\log n)$ 是显然的。同时，$W'(n) = O(n)$，实现了和 serial method 一样的代价。
 
-## Randomized Method
+### Randomized Method
 
 我们还可以使用一种随机化的奇技淫巧。
 
@@ -190,9 +190,9 @@ $$
 > 
 > 如果仿照 BPP 的话，就让 $P(n) = n^{-j} = \log \frac 23$ 即可。也就是 $j = \frac {\log \frac 32} {\log n}$。于是 $T(n) = O(\log\log n)$，和 Even Cleverer Parallel Method 一样。但是 $W(n)$ 好像不太好算，你可以试试用积分审敛法来计算一下 upper bound。
 
-# 续篇：外部排序
+## 续篇：外部排序
 
-## 模型
+### 模型
 
 我们这里的内存模型：
 
@@ -203,7 +203,7 @@ $$
 3. 数据量为 N cells，其中 N >> M
 4. 内存的计算时间可以忽略，我们这里只考虑从外部内存传输到内部内存的时间。
 
-## 例子
+### 例子
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/3_18_33_27_202406031833083.png"/>
 
@@ -226,9 +226,9 @@ $$
 > 3. Internal sort time
 > 4. Merge N record time
 
-## Optimization
+### Optimization
 
-### Reduce The \# of passes
+#### Reduce The \# of passes
 
 使用 k-way merge 可以 reduce the number of passes greatly。
 
@@ -240,7 +240,7 @@ $$
 
 如果我们调小 B，那么可以使得 M / B 更大，从而 k 可以更大。但是，后果就是：N / B 也会随之变大，从而使得磁盘大小不好控制。
 
-### Heuristic Merge for Nearly-Sorted Data: Generating Longer Runs
+#### Heuristic Merge for Nearly-Sorted Data: Generating Longer Runs
 
 > [!note]+
 > 
@@ -264,7 +264,7 @@ Example (假设一个 block 就是一个 cell)：
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/4_4_47_6_202406040447495.png"/>
 
 这样做，每一个 block 只需要处理其深度次数（i.e. 2 -> 6 -> 11 -> 26，一共经历了 3 次排序），我们让更小的节点位于更深的位置，从而确保了总处理次数最小化：2 * 3 + 4 * 3 + 5 * 2 + 15 * 1 = 43。
-#### Use 3 Tapes to Sort Efficiently
+##### Use 3 Tapes to Sort Efficiently
 
 > [!abstract]+
 > 

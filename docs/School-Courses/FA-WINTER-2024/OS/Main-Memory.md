@@ -1,18 +1,18 @@
-# Outline
+## Outline
 
-- ﻿﻿Memory allocation evolution
-	- ﻿﻿How to move a process
-	- ﻿﻿Partition
-- ﻿﻿Memory partition - fixed and variable
-	- ﻿﻿first, best, worst fit
-	- ﻿﻿fragmentation: internal/external
-- ﻿﻿Segmentation
-	- ﻿﻿Logical address vs physical address
-- ﻿﻿MMU: address translation + protection
+- Memory allocation evolution
+	- How to move a process
+	- Partition
+- Memory partition - fixed and variable
+	- first, best, worst fit
+	- fragmentation: internal/external
+- Segmentation
+	- Logical address vs physical address
+- MMU: address translation + protection
 
-# Memory Allocation Evolution
+## Memory Allocation Evolution
 
-## Drawbacks of Physical Addressing
+### Drawbacks of Physical Addressing
 
 如果采用物理寻址的话，那么，
 
@@ -23,7 +23,7 @@
 
 因此，我们需要引入地址的虚拟化。
 
-## Simple Solution: Memory Partition
+### Simple Solution: Memory Partition
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_19_11_28_20241112191127.png"/>
 
@@ -49,9 +49,9 @@
 	的操作，是无法完成的。从而，我们只能通过**物理上移动内存**的方式，来消除内存碎片，但是，在进程多、碎片多的情况下，这样做非常 expensive
 2. 无法实现内存共享
 
-# Memory Partition
+## Memory Partition
 
-## Partition Strategy: Fixed Partition
+### Partition Strategy: Fixed Partition
 
 如果所有 partition 的长度都一样，那么就不会出现碎片内存。
 
@@ -62,7 +62,7 @@
 
 其中，1 是最大的问题，又称为 **internal fragmentation**（process 内部出现大量未使用的内存）。
 
-## Partition Strategy: Variable-Length Partition
+### Partition Strategy: Variable-Length Partition
 
 解决了 internal fragmentation，但是问题也很显然：**external fragmentation**（不同 processes 之间存在大量未使用的内存）。
 
@@ -70,9 +70,9 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_20_5_18_20241112200517.png"/>
 
-# Segmentation
+## Segmentation
 
-## Sections of a Program
+### Sections of a Program
 
 在实际中，一个 program 中，为了模块化，会有多个 sections：
 
@@ -80,7 +80,7 @@
 
 不同的 sections，内存地址不一定连续，访问权限不一样相同，因此可能需要多个的 sections (partitions) 来管理。而之前的实现中，一个进程只能对应一个 section (partition)。因此，我们需要引入更加复杂的实现。
 
-## Segments (Partitions) of a Process
+### Segments (Partitions) of a Process
 
 Program 加载到内存中，变成 process 之后：
 
@@ -104,22 +104,22 @@ Program 加载到内存中，变成 process 之后：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_20_48_25_20241112204825.png"/>
 
-## Still Problem
+### Still Problem
 
 仍然，external segmentation 的问题没有解决。一个 segment 必须在物理中占用连续内存。
 
-# MMU
+## MMU
 
 > [!info] tl;dr
 > 
 > MMU 就是用来将 logical (i.e. virtual) address 翻译成 physical address 的 module
-## Address Binding: Revisted
+### Address Binding: Revisted
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_6_50_20241112210649.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_7_17_20241112210716.png"/>
 
-## MMU for Address Translation
+### MMU for Address Translation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_8_19_20241112210818.png"/>
 
@@ -129,7 +129,7 @@ Program 加载到内存中，变成 process 之后：
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_10_14_20241112211014.png"/>
 
-# Paging
+## Paging
 
 > [!info] Introduction
 > 
@@ -152,14 +152,14 @@ Program 加载到内存中，变成 process 之后：
 
 - **Note**: vanilla fixed partition 没有虚拟地址。因为 **one process, one partition**，所以虚拟地址默认就是 0x0。但是 paging 的 partition 就要记录虚拟地址
 
-## Larger or Smaller Frame Size? A Trade-Off
+### Larger or Smaller Frame Size? A Trade-Off
 
 Frame size 更大，那么：
 
 - **好处**：MMU 需要进行的储存就更少
 - **坏处**：Internal fragmentation 更严重
 
-## Page Table and Frame Table
+### Page Table and Frame Table
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_50_30_20241112215030.png"/>
 
@@ -172,11 +172,11 @@ Frame size 更大，那么：
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_56_51_20241112215650.png"/>
 
-## MMU Architecture (Based on Paging)
+### MMU Architecture (Based on Paging)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_57_6_20241112215706.png"/>
 
-## Translation Lookaside Table
+### Translation Lookaside Table
 
 - PTBR 存着（最低级）页表的**物理起始位置**
 - 因此，（每个进程的）page table 本质上也是要在内存中进行寻址
@@ -192,10 +192,10 @@ Frame size 更大，那么：
 1. 使用 option II 显然更好。第一大大减小 context switch 的 overhead；第二所有进程的 kernel TLB 都是一样的，所以 kernel TLB 实际上根本无需替换。
 2. Cache miss 显然是让 MMU（i.e. 硬件）自行处理，但是 TLB miss 可能是让硬件处理，也可能是让软件处理
 
-### TLB implementation: Associative Memory
+#### TLB implementation: Associative Memory
 
 由于 TLB 是乱序存的，因此为了实现高速查找（毕竟在 ld/sd 虚拟内存地址的时候，即便这些虚拟内存是在 cache 里的，因为 cache 是 VIPT，所以我们还是需要 physical address，所以 TLB 访问这一步是必做的。而 virtual addr -> physical addr 这个 overhead 就非常关键），我们使用了 associative memory 进行并行查找。
-### Hierarchical TLB
+#### Hierarchical TLB
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_5_21_1_20241115052100.png"/>
 
@@ -208,20 +208,20 @@ Frame size 更大，那么：
 > 
 > 前面的就是 w/ TLB，后面的就是 w/o TLB。
 
-### Quantized Analysis
+#### Quantized Analysis
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_7_43_53_20241115074352.png"/>
 
 如上图：读取 TLB 的时间可以忽略不计。那么，只要 miss，（假设没有 cache，）就是双倍时间。
 
 
-## Memory Protection
+### Memory Protection
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_8_20_57_20241115082056.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_8_22_15_20241115082214.png"/>
 
-# Structure of Page Table
+## Structure of Page Table
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_21_57_6_20241112215706.png" width="50%"/>
 
@@ -233,7 +233,7 @@ Frame size 更大，那么：
 
 因此，我们需要用到 multi-level page table。从而导致内存分配是有问题的。
 
-## Two-Level Page Table
+### Two-Level Page Table
 
 一目了然，不言而喻
 
@@ -243,7 +243,7 @@ Frame size 更大，那么：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/13_1_49_15_20241113014914.png"/>
 
-## Multi-Level Page Table in Practice
+### Multi-Level Page Table in Practice
 
 对于 ARM64 而言，其虚拟地址可以为 39 bit 或者 48 bit；对于 AMD64 而言，必须是 48 bit。
 
@@ -256,12 +256,12 @@ Frame size 更大，那么：
 1. `PTBR` 就是 page table base register，指向最低级页表的 head
 2. 图中的所有加法，就是 base address (left arrow) + offset (top arrow) = target address
 
-## Hashed Page Table
+### Hashed Page Table
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/13_2_37_2_20241113023702.png"/>
 
 如图所示，显而易见。注意我们使用的是链表哈希。
-## Inverted Page Table
+### Inverted Page Table
 
 1. 虚拟内存地址空间比物理空间要大很多。比如对于 ARM64，虚拟空间至少有 512 GiB（39 bits），但是物理空间可能只能 8~16GiB 等等。
 2. 每一个 process 都要有自己的页表。那么多 processes，如果每一个 process 都要自己的页表，那还是有点费空间的。
@@ -273,7 +273,7 @@ Frame size 更大，那么：
 - 其实，inverted page table 带上了 pid 也是不得而为之。因为一个物理 frame 可能对应任何 pid 下的某个虚拟 page，因此 (inverted) page table 内的信息必须是 `pid p` 二元组
 - 至于正常的 page table，每一个 pid 都有一个自己的 page table，自然只需要物理 frame 的信息
 
-### Vanilla IPT
+#### Vanilla IPT
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/13_2_22_56_20241113022255.png"/>
 
@@ -287,7 +287,7 @@ Frame size 更大，那么：
 1. 线性查找太慢。特别是 TLB miss 的时候，需要将所有 page table 都过一遍
 2. 没法共享物理内存
 
-# Swap Memory
+## Swap Memory
 
 可以认为，swap memory 就是为了完成下面的任务：
 
@@ -296,9 +296,9 @@ Frame size 更大，那么：
 - 将这 1 GiB 进程加载进来之后，我们就有 0.5 GiB 的“进程内存”是在 swap 文件中
 - 如果需要执行/读/写某一个在 swap 中的地址，但是物理内存已经满了，那么就会触发 page fault，将该地址对应的 block 从 swap 文件中换到内存中，同时将物理内存中的一个 block 当做 victim block，放到 swap 文件中。这就是一个 swap 操作
 
-# Realworld Examples
+## Realworld Examples
 
-## IA32 
+### IA32 
 
 为了兼容 segmentation，ia32 架构只能在 paging unit 前面加一个 segmentation unit。换句话说，当我们不使用 segmentation 而是使用 paging 的时候，就有 logical address = linear address
 
@@ -323,10 +323,10 @@ Frame size 更大，那么：
 	- Page directory pointer table 只可能用到前 4 项，因为只有 logical address 剩下的只有 2 bits
 		- 但是我们实际上为一个 table 分配了 1 个 frame 的空间，所以，what a waste and how ad-hoc!
 
-## ARM 32
+### ARM 32
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/13_4_46_51_20241113044650.png"/>
-## ARM 64
+### ARM 64
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/13_4_46_44_20241113044643.png"/>
 

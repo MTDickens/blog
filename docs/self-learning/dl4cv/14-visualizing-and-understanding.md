@@ -1,4 +1,4 @@
-# Recall: Visualization
+## Recall: Visualization
 
 在 CNN 中，对于一个 3 层的 filter，我们可以用 RGB 来 visualize 这个 filter，如下：
 
@@ -16,13 +16,13 @@
     - 输入有 16 层
 - 每个 filter 的大小为 7x7
 
-# Recall: Nearest Neighbors
+## Recall: Nearest Neighbors
 
 如果我们在 pixel space 中寻找 nearest neighbors，那么往往会找出类型完全不一样，但是 pixel 类似的图片。这不是我们想要的。
 
 如果我们同样应用最近邻算法，但是是在 feature vector 上（比如 AlexNet 的 FC7 layer 的 4096 个输出），就可以得到在 feature space 而不是 pixel space 下最相似的图片，而这正是我们想要的。
 
-# Dimensionality Reduction
+## Dimensionality Reduction
 
 可以通过
 
@@ -37,7 +37,7 @@
 
 ![img](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_10_21_19_202404281021316.jpeg)![img](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_10_21_23_202404281021437.jpeg)
 
-# Visualizing Activations
+## Visualizing Activations
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_10_32_33_202404281032089.png" alt="image-20240428103230220" style="zoom: 25%;" />
 
@@ -45,7 +45,7 @@
 
 - 可能由于 ReLU 或者需要将数值压到 0\~256 之间，绝大部分的地方是黑的。因此非黑的地方就是（该图片）重要的特征。
 
-## Maximally Activating Patches
+### Maximally Activating Patches
 
 我们可以找出所有图片中，对某个神经元激活值最高的那些图片，从而得知这个神经元具体在理解哪些信息。
 
@@ -53,9 +53,9 @@
 
 比如，第一行主要就是理解 dog eyes，等等。
 
-# Which Pixels Matter?
+## Which Pixels Matter?
 
-## Saliency via Occlusion
+### Saliency via Occlusion
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_10_40_20_202404281040377.png" alt="image-20240428104017185" style="zoom:50%;" />
 
@@ -67,7 +67,7 @@
 
 - 注意：由于需要每一个像素分别进行遮蔽，因此计算代价高
 
-## Saliency via Backprop
+### Saliency via Backprop
 
 **每一个像素关于该图片的类别的得分的导数**（或者说，该图片的类别的得分关于原图片的梯度），可以反映：对原图片某个像素进行修改，图片类别的得分的增减。增加越多，就说明该像素越重要。
 
@@ -75,21 +75,21 @@
 
 - 注意：这个方法并不总是好用，上面的图片只是恰好比较好用而已。
 
-## Salient Map Application: Segmentation without Supervision
+### Salient Map Application: Segmentation without Supervision
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_11_5_14_202404281105370.png" alt="image-20240428110505589" style="zoom: 33%;" />
 
 在 salient map 的基础上，通过 GrabCut 的方式进行 unsupervised segmentation。
 
-## Saliency via Guided Backprop
+### Saliency via Guided Backprop
 
 想法很简单：正向传播的时候，ReLU 会把小于 0 的值变成 0，从而反向传播的时候，这些反向的梯度也会被变成 0。我们在这里额外再加一个 mask，就是**在 ReLU 的基础上，把反向小于 0 的梯度，也抹去**。
 
 - 也许看起来没什么道理，但是效果确实好
 
-# Gradient Ascent
+## Gradient Ascent
 
-## Generate From Scratch
+### Generate From Scratch
 
 步骤：
 
@@ -108,13 +108,13 @@ $$
 
 - 当然，通过一些 hack on regularizers，我们可以得到更加 realistic 的图片。
 
-## Adversarial Examples
+### Adversarial Examples
 
 假如我们不从空白图开始，而是从某张**其它类别的图片**开始，然后通过梯度上升的方式，来制造出 adversarial sample。如下图：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_11_29_48_202404281129320.png" alt="image-20240428112945636" style="zoom:50%;" />
 
-## Amplifying Existing Features
+### Amplifying Existing Features
 
 我们可以通过**将某一层的 activation 当作该层的梯度**，然后反向传播至图片并进行修改，从而**倍增这一层的 activation**。
 
@@ -128,7 +128,7 @@ $$
 - 如果目标层是浅层，那么放大的 feature 就是 edge 等等
 - 如果目标层是深层，那么方法的 feature 就可能是更加抽象的物体，比如人类、动物、车辆等等
 
-# Feature Inversion
+## Feature Inversion
 
 目标：Given a CNN **feature vector** for an image, find a new image that:
 
@@ -158,7 +158,7 @@ $$
 
 而对于深层的 feature vector，我们容易找到另一张更加平滑的图片，使得该平滑图片的 feature vector 和原图片的 feature vector 相似。也就是说，更多的信息在这些深层 vector 中消失了。
 
-# Textures
+## Textures
 
 Feature 可以认为是某一层的输出 (C &times; H &times; W) 中的 H &times; W，而 texture 则是这些 H &times; W 之间的 covariance matrix (又称 **Gram matrix**)。
 
@@ -166,7 +166,7 @@ Feature 可以认为是某一层的输出 (C &times; H &times; W) 中的 H &ti
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/28_13_14_52_202404281314387.png" alt="image-20240428131446571" style="zoom: 33%;" />
 
-## Neural Texture Synthesis
+### Neural Texture Synthesis
 
 我们可以通过以下的方式，计算两张图片之间 texture 的相似程度：
 
@@ -178,13 +178,13 @@ Feature 可以认为是某一层的输出 (C &times; H &times; W) 中的 H &ti
     - 直观来说：边界、线条的使用也是 texture 的一部分
 - $G_{ij}^l$ 指的是：第 $l$ 层的第 $i$ 个和第 $j$ 个 output matrix 之间的 covariance。这是一个标量。
 
-### Example
+#### Example
 
 <img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240428132210740.png" alt="image-20240428132210740" style="zoom:50%;" />
 
 如果只考虑其中一层的话，我们可以重建出如上图所示的图片。可以看出，每一层都代表着不同的风格。浅层的风格更加抽象，深层的风格更加具体。
 
-## Neural Style Transfer
+### Neural Style Transfer
 
 通过结合 texture synthesis 和 feature inversion，可以自然地进行风格迁移。
 

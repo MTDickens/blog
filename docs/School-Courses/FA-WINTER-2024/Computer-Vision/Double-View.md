@@ -1,8 +1,8 @@
-# Overview
+## Overview
 
 有了双目，我们就可以将两张 2D 的图片，重建成一张 2.5D 的深度图。
 
-## A Trivial Example
+### A Trivial Example
 
 如果两个眼睛的“底片”是
 
@@ -21,7 +21,7 @@
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/8_11_56_19_20241208115619.png"/>
 
-## 对极几何
+### 对极几何
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/8_12_42_10_20241208124209.png"/>
 
@@ -57,11 +57,11 @@ $$
 
 这个 $\mathbf E$ 就是 essential matrix，可以将左侧的点变换到右侧的一条线上（同样，对于右侧而言，$\mathbf E^T$ 可以将右侧的点变换到左侧的线上）
 
-### Essential Matrix as Perspective Transformation
+#### Essential Matrix as Perspective Transformation
 
-### Derivation of Essential Matrix
+#### Derivation of Essential Matrix
 
-### Homography, Essential Matrix and Fundamental Matrix
+#### Homography, Essential Matrix and Fundamental Matrix
 
 > [!info] 四个坐标系
 > 
@@ -84,7 +84,7 @@ $$
 
 至于 $E = R[t]_\times$，$R$ 有 3 个自由度，$[t]_\times$ 也有 3 个，然后又由于缩放无意义（其实就是 $[t]_\times$ 缩放无意义，归根结底是 $t$ 缩放无意义），$3+3-1=5$ 个自由度。
 
-# Structured Light (结构光)
+## Structured Light (结构光)
 
 对于双目视觉而言，如果某一个点在另外一张图像上没有找到对应，那么就会造成深度缺失。为了保证所有点的深度都能求出，我们需要采用 structured light 的方式——主动探测，主动往结构上打上特殊的光，然后通过反射回来的信号，来判断深度。
 
@@ -108,7 +108,7 @@ $$
 > 
 > **缺点**：粗糙，需要后处理
 
-## 结构光深度图拼接
+### 结构光深度图拼接
 
 > [!info]+ Problem
 > 
@@ -134,7 +134,7 @@ $$
 - 什么时候可以停止
 - ……
 
-# Shape from X
+## Shape from X
 
 人类并不是完全使用双目来判断形状——单眼也不是不行。这就是因为使用了很多额外的信息。
 

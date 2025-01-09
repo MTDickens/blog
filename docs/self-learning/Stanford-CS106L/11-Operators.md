@@ -1,13 +1,13 @@
-# Lec 11: Operators
+## Lec 11: Operators
 
 <img src="img/image-20240110194632426.png" alt="image-20240110194632426" style="zoom:33%;" />
 
 When you are using overloaded operators, you are actually calling member functions:
 
 ```cpp
-#include <iostream>
-#include <vector>
-#include <string>
+##include <iostream>
+##include <vector>
+##include <string>
 using namespace std;
 
 void human_readable_form() {
@@ -30,7 +30,7 @@ void non_member_function_form() {
 }
 ```
 
-## A Simple Implementation
+### A Simple Implementation
 
 ```cpp
 // ...
@@ -86,7 +86,7 @@ string& StringVector::operator[] (const int& index)
    - e.g. `strvec += "Hello"`, `"Hello"` here is `const` (and also `constexpr`)
 2. Use **reference** to avoid unnecessary copy.
 
-## General Rule of Thumb
+### General Rule of Thumb
 
 1. Some operators must be implemented as **members**, e.g., `[]() -> =`, **due to C++ semantics**.
 2. Some operators must be implemented as **non-members**, e.g., `<`, if you are **writing a class for the right-hand side (rhs), not the left-hand side (lhs).**
@@ -94,7 +94,7 @@ string& StringVector::operator[] (const int& index)
 4. If binary operator **treats both operands equally** (e.g., both unchanged), implement as **non-member** (maybe friend). Examples: `+`, `<`
 5. If binary operator **does not treat both operands equally** (changes `lhs`), implement as a **member** (allows easy access to `lhs` private members). Examples: `+=`
 
-## `friend` modifier
+### `friend` modifier
 
 Imagine you have a `Fraction` class:
 
@@ -130,7 +130,7 @@ private:
 };
 ```
 
-## Const-ness and others
+### Const-ness and others
 
 Take `operator<<` as example:
 
@@ -149,7 +149,7 @@ Take `operator<<` as example:
 
    - it will merely be copied and not change, so `const`
 
-## Principle of Least Astonishment (POLA)
+### Principle of Least Astonishment (POLA)
 
 > "If a necessary feature has a high astonishment factor, it may be necessary to redesign the feature".
 

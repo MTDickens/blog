@@ -1,4 +1,4 @@
-# Design Procedure
+## Design Procedure
 
 设计一个数据库的时候，应该如下进行考虑
 
@@ -8,7 +8,7 @@
 
 - 我们只需要在具体的 logical design 中，进行 logical schema 的 design
 
-## Example: Conceptual Design
+### Example: Conceptual Design
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_16_25_48_202404111625943.png" style="zoom: 50%;" />
 
@@ -47,7 +47,7 @@
 2. 一个关系可以带有属性
     - 比如 takes 关系的 grade 属性（i.e. 学生上这门课的课程成绩）
 
-# Relationship Sets
+## Relationship Sets
 
 Relationship sets 就是一个 n-ary relationship：$\set{(e_1, \dots, e_n)|e_1\in E_1, \dots, e_n\in E_n}$
 
@@ -55,13 +55,13 @@ Relationship sets 就是一个 n-ary relationship：$\set{(e_1, \dots, e_n)|e_1\
 
 如果关系中含有属性，那么就是 (2+# of attributes) 元关系。
 
-## 多元关系二元化
+### 多元关系二元化
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_17_34_34_202404111734196.png" style="zoom:50%;" />
 
 方法：把多元联系实体化。如 `proj_guide` 里有老师、学生、工程的 id. 随后这个实体又和另外三个实体各有一个二元联系。
 
-# Attributes
+## Attributes
 
 **Attribute types**:
 
@@ -72,21 +72,21 @@ Relationship sets 就是一个 n-ary relationship：$\set{(e_1, \dots, e_n)|e_1\
     - Can be computed from other attributes
       *e.g.* `age`, given `date_of_birth`
 
-## Redundant Attributes
+### Redundant Attributes
 
 如果一个 attributes 在两个实体中均有出现，那么，就把其中不是 primary key 的实体的 attributes 删去。具体如下：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_18_46_30_202404111846233.png" style="zoom:50%;" />
 
-## Example
+### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_17_23_42_202404111723805.png" style="zoom:50%;" />
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_17_23_55_202404111723139.png" style="zoom: 33%;" />
 
-# Reduction to Relational Schemas
+## Reduction to Relational Schemas
 
-## Representing Entity Sets
+### Representing Entity Sets
 
 对于 strong entity set，就原原本本即可
 
@@ -98,7 +98,7 @@ Relationship sets 就是一个 n-ary relationship：$\set{(e_1, \dots, e_n)|e_1\
 - 用 ER 图里的 attributes 当作 relational schemas 的 attributes
 - 用 ER 图里**自己的 discriminator + 依赖实体的 primary key** 当作 relational schemas 的 primary key
 
-## Representing Relationship Sets
+### Representing Relationship Sets
 
 对于 many-to-many，relationship 就使用一个含有两个属性的 relational schema 来管理。
 
@@ -113,7 +113,7 @@ Relationship sets 就是一个 n-ary relationship：$\set{(e_1, \dots, e_n)|e_1\
 
     如上图，我们可以直接在 instructor 和 student 处增加 dept\_name，从而避免定义 inst\_dept 和 stud\_dept 这两个表
 
-## Composite, Multivariate and Derived Attributes
+### Composite, Multivariate and Derived Attributes
 
 Composite attributes 就是 C 中的 `struct`。由于关系型数据库只支持 simple attributes，因此 composite attributes 必须被 "flatten"。
 
@@ -131,9 +131,9 @@ Multivariate attributes 的典型例子，就是 `list`。由于 list 并不能�
 
 但是在面向对象数据库中，就可以当作一个函数存下来，会自然很多。
 
-# Design Issues
+## Design Issues
 
-## Common Mistakes in E-R Diagrams
+### Common Mistakes in E-R Diagrams
 
 - 信息冗余
     student 的 `dept_name` 应该去掉
@@ -155,14 +155,14 @@ Multivariate attributes 的典型例子，就是 `list`。由于 list 并不能�
 
     
 
-## Use of entity sets vs. attributes
+### Use of entity sets vs. attributes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_18_51_59_202404111851648.png" style="zoom: 33%;" />
 
 - 第一种方法，明确放一个电话号码。
 - 第二种方法，电话号码可以附属更多属性，一个电话号码可以由多人共享。（如办公室的公共电话）
 
-## Use of entity sets vs. relationship sets
+### Use of entity sets vs. relationship sets
 
 Possible guideline is to designate a relationship set to describe an action that occurs between entities.
 
@@ -172,14 +172,14 @@ Possible guideline is to designate a relationship set to describe an action that
 
 如电商，我们可以简单的把客户和商品用 `buy` 联系起来，但后续还会有付款、物流等情况，我们最好把 `buy` 实体化为订单。
 
-## Placement of relationship attributes
+### Placement of relationship attributes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_18_52_13_202404111852326.png" style="zoom: 33%;" />
 
 - 第一种方法，可以记录每次访问的访问日期。
 - 第二种方法，只能记录用户最近一次访问日期，不完整。
 
-## Binary Vs. Non-Binary Relationships
+### Binary Vs. Non-Binary Relationships
 
 - Binary versus n-ary relationship sets
     Although it is possible to replace any nonbinary (n-ary, for 𝑛>2) relationship set by a number of distinct binary relationship sets, a n-ary relationship set shows more clearly that several entities participate in a single relationship.

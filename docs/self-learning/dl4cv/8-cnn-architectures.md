@@ -1,4 +1,4 @@
-# Hardware Usage Analysis
+## Hardware Usage Analysis
 
 Take AlexNet as example:
 
@@ -32,9 +32,9 @@ Terminology:
 
 **注意**：由于池化层不会占用参数，几乎不怎么消耗算力，所以我们在直方图中忽略它（
 
-# Famous CNN Architectures
+## Famous CNN Architectures
 
-## 2014: VGG
+### 2014: VGG
 
 相比之前的 ad-hoc architecture，VGG 采用了一种设计理念，来指导网络的设计：
 
@@ -46,7 +46,7 @@ Terminology:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403151534472.png" alt="image-20240315153405831" style="zoom:33%;" />
 
-## 2014: GoogLeNet
+### 2014: GoogLeNet
 
 为了减少运算、内存、参数，从而更好地应用于工业界，GoogLeNet 采用了与众不同的模块。
 
@@ -66,13 +66,13 @@ Terminology:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403151543841.png" alt="image-20240315154334837" style="zoom:50%;" />
 
-## Sidenote: Before Batch Normalization
+### Sidenote: Before Batch Normalization
 
 在 Batch Normalization 出现之前，对于深层网络（层数大于 10），人们都需要通过一些 hack（比如 GoogLeNet 的 auxiliary module）来避免梯度消失/爆炸。
 
 在 Batch Normalization 出现之后，这个问题得到了很好的缓解。
 
-## 2015: ResNet
+### 2015: ResNet
 
 > [!question]+ Does scaling always work?
 > 
@@ -93,13 +93,13 @@ ResNet 解决的问题：
 1. 梯度消失
 2. 计算/空间复杂性：还是采用了 GoogLeNet 的 aggressive down-sampling at the beginning and global average pooling at the end.
 
-### Bottleneck Block
+#### Bottleneck Block
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403152052465.png" alt="image-20240315205236315" style="zoom:33%;" />
 
 如图，我们与其使用左侧的 residual block，不如使用右侧的。因为右侧的 block 不仅增加了 non-linearity，还减少了 computational cost。
 
-## Improved ResNet: ResNeXt
+### Improved ResNet: ResNeXt
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403152112790.png" alt="image-20240315211218007" style="zoom:33%;" />
 
@@ -107,7 +107,7 @@ ResNet 解决的问题：
 
 我们可以得到算式 $9Gc^2+8GCc-17C^2=0$ 来解出在同样算力支持下，如何均衡通道数和并行数。
 
-### Practice in PyTorch
+#### Practice in PyTorch
 
 在 PyTorch 中，对于并行的网络，我们采用 group convolution 来实现：
 
@@ -121,7 +121,7 @@ ResNet 解决的问题：
 
 另外，实际测试中，使用相同的算力，增加 $G$ 的数量，确实会使得网络性能更好。
 
-## MobileNets: Tiny Networks (For Mobile Devices)
+### MobileNets: Tiny Networks (For Mobile Devices)
 
 如果要部署 local deep learning network，那么就必须考虑到 local devices 算力的差距。对于手机等弱算力设备，我们必须用 accuracy 来换取 time/space efficiency.
 
@@ -138,7 +138,7 @@ Also related:
 2. MobileNetV2: Sandler et al, CVPR 2018 
 3. ShuffleNetV2: Ma et al, ECCV 2018
 
-## Densely Connected Neural Networks
+### Densely Connected Neural Networks
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403152151721.png" alt="image-20240315215145473" style="zoom: 50%;" />
 
@@ -152,7 +152,7 @@ Also related:
 
 其中，后两点的意思是：卷积的时候，可能会造成特征损失，从而后面的层就用不了前面的前面的特征。我们使用更加密集的连接，保证了后面的层能够有效获取前面各层的特征。
 
-# Neural Architecture Search
+## Neural Architecture Search
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403152135657.png" alt="image-20240315213458045" style="zoom:50%;" />
 
@@ -160,7 +160,7 @@ Also related:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403152158124.png" alt="image-20240315215751585" style="zoom:50%;" />
 
-# Conclusion
+## Conclusion
 
 1. 早期的工作（AlexNet -> ZFNet -> VGG）似乎表明了：越大的网络效果越好
 2. GoogLeNet 是第一个 focus on efficiency 的架构

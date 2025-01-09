@@ -1,4 +1,4 @@
-# Basics
+## Basics
 
 事务需要保证 ACID 原则的实现：
 
@@ -13,7 +13,7 @@
 
 为了简化事务，我们只有 **read** 和 **write** 两种操作。
 
-## ACID by Example: Money Transfer
+### ACID by Example: Money Transfer
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_11_3_57_202405241103474.png" style="zoom:80%;" />
 
@@ -32,7 +32,7 @@ Consistency 有两种约束：
 
 Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策略是低效的。
 
-## TX State
+### TX State
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_11_22_30_202405241122587.png" style="zoom: 50%;" />
 
@@ -46,7 +46,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 - aborted: 回滚成功。
 - committed: 所有行执行完毕，且已提交
 
-# Concurrent Executions
+## Concurrent Executions
 
 并发执行有几点好处：
 
@@ -57,7 +57,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 3. reduced average response time
     - 即使只有单核，如果将任务按照（预期）任务执行时间由小到大排一下，可以保证较短的任务不用等待前面的长任务
 
-## Anomalies (异常情况)
+### Anomalies (异常情况)
 
 主要有以下 4 个异常情况：
 
@@ -66,7 +66,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 3. Unrepeatable Read
 4. Phantom Read
 
-### Lost Update
+#### Lost Update
 
 如果一个事务在正常完成了写操作之后，却在 commit 之前，写入的值被篡改了，就称为 lost update。
 
@@ -79,7 +79,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 | Write A (99)  |                                              |
 |               | <del>Write A (99)</del> (**This is wrong!**) |
 
-### Dirty Read
+#### Dirty Read
 
 一个事务读了另一个事务未提交的数据，就是 dirty read。
 
@@ -94,7 +94,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 |               | <del>Write A (98)</del> (**This is wrong!**) |
 |               | Commit                                       |
 
-### Unrepeatable Read
+#### Unrepeatable Read
 
 如果一个事务在不同时间读取同一个数据，读到的 value 可能不同，那么就称为 unrepeatable read。
 
@@ -106,7 +106,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 |              | Write A (98)  |
 | Read A (99)  |               |
 
-### Phantom Read (幻读)
+#### Phantom Read (幻读)
 
 如果一个事务在不同时间进行同样的查询，查询的行数不一样。
 
@@ -118,17 +118,17 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 - 幻读，并不是说两次读取获取的结果集不同，幻读侧重的方面是**某一次的 select 操作得到的结果所表征的数据状态无法支撑后续的业务操作**。 更为具体一些：select 某记录是否存在，不存在，准备插入此记录，但执行 insert 时发现此记录已存在，无法插入，此时就发生了幻读。
 
-## Scheduling (调度)
+### Scheduling (调度)
 
 采用合适的调度，可以避免上面的部分或者所有的 anomalies。
 
-### 串行调度
+#### 串行调度
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_14_22_42_202405241422129.png" style="zoom: 80%;" />
 
 串行的方法，必然可以保证上面的异常情况都不存在。
 
-### 交替调度
+#### 交替调度
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_14_30_56_202405241430134.png" style="zoom: 80%;" />
 
@@ -138,7 +138,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 由于处理不当，使得本来应该的写后读顺序变成了读后写，从而结果不对。
 
-## Serializability (可串行化)
+### Serializability (可串行化)
 
 > 注：两个 instructions 之间冲突，意思就是两个 instructions 之间
 >
@@ -151,7 +151,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 而我们的目标，就是找到这样的 schedule，使得它和 serial schedule 是 equivalent 的。
 
-### Conflict Serializability
+#### Conflict Serializability
 
 如果一个 schedule 可以通过 a series of swaps of non-conflicting instructions，那么就称 S and S' are conflict serializable.
 
@@ -171,7 +171,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 不难发现，这张图就是一个 acylic directed graph。通过拓扑排序，我们可以得到这样的一个顺序（比如 T1, T2, T5, T3, T4），使得在不交换 conflict insts 的前提下（其它可以随意交换），使得该图变成 T1 T2 T5 T3 T4 串行执行的图。
 
-### View Serializability
+#### View Serializability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_18_23_53_202405241823005.png" style="zoom:80%;" />
 
@@ -194,7 +194,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 > 注意：如果没有 T29，那么就**不** view serializability。本质上还是因为 T29 **覆写**了 Q 的值。
 
-### Other Notions of Serializability
+#### Other Notions of Serializability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_18_44_7_202405241844085.png" style="zoom:80%;" />
 
@@ -206,7 +206,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 **因此，上述的两个 serializability check，实际上是一个 must analysis。也就是，如果分析下来是 serializable 的，那么 must be serializable，但是分析下来不是的，不一定不是（比如说上图）。**
 
-## Recoverable Schedule
+### Recoverable Schedule
 
 > 在已有的 READ, WRITE 两个操作的基础上，再加一个 COMMIT
 
@@ -214,7 +214,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 如上图：如果 A 读取了 B 产生的数据，那么就必须保证 B 在 A 之前 commit。否则，如果 B 回滚，而 A 已经 commit 了，就可能造成数据不一致。
 
-## Cascading rollback
+### Cascading rollback
 
 > 在 recoverable schedule 的基础上（i.e. 如果 A 读取了 B 产生的数据，那么就必须保证 B 在 A 之前 commit），每一次 "rollback" 某个 TX 的时候，都可能需要同时 rollback 其它受到影响的 TXs。我们希望尽量减少其它受到影响的 TXs。
 
@@ -222,13 +222,13 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 如图，如果 T10 rollback 了，那么 T11, T12 都需要 rollback。如果有更多的 TXs 需要级联回滚的话，这样会导致开销非常的大。
 
-### Solution: Cascadeless Schedule
+#### Solution: Cascadeless Schedule
 
 等待 T10 commit 之后，T11 再进行 read(A) 操作；等待 T11 回滚之后，T12 在进行 read(A) 操作。
 
 - 当然，这样做也自然会导致并发度降低，since everything is tradeoff
 
-### Which One to Choose?
+#### Which One to Choose?
 
 部分情况下，默认一个操作回滚概率低，从而采用冒险激进的策略，实在要回滚了，反正也只有很少的次数，占用资源不多。
 
@@ -236,7 +236,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 
 另外的情况下，默认一个操作有不小的可能会回滚，从而采用“解决方法”中的策略，虽然造成并发度降低，但是起码不会造成更多的回滚。
 
-## Brief Summary
+### Brief Summary
 
 数据库系统希望这样的 schedule
 
@@ -245,7 +245,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 - Recoverable
 - (Better be) cascadeless
 
-# Tradeoffs in Reality
+## Tradeoffs in Reality
 
 实际中，如果我们强制要求 schedule 必须 serializable，那么就会导致性能很差。因此，我们实际上有不同的事务隔离级别。如下图所示：
 
@@ -256,13 +256,13 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 - Read committed: 其它事务可以把当前事务已经读过的条目重新修改，当然，必须保证其它事务必须在当前事务提交前提交。
 - Read uncommitted: 就是没有规则，随便来。
 
-# Concurrency Control
+## Concurrency Control
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_20_16_56_202405242016630.png"/>
 
 前两种是悲观的（i.e. 默认有不小概率回滚），第三种是乐观的（i.e. 默认回滚概率极低）。
 
-## Locks
+### Locks
 
 锁分两个：shared lock and exclusive lock。
 
@@ -279,7 +279,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 - 如果一个 exclusive lock 占据一个表现，那么其它 TXs 就无法获得任意 lock
     - 只有一个 TX 可以写
 
-### Two-Phase Protocol
+#### Two-Phase Protocol
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_20_49_47_202405242049766.png"/>
 
@@ -299,7 +299,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 > 
 > 如此 induct，可以最终得到结论：T<sub>1</sub> 解 lock-u<sub>1</sub> 先于 T<sub>1</sub> 加 lock-l<sub>1</sub>。而这显然违反了 two-phase。因此，不可能存在 cycle。
 
-#### Extensions of Two-Phase Protocol
+##### Extensions of Two-Phase Protocol
 
 上面的 two-phase protocol 只能保证 serializability，但是无法保证**可恢复性**。也就是说：没法保证如果 TX A 读取了 TX B 的数据，TX A 就必须在 TX B 之后 commit。
 
@@ -317,7 +317,7 @@ Isolation 有一个很简单的办法，就是串行 (serial)。当然这个策�
 > 
 > 对于“可串行化”事务隔离级别，**strict two-phase locking** 用的是最广泛的。
 
-#### Is Two-Phase Protocol Necessary?
+##### Is Two-Phase Protocol Necessary?
 
 不妨思考下面这个例子：
 
@@ -356,7 +356,7 @@ T3 --> T1 --> T2
 
 因此，**two-phase locking protocol is not necessary**。
 
-### Two-Phase Protocol with Fined-Grained Lock Management
+#### Two-Phase Protocol with Fined-Grained Lock Management
 
 直接上图。
 
@@ -372,7 +372,7 @@ T3 --> T1 --> T2
 > 
 > 同样，如果我们写完了，但是之后可能还需要读，那么可以先将 lock-X 降级至 lock-U，这样的话，就可以将资源更早地释放出去。
 
-### Automatic Lock in Real-World DBMS
+#### Automatic Lock in Real-World DBMS
 
 在数据库中，我们并不手动管理锁，DBMS 会帮我们管理，i.e. **锁是自动获得的**。下面就是 READ 和 WRITE 的伪代码：
 
@@ -384,7 +384,7 @@ T3 --> T1 --> T2
 > 
 > 简单来说：有锁就用，没锁就申请，申请不了就等待。
 
-#### Locktable
+##### Locktable
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_48_45_202405301948799.png"/>
 
@@ -394,7 +394,7 @@ T3 --> T1 --> T2
 
 返回值可以是 `bool`，意思是是否上锁成功。
 
-### Deadlock Problem
+#### Deadlock Problem
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_19_53_21_202405301953361.png"/>
 
@@ -416,7 +416,7 @@ T3 --> T1 --> T2
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_20_5_48_202405302005561.png"/>
 
-#### Deadlock Detection
+##### Deadlock Detection
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_5_37_202405302105693.png"/>
 
@@ -427,7 +427,7 @@ T3 --> T1 --> T2
 - rollback 分为 total rollback 和 as-far-as-necessary-to-break-deadlock rollback。第二种显然是更加 efficient
 - 如果某一个 TX **总是**被选为 victim，那么就发生了所谓的 starvation——某个 TX 总是获得不到所需的资源，因此这一条 TX 的执行时间远超预期
 
-#### Graph-Based Protocol
+##### Graph-Based Protocol
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_28_37_202405302128230.png"/>
 
@@ -454,7 +454,7 @@ T3 --> T1 --> T2
 > 
 > 由于 unlock 的时间没有控制，因此无法保证 dirty-read。我们还需要引入一些 commit dependency 机制（比如说如果检测到了 TX 1 读取了 TX 2 的脏数据，那么就必须强制 TX 1 在TX 2 之后提交。
 
-### Multiple Granularity
+#### Multiple Granularity
 
 > [!question]- 为何需要多粒度管理？
 > 
@@ -470,7 +470,7 @@ T3 --> T1 --> T2
 
 同时，分层管理，又会引入一个问题：如果你对子层次加了锁，那么如果有某个 TX 要对其父层次加锁，怎么办？这里，可以通过 **lock-S/XI(ntention)** 来解决。
 
-#### Intention Lock Modes
+##### Intention Lock Modes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_21_52_52_202405302152392.png"/>
 
@@ -487,7 +487,7 @@ T3 --> T1 --> T2
 
 - 不难发现：$SIX = IX \land S$
 
-#### New Locking Scheme
+##### New Locking Scheme
 
 使用了新的锁，我们还需要新的 scheme。下面就是 Two-Phase Scheme 在多粒度管理下的变种：
 
@@ -505,7 +505,7 @@ T3 --> T1 --> T2
 > 
 > 注意 lock granularity escalation：如果某个 TX 在某一层的锁太多了，会造成管理臃肿的情况。此时，直接移到上一层。
 
-### More Operations: `INSERT` and `DELETE`
+#### More Operations: `INSERT` and `DELETE`
 
 我们可以假设一个 table is infinitely large with `undefined` entries。然后，`INSERT` 就是将 undefined 改成一个有意义的值，而 `DELETE` 正好相反。
 
@@ -519,19 +519,19 @@ T3 --> T1 --> T2
 
 当然，在这个例子中，也会存在 unrepeatable read 的问题。因为 TX 2 可以在插入之后立刻释放锁，TX 1 就可以再读一次，就会发现两次读的事情不一样。
 
-#### Lock the Table
+##### Lock the Table
 
 这是最暴力的方法：通过 multiple granularity，直接锁住整个 table——等价于将所有的 `undefined` entries 一并也锁上了。
 
 **缺点**：假如你要插入的是 `(1919810, <some name>)`，本来这个东西和 114514 毫无关系，却也插不进去了，造成了并行性下降。
 
-#### Lock the Value
+##### Lock the Value
 
 我们可以直接给 `<primary key name>: 114514` 这个 value with column 上一个锁。然后插入的时候，一个一个锁进行比较。
 
 **缺点**：在锁很多的时候，会造成大量的对比，并不划算。
 
-#### Lock the Leaf (Page)
+##### Lock the Leaf (Page)
 
 假如已经建立了索引，那么我们可以直接在 B+ 树的叶子上上锁，i.e. 将 lock-S 也锁在查询用到的叶子中。如下图：
 
@@ -539,7 +539,7 @@ T3 --> T1 --> T2
 
 **缺点**：锁的太多了，不够精细。
 
-#### Next-Key Lock
+##### Next-Key Lock
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/30_23_26_38_202405302326821.png"/>
 
@@ -552,7 +552,7 @@ T3 --> T1 --> T2
 - 如上图，锁上了 next-key 之后，x=15 和 x=7 这两个会造成 phantom/unrepeatable read 的插入，就插不进去了。
 - 但是，这样做，仍然也不是完美的——**如果决定插入 6，那么 lock-X 应该为 (6, 8)。因此 8 重复了，也插不进去。但是实际上 $6 \notin [7, 16]$。**
 
-#### Multiversion Lock
+##### Multiversion Lock
 
 多版本的方法，是目前工业界中最常用的。因为对并发性的支持最好（缺点就是多了一些 spatial overhead 罢了）。
 

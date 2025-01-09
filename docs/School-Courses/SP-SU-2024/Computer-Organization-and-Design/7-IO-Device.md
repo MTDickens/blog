@@ -1,10 +1,10 @@
-# Basics of IO
+## Basics of IO
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_15_10_47_202405281510009.png"/>
 
 IO 也是 memory 组成的一部分。我们使用 mapped memory 方式来访问 IO。
 
-# Characters of IO
+## Characters of IO
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_15_17_55_202405281517841.png"/>
 
@@ -18,7 +18,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 
 带宽是 IO 的重要指标。
 
-# Performance Metrics of IO
+## Performance Metrics of IO
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_15_20_46_202405281520830.png"/>
 
@@ -27,13 +27,13 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
     - 对于流媒体来说，有时处理能力是瓶颈，因为需要传输大量的小视频块
 - 反应时间：跟人交互的 IO 设备，response time 非常重要
 
-## Recap: Amdahl's Law
+### Recap: Amdahl's Law
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_15_37_50_202405281537905.png"/>
 
 如果硬盘等 IO 的性能不提高，那么就会严重拖后腿。
 
-## Some Issues
+### Some Issues
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_16_0_58_202405281600245.png"/>
 
@@ -53,7 +53,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 > 
 > 事实上，磁盘控制器是非常复杂的东西，设计难度并不小于一个 CPU
 
-# Categories of Storage Devices
+## Categories of Storage Devices
 
 对于磁盘，可以参考 DBMS: Storage。下面我们讲一讲 flash memory。
 
@@ -71,7 +71,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 > 
 > 而擦除会对其造成很大的破坏，一个 block 擦除 10000 次之后就不能用了。
 
-# Availability
+## Availability
 
 除了 performance 以外，我们还需要考虑其稳定性。
 
@@ -79,7 +79,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 
 电脑上每一个模块都有一个**理想情况下的 behavior**，如果实际执行情况与理想情况不符，就是 service interruption/failure。
 
-## Availability Metric
+### Availability Metric
 
 主要有三个概念：
 
@@ -108,7 +108,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_16_38_21_202405281638425.png"/>
 > 
 
-# Disk Array
+## Disk Array
 
 通过小磁盘 + 磁盘并行访问，我们可以做到成倍地加快磁盘速度。
 
@@ -119,7 +119,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 
 因此，我们需要通过冗余来减小这样的情况发生。
 
-# RAID: Redundant Array of Inexpensive Disks
+## RAID: Redundant Array of Inexpensive Disks
 
 为了均衡性能、储存效率和 MTTF，我们将 RAID 分成下面这么多的等级。
 
@@ -141,7 +141,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
     - 注意：RAID 3 本质上和 RAID 4 是一样的，只不过 RAID 4 更实际，以 block 为单元，而不是 byte
 - RAID 5 被广泛使用，是比较均衡的选择
 
-## RAID 的一些概念
+### RAID 的一些概念
 
 首先，衡量一种 RAID 效率的指标有两个：储存效率和读写效率。
 
@@ -150,7 +150,7 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
     - Small Read/Write: 可以在满足约束条件的情况下，一次只读/写一行中某一个盘
     - Large Read/Write: 在满足约束条件的情况下，一次必须读/写一行所有盘
 - bit/byte/block 条带化：就是将 bit/byte/block 1 放到 disk 1，bit/byte/block 2 放到 disk 2，……，bit/byte/block n 放到 disk $n \% \# \text{of disks}$
-## RAID 3
+### RAID 3
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_17_30_37_202405281730871.png"/>
 
@@ -165,14 +165,14 @@ IO 的对象要么是人类（鼠标键盘显示器）、要么是机器（网�
 > 
 > 假如不知道损坏的是哪一个盘，还是老老实实用 hamming code 的 RAID 2 吧。
 
-### RAID 3 的不足
+#### RAID 3 的不足
 
 只能够 large write。而不能 small write。
 
 - 这是因为 RAID 3 是 **byte-条带化**的，从而逻辑中的一块是分布在物理上的所有块上的。
 - 因此，如果你希望写**逻辑中的**一块进入磁盘，那么必须**在物理上**将数据同时写入所有磁盘。
 
-## RAID 4
+### RAID 4
 
 RAID 4 和 RAID 3 的差别是：
 
@@ -182,11 +182,11 @@ RAID 4 和 RAID 3 的差别是：
 > [!warning]+ RAID 4 相比 RAID 3 的缺点
 > 
 > 缺点很简单：假如说需要反复读某些块，而这些块在硬盘阵列上分布得不均匀。那么，就很容易导致硬盘之间的损耗不均匀（i.e. 某些硬盘比其他硬盘更早坏）。
-### RAID 4 的不足
+#### RAID 4 的不足
 
 虽然可以 small write，但是 write 的时候，奇偶校验盘和数据盘都会受影响，因此无法并行写两个盘。
 
-## RAID 5
+### RAID 5
 
 RAID 5 就是在 RAID 4 的基础上，将奇偶校验盘均匀分布到了多个盘上。从而使得 small write 的并行性更好了（当然也无法保证一定可以并行）。
 
@@ -194,11 +194,11 @@ RAID 5 就是在 RAID 4 的基础上，将奇偶校验盘均匀分布到了多�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_18_44_15_202405281844839.png"/>
 
-## RAID 6
+### RAID 6
 
 RAID 6 就是采用两个奇偶校验盘，分别采用不同的奇偶校验算法，然后和 RAID 5 一样，也是均匀分布到多个盘上。这样就可以实现两个盘损坏也能恢复。
 
-# Bus
+## Bus
 
 > [!tldr] tl;dr
 > 
@@ -218,7 +218,7 @@ RAID 6 就是采用两个奇偶校验盘，分别采用不同的奇偶校验算�
 
 - 如图，采用更多的 bus adapters，可以让硬件有更多的速率选择
 
-## Handshake Protocol
+### Handshake Protocol
 
 对于跨时钟域传输，我们需要用到握手的协议。协议内容如下图所示：
 

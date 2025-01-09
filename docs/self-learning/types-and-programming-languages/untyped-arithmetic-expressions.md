@@ -3,7 +3,7 @@ $$
 \newcommand{size}{\operatorname{size}}
 $$
 
-# Terminology
+## Terminology
 
 
 > [!note]+ Language that We Use
@@ -26,9 +26,9 @@ $$
 > 形如 `if succ(0) then ... else ...`, `succ(true)` 是无意义的。因此，之后会讲到：**类型**的目的之一，就是避免这样的无意义语句的产生。
 
 
-# 三大性质以及常用归纳策略
+## 三大性质以及常用归纳策略
 
-## 三大性质
+### 三大性质
 
 **注意**：Term 本质上来说，是一棵树。我们这里使用括号，就将这棵树变成了一个便于表示的形式。
 
@@ -41,16 +41,16 @@ $$
 **Term Tree 的深度**
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/28_16_12_22_202406281612624.png"/>
 
-## 常用归纳策略
+### 常用归纳策略
 
 我们可以使用三个性质，进行自然数上的数学归纳法。同时，我们也可以直接使用结构归纳法。如下：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/28_20_23_17_202406282023878.png"/>
 
 
-# Evaluation
+## Evaluation
 
-## An Example
+### An Example
 
 > [!example]+ Example
 > 
@@ -82,7 +82,7 @@ $$
 >    
 >    从而，关系 $R$ **最小**也可以包含所有通过这三条规则可以实现的 evaluation。
 
-## Determinacy of One-Step Evaluation
+### Determinacy of One-Step Evaluation
 
 **Theorem 3.5.4 (Determinacy of one-step evaluation):** 对于我们这个例子而言，if $t \to t', t \to t''$, then $t' = t''$
 
@@ -98,7 +98,7 @@ $$
 
 $\blacksquare$
 
-## Normal Form
+### Normal Form
 
 **Definition:** A term $t$ is in *normal form* if no evaluation rule applies to it
 
@@ -122,7 +122,7 @@ Then:
 
 Thus, this term is also a non-normal-form. $\blacksquare$
 
-## Multi-Step Evaluation
+### Multi-Step Evaluation
 
 **Definition (multi-step evaluation):** *Multi-step evaluation* relation $\to^\ast$ is the 
 
@@ -159,7 +159,7 @@ of one-step evaluation relation.
 > 1. 第一条显然违反了 3.5.4，同时也违反了 3.5.11
 > 2. 第二条显然违反了 3.5.4，但是，并没有违反 3.5.11（直觉上来看，不论先化简 `if ... then ... else` 中的哪一项，其实都是殊途同归）
 
-## A More Intrinsic Example
+### A More Intrinsic Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/28_23_25_49_202406282325611.png"/>
 

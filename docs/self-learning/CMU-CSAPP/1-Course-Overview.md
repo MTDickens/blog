@@ -1,6 +1,6 @@
-# Lec 1: Course Overview
+## Lec 1: Course Overview
 
-## `int` != integer, `float` != real numbers
+### `int` != integer, `float` != real numbers
 
 Example:
 
@@ -17,12 +17,12 @@ $16 = 3.1400000000000001
 $17 = 0
 ```
 
-## Memory Matters
+### Memory Matters
 
 Example (Memory Reference Bug demo code):
 
 ```c
-#include <stdio.h>
+##include <stdio.h>
 
 typedef struct {
         int a[2];
@@ -159,7 +159,7 @@ Aborted (core dumped)
 
 ```
 
-### Hazards
+#### Hazards
 
 Since C/C++ doesn't provide any memory protection, there might be:
 
@@ -168,7 +168,7 @@ Since C/C++ doesn't provide any memory protection, there might be:
 - Invalid pointer values
 - Abuses of `malloc`/`free`
 
-### How to deal with this?
+#### How to deal with this?
 
 - Program in Java, Ruby, Python, ML, ...
   - use another language
@@ -177,7 +177,7 @@ Since C/C++ doesn't provide any memory protection, there might be:
 - Use-or develop tools to detect referencing errors (e.g. **Valgrind**)
   - use advanced tools
 
-## More Than Asymptotic Complexity
+### More Than Asymptotic Complexity
 
 - Constant factor matters too!
 - And even exact op count does not predict performance
@@ -209,13 +209,13 @@ void copyji(int src[2048][2048], int dst[2048][2048])
 
 The difference has something to do with memory hierarchies.
 
-## More than executing programs
+### More than executing programs
 
 I/O is crucial for machines to communicate with each other.
 
 One interesting application based on I/O is networking. We'll make our own web proxy.
 
-## Assignment Outline
+### Assignment Outline
 
 1. Data Lab: Manipulate bits
    - get used to the world of binary operations

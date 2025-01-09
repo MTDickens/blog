@@ -1,4 +1,4 @@
-# 引入
+## 引入
 
 为了在 $(\lambda x.t_{12}) t_2 \to [x \mapsto t_2] t_{12}$ 这个替换中，不造成变量名的混淆，我们可以使用以下几种命名/替换策略：
 
@@ -12,7 +12,7 @@
 本文中，我们使用第 3 个，主要原因是: **it tends to fail catastrophically rather than subtly when it is implemented wrong, allowing mistakes to be detected and corrected sooner rather than later.** Our formulation uses a well-known technique due to Nicolas de Bruijn (1972). 
 - Bugs in implementations using named variables, by contrast, have been known to manifest months or years after they are introduced. 
 
-# Terms and Contexts
+## Terms and Contexts
 
 De Bruijn’s idea was that we can represent terms more straightforwardly—if less readably—by making **variable occurrences point directly to their binders**, rather than referring to them by name. 
 
@@ -36,6 +36,6 @@ Nameless terms are also sometimes called de Bruijn terms, and the numeric variab
 
 - 其中，$\mathcal T_n$ 被称为 n-term，意思就是**所有至多只有 n 个 free variable 的 term**。
 
-# Rules
+## Rules
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/3_21_33_32_202407032133264.png"/>

@@ -1,4 +1,4 @@
-# 执行 pipeline
+## 执行 pipeline
 
 ```sql
 SELECT column1, aggregate_function(column2) AS aggr
@@ -16,13 +16,13 @@ HAVING condition;
 3. 通过 `having` 来 filter result
     - **Note:** Before SQL-93, attributes in `having` conditions must NOT appear in `group by` list
 
-# NULL Value
+## NULL Value
 
-## 算数
+### 算数
 
 在算数中，NULL 进行任何运算，还是 NULL。如 5 * (7 + NULL) = NULL。
 
-## 逻辑
+### 逻辑
 
 在逻辑中，NULL 进行任何逻辑判断，都是 Unknown。
 
@@ -32,7 +32,7 @@ HAVING condition;
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141207665.png" alt="image-20240314120658118" style="zoom:50%;" />
 
-## 聚合
+### 聚合
 
 除了 `COUNT(*)` 以外，其它的聚合函数直接会**忽略** NULL。
 

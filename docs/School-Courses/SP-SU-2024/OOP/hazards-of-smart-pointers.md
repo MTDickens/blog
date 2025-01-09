@@ -1,4 +1,4 @@
-# Hazard
+## Hazard
 
 如图，这是 `shared_ptr` 的结构：
 
@@ -146,7 +146,7 @@ father: 2
 
 我们需要使用 `weak_ptr` 来解决问题。
 
-# Solution: `weak_ptr`
+## Solution: `weak_ptr`
 
 `weak_ptr` 可以认为就是**依附于**某个 `shard_ptr` 的指针。当某个 `weak_ptr` 引用了 `shared_ptr` 时，此 `shared_ptr` 不会自增
 

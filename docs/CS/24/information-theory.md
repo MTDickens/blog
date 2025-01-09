@@ -1,4 +1,4 @@
-# Prelude: The Meaning of Probability
+## Prelude: The Meaning of Probability
 
 > [!abstract]+ Prelude
 > A very original and thoroughgoing development of the theory of probability, which does not depend on the concept of frequency in an ensemble, has been given by Keynes. In his view, **the theory of probability is an extended logic**, the **logic of probable inference**. 
@@ -27,7 +27,7 @@
 > 
 > 同时，通过贝叶斯，所谓概率推导，其实就是 inference——通过已知的 belief measure（i.e. assumptions），推导未知的 belief measure
 
-# Entropy
+## Entropy
 
 对于一个**信息源**的 **outcome**，其 **Shannon information** 的定义是：
 
@@ -72,13 +72,13 @@ $$
 > 
 > 如果 X,Y 独立，那么 $H(X,Y) = H(X) + H(Y)$
 
-## Decomposition of Entropy
+### Decomposition of Entropy
 
 > [!abstract]+ 前言
 > 
 > Entropy 就是**平均信息**。既然是”信息“，那么应该能够被分解——同时得到 A+B，相当于先得到 A，再在 A 的基础上得到 B。恰好，entropy 支持这种定义。
 
-### An Example: Flipping Coins
+#### An Example: Flipping Coins
 
 举一个例子：假如我们掷一个硬币，如果正面，就返回 0，如果反面，就再掷一次，如果是正面，就返回 1，如果反面，就返回 0。
 
@@ -91,7 +91,7 @@ $$
 
 因此，总共的熵就是：1 + 正面概率 * 正面熵 + 反面概率 * 反面熵 = 1 + 0.5 * 0 + 0.5 * 1 = 1.5。和合起来考虑一样。
 
-### Formulae of the Decomposition of Entropy
+#### Formulae of the Decomposition of Entropy
 
 下面是一个 generalized version of decomposition of entropy：
 - **注意**：为方便起见，我们之后不再使用 ensemble，而统一使用概率分布 $\mathrm p$ 来代替 ensemble $X$
@@ -110,7 +110,7 @@ $$
 > 
 > 最 general 的 formula，用数学符号表示，就是：$H(X) = H(\set{A_i}_{i \in [N]}) + \sum_{i \in [N]} P(A_i) H(X | A_i)$ 
 
-## Gibbs Inequality
+### Gibbs Inequality
 
 两个（输出相同但是概率不同的） ensemble P, Q 之间的相对熵就是 KL divergence:
 

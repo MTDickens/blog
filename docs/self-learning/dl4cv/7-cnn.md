@@ -1,4 +1,4 @@
-# Recap
+## Recap
 
 What we learnt in the previous course:
 
@@ -16,7 +16,7 @@ What we shall learn in this course:
 - Pooling: down-sampling that preserves the 2D structure
 - Normalization: prevent over-fitting
 
-# Convolution Layers
+## Convolution Layers
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141732720.png" alt="image-20240314173219655" style="zoom: 33%;" />
 
@@ -45,7 +45,7 @@ What we shall learn in this course:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141742661.png" alt="image-20240314174200472" style="zoom:25%;" />
 
-## Stacking Convolutions
+### Stacking Convolutions
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141746812.png" alt="image-20240314174604848" style="zoom: 33%;" />
 
@@ -53,13 +53,13 @@ What we shall learn in this course:
 
 由于卷积和卷积的复合还是卷积，因此，我们需要像应对神经网络的线性性一样，为每一层的结果施加 ReLU 算子。
 
-## What do convolutional filters learn?
+### What do convolutional filters learn?
 
 First-layer conv filters: local image templates (often learns **oriented edges**, **opposing colors**)
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141938099.png" alt="image-20240314193840198" style="zoom:50%;" />
 
-## Receptive Fields
+### Receptive Fields
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141941185.png" alt="image-20240314194133150" style="zoom: 33%;" />
 
@@ -74,11 +74,11 @@ As you can see, with a $k$-by-$k$ convolution kernel, we can expand the edge len
 
 However, it's way too slow due to its linear growth.
 
-### Acceleration
+#### Acceleration
 
 We can use convolution with stride &geq; 2.
 
-## Summary & Practices
+### Summary & Practices
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403141951982.png" alt="image-20240314195125044" style="zoom:50%;" />
 
@@ -91,7 +91,7 @@ We can use convolution with stride &geq; 2.
 - Stride determines how much you want to down-sample
     - Actually, "down-sampling" in CNN is usually done by both convolution layer with stride &geq; 2 and *pooling layer*
 
-# Pooling Layer
+## Pooling Layer
 
 Pooling layer is a way to
 
@@ -102,7 +102,7 @@ Pooling layer is a way to
 
 Pooling layer 只有两个超参数：K 和 S。意义同 convolution layer。
 
-# Batch Normalization
+## Batch Normalization
 
 我们对 batch 里面的 $N \times D$（$N$ 是 batch size，$D$ 是向量的维数）矩阵，每一列进行这样的 normalization。也就是说，对于长度为 $D$ 的向量的每一个 element，我们 batch 里都有 $N$ 个，因此我们求出这 $N$ 个数的方差和平均值，然后进行处理（如下图，我们一条条红线进行处理）
 
@@ -126,7 +126,7 @@ $$
 
 如图，我们还会加入 $\gamma, \beta$ 这两个 learnable parameters 来使得模型还有调整自己的“余地”（提升模型的 power，避免欠拟合）。
 
-## Test-Time
+### Test-Time
 
 Batch normalization 要求我们在训练的时候，必须一次输入 $N$ 个向量。但是，在 test 的时候，一次只有一个输入。
 
@@ -138,13 +138,13 @@ Batch normalization 要求我们在训练的时候，必须一次输入 $N$ 个�
 
 进一步，我们可以把这个线性变换和之前的卷积层/全连接层（注意卷积也是线性变换）再次二合一，从而实现 zero computational overhead at test-time。
 
-## Batch Normalization For ConvNets
+### Batch Normalization For ConvNets
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403142129246.png" alt="image-20240314212857095" style="zoom: 50%;" />
 
 **注意：**对于图片而言，我们把每张图片的每一个像素视为 batch 里的一份，也就是说，batch 的大小为 N &times; H &times; W（伪代码： `normalize(NCHW, dim=[0,2,3]`）。
 
-## Cons and More
+### Cons and More
 
 Batch Normalization 虽然可以大大提升收敛速度，但是
 

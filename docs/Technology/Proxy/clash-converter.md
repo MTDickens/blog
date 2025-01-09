@@ -1,4 +1,4 @@
-# Clash 订阅转换
+## Clash 订阅转换
 
 第一次正经用 Clash，因为有分流 YouTube（不看重延时）、AI 工具（很多 AI 都屏蔽了港澳）的需求。使用了好几种方法，试图来代替原订阅，后来还是算了，trade anonymity for convenience 得了，就用公共订阅转换吧。
 
@@ -13,7 +13,7 @@
 1. 我选择包含 x0. 的节点，是为了过滤掉倍率太大的节点。
 2. 排除除了 `_US_.*@mtdic` 以外的 `_US_` 节点，是为了使用美国节点的时候，只用我自建的节点
 
-### 使用 Merge 配置添加规则
+#### 使用 Merge 配置添加规则
 
 同时，如果你还希望将 Google Gemini 也分流，可以
 
@@ -25,8 +25,8 @@
 代码：
 
 ```yaml
-# Merge Template for clash verge
-# The `Merge` format used to enhance profile
+## Merge Template for clash verge
+## The `Merge` format used to enhance profile
 
 prepend-rules:
   - DOMAIN-SUFFIX,gemini.google.com,💬 OpenAi

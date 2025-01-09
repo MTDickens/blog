@@ -1,6 +1,6 @@
-# Lec 13: Linking
+## Lec 13: Linking
 
-## Static Linking
+### Static Linking
 
 Suppose we have two `.c` files:
 
@@ -42,7 +42,7 @@ The overall procedure is shown below:
 - Assembler: `as`
 - Linker: `ld`
 
-## Why Use Linkers?
+### Why Use Linkers?
 
 Why not just put all codes into one file?
 
@@ -61,13 +61,13 @@ Why not just put all codes into one file?
     - Common functions can be aggregated into a single file...
     - Yet executable files and running memory images contain only code for the functions they actually use.
 
-## What Do Linkers Do?
+### What Do Linkers Do?
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240125182111725.png" alt="image-20240125182111725" style="zoom:33%;" />
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240125182123607.png" alt="image-20240125182123607" style="zoom:33%;" />
 
-## Three Kinds of Object Files
+### Three Kinds of Object Files
 
 - Relocatable Object File (`.o` file)
     - Contains code and data in a form that **can be combined with other relocatable object files** to form executable object file.
@@ -78,13 +78,13 @@ Why not just put all codes into one file?
     - Special type of relocatable object file that **can be loaded into memory and linked dynamically**, **at either load time or runtime.**
     - Called Dynamic Link Libraries (DLLs) by Windows 
 
-## Object File Format
+### Object File Format
 
 The standard format for object file is "Executable and Linkable Format (ELF)".
 
 - General name is **ELF binaries**
 
-### ELF Object File Format
+#### ELF Object File Format
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240125183020675.png" alt="image-20240125183020675" style="zoom: 50%;" />
 
@@ -121,7 +121,7 @@ The standard format for object file is "Executable and Linkable Format (ELF)".
 - Section header table:
     - Offsets and sizes of each section
 
-## Linking And Executing Procedure
+### Linking And Executing Procedure
 
 There are 3 kinds of linker symbols in total:
 
@@ -136,11 +136,11 @@ There are 3 kinds of linker symbols in total:
     - Local linker symbols are *not* local program variables
         - it's a way to define "private functions" and "private variables" in C
 
-### Step 1: Symbol Resolutions
+#### Step 1: Symbol Resolutions
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126013753878.png" alt="image-20240126013753878" style="zoom: 50%;" />
 
-#### How Linkers Resolve Duplicative Symbols?
+##### How Linkers Resolve Duplicative Symbols?
 
 - Program symbols are either strong or weak
   - Strong: procedures and initialized globals
@@ -148,18 +148,18 @@ There are 3 kinds of linker symbols in total:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126010113104.png" alt="image-20240126010113104" style="zoom:50%;" />
 
-#### Linker's Symbol Rules
+##### Linker's Symbol Rules
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126010147526.png" alt="image-20240126010147526" style="zoom:50%;" />
 
-##### Bad Code
+###### Bad Code
 
 ```c
 // main.c
 int x = 0xa;
 int y = 0x14;
 
-#include <stdio.h>
+##include <stdio.h>
 
 void change();
 
@@ -197,11 +197,11 @@ where 0x400921fb4d12d84a is the double precision representation of 3.1415926.
         - i.e. make it strong
     - Use `extern` if you reference an external global variable
 
-### Step 2: Relocation
+#### Step 2: Relocation
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126024549938.png" alt="image-20240126024549938" style="zoom: 33%;" />
 
-#### Relocation Entries	
+##### Relocation Entries	
 
 For this piece of code:
 
@@ -246,7 +246,7 @@ As you can see, `14: R_X86_64_PC32	array-0x4` means
 
 Since `array` will be relocated during linking, we don't know exactly where it will be, so this patch is necessary.
 
-### Step 3: Load Into Memory
+#### Step 3: Load Into Memory
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126124817811.png" alt="image-20240126124817811" style="zoom:50%;" />
 
@@ -254,7 +254,7 @@ Since `array` will be relocated during linking, we don't know exactly where it w
 
 - **Note:** There is a place called **memory-mapped region for shared libraries** between the huge gap of user stack and run-time heap. 
 
-## Packaging Useful APIs
+### Packaging Useful APIs
 
 How to package functions commonly used by programmers?
 
@@ -270,7 +270,7 @@ Given the linker framework so far, it can be awkward:
     - More efficient,but burdensome on the programmer
         - i.e. ridiculous large command line to `gcc`
 
-### Old-Fashioned Way: Static Library
+#### Old-Fashioned Way: Static Library
 
 `gcc` has a default path to static libraries: `/usr/lib/...`
 
@@ -283,14 +283,14 @@ Linker's algorithm for resolving external references:
 - As each new `.o` or `.a` file, `obj`, is encountered, try to resolve each unresolved reference in the list against the symbols defined in `obj`.
 - If there are any entries in the unresolved list at the end of the scan, then error.
 
-#### Problem
+##### Problem
 
 Suppose you have a piece of C code:
 
 ```c
-#include <stdio.h>      /* printf */
-#include <math.h>       /* cos */
-#define PI 3.14159265
+##include <stdio.h>      /* printf */
+##include <math.h>       /* cos */
+##define PI 3.14159265
 int main ()
 {
     double param, result;
@@ -317,7 +317,7 @@ gcc -lc -lm main.c -o main -nodefaultlibs -static -L/usr/lib/x86_64-linux-gnu/
 
 is not okay, because `main.c` (later `main.o`) is scanned after `libm.a` and `libc.a`. 
 
-## Modern Approach: Dynamic Linking
+### Modern Approach: Dynamic Linking
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240126143608071.png" alt="image-20240126143608071" style="zoom:50%;" />
 
@@ -325,13 +325,13 @@ Unlike statically linked exes, the function calls in dynamically linked exes get
 
 And it can even get linked **at runtime**.
 
-### Runtime Dynamic Linking
+#### Runtime Dynamic Linking
 
 ```c
 /* main.c */
-#include <stdio.h>
-#include <stdlib.h>
-#include <dlfcn.h>
+##include <stdio.h>
+##include <stdlib.h>
+##include <dlfcn.h>
 
 long x[2] = {1, 2};
 long y[2] = {3, 4};
@@ -386,7 +386,7 @@ And use `gcc -o main main.c libvector.so -ldl` to generate exe obj file.
 
 - `-ldl` stands for `libdl.so`, which is used to link  `dlfcn.h`
 
-## Library Interpositioning
+### Library Interpositioning
 
 See [here](https://hansimov.gitbook.io/csapp/part2/ch07-linking/7.13-library-interpositioning) for details.
 

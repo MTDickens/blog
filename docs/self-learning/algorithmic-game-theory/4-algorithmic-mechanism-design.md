@@ -1,4 +1,4 @@
-# Counterexample: Knapsack Auction
+## Counterexample: Knapsack Auction
 
 1. Bidder $i$ has a public size $w_i$ (requirement) and a private valuation $v_i$
 2. Seller has capacity $W$
@@ -16,7 +16,7 @@ $$
 
 **但是，由于 knapsack problem is np-hard，因此 $X(b)$ is computationally intractable。从而，it's *NOT* a perfect auction.**
 
-## How to deal with it?
+### How to deal with it?
 
 Perfect auction 有三个条件：
 
@@ -36,7 +36,7 @@ Perfect auction 有三个条件：
 > 
 > - 同时，$p$ 同样可以以伪多项式时间算出来
 
-# Algorithmic Mechanism Design
+## Algorithmic Mechanism Design
 
 > [!abstract]+
 > 
@@ -55,7 +55,7 @@ Basically，你只需要设计出一个
 > - 如果一定有，请告诉我将 nonmonotone 转换成 monotone 算法的 routine
 > - 如果一定没有，请举一个例子
 
-## Reasons of Getting Rid of DSIC
+### Reasons of Getting Rid of DSIC
 
 前面提到，很多问题的本质是 maximal surplus 和 poly-time 不兼容，和 DSIC property 没有直接关系。同样，很多情况下，如果满足了 poly-time maximal surplus，那么就可以 automatically 满足 poly-time DSIC (via some reduction)。
 

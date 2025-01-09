@@ -1,17 +1,17 @@
-# Docker 相关备忘
+## Docker 相关备忘
 
 > 转载自：[鹤翔万里的笔记本](https://note.tonycrane.cc/cs/tools/docker/)
 
 !!! abstract
     一些常用/常忘的 docker 命令、Dockerfile 等
 
-## 安装
+### 安装
 - `curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun`
 - `sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 - `sudo chmod +x /usr/local/bin/docker-compose`
 
-## docker 命令
-### 镜像相关
+### docker 命令
+#### 镜像相关
 - `docker images` 列出本地镜像
 - `docker search <image>` 搜索镜像
 - `docker pull <image>` 拉取镜像
@@ -21,7 +21,7 @@
 - `docker import <file>.tar <image>` 从 tar 包导入镜像
 - `docker tag <image> <image>:<tag>` 给镜像打 tag（重命名）
 
-### 容器相关
+#### 容器相关
 - `docker ps -a` 列出正在运行的容器
 - `docker run -it <image>` 运行镜像
     - `-d` 后台运行
@@ -38,14 +38,14 @@
 - `docker exec -it <container> /bin/bash` 进入容器
 - `docker cp ... ...` 在本地和容器之间复制文件（用法类似 scp）
 
-### 网络相关
+#### 网络相关
 - `docker network ls` 列出网络
 - `docker network create <network>` 创建网络
 - `docker network connect <network> <container>` 将容器连接到网络
 - `docker network inspect <network>` 查看网络信息
 - `docker network rm <network>` 删除网络
 
-### 仓库相关
+#### 仓库相关
 - `docker login <url>` 连接 registry
     - `docker login` 连接到 Docker Hub
     - `docker login ghcr.io` 连接到 GitHub 的仓库，用户名是 GitHub 用户名，密码是 GitHub 生成的 token（ghp_ 开头）
@@ -53,7 +53,7 @@
 - `docker push <image>` 推送镜像到 registry（会根据前缀自动选择 registry）
 - `docker pull <image>` 从 registry 拉取镜像
 
-#### registry 镜像
+##### registry 镜像
 可以利用 registry 镜像来自建私有 registry
 
 - `docker pull registry:2` 拉取 registry 镜像
@@ -77,17 +77,17 @@
 - `docker tag <image> <url>/<image>` 给镜像打上 registry 的 tag
 - `docker push <url>/<image>` 推送镜像到 registry
 
-## Dockerfile
-### 常用换源
-#### Ubuntu 软件源
+### Dockerfile
+#### 常用换源
+##### Ubuntu 软件源
 ```dockerfile
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-# RUN sed -i s@/archive.ubuntu.com/@/<...>/@g /etc/apt/sources.list
+## RUN sed -i s@/archive.ubuntu.com/@/<...>/@g /etc/apt/sources.list
 RUN apt-get clean
 RUN apt-get update
 ```
 
-#### Debian 软件源
+##### Debian 软件源
 ```dockerfile
 RUN sed -i s/deb.debian.org/mirrors.aliyun.com/g /etc/apt/sources.list && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone

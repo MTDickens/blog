@@ -1,4 +1,4 @@
-# Recap & Introduction
+## Recap & Introduction
 
 上一次，我们讲到了各种算子（i.e. `SELECT WHERE _ = _` 和 `NATURAL JOIN ON _ = _`）以及一些 subroutine（i.e. 排序）的算法，以及每个算法的代价。
 
@@ -23,7 +23,7 @@
 
 **Conclusion:** DBMS 会采用**代价估算**来物理优化每一个算子。对于中间结果，DBMS 会采用所谓的 **cardinality estimation**，来估算中间结果的规模，然后再进行代价估算。
 
-# SQL 语句：`explain`
+## SQL 语句：`explain`
 
 MySQL 可以使用 `explain <clause>` 来展示其内部的真正执行流程。比如：
 
@@ -80,9 +80,9 @@ WHERE temp.stat_description > 'book_id';
 
 然后再 join，join 之后，行数也只有预估 1.33 * 40 * 10% = 5.33 行。
 
-# 优化方法
+## 优化方法
 
-## 逻辑优化：等价规则
+### 逻辑优化：等价规则
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_14_44_39_202405191444729.png" style="zoom:80%;" />
 
@@ -119,7 +119,7 @@ WHERE temp.stat_description > 'book_id';
 
 规则还有很多，此处就不赘述了。
 
-## 物理优化：代价估算的统计信息
+### 物理优化：代价估算的统计信息
 
 为了对中间结果进行代价估算，我们需要用到统计信息。一般而言，重要的统计信息有以下几个：
 
@@ -139,13 +139,13 @@ WHERE temp.stat_description > 'book_id';
         然后，如果需要 $\sigma_{gender = \dots}$​，那么直接顺序搜索即可，用不着 B+ 树索引啥的（即使有索引）
     - 不过，有一些属性在不同的值上的分布未必均匀，因此如果可以把“每一个 distinct value 有多少个”也储存下来，可以更加准确
 
-### `SELECT` Size Estimation
+#### `SELECT` Size Estimation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_16_25_42_202405191625441.png" style="zoom:67%;" />
 
 如上图，对于只有单个变量的 size estimation，可以通过上面的 heuristic 得出来。
 
-### Complex `SELECT` Size Estimation
+#### Complex `SELECT` Size Estimation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_16_39_28_202405191639358.png" style="zoom:80%;" />
 
@@ -156,7 +156,7 @@ WHERE temp.stat_description > 'book_id';
 
 但是变量之间往往是不独立的。因此 state-of-the-art cost est 其实是采用了大模型等方式进行估计。
 
-### Estimate the Size of `JOIN`s
+#### Estimate the Size of `JOIN`s
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_21_17_11_202405222117726.png"/>
 
@@ -170,7 +170,7 @@ WHERE temp.stat_description > 'book_id';
 - 如果和 primary key/unique 无关的话，那么就只能使用更加粗糙的估计。如下图：假设 R 中每一个 row 都可以匹配上 S 的一个 row，那么我们就关心的是：R 上的 row 平均可以匹配 S 上几个 row？一个 feasible 的估计就是：n<sub>s</sub> 除以 V(A,s)，也就是 S 的 A 属性的每个不同值的平均行数；如果 S 中每一个 row 都可以匹配上 R 的一个 row，情况类似。
     <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_21_42_56_202405222142583.png" style="zoom: 67%;" />
 
-### Estimate Distinct Values
+#### Estimate Distinct Values
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_22_20_42_202405222220058.png" style="zoom:80%;" />
 
@@ -182,9 +182,9 @@ WHERE temp.stat_description > 'book_id';
 
 对于 JOIN 的 estimation，分上面两种情况。
 
-## 逻辑优化：语句优化
+### 逻辑优化：语句优化
 
-## `JOIN`
+### `JOIN`
 
  <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_23_35_19_202405222335488.png" style="zoom: 80%;" />
 
@@ -208,7 +208,7 @@ WHERE temp.stat_description > 'book_id';
 
 对于 n=10 的情况，只有 1024，真的是很小了。
 
-## 其它语句
+### 其它语句
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_0_4_36_202405230004458.png"/>
 

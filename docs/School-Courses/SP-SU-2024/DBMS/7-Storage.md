@@ -1,4 +1,4 @@
-# Storage Hierarchy
+## Storage Hierarchy
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_2_12_6_202404260212812.png" style="zoom: 80%;" />
 
@@ -8,13 +8,13 @@
 
 Cache 和 Memory 之间的差异为 100 倍左右（具体和 cache 的级别有关）。相比硬盘和内存，cache miss 的惩罚要小得多。
 
-## Disk Speed
+### Disk Speed
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_2_37_49_202404260237842.png"/>
 
 如图：对于 4 KB (i.e. 1 block) 的数据，传输时间仅为 0.02 ms (以 200MB/s 计)。但是，寻道和旋转的时间，却有 4 \~ 11 ms。说明时间都浪费在后者上了。
 
-# Performance Measure
+## Performance Measure
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_2_48_56_202404260248673.png" style="zoom:67%;" />
 
@@ -27,9 +27,9 @@ Cache 和 Memory 之间的差异为 100 倍左右（具体和 cache 的级别有
         - 可以用泊松过程来算
 - 采用顺序访问的模式，可以极大增加 IOPS。
 
-# Optimization
+## Optimization
 
-## Magnetic Disk
+### Magnetic Disk
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_3_15_16_202404260315915.png" style="zoom: 80%;" />
 
@@ -43,7 +43,7 @@ Cache 和 Memory 之间的差异为 100 倍左右（具体和 cache 的级别有
 
 还可以通过磁盘碎片清理，来避免随机读取。
 
-## Flash Memory
+### Flash Memory
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_15_53_37_202404261553211.png" style="zoom: 67%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_15_53_8_202404261553258.png" style="zoom: 67%;" />
 
@@ -59,7 +59,7 @@ Cache 和 Memory 之间的差异为 100 倍左右（具体和 cache 的级别有
 1. 闪存的随机读和顺序读几乎没有差别（实际上，remapping 之后，顺序读和随机读在物理上并没有多大的区别）
 2. 闪存的读和写有很大差别。我们要尽量防止反复写入。
 
-## Example: Ensuring Durability 
+### Example: Ensuring Durability 
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_3_20_10_202404260320353.png" style="zoom:67%;" />
 
@@ -68,7 +68,7 @@ Cache 和 Memory 之间的差异为 100 倍左右（具体和 cache 的级别有
 - 存到 non-volatile write buffer（比如 NVM）去
 - 或者**连续**地存到日志里去
 
-# Comparison of Different Storage Media
+## Comparison of Different Storage Media
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/26_16_5_40_202404261605544.png"/>
 

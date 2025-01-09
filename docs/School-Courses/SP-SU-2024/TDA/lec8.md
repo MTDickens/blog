@@ -1,10 +1,10 @@
-# Motivation
+## Motivation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/21_22_28_37_202405212228821.png" style="zoom: 80%;" />
 
 Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概念。
 
-# Some Concepts
+## Some Concepts
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/21_22_36_37_202405212236190.png" alt="img"  />
 
@@ -43,7 +43,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 1. 非退化
 2. 函数值不同
 
-## Morse Lemma
+### Morse Lemma
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_10_13_45_202405221013809.png" style="zoom: 67%;" />
 
@@ -249,7 +249,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 </math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e3f3991bf25064ad53405e00c6e2694ff8d6a83d" class="mwe-math-fallback-image-inline mw-invert" aria-hidden="true" style="vertical-align: -0.838ex; width:8.03ex; height:2.843ex;" alt="{\displaystyle (2p-r)}"></span>称作符号差。
 </p>
 
-## 积分曲线
+### 积分曲线
 
 积分曲线就是由实数 parameterize（i.e.实数到流形上的一个映射）的一个曲线。满足**积分曲线每一处的切向量都和 Morse 函数的梯度方向是一致的**。
 
@@ -265,7 +265,7 @@ Morse 函数是微分拓扑的概念：涉及了微分几何以及同调的概�
 2. 第二条，因为每一个点都有一条经过它的积分线，因此易得
 3. 第三条，直观上来看，好像挺有道理。但是仔细一看，为啥起点和终点必须在临界点处？还得是靠常微分方程的性质。
 
-### Example
+#### Example
 
 以 $f(x,y) = x^2 + y^2$ 为例，按照上面的说法，那就必须满足方程：
 
@@ -281,7 +281,7 @@ $$
 
 也就是可以沿着任意从原点发出去的射线到达无穷远处。又 $\lim_{x \to -\infty}\beta(x) = (0,0), \lim_{x \to +\infty}\beta(x) = (+\infty, +\infty)$，因此显然是满足上图的三个要求的。
 
-## 稳定和不稳定流形
+### 稳定和不稳定流形
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_20_43_4_202405262043650.png" style="zoom: 67%;" />
 
@@ -291,7 +291,7 @@ $$
 
 如第二张图，每一个左侧的区域（由实线包围起来），都是该区域中的极大值点的稳定流形；每一个右侧的区域（由虚线包围起来），都是该区域中的极小值点的稳定流形。
 
-## Morse-Smale 函数
+### Morse-Smale 函数
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_21_1_55_202405262101426.png" style="zoom: 80%;" />
 
@@ -300,7 +300,7 @@ $$
 - 也就是说：**两个切线不平行**
     - 这样，两个流形的相交区间才是有形的
 
-## Morse-Smale 复形
+### Morse-Smale 复形
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/26_21_25_13_202405262125342.png" style="zoom: 67%;" />
 
@@ -316,7 +316,7 @@ $$
 - 2-鞍点，就是惯性系数为 2（i.e. Hessian 矩阵的合同标准型有 2 个负号）
 - ……
 
-# 离散情况：分片线性函数
+## 离散情况：分片线性函数
 
 我们可以通过以下的方法获得分片线性函数：
 
@@ -324,7 +324,7 @@ $$
 2. 将这些点连线，建立一个 mesh
 3. 在每个三角网格中，采用重心坐标插值来近似函数值
 
-## 判断离散的临界点
+### 判断离散的临界点
 
 > Lower Link 的定义：
 > $$
@@ -338,7 +338,7 @@ $$
 
 对于极小值、鞍点、极大值，它们分别有不同的拓扑特征。
 
-## 分片线性函数的 Morse 理论
+### 分片线性函数的 Morse 理论
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_50_202405270121874.png" style="zoom: 50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_21_26_202405270121820.png" style="zoom: 50%;" />
 
@@ -346,7 +346,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_1_25_47_202405270125190.png" style="zoom:67%;" />
 
-### Unfolding
+#### Unfolding
 
 如图，中间的那一个点，旁边有**三个高点和三个矮点**，其 0 阶约化贝蒂数为 2（连通分支有 3 个）。
 
@@ -354,11 +354,11 @@ $$
 
 但是，我们可以将中间点视作**重叠的两个点**，然后再进行计算。此时发现，这两个点分别都是鞍点。
 
-### Perturbation
+#### Perturbation
 
 如果存在两个值一样的 PL 简单点，那么就加一个小扰动，让两个值不一样就好了。
 
-# Reeb 图
+## Reeb 图
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_23_22_20_202405272322622.png"/>
 
@@ -366,11 +366,11 @@ $$
 
 我们将每一个水平集的连通关系当作等价类（通俗来说，就是**将圆圈缩成点**），就可以得到一个 Reeb 图。
 
-## Reeb 图的性质
+### Reeb 图的性质
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/27_23_40_15_202405272340426.png"/>
 
-## Morse 函数的 Reeb 图
+### Morse 函数的 Reeb 图
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_13_12_202405280113316.png"/>
 
@@ -379,7 +379,7 @@ Morse 函数相比一般函数性质更好，因此 Reeb 图也能更好地反�
 对于一个可定向的、有 g 个洞的二维流形，Morse 函数确定的 Reeb 图中有 g 个环路。
 
 因此，可以使用 Reeb 图，来快速地求出该二维流形的洞数，而不必仰仗计算同调。
-## 离散 Reeb 图的构造
+### 离散 Reeb 图的构造
 
 我们可以通过之前所说的分片线性函数，来构造离散的 Reeb 图。
 
@@ -416,7 +416,7 @@ Morse 函数相比一般函数性质更好，因此 Reeb 图也能更好地反�
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_7_41_202405280107797.png"/>
 
-### 一些应用
+#### 一些应用
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/28_1_27_23_202405280127731.png"/>
 
@@ -432,7 +432,7 @@ Morse 函数相比一般函数性质更好，因此 Reeb 图也能更好地反�
 
 还可以进行 3D mesh 的匹配。众所周知，计算两个 3D 形状的相似性是困难的事情。因此，我们将 3D 形状通过某种离散 Morse 函数，构建出 Reeb 图。然后，我们就可以对两个不同的 Reeb 图之间进行匹配。
 
-# Morse 复形算法简介
+## Morse 复形算法简介
 
 如何计算 Morse 复形？具体来说，如何在二维三角面片上，使用离散 Morse 函数，计算 Morse 复形？主要有下面三种方法：
 

@@ -4,9 +4,9 @@ $$
 
 
 
-# Persistent Homology
+## Persistent Homology
 
-## Filtration
+### Filtration
 
 Filtration 就是一个
 
@@ -19,7 +19,7 @@ $$
 $$
 我们用 $C_k^{(n)}, \partial_k^{(n)}, Z_k^{(n)}, B_k^{(n)}, H_k^{(n)}$ 来表示第 $n$​ 项链复形的各项属性
 
-### Example
+#### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/11_0_17_26_202404110017442.png" alt="image-20240411001722284" style="zoom: 50%;" />
 
@@ -36,7 +36,7 @@ $$
         - 减少了 st, tw, ws 这三个 1-复形特征，以及 s, t, w 这三个 0-复形特征
         - 不过，由于 st, tw, ws, s, t, w 之前已经被减少了，因此实际什么也没有减少
 
-## How to Construct a Complex With $\varepsilon$?
+### How to Construct a Complex With $\varepsilon$?
 
 对于点云而言，可以使用：
 
@@ -45,13 +45,13 @@ $$
 - Alpha 复形：最小包围球 &cap; 相邻胞腔
 - 另外，如果点云数量过于巨大，则可以使用 vineyard 复形来计算
 
-## How to Construct a Filtration With a certain Complex?
+### How to Construct a Filtration With a certain Complex?
 
-### 一般构造
+#### 一般构造
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_4_5_18_202404120405500.png" style="zoom: 80%;" />
 
-### Lower-Star 构造
+#### Lower-Star 构造
 
 Lower-Star 构造不需要每一个单形都对应一个值，只需要顶点对应即可。
 
@@ -80,9 +80,9 @@ $$
 g(\sigma) = \max_{v \in \sigma} f(v)
 $$
 
-## 同调元的继承
+### 同调元的继承
 
-## 诱导映射
+### 诱导映射
 
 如果存在单纯映射 $f: K \to L$（单纯映射就是 k-单形只会映射到 k-单形的映射），我们就可以诱导出任意 $p$ 阶同调群之间的同态：
 $$
@@ -94,13 +94,13 @@ $$
 
 - 基本原理：因为所有的 $K_p \to L_p$ 的映射都可以被自然地导出
 
-## 嵌入映射
+### 嵌入映射
 
 对于一个 filtration，若 $n < m$，则 $K^{(n)} \subset K^{(m)}$，从而有一个自然的嵌入映射：$i^{n, m}: K^{(n)} \to K^{(m)}$
 
 从而就有 $i_\ast^{n,m}:H_\ast(K^{(n)}) \to H_\ast(K^{(m)})$
 
-## 生成元的持续
+### 生成元的持续
 
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/14_1_22_1_202404140122400.png)
 
@@ -115,7 +115,7 @@ $$
 
 - 同调群就是闭链除以边界的一个商群
 
-### 生成元计数
+#### 生成元计数
 
 定义：
 
@@ -138,13 +138,13 @@ $$
 \beta_p^{k,l} = \sum_{i \leq k} \sum_{j \geq l} \mu_p^{i,j}
 $$
 
-## 可视化
+### 可视化
 
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/14_18_3_10_202404141803546.png)
 
 如图，每一个点都对应着一个 $\mu_p^{i,j}$。向左上的阴影区域都对应着 $\beta_p^{i,j}$。
 
-## 持续等价定理
+### 持续等价定理
 
 **定理：** 如果
 
@@ -157,7 +157,7 @@ $$
 
 - 具体来说：我们可以认为，$V_i$ 和 $U_i$ 就是一组 filtration（之间由嵌入映射连接）。如果两者之间存在同构，那么在 PD 图层面就是等价的。
 
-# Yet Another "Persistence": Level Set (水平集)
+## Yet Another "Persistence": Level Set (水平集)
 
 对于一个标量场，我们就不能简单使用复形了，而是要使用上下水平集。
 

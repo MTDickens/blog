@@ -1,16 +1,16 @@
-# Basics
+## Basics
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/16_6_30_54_202405160630235.png"/>
 
 如上图，对于多周期 CPU，往往取 mem 的时候用多周期去取，而且会有一个 ready bit。
 
-# Cache
+## Cache
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/16_6_32_15_202405160632429.png" style="zoom: 67%;" />
 
 如上图，可以参考我在 csapp 中的笔记。
 
-## Example: the intrinsity FastMATH Processor
+### Example: the intrinsity FastMATH Processor
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_3_10_47_202405180310352.png" style="zoom:80%;" />
 
@@ -33,7 +33,7 @@
     - 说明这个 cache 是 word-addressable 的
 2. Hit bit 跟两个有关：cache.valid_bit ?= 1，以及 cache.tag ?= input.tag。
 
-### Test: SPEC2000
+#### Test: SPEC2000
 
 使用 SPEC2000 benchmark 进行测试，结果如下：
 
@@ -45,11 +45,11 @@
 
 而 data 一般而言总是难以避免随机读取，而且可能就只读一个值，因此 data miss rate 一般而言比较差。
 
-## Split Cache and Combined Cache
+### Split Cache and Combined Cache
 
 我们的流水线用的是 split cache，为的就是避免结构竞争。
 
-## Cache Performance Analysis
+### Cache Performance Analysis
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_4_37_27_202405180437843.png" style="zoom:67%;" />
 
@@ -63,7 +63,7 @@
 
 由于内存数据需要先写到 cache 里，然后再花费一个周期从 cache 读入寄存器，因此，一共需要 66 个 clock cycles。
 
-### Observation
+#### Observation
 
 从而，在 **miss rate = 10%** 的情况下，使用 cache 和不用 cache 的性能是有显著差距的。
 
@@ -77,7 +77,7 @@
 
 这说明，我们的 memory 也需要跟 cache 配套：**reduce miss penalty**。
 
-### Reduce Miss Penalty
+#### Reduce Miss Penalty
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_5_16_32_202405180516251.png" style="zoom: 80%;" />
 
@@ -94,7 +94,7 @@
 - 由于取数据是瓶颈，因此这种方式也很好
 - 这种方式是现在的主流
 
-#### Wide Memory
+##### Wide Memory
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_5_19_38_202405180519359.png" style="zoom: 80%;" />
 
@@ -104,7 +104,7 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_5_34_56_202405180534786.png"/>
 
-#### Interleaved Memory
+##### Interleaved Memory
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_5_25_22_202405180525299.png" style="zoom:80%;" />
 
@@ -118,11 +118,11 @@
 
 **如果 block size 是 16 words，那么也是 90% * 1 + 10% * (1 + 1 + 15 + 16 * 1) = 4.2 cycles。相比 4 block 的情况，没有太大的问题。**
 
-### Reduce Miss Rate
+#### Reduce Miss Rate
 
 可以采用 multi-way 的方式来 reduce cache miss。
 
-### Cache Metric
+#### Cache Metric
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/18_6_12_39_202405180612854.png" style="zoom:67%;" />
 
@@ -151,7 +151,7 @@
 
 另外，假如 block is dirty，那么我们还需要 write back to memory，这又是一次开销。在具体计算的时候，我们还需要加上。
 
-## Factors of Cache Metric
+### Factors of Cache Metric
 
 Cache metric 有几个 factors：
 
@@ -164,7 +164,7 @@ Cache metric 有几个 factors：
 - 如果 Clock Cycle Time，由于**内存访问时间不变**，因此 Memory-stall clock cycles **反而会提升**，从而**更加拖后腿**
     - 有可能 clock cycle time 降了一半，但是 CPU time 只是降到了原来的 0.81 倍，性能只提升到原来的 1.23 倍
 
-## Space Overhead of Cache
+### Space Overhead of Cache
 
 假设我们的 cache 是 1-way associative cache in 32-bit addressable space with 
 
@@ -187,7 +187,7 @@ $$
 - 18 和 1 分别是 tag bits and valid bit (i.e. 上图的 "V")
     - 后面除以 8 是为了将 bit 转换为 byte
 
-# Associativity of Cache
+## Associativity of Cache
 
 如果是 fully associative，使用硬件实现，一般就用三态门。但是硬件实现代价太高，而且会导致 clock cycle 大大减慢，因此一般不会这样做。
 
@@ -196,7 +196,7 @@ $$
 - 用于选择”具体取哪一个 set“的逻辑门电路增加，从而会导致 clock cycle 时间增加
 - 同样的内存容量，set 数量越多，统计上来看，冲突的概率就越小，因此 miss rate 会降低
 
-## Example
+### Example
 
 如果一个 cache 是：
 
@@ -221,7 +221,7 @@ $$
     - 输出 data 的时候，我们当然知道（正常情况下）4 个与门至多只有一个为真，因此是可以直接用三态门的。
     - 在这里，与其使用 mux，不如直接每一列的 32 bit 的 data 线，都和该列的与门并上，然后再放入一个 fan-in=4 的或门就完了。
 
-# Write Strategies of Cache
+## Write Strategies of Cache
 
 可以参考 [csapp notes](../../../self-learning/CMU-CSAPP/12-Cache-Memories.md#cache-write)。这里的四种策略，其实要分为两组，每组两个。每一组分别对应 hit 和 miss 两种情况：
 
@@ -279,11 +279,11 @@ $$
 > 
 > - **兼容性**：肯定都是兼容的
 > - **Read and Flush**: 策略可以非常随意
-# Replacement Strategies of Cache
+## Replacement Strategies of Cache
 
 一般而言，有 LRU (Least Recently Used) 和 FIFO 两种策略。
 
-## LRU
+### LRU
 
 在 associativity 比较多的时候，LRU 的实现开销很大；而且 LRU 本身也不比随机算法好多少 (in practice)。
 
@@ -301,7 +301,7 @@ $$
 
 然后，需要替换的时候，我们就沿着树，从树的根节点往下走：如果某个节点为 0，那就说明左侧 more recently used，因此就往右走；如果某个节点为 1，那就说明左侧 more recently used，因此就往左走。
 
-## FIFO
+### FIFO
 
 FIFO 就更简单了。给每一个 block 设置一个 "I'm the first" 的 bit 即可。
 
@@ -311,7 +311,7 @@ FIFO 就更简单了。给每一个 block 设置一个 "I'm the first" 的 bit �
 
 - 被插入时间最晚的 block，就是 "I'm the first" bit 为 1 的 block 左侧的 block。
 
-# Virtual Memory
+## Virtual Memory
 
 我们并不会**显式**地在 memory 中额外划分一块，给 disk 当作 cache；而是通过虚拟内存的方式，将物理内存和硬盘上的内存有机结合了起来。
 
@@ -329,7 +329,7 @@ FIFO 就更简单了。给每一个 block 设置一个 "I'm the first" 的 bit �
 - **缓存的 (Cached)：**当前已缓存在物理内存中的已分配页。
 - **未缓存的 (Uncached)：**未缓存在物理内存中的已分配页。
 
-## TLE
+### TLE
 
 由于页表是存在内存里的，因此如果没有缓存的话，就会比较慢。我们这里可以加一个 TLE，进行缓存。具体详见 [csapp](https://blog.cc98.site/self-learning/CMU-CSAPP/17-Virtual-Memory/#efficient-address-translation)。
 
@@ -337,7 +337,7 @@ FIFO 就更简单了。给每一个 block 设置一个 "I'm the first" 的 bit �
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402031758086.png" alt="image-20240203175759968" style="zoom: 33%;" />
 
-### TLE Control Registers
+#### TLE Control Registers
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_14_20_9_202405221420506.png" style="zoom: 80%;" />
 

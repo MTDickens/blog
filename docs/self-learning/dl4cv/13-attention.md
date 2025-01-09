@@ -1,4 +1,4 @@
-# Sequence-to-Sequence with RNNs
+## Sequence-to-Sequence with RNNs
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290626691.png" alt="image-20240329062645879" style="zoom: 40%;" />
 
@@ -8,7 +8,7 @@
 
 可惜，$c$ 的长度有限，直觉上+信息论上并不能够封装任意长的信息。因此，我们需要的是充分利用到每一个 $h_i$。
 
-# Attention Mechanism
+## Attention Mechanism
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290658624.png" alt="image-20240329065857158" style="zoom:40%;" />
 
@@ -24,13 +24,13 @@
 
 - 从而，我们既能够利用上所有的 $h_i$（i.e. 文本信息），也能够保证使用的合理性（i.e. 不是只取特定的 hidden state vector，而是**根据需要来取用某一些 vectors**。这和实际的语言翻译等工作是类似的）
 
-## Interpretability
+### Interpretability
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290713148.jpeg" alt="Interpreting Attention matrix weights in MultiheadAttention ..." style="zoom: 25%;" />
 
 如图，我们可以通过 attention 的矩阵，直接解读出哪些词语和哪些词语之间有关系——"European Economic Area" 和 "zone &eacute;conomique europ&eacute;enne" 是一一对应但是倒序的关系。
 
-## Observation: set not a sequence
+### Observation: set not a sequence
 
 这样的 na&iuml;ve attention mechanism 并没有考虑到输入文本是一个 ordered sequence，而只是把输入文本当成了 unordered set。
 
@@ -38,7 +38,7 @@
 
 **因此，attention mechanisn 可以使用于任何的 input，不论有没有序，比如图像等等**。
 
-### Attention: Image2Caption
+#### Attention: Image2Caption
 
 **Recap:** 我们之前的 image to caption via RNN 的方式，是将**所有的** CNN 输出作为变量 $\vec v$，输入到 RNN 中，
 
@@ -52,19 +52,19 @@
     - $c_n$ 和 $h_{i,j}$ 的形状是一样的。如果 $h_{i,j}$ 是 vector，那么 $c_n$ 也是；如果 $h_{i,j}$ 是 scalar，那么同理
 - 最后，才将 $c_n$ （而不是 $\vec v$）作为其中一个变量输入到函数中，生成 current state
 
-### Example
+#### Example
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403302019506.png" alt="image-20240330201913258" style="zoom: 50%;" />
 
 
 
-## Biological Background
+### Biological Background
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403302019147.png" alt="image-20240330201945224" style="zoom:50%;" />
 
 如图，只有视网膜黄斑附近的 visual acuity 最高，因此我们看东西的时候，会进行频繁的 saccade (眼跳动，也就是眼球转动)，从而获得更多的信息。Attention 机制就是在模仿这种 saccade。
 
-## When To Use Attention?
+### When To Use Attention?
 
 If you want to 
 
@@ -73,9 +73,9 @@ If you want to
 
 you can often use some kind of attention mechanism to cause the model to focus on different chunks/parts of input while generating each part of the output.
 
-# Generalized Attention Mechanism
+## Generalized Attention Mechanism
 
-## First Generalization
+### First Generalization
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403302052191.png" alt="image-20240330205215865" style="zoom:50%;" />
 
@@ -90,7 +90,7 @@ you can often use some kind of attention mechanism to cause the model to focus o
     - 其中，最后一行的 "(Shape: D<sub>x</sub>)" 就是 D<sub>Q</sub>
 
 
-## Second Generalization
+### Second Generalization
 
 首先，上面一行只有 1 个 query。我们难道不能用多个 queries 吗？
 
@@ -108,7 +108,7 @@ $$
     - 最后，与 $X^t$ 相乘，就是 3&times;9 的 matrix of weighted picture
 - 可以发现，matrix of queries 和 matrix of weighted pictures 的形状一样
 
-## Third Generalization
+### Third Generalization
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_28_15_202404120328608.png" alt="image-20240412032812074" style="zoom: 50%;" />
 
@@ -118,7 +118,7 @@ $$
 
 - i.e. 去掉上图中的 V 和 K，就是 second generalization；加上 V 和 K，就是 third generalization。
 
-## Variation: Self-Attention Layer
+### Variation: Self-Attention Layer
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_33_3_202404120333601.png" alt="image-20240412033300656" style="zoom:50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_33_24_202404120333400.png" alt="image-20240412033320657" style="zoom: 50%;" />
 
@@ -128,7 +128,7 @@ $$
 
 - 从而，如果你希望让它考虑顺序，就要人为  encode 进去。
 
-## Variation: Masked Self-Attention Layer
+### Variation: Masked Self-Attention Layer
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/12_3_48_45_202404120348701.png" alt="image-20240412034842500" style="zoom: 50%;" />
 

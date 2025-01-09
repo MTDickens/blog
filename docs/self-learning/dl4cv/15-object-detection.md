@@ -1,14 +1,14 @@
-# Prelude: Tasks in CV
+## Prelude: Tasks in CV
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_6_46_40_202405060646553.png" alt="image-20240506064632136" style="zoom: 33%;" />
 
-# Challenges
+## Challenges
 
 1. 多物体：你不知道有几个物体，因此什么时候结束也无法确定
 2. 多类别输出：你不仅要输出 what，还要输出 where
 3. 大图片：对于分类而言，图片尺寸只需要在 224x224 即可；但是对于 object detection，需要在 800x600 左右
 
-# Single Object Detection
+## Single Object Detection
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_7_13_26_202405060713449.png" alt="img" style="zoom: 50%;" />
 
@@ -16,19 +16,19 @@
 
 缺点就是：**无法探测一个以上的物体**
 
-# Multiple Object Detection
+## Multiple Object Detection
 
-## Sliding Windows
+### Sliding Windows
 
 最原始的想法，就是对于不同大小、不同中心的 sub-image，都抽出来，通过一个 CNN 求 softmaxed scores，然后根据 score 的无穷范数来选取 top-k 个区域（或者使用 threshold），作为输出。
 
 但是，这里的问题就是：计算量过于巨大。因此实际上不可取。
 
-## R-CNN
+### R-CNN
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_20_50_22_202405062050396.png" alt="image-20240506205019844" style="zoom: 33%;" />
 
-### training sketch
+#### training sketch
 
 首先，通过 selective search 算法（非神经网络的传统方法），得到 region proposals（大约有 2000 个）
 
@@ -42,7 +42,7 @@
 4. 然后，我们通过 region transform 来变换该 region，得到最终的 region
 5. 最后，通过和 ground truth 的 region 以及 category 两者，分别计算 loss，然后加权加起来得到最终 loss，再进行反向传播
 
-### training details
+#### training details
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_6_13_21_202405070613609.png" alt="image-20240507061318805" style="zoom:33%;" />
 
@@ -55,7 +55,7 @@
     - 目标分类是 background，是我们自己加上去的分类
 3. neutral 的，我们就不管了
 
-### predicting/testing
+#### predicting/testing
 
 首先，通过 selective search 算法（非神经网络的传统方法），得到 region proposals（大约有 2000 个）
 
@@ -69,15 +69,15 @@
 
 然后，通过一些规则选取部分 region（比如分数 top-k 的/超过 threshold的），输出对应 region 和对应的 category。
 
-### *Note*
+#### *Note*
 
 我们的 CNN 不会接受任何和原始 subimage 大小相关的参数。
 
-### Comparing Boxes
+#### Comparing Boxes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_21_27_32_202405062127306.png" alt="image-20240506212729118" style="zoom:50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_21_28_18_202405062128440.png" alt="image-20240506212808359" style="zoom: 50%;" />
 
-### Overlapping Boxes
+#### Overlapping Boxes
 
 有时候，若干个 overlapped boxes 可能指代的是同一个物体，此时，我们需要将一些 boxes 清除出去。
 
@@ -107,7 +107,7 @@ fn NMS(Category "c", Float "threshold") -> Array:
 	return "Arr"[!"IsEliminated"]
 ```
 
-### Performance Metric
+#### Performance Metric
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/6_21_56_25_202405062156641.png" alt="image-20240506215622731" style="zoom:33%;" />
 
@@ -136,7 +136,7 @@ fn NMS(Category "c", Float "threshold") -> Array:
 
 不难设想，最好的情况就是：分数最高的几张图片，已经将所有的 GT boxes recall 了。然后剩下的就不管了。
 
-## Faster R-CNN
+### Faster R-CNN
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_0_13_24_202405070013728.png" alt="image-20240507001318714" style="zoom: 33%;" />
 
@@ -152,7 +152,7 @@ fn NMS(Category "c", Float "threshold") -> Array:
 
 这样做的好处就是**通过共用 backbone，大大降低 training 时的计算量**（i.e. 正向计算只用算一次，反向求导也只用求一次，而不是算/求 # of proposals 次）
 
-### Details of Pooling
+#### Details of Pooling
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_16_42_0_202405071642881.png" alt="image-20240507164156902" style="zoom:20%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_0_25_6_202405070025739.png" alt="image-20240507002502297" style="zoom:20%;" />
 
@@ -167,7 +167,7 @@ fn NMS(Category "c", Float "threshold") -> Array:
 1. feature map 上的均匀采样点，在 input image 上也是均匀的
 2. 将 box coordinates 作为参数，loss 的改变**是连续的**，而且在非边界处是可微的
 
-## Fast*er* R-CNN
+### Fast*er* R-CNN
 
 由于 selective search 算法用不了 GPU，因此我们如果需要加速，那么就必须使用神经网络：
 
@@ -182,7 +182,7 @@ RPN的工作流程大概是这样的（如下图所示）：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_3_49_15_202405070349641.png" alt="image-20240507034909857" style="zoom: 33%;" />
 
-### Two Stages VS One Stage
+#### Two Stages VS One Stage
 
 基本情况就如图下图所示，可以发现，有两个 stages：
 
@@ -213,17 +213,17 @@ RPN的工作流程大概是这样的（如下图所示）：
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/17_22_5_53_20241217220552.png"/>
 
-### Takeaways
+#### Takeaways
 
 - Two stage method (Faster-CNN) get the best accuracy, but are slower
 - Single-stage methods (SSD) are much faster, but don't perform as well
 - Bigger backbones (e.g. Resnet instead of MobileNet) improve performance, but are slower
 
-## YOLO: You Only Look Once
+### YOLO: You Only Look Once
 
 Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，所以寄希望于 one stage。YOLO 就是 one stage 的模型架构。
 
-### Architecture
+#### Architecture
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_12_3_20241218021203.png" width="70%"/>
 
@@ -236,7 +236,7 @@ Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，�
 
 上图就是每一个格子的参数数量，以及每个格子的 output tensor 的格式。
 
-### Prediction
+#### Prediction
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_17_49_20241218021749.png" width="70%"/>
 
@@ -249,7 +249,7 @@ Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，�
 - 最后，剩下的 bounding box 就是 prediction
 	- 每个 bounding box 的 category 就是所属格子的 category
 
-### Losses
+#### Losses
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/18_2_21_13_20241218022112.png"/>
 
@@ -262,7 +262,7 @@ Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，�
 > 对于格子 $i$ 而言，里面有 $B$ 个 anchor，其中 IOU 最高的那个 anchor $j$，决定了 $\mathbb 1^{obj}_{ij}$
 
 
-## CornerNet: multi-object detection without anchors
+### CornerNet: multi-object detection without anchors
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_17_16_47_202405071716323.png" alt="image-20240507171643885" style="zoom:33%;" />
 
@@ -275,6 +275,6 @@ Faster R-CNN 是 two stage 的，速度还是比较慢。我们希望更快，�
     - embeddings 就是**该区域的 embedding 向量**
 2. 我们通过将 heatmap 上高分的 upper left 和 lower left，根据 embedding 的相似程度来匹配，从而无需 anchor 即可得到 bounding box
 
-# Conclusion
+## Conclusion
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/7_5_51_46_202405070551700.png" alt="image-20240507055139922" style="zoom:40%;" />

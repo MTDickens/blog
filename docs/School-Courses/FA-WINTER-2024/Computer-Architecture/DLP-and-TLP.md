@@ -1,4 +1,4 @@
-# Types of Vector Architectures
+## Types of Vector Architectures
 
 主要有两种：
 
@@ -7,7 +7,7 @@
 
 目前来说，主要还是用第二种。
 
-# Components of a Vector Processor
+## Components of a Vector Processor
 
 组成有三点：
 
@@ -18,7 +18,7 @@
 		- FP mult
 		- FP reciprocal (1/X)
 		- integer add, logical, shift
-	- ﻿﻿may have multiple of same unit
+	- may have multiple of same unit
 3. **Vector Load-Store Units**: Multiple elements fetched/stored per cycle
 	- may have multiple LSUs
 4. **Scalar registers**: single element for FP scalar or address
@@ -26,7 +26,7 @@
 > [!info]+ 优缺点
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_15_45_16_20241204154516.png"/>
-# Basic Vector Instructions
+## Basic Vector Instructions
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_15_52_34_20241204155233.png"/>
 
@@ -40,14 +40,14 @@
 v1 = a[0,:] # Unit stride: Get the 0-th row
 v2 = a[:, 0] # Non-unit stride: Get the 0-th column
 v3 = a[np.arange(a.shape[0]), np.abs(a).argmax(dim=1)] # Indexed: Get the value of each row that has the maximum absolute value
-# Note: `dim = 1` means that the argmax is ALONG dim = 1 (column), thus staying at the same dim = 0 (row).
+## Note: `dim = 1` means that the argmax is ALONG dim = 1 (column), thus staying at the same dim = 0 (row).
 ```
 
-## 例子
+### 例子
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_16_11_51_20241204161151.png"/>
 
-## Problem: 向量长度
+### Problem: 向量长度
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_16_13_32_20241204161331.png"/>
 
@@ -67,9 +67,9 @@ v3 = a[np.arange(a.shape[0]), np.abs(a).argmax(dim=1)] # Indexed: Get the value 
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_16_36_14_20241204163614.png"/>
 
-# Optimization
+## Optimization
 
-## Vector Chaining
+### Vector Chaining
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_17_8_38_20241204170838.png"/>
 
@@ -81,7 +81,7 @@ v3 = a[np.arange(a.shape[0]), np.abs(a).argmax(dim=1)] # Indexed: Get the value 
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_17_30_29_JPEG%E5%9B%BE%E5%83%8F-4D2E-8405-BD-0.jpeg"/>
 
-### Conveys and Chimes
+#### Conveys and Chimes
 
 我们在实际中，使用 conveys and chimes 技术来实现 vector chaining 这个概念。
 
@@ -106,7 +106,7 @@ v3 = a[np.arange(a.shape[0]), np.abs(a).argmax(dim=1)] # Indexed: Get the value 
 > 
 > Chaining 是为了将有 RAW 依赖关系（但是没有结构冲突）的相邻指令放在一起来执行。不过这个并行没有那么“真”，因为本质上还是数据流依次通过两个部件（并不是并行通过两个部件之类的），只是数据不用从寄存器中取出来、存进去再取出来、存进去，而只用取出来一次、存进去一次。这个其实是 exploit 了 DLP——我们省下来的时间，其实是数据流进出的时间，并不是指令执行的时间。
 
-## Conditional Execution
+### Conditional Execution
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_17_51_4_20241204175103.png"/>
 
@@ -119,13 +119,13 @@ mask = a != b
 a[mask] -= b[mask]
 ```
 
-### Compress and Expand
+#### Compress and Expand
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_18_13_42_20241204181342.png"/>
 
 在 numpy 中，上面代码实际的操作就是 compress + expand
 
-## 稀疏矩阵
+### 稀疏矩阵
 
 > [!info]
 > 
@@ -143,7 +143,7 @@ a[mask] -= b[mask]
 
 **Observation**: numpy 里面的 array，可以用 mask 或者 gather 的方式来变换数组（而且两者语法一样，都是 `array[mask_or_gather]`），其实和这里的概念是对应的
 
-## Multiple Lanes
+### Multiple Lanes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_18_36_49_20241204183648.png"/>
 
@@ -151,7 +151,7 @@ a[mask] -= b[mask]
 
 Multi-lane 可以和 chaining 相结合，这样，不仅 overhead 数量减少（chaining），一个 overhead 造成的时间消耗也减少了（multi-lane）。
 
-# Two Views of Vectorization
+## Two Views of Vectorization
 
 > [!info]
 > 
@@ -167,15 +167,15 @@ Multi-lane 可以和 chaining 相结合，这样，不仅 overhead 数量减少�
 
 - 其实就是视作 multi-threading，一共有 n 个 threads
 
-# GPU
+## GPU
 
-## Overview
+### Overview
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_19_10_52_20241204191051.png" width="50%"/>
 
 GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thread）。不过这里的 thread，直接由 GPU 硬件进行管理，不受应用程序或者操作系统的控制。
 
-## GPU Memory Structure
+### GPU Memory Structure
 
 - **GPU memory** is shared by all _Grids_ (vectorized loops).
 - **Local memory** is shared by all threads of SIMD instructions within _a Thread Block_ (body of a vectorized loop).
@@ -185,9 +185,9 @@ GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thr
 
 ***TODO***
 
-# Multiprocessors
+## Multiprocessors
 
-## 若干种模型
+### 若干种模型
 
 - Shared Memory
 	- NUMA
@@ -203,9 +203,9 @@ GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thr
 
 另外，如果所有处理器都能通过**共享主存**来互相传递消息，那么就是**集中式**；如果只能通过专用的 **message passing**，那么就是**分布式**的。
 
-## Shared Memory
+### Shared Memory
 
-### NUMA vs UMA
+#### NUMA vs UMA
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/13_16_29_39_20241213162938.png"/>
 
@@ -217,7 +217,7 @@ GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thr
 	- 也就是，假如说不关注每一块处理器使用的内存的话，那么 interconnect 又会成为瓶颈，而且此时延迟比 UMA 更大
 	- 当然，对于 NUMA 而言，无论怎样 scale up，如果每一个处理器主要都是使用其本身的内存，那么 latency 都是常数
 
-### Pros and Cons
+#### Pros and Cons
 
 好处很显然：
 
@@ -230,13 +230,13 @@ GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thr
 - 同时，数据保护也会成为一个问题
 - Scalability 也不太好，因为 communication model is so tightly coupled with process address space
 
-## Message Passing
+### Message Passing
 
 > 我们现在越来越少用 message passing 了
 
 每当需要无法直接使用 memory access 取到的数据的时候，就去进行 I/O 调用，“显式”地获取其它 processor 的数据。
 
-### Pros and Cons
+#### Pros and Cons
 
 好处：
 
@@ -247,7 +247,7 @@ GPU 采用 Single Instruction Multiple Threads 的视角（这里是 data as thr
 
 - 编程模型复杂
 
-## Trends
+### Trends
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/13_17_4_42_20241213170441.png"/>
 
@@ -255,7 +255,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 因此，我们着重需要解决 shared memory 的问题——synchronization
 
-# Cache Coherence
+## Cache Coherence
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_1_49_12_20241214014912.png"/>
 
@@ -268,12 +268,12 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 因此，我们把上面三条弱化成下面两条：
 
-- ﻿﻿Any write must **eventually** be seen by a read
+- Any write must **eventually** be seen by a read
 	- 注意这里是 eventually，不是 immediately
-- ﻿﻿All writes are **seen in proper order**
+- All writes are **seen in proper order**
 	- 注意这里是 proper order（i.e. 任意 order，只要所有处理器都认为是这个 order），不是 time order
 
-## Snooping 协议
+### Snooping 协议
 
 **基本思想**：一个处理器对某个内存地址完成了写操作之后，就需要将本次操作通过总线广播出去。然后，所有 cache 会根据总线上的信息，**主动**做一个响应。
 
@@ -291,7 +291,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 上面的协议只保证了 **writes must eventually be seen by a read**。至于 **seen in proper order**，由于总线本身就是独占的，所有 processor 都会去抢总线资源，这个抢到的顺序，就自然决定了这个 "proper order"。
 
-### Example: Write Invalid + Write Back
+#### Example: Write Invalid + Write Back
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_3_31_26_20241214033126.png"/>
 
@@ -310,11 +310,11 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_5_28_35_%E6%88%AA%E5%B1%8F2024-12-14%2005.26.19.png"/>
 
-## More Protocols
+### More Protocols
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_5_30_39_20241214053038.png"/>
 
-## MESI 协议
+### MESI 协议
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_5_39_8_20241214053907.png"/>
 
@@ -328,7 +328,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 **好处**：处在 exclusive 状态下，CPU write 的时候，不需要在总线上广播 write；CPU read 的时候，不需要在总线上广播 read。如果我们确实需要读入一个数据，然后做很多操作，那么这样做可以大大减小延迟和负载。
 
-## Performance
+### Performance
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_5_58_53_20241214055852.png"/>
 
@@ -341,7 +341,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_6_1_31_20241214060130.png"/>
 
-# 内存一致性
+## 内存一致性
 
 > [!info]+ Coherence vs Consistency
 > 
@@ -365,7 +365,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 - 部分存储定序（part store order，PSO）
 - 宽松存储模型（relax memory order，RMO）
 
-## SC：顺序一致性
+### SC：顺序一致性
 
 顺序一致性是最简单的内存模型，也称为强定序模型。CPU会**按照程序顺序来执行所有的load与store动作**，即按照它们在程序中出现的次序来执行。从主存储器和CPU的角度来看，load和store是顺序地对主存储器进行访问。PS：可以想象成只有共享存储，没有独立存储。
 
@@ -389,7 +389,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 未同步程序在顺序一致性模型中虽然整体执行顺序是无序的，但所有线程都只能看到一个一致的整体执行顺序。以上图为例，线程 A 和 B 看到的执行顺序都是：B1- >A1->A2->B2->A3->B3。之所以能得到这个保证是因为顺序一致性内存模型中的每个操作必须立即对任意线程可见。
 
-## TSO：完全存储定序
+### TSO：完全存储定序
 
 为了提高CPU的性能，芯片设计人员在CPU中包含了一个存储缓存区（store buffer），它的作用是为store指令提供缓冲，使得CPU不用等待存储器的响应。所以对于写而言，只要store buffer里还有空间，写就只需要1个时钟周期（哪怕是ARM-A76的L1 cache，访问一次也需要3个cycles，所以store buffer的存在可以很好的减少写开销），但这也引入了一个访问乱序的问题。
 
@@ -425,7 +425,7 @@ tl;dr: 共享内存，局部 UMA，全局 NUMA。
 
 所以，我们可以看到，在store buffer被引入之后，内存一致性模型已经发生了变化（从SC模型变为了TSO模型），会出现store-load乱序的情况，这就造成了代码执行逻辑与我们预先设想不相同的情况。而且随着内存一致性模型越宽松（通过允许更多形式的乱序读写访问），这种情况会越剧烈，会给多线程编程带来很大的挑战。
 
-## PSO：部分存储定序
+### PSO：部分存储定序
 
 芯片设计人员并不满足TSO带来的性能提升，于是他们在TSO模型的基础上继续放宽内存访问限制，允许CPU以非FIFO来处理store buffer缓冲区中的指令。CPU只保证地址相关指令在store buffer中才会以FIFO的形式进行处理，而其他的则可以乱序处理，所以这被称为部分存储定序（PSO）。
 
@@ -443,7 +443,7 @@ S1与S2是地址无关的store指令，cpu执行的时候都会将其推到store
 
 从这里可以看到，store-store乱序的时候就会将我们的多线程代码完全击溃。所以在PSO内存模型的架构上编程的时候，要特别注意这些问题。
 
-## RMO：宽松内存模型
+### RMO：宽松内存模型
 
 丧心病狂的芯片研发人员为了榨取更多的性能，在PSO模型基础上，更进一步的放宽了内存一致性模型，不仅允许store-load，store-store乱序。还进一步允许load-load，load-store乱序， 只要是地址无关的指令，在读写访问的时候都可以打乱所有load/store的顺序，这就是宽松内存模型（RMO）。
 

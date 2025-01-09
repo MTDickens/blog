@@ -1,4 +1,4 @@
-# Language Class 的包含关系
+## Language Class 的包含关系
 
 **结论：**
 
@@ -49,9 +49,9 @@ def T(i):
 
 由于 $\exists k: M_k = T$，因此：如果 $T(k) = accept$，那么 $T(k) = ~run(T, k) = reject$; 如果 $T(k) = reject$，那么 $T(k) = ~run(T, k) = accept$。矛盾。从而 $T$ 这个图灵机不应该存在，从而 $H'$ 不应该存在，从而 $L(H)$ 是递归语言，但是**不是**递归可枚举语言。$\blacksquare$
 
-# 几种 R 和 RE 的语言
+## 几种 R 和 RE 的语言
 
-## $A_{CFG} = \{\langle G, w \rangle: w \in L(G)\}$ is recursive
+### $A_{CFG} = \{\langle G, w \rangle: w \in L(G)\}$ is recursive
 
 很简单，我们将 CFG $G$ 转换成等价的 Chomsky Normal Form (CNF)，也即：
 
@@ -72,7 +72,7 @@ $$
 
 这样，我们就可以在有限时间内（其实还是指数时间内）模拟 $A_{CFG}$。从而必然停机，从而这个语言是 recursive。
 
-## $E_{CFG} = \{G: \exists w: w \in L(G)\}$ is recursive
+### $E_{CFG} = \{G: \exists w: w \in L(G)\}$ is recursive
 
 我们可以直接把 CNF 规则变成逻辑：
 
@@ -86,15 +86,15 @@ $$
 
 $G \in E_{CFG}$，当且仅当 $G$ 中规则所代表的逻辑，最终可以推出 $x_S$。这个判定甚至是 $\mathcal O(n)$ 的。
 
-## $A_{TM}$ is recursively enumerate
+### $A_{TM}$ is recursively enumerate
 
 我们可以通过在通用图灵机上来模拟 $A_{TM}$。这个通用图灵机显然是 semi-decidable。
 
-## $A_{TM}$ is *NOT* recursive
+### $A_{TM}$ is *NOT* recursive
 
 通过证明 Rice's Theorem（见下），这就是推论。
 
-## $ALL_{PDA}$ is *NOT* recursive
+### $ALL_{PDA}$ is *NOT* recursive
 
 **证明方法**：将停机问题规约到 $ALL_{PDA}$。
 
@@ -102,7 +102,7 @@ $G \in E_{CFG}$，当且仅当 $G$ 中规则所代表的逻辑，最终可以推
 
 我们的 PDA 可以这样：如果
 
-# Rice's Theorem
+## Rice's Theorem
 
 **定义（$L(P)$）**：$P$ 是一个性质（比如“L(M) 为空”“L(M) 有限”等等），$L(P)$ 是**所有满足**条件 $P$ 的递归可枚举语言。
 
@@ -110,7 +110,7 @@ $G \in E_{CFG}$，当且仅当 $G$ 中规则所代表的逻辑，最终可以推
 
 **Lemma**: $ALL_{TM}, E_{TM}, A_{TM}, EQ_{TM}$ 等等都不可被判定。
 
-# 规约
+## 规约
 
 不妨假设我们现在的规约都是在图灵机计算模型之下（对于 PDA、DFA 等等其它计算模型，也可类比）：
 

@@ -1,14 +1,14 @@
-# Overview
+## Overview
 
 单目视觉必然会损失深度信息，因此最终的成像就是 2D 图片。
 
 很多时候，我们采用针孔相机模型来近似镜头相机。
 
-# Pin-Hole Camera
+## Pin-Hole Camera
 
 
 
-# Depth of Field
+## Depth of Field
 
 对于不满足 $\frac 1 u + \frac 1 v = \frac 1 f$ 的物体，无法成一个绝对清晰的像。但是如果 $\frac 1 u$ 和 $\frac 1 f - \frac 1 v$ 相差不大的话，物体一点发出的光，在像平面虽然无法汇聚成一个点，但是可以汇聚在一个足够小的圆内。这个圆被称为**弥散圆** (circle of confusion)
 
@@ -21,15 +21,15 @@
 > 1. 光圈越大（i.e. 光圈半径越小），depth of field 越大
 > 2. 焦距越大，depth of field 越小
 
-# Field of View
+## Field of View
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_11_44_58_20241206114457.png"/>
 
 Field of view 就是立体角。不过我们往往用这个立体角一个方向上的平面角来代替。
 
-# 畸变
+## 畸变
 
-## 径向畸变
+### 径向畸变
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_12_28_34_20241206122834.png" width="50%"/>
 
@@ -59,7 +59,7 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_12_58_1_20241206125801.png"/>
 
-## 切向畸变
+### 切向畸变
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_12_59_18_20241206125918.png" width="50%"/><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_13_0_38_20241206130037.png" width="50%"/>
 
@@ -82,7 +82,7 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/6_13_3_23_%E6%88%AA%E5%B1%8F2024-12-06%2013.03.04.png" width="70%"/>
 
-## 畸变校正
+### 畸变校正
 
 已知内参矩阵，可以通过
 

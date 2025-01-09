@@ -1,4 +1,4 @@
-# 泛型
+## 泛型
 
 泛型被广泛应用于
 
@@ -80,7 +80,7 @@ fn main() {
 - 模板的 implementation 不需要加 `::`，但是 call 的时候需要加 `::`
 - Rust 有自动类型推断的功能
 
-## Const 泛型
+### Const 泛型
 
 另外，如同 C++ 的 `std::array<type, const length>` 一样，我们可以让一个类型本身为整数（称为**const 泛型**）
 
@@ -108,11 +108,11 @@ fn main() {
 }
 ```
 
-# Trait
+## Trait
 
 Trait，说白了，就是 Haskell 的 type class。
 
-## Example
+### Example
 
 ```rust
 pub trait Summary {

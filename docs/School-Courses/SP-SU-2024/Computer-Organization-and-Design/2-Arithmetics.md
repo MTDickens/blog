@@ -1,6 +1,6 @@
-# 加法器
+## 加法器
 
-## Carry Select Adder
+### Carry Select Adder
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403121457698.png" alt="image-20240312145713051" style="zoom: 50%;" />
 
@@ -13,25 +13,25 @@
 
 本质上，这就是**空间换时间**。
 
-# 乘法器
+## 乘法器
 
-## 无符号乘法器
+### 无符号乘法器
 
 **注：**我们以 64 位乘法为例。
 
-### Naive Multiplier V1
+#### Naive Multiplier V1
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403121509051.png" alt="img" style="zoom: 33%;" />
 
 如图，由于我们需要对 multiplicand 进行移位（类比：我们列竖式不就要移位嘛），因此需要 128 位储存 multiplicand 和 product，**同时还需要 128 位 ALU**。
 
-### Naive Multiplier V2
+#### Naive Multiplier V2
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403121511948.png" style="zoom: 33%;" />
 
 如图，我们做了一个小优化：移位是**相对**的。与其移位 multiplicand，不如移位 product。这样，我们就只需要 64 位 multiplicand 了。**更关键地，我们只需要 64 位 ALU 了，速度提升至少一倍。**
 
-### Naive Multiplier V3
+#### Naive Multiplier V3
 
 进一步，我们发现，右上的 multiplier shift right 和 中间的 product shift right 是**同步进行**的。
 
@@ -43,7 +43,7 @@ Naive Multiplier V3 的流程如下：
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403121533720.png" alt="image-20240312153344474" style="zoom: 50%;" />
 
-## 有符号乘法器
+### 有符号乘法器
 
 有符号的数字，如果相乘之后扩展其位数（比如，我们对两个 32 位整数进行相乘，然后将结果储存在 64 位整数中），那么，就不可以直接相乘。
 
@@ -57,7 +57,7 @@ Naive Multiplier V3 的流程如下：
 
 不过这样做并不方便，而且比较慢。
 
-### Booth 算法
+#### Booth 算法
 
 对于 multiplier，我们以前只关注目前的位（记为 $\newcommand{vc}{v_{cur}}\vc$）
 
@@ -75,7 +75,7 @@ Naive Multiplier V3 的流程如下：
 
 - **注意**：最开始的时候，由于 $\vc$ 之前并没有值，我们约定 $\vp$ 最初为 0。
 
-#### 例子
+##### 例子
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191941633.png" alt="image-20240312160441658" style="zoom:50%;" />
 
@@ -87,13 +87,13 @@ Naive Multiplier V3 的流程如下：
     - `1110 0010`  -> `1111 0001`, `0110 0010` -> `0011 0001`
 - 最后，乘数和被乘数是多少位的乘法，就进行多少个 iteration
 
-### 快速乘法
+#### 快速乘法
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403121618273.png" alt="img" style="zoom:50%;" />
 
 如图，64 位数乘 64 位数，相当于 64 位 64 位数相加。
 
-# 除法器
+## 除法器
 
 Dividend (被除数) &div; Divisor (除数)
 
@@ -101,7 +101,7 @@ Dividend (被除数) &div; Divisor (除数)
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191643507.png" alt="img" style="zoom: 33%;" />
 
-## Naive iteration
+### Naive iteration
 
 1. 将 quotient 左移一位
 2. remainder 减去 divisor
@@ -110,7 +110,7 @@ Dividend (被除数) &div; Divisor (除数)
     2. 如果大于等于 0，那么就**不加回去**，并且**将 quotient 的最后一位由 0 变成 1**
 4. 将 divisor 右移一位 
 
-### 例子：7 &div; 2
+#### 例子：7 &div; 2
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191644738.png" alt="img" style="zoom: 33%;" />
 
@@ -124,7 +124,7 @@ Dividend (被除数) &div; Divisor (除数)
 
 如图，被除数是 b0111，除数是 b0010。除数和被除数如果长度为 n，就要进行 (n+1) 次 iteration
 
-## Better iteration
+### Better iteration
 
 **实际的 ALU**中，我们采用的是将被除数左移、商放到被除数右侧的方式。
 
@@ -139,11 +139,11 @@ Dividend (被除数) &div; Divisor (除数)
 4. 重复第 2 步，重复的次数就是 divisor 的长度
 5. 右移 remainder 左半部分（抵消第 1 步）
 
-### 例：7 &div; 2
+#### 例：7 &div; 2
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403192108208.png" alt="img" style="zoom: 33%;" />
 
-### 例：7 &div; 0（非法操作）
+#### 例：7 &div; 0（非法操作）
 
 左移 remainder: r0000 0111 -> r0000 1110
 
@@ -158,11 +158,11 @@ Dividend (被除数) &div; Divisor (除数)
 
 从而余数就是 7，商就是 1111。
 
-## 更复杂的除法
+### 更复杂的除法
 
 对于有符号除法，我们要求余数和被除数的符号相同。
 
-# IEEE 浮点数
+## IEEE 浮点数
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191744844.png" alt="img"  />
 
@@ -174,7 +174,7 @@ Dividend (被除数) &div; Divisor (除数)
 |    无穷    |   2<sup>e</sup>-1    |       0        |
 |    NaN     |   2<sup>e</sup>-1    |      非0       |
 
-## 单精度浮点数
+### 单精度浮点数
 
 ![img](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191802998.png)
 
@@ -211,11 +211,11 @@ ELSE:
 
 ![Floating Point Denormals, Insignificant But Controversial » Cleve's Corner:  Cleve Moler on Mathematics and Computing - MATLAB & Simulink](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403191832071.jpeg)
 
-## 四则运算
+### 四则运算
 
 浮点数的四则运算，本质上就是整数的四则运算（可能还要进行移位等操作），只不过指数部分需要额外处理，另外也需要处理符号位。
 
-### 乘法
+#### 乘法
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403261843798.png" alt="image-20240326184330522" style="zoom:50%;" />
 
@@ -227,7 +227,7 @@ ELSE:
 4. round 一下
 5. 确定 sign 的正负
 
-# 记录一下（与上文无关）
+## 记录一下（与上文无关）
 
 一个 object file 的
 
@@ -251,7 +251,7 @@ GCC 进行多文件编译的时候，可以在逻辑上理解成：
 
 因此，由于所有 obj 的符号都会包含，因此不用关心顺序；由于 library 只会包含目前已经在 undefined symbol table 的符号，因此需要考虑顺序。
 
-## 注意
+### 注意
 
 实际上，GCC 比这复杂的多。
 
@@ -283,7 +283,7 @@ int x = 2;
 
 ```c
 // main.c
-#include <stdio.h>
+##include <stdio.h>
 
 int food()
 {
@@ -318,7 +318,7 @@ collect2: error: ld returned 1 exit status
 
 ```c
 // main.c
-#include <stdio.h>
+##include <stdio.h>
 
 int food()
 {
@@ -336,7 +336,7 @@ int main()
 或者
 
 ```c
-#include <stdio.h>
+##include <stdio.h>
 
 int food();
 int x = 114514;

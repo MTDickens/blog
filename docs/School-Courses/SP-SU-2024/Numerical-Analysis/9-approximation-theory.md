@@ -2,9 +2,9 @@ $$
 \newcommand{norm}[1]{\left|#1\right|}
 $$
 
-# Discrete Least Square Approximation
+## Discrete Least Square Approximation
 
-## Definition
+### Definition
 
 给定多项式 $P_n(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_n x^n$ 来 approximate a set, s.t. $E = \sum_{i=1}^m (y_i - P_n(x_i))^2$ is minimal.
 
@@ -24,13 +24,13 @@ $$
 1. 必须要 $n \geq m-1$，否则无意义
 2. 如果 $n = m-1$，那么拟合多项式等价于插值
 
-## Problem
+### Problem
 
 上面的矩阵是稠密的，从而解方程需要 $\mathcal O(n^3)$ 的时间，效率不高。
 
 因此，我们需要选取一组合适的 basis，使得矩阵的形式更加好看。
 
-## Integration Norm
+### Integration Norm
 
 一个自然的 norm 就是：
 $$
@@ -61,7 +61,7 @@ $$
 > 
 > 如果我们需要在同一组 $x_1, x_2, \dots, x_n$ 上，使用大量不同的 $y_1, y_2, \dots, y_n$ 来拟合大量不同的多项式，那么就可以**重复利用上面的矩阵**，从而节省时间。
 
-# General Least Squares Problem
+## General Least Squares Problem
 
 目标：
 
@@ -104,7 +104,7 @@ $$
 
 **注意：** $P_{n-1}$ 是任意的 $n-1$ 阶的多项式，i.e. 不要求 $x^{n-1}$ 系数为 1。
 
-# Chebychev Polynomials
+## Chebychev Polynomials
 
 直观来想：一个最大偏差最小的函数，就应该是一个类似于 $\cos$ 这样的周期函数。
 
@@ -130,7 +130,7 @@ $f(\theta) = \cos(n\theta)$​ 是一个非常好的多根函数，可惜不是�
 
 我们只需要计算这几个点的插值就行了。
 
-## Economization of Power Series
+### Economization of Power Series
 
 > [!note]+ 目标
 > 

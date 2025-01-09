@@ -2,7 +2,7 @@ $$
 \newcommand{abs}[1]{|#1|}
 $$
 
-# Numerical Differentiation
+## Numerical Differentiation
 
 我们可以将函数进行泰勒展开，比如：$f(x_0 + h) = 1\left[f(x_0)\right] + 1 \left[hf'(x_0)\right] + \frac 1 2 \left[h^2 f''(x_0)]\right] + \mathcal o(h^3)$，从而如果给定了 $f(x_0), f(x_0 + h), f(x_0 + 2h)$，我们就可以忽略三阶小量，然后消去 $f(x_0), h^2 f''(x_0)$，只留下 $hf'(x_0)$，从而求出导数。
 
@@ -36,17 +36,17 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/9_0_19_59_202405090019215.png" style="zoom: 80%;" />
 
-# Numerical Integration
+## Numerical Integration
 
 数值积分，本质上来说，也很简单：将积分区间上插值多项式拿过来近似就行了。
 
-## Degree of Accuracy
+### Degree of Accuracy
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/9_1_8_7_202405090108513.png" style="zoom:80%;" />
 
 如图：对于这样的一次拟合，只能够准确求出 1 次及以下的多项式，因此 DoA 就是 1。
 
-## Higher Order Interpolation
+### Higher Order Interpolation
 
 假设我们在 $[a,b]$ 中间均匀插值，插 $n+1$ 个点（包括端点），也就是 $h = \frac {b - a} n, x_i = ih + a$。那么，就可以实现：
 
@@ -54,7 +54,7 @@ $$
 
 由于当 $n+1$ 为奇数的时候，$x_{mid} = \frac {a+b} n = x_{\frac n 2}$，因此就可以多抵消一阶小项，precision = n + 2。
 
-## Piecewise Approximation
+### Piecewise Approximation
 
 Motivation: 
 
@@ -82,7 +82,7 @@ $$
 
 就可以了。
 
-## Error Analysis
+### Error Analysis
 
 我们可以证明：Piecewise Simpson's Rule 是稳定的。
 
@@ -90,7 +90,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/16_7_55_54_202405160755496.png" style="zoom: 80%;" />
 
-## Recursive Integration Method: Romberg Integration
+### Recursive Integration Method: Romberg Integration
 
 我们可以通过反复外推的方式，通过最简单的 Trapezoidal Integration 推导成更加精细的积分。
 
@@ -507,15 +507,15 @@ $$
 
 - **好处是实现方便，无需将复杂的高阶积分的参数算出来，而且可以根据需要不断地进行加高阶**。
 
-# Adaptive Numerical Integration
+## Adaptive Numerical Integration
 
 以上的积分方式，只是进行了运算和误差估计。下面我们进行 adaptive 的 numerical integration。
 
-## 核心思想
+### 核心思想
 
 如果一个区间的误差已经足够小了，那么细化这个区间，从而榨取所剩无几的”剩余误差“，就是不明智之举。我们应该将目标放在榨取大误差区间的”剩余误差“。
 
-## 核心步骤
+### 核心步骤
 
 就是如果要控制整体的误差小于 $\varepsilon$，那么就可以通过**控制每一个长为 $h_i$ 的小段的误差小于 $\frac {h_i} {b - a} \varepsilon$**。
 
@@ -525,7 +525,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/17_2_36_35_202405170236614.png" alt="image-20240517023629100" style="zoom:50%;" />
 
-## Example: Adaptive Simpson Integration
+### Example: Adaptive Simpson Integration
 
 我们先在 [a,b] 上使用 Simpson Integration。
 $$
@@ -544,7 +544,7 @@ $$
 
 也就是说：如果 $\frac 1 {15} \abs{S(a,b) - S(a, \frac {a+b} 2) - S(\frac {a+b} 2, b)} < \varepsilon$，那么就可以认为 $\abs{\int_a^b f(x) \mathrm dx - S(a, \frac {a+b} 2) - S(\frac {a+b} 2, b)} < \varepsilon$。
 
-### 另一种理解
+#### 另一种理解
 
 除了通过”估计误差“这一角度来理解 $\abs{S(a,b) - S(a, \frac {a+b} 2) - S(\frac {a+b} 2, b)}$，我们还可以从下面这个形象的比喻中理解：
 
@@ -553,7 +553,7 @@ $$
     - 当然，61 分也比 60 分强，因此我们到时候还是返回揍了之后的结果（也就是还是返回细化的辛普森积分结果）
 3. 如果挨揍之后却考了 90 分（$\abs{S(a,b) - S(a, \frac {a+b} 2) - S(\frac {a+b} 2, b)}$ 比较大），那么就说明”孺子尚可教也“，我就继续揍，直到”朽木不可雕“为止
 
-## Algorithm
+### Algorithm
 
 通过上面的 example，我们可以自然地推导出算法。下面就是伪代码：
 
@@ -576,7 +576,7 @@ end
 
 - 当然，上面的伪代码没有很好地用到之前的结果，因此并不是非常高效
 
-# Better Methods: Gaussian Quadrature
+## Better Methods: Gaussian Quadrature
 
 对于**插值多项式**而言，插 $n+1$ 个点，只能达到 $n$ 的精度
 
@@ -642,7 +642,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_19_51_29_202405221951578.png"/>
 
-## 各种不同 $w(x)$ 下的多项式
+### 各种不同 $w(x)$ 下的多项式
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/22_20_1_24_202405222001633.png"/>
 

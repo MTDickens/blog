@@ -1,4 +1,4 @@
-# Interuption and Exception
+## Interuption and Exception
 
 Exception arises within the CPU when executeinstruction
 
@@ -26,7 +26,7 @@ Interruption is from an external I/O controller.
 
 但是，**RISC-V 不区分两者**，都是在执行某一条 inst 之前，检查是否有 exception/interruption，然后就跳转至对应的入口。跳转过去之后，再检查具体是 interruption 还是 exception，具体是哪种 interruption/exception，然后执行对应的动作。
 
-## Why we need Interruption?
+### Why we need Interruption?
 
 - 如果由 CPU 专门来轮询等待的话，就会非常浪费资源。
 - 如果只是在执行每一条指令之前，检查一下 interruption bit 是否置位，则可以干别的事（比如等待 I/O 的时候，就上下文切换，去执行别的进程，而把当前的进程挂起）。
@@ -41,7 +41,7 @@ Interruption is from an external I/O controller.
 
 具体地：将硬盘数据位置、大小以及希望存储到的内存位置发给 DMA，然后等待 DMA 执行即可。
 
-## How to Handle Exceptions?
+### How to Handle Exceptions?
 
 1. Save PC
     - In RISC-V: Supervisor Exception Program Counter (SEPC)
@@ -50,7 +50,7 @@ Interruption is from an external I/O controller.
 3. Jump to handler
     - In RISC-V: Entry address is in a special register: supervisor trap vector (STVEC), which can be loaded by OS
 
-# Privileged Levels
+## Privileged Levels
 
 特权可以保证不同的软件栈（不被非法访问）。
 
@@ -58,13 +58,13 @@ Interruption is from an external I/O controller.
 
 - 为方便起见，我们此处只使用一个 M
 
-# Control and Status Registers (CSR)
+## Control and Status Registers (CSR)
 
 如果要找一个 CSR，需要用到 12 位。因此一共有 4096 个 CSR。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_4_2_13_202404190402308.png" alt="image-20240419040206834" style="zoom:33%;" />
 
-## Instruction Overview
+### Instruction Overview
 
 具体而言，我们可以通过以下指令来改变 CSR：
 
@@ -81,11 +81,11 @@ Interruption is from an external I/O controller.
 - csr rci  rd,csr,imm：~imm&csr------>csr,csr------->rd,关闭某几位        
 - csr rsi  rd,csr,imm：imm|csr----->csr,csr------>rd,打开某几位
 
-## Address Mapping Conventions
+### Address Mapping Conventions
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_4_5_14_202404190405851.png" alt="image-20240419040512166" style="zoom:50%;" />
 
-## Privileged Call Instructions
+### Privileged Call Instructions
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_4_22_40_202404190422578.png" alt="image-20240419042237556" style="zoom:50%;" />
 
@@ -94,11 +94,11 @@ Obs:
 - ecall 本质上和 jal 是类似的
 - MEPC 就是用来存返回地址的
 
-## Some Important Registers
+### Some Important Registers
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_4_30_14_202404190430423.png" alt="image-20240419043011111" style="zoom: 50%;" />
 
-### `mstatus`: 全局状态
+#### `mstatus`: 全局状态
 
 这是一个全局寄存器，负责记录全局的情况。
 
@@ -115,7 +115,7 @@ Obs:
         2. SPP 只有两种情况（SPP, UPP），因此只需要一位
         3. UPP 只有一种情况（UPP），因此在这里被省略了
 
-### `mie`/`mip`: 更细粒度的状态
+#### `mie`/`mip`: 更细粒度的状态
 
 这两类寄存器，相比 `mstatus`，粒度更细。也就是说，如果 `mstatus` 的 xIE 为 1，那么`mie`/`mip` 就会对允许的 interrupt 进行更加细致的划分；如果是 0，那么所有 interrupt 均被禁止，`mie`/`mip` 也失去作用。
 
@@ -129,7 +129,7 @@ Obs:
 - xyIP 决定是否 enable 某种中断 pending
     - 也就是说：不处理这个中断，但是通知你这个中断出现了
 
-### `mtvec`: 入口地址
+#### `mtvec`: 入口地址
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_4_56_18_202404190456207.png" alt="image-20240419045613449" style="zoom: 50%;" />
 
@@ -139,11 +139,11 @@ Obs:
 - 当 mode 的值为 1 的时候，如果是中断，那么就跳到 base+4&times;cause
     - 比如说，external exception 的 cause 是 11，从而机器就跳到 base + 44
 
-### `mepc`: 返回地址
+#### `mepc`: 返回地址
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_5_31_25_202404190531424.png" style="zoom: 80%;" />
 
-### `mcause`: 异常/中断原因（与 `mtvec` 相配合）
+#### `mcause`: 异常/中断原因（与 `mtvec` 相配合）
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_5_34_9_202404190534835.png" style="zoom:80%;" />
 
@@ -151,19 +151,19 @@ Obs:
 
 **注意：** 不难发现，如果用的是向量模式，那么两个相邻的异常之间，就是一条指令。一条指令能够执行什么中断功能？能够执行 `jal zero, xxx`，继续跳至目标程序地址。
 
-# Priority
+## Priority
 
 不同的中断/异常可能是同时发生的，因此总要有一个先后顺序：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_5_41_4_202404190541702.png"/>
 
-# 中断处理过程
+## 中断处理过程
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_5_43_44_202404190543715.png" style="zoom: 80%;" />
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_5_49_31_202404190549133.png" style="zoom: 80%;" />
 
-# Privileged Architecture
+## Privileged Architecture
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/19_6_4_37_202404190604989.png"/>
 

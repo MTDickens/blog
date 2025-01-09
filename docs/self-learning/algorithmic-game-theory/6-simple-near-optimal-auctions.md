@@ -13,7 +13,7 @@ $$
 > 
 > How to define one auction is simpler than the other? Although we shall see many cases where one auction is definitely simpler than the other, but how to quantize it?
 
-# Prophet Inequality
+## Prophet Inequality
 
 > [!abstract]+
 > 
@@ -55,7 +55,7 @@ $$
 > 
 > - 具体来说，证明的时候，只需要把第二行改成 $(1-q(t)) * t + \sum_{i=1}^n \E[\pi_i - t | \forall j \neq i: \pi_j < t, \pi_i \geq t] * \Pr[\forall j \neq i: \pi_j < t, \pi_i \geq t]$（也就是用 $j \neq i$ 代替 $j < i$），即可
 
-## Example: Single-Item Auction
+### Example: Single-Item Auction
 
 对于 single-item auction 而言，由于 $\E_\v[\sum_{i=1}^n p_i(\v)] = \E_\v[\sum_{i=1}^n \varphi_i(\v) x_i(\v)]$，因此我们所需要的，就是最大化右侧：$\max_x \E_\v[\sum_{i=1}^n \varphi_i(\v) x_i(\v)] = \E_\v[\max_i (\varphi_i(\v))^+]$。
 
@@ -73,26 +73,26 @@ $$
 > 
 > - 具体详见 [timroughgarden.org/f13/l/l6.pdf](https://timroughgarden.org/f13/l/l6.pdf)
 
-## Case Study: Reserve Prices in Yahoo! Keyword Auctions
+### Case Study: Reserve Prices in Yahoo! Keyword Auctions
 
-### 理论依据
+#### 理论依据
 
 假设所有 bidder 均为 i.i.d. subject to $F$, where $F$ is a [regular distribution](https://en.wikipedia.org/wiki/Regular_distribution_(economics))，那么，利润最优的策略就是：rank bidders by bid (from the best slot to the worst) after applying the monopoly reserve price $\varphi^{-1}(0)$ to all bidders, where $\varphi$ is the virtual valuation function of $F$.
 
-### 计算过程
+#### 计算过程
 
 首先，如何求出每个关键字的 $\varphi_{keyword}^{-1}(0)$？Yahoo 采用了**对数正态分布**来对 $F_{keyword}$ 进行建模（this is somewhat ad hoc, but really doesn't matter）。通过统计历史上的出价信息，求出该分布的 $\mu, \sigma$。从而得到 $\varphi_{keyword}$，从而可以反求 $\varphi_{keyword}^{-1}(0)$。
 
 > [!info]+ 实际的统计
 > 
 > 由于 Yahoo! 使用的是 Generalized Second Price auction，因此
-### 结论
+#### 结论
 
 通过理论计算，可以发现之前的 reserve price 过低（$0.1 左右，而理论上的 optimal reserve price 是 $0.3 \~ $0.4）。
 
 提高 reserve price 之后，keywords with **thin market** 的利润有明显的上升。这是因为对于竞争激烈的市场，往往 reserve price 起不到作用（因为很大概率，会有至少两个 bids 的价格大于等于 reserve price），而 thin market 可以起到很好的作用。
 
-# Prior-Independent Auctions
+## Prior-Independent Auctions
 
 > [!abstract]+
 > 

@@ -1,6 +1,6 @@
-# Lec 8: Template Classes and Const Correctness
+## Lec 8: Template Classes and Const Correctness
 
-## Motivation
+### Motivation
 
 You were working at a graphics startup in 1998, and you needed a simple data structure to manage `Point` objects. 
 
@@ -19,7 +19,7 @@ private:
 
 You realized that you not only need to keep track `Point`, but also need to keep track of `bool`, `char`, `int`, `short`, `long`, `long long`, `unsigned int`, `unsigned char`, `unsigned short`, `unsigned long`, `unsigned long long`, `float`, `double`, `long double`, `std::size_t`, `ptrdiff_t`, `int8_t`, `int16_t`, `int32_t`, `int64_t`, `uint8_t`, `uint16_t`, `uint32_t`, `uint64_t`, `char16_t`, `char32_t`, `wchar_t`, `void`, `nullptr`, and finally, `enum` types. That's A LOT of types!
 
-## Template Class
+### Template Class
 
 > Definition: Template Class is a class that is **parametrized** **over** some number of **types**; it is comprised of member variables of a general type/types.
 
@@ -42,11 +42,11 @@ private:
     int value;
 }
 */
-#pragma once
+##pragma once
 
 // When making template classes you need to `#include` the `.cpp` implementation in the .h file. This is a compiler quirk
 // — not super important for this class, but just keep it in mind when working with templates. 
-#include "container.cpp"
+##include "container.cpp"
 
 template <typename T>
 // This is a template
@@ -67,7 +67,7 @@ private:
 * container.cpp
 */
 
-#include <container.h>
+##include <container.h>
 
 template <typename T>
 Container<T>::Container(T val) {
@@ -87,7 +87,7 @@ T Container<T>::getValue () {
 3. When used in templates, **`typename` and `class` are interchangeable**.
 4. When **making template classes** you need to **`#include` the `.cpp` implementation in the .h file**. This is a compiler quirk — not super important for this class, but just keep it in mind when working with templates. 
 
-## Const Correctness
+### Const Correctness
 
 ```cpp
 std::string stringify(const Student& s){
@@ -105,13 +105,13 @@ So, **we add `const` at the end of a member method that does not modify `this`**
 - So, **the "const correctness" is actually the `const` for `this`**!
 - And, for sure, **`const` objects can only interact with const-interface!**
 
-## `const_cast`
+### `const_cast`
 
 `const_cast` performs operations on the low-level`const` (referred to as "casting away the const") in C++.
 
 ```cpp
-#include <iostream>
-#include <string>
+##include <iostream>
+##include <string>
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-# Unsupervised Learning
+## Unsupervised Learning
 
 Supervised Learning: given $D \sim \mathcal{X \times Y}$,  learn a function $f: \mathcal X \to \mathcal Y$
 
@@ -18,7 +18,7 @@ Unsupervised Learning: given $D \sim \mathcal X$, learn the "intrinsic structure
 
 后者的好处就是：由于无类别的数据远多于有类别的数据，因此 supervised learning 需要耗费手工标注的成本，而 unsupervised learning 无需标注。
 
-# Difference Between Models
+## Difference Between Models
 
 我们可以将 model 分为 3 类：
 
@@ -26,7 +26,7 @@ Unsupervised Learning: given $D \sim \mathcal X$, learn the "intrinsic structure
 - (Unconditional) Generative Model: $p(x)$
 - Conditional Generative Model: $p(x|y)$​​
 
-## Discriminative Model
+### Discriminative Model
 
 注意到，**同一个样本空间内，概率之间是互相竞争的，如果你多，那么我必须少；反之亦然**。因此，如果使用 $p(y|x)$，就会产生以下的后果：
 
@@ -34,7 +34,7 @@ Unsupervised Learning: given $D \sim \mathcal X$, learn the "intrinsic structure
 
 - 虽然上面两张图片和猫、狗没有任何关系，但是由于 $p(y|x)$ 中，**不同标签之间是竞争关系**，因此，必须有一个标签的概率比较大，即使这个标签对于这张图片而言非常离谱。
 
-## Generative Model
+### Generative Model
 
 如果采用生成式模型，那么互相竞争的就不是标签，**而是 $\mathrm x$ 本身**。
 
@@ -46,7 +46,7 @@ Unsupervised Learning: given $D \sim \mathcal X$, learn the "intrinsic structure
 
 另外，**generative model 实际上是有能力去 reject 一个图片的**。比如说该张图片的出现概率非常低，那么，模型可以认为这张图片就是不正常的图片，从而拒绝。相比之下，discriminative model 并不能拒绝图片，因为所有标签概率之和总是 1。
 
-## Conditional Generative Model
+### Conditional Generative Model
 
 By Bayesian Law:
 
@@ -56,13 +56,13 @@ By Bayesian Law:
 
 - 和 generative model 一样，conditional generative model 可以拒绝一张图片。比如说即使是 $\mathop{\max}_{y \in \mathcal Y} p(x | y)$ 也在 threshold 之下。
 
-## Comparison
+### Comparison
 
 最根本的两种模型，就是 discriminative model 以及 generative model。
 
 <img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240519191445966.png" alt="image-20240519191445966" style="zoom:50%;" />
 
-# Generative Models
+## Generative Models
 
 Generative model 的目标函数就是：
 $$
@@ -93,13 +93,13 @@ $$
 
 然后，我们将每一张图片都这样做，然后加起来，就得到了 $\prod_i p(x^{(i)})$
 
-## Taxonomy
+### Taxonomy
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_19_19_25_202405191919469.png" alt="image-20240519191919050" style="zoom: 50%;" />
 
-## Autoregressive Model
+### Autoregressive Model
 
-### Pixel RNN
+#### Pixel RNN
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_19_47_9_202405191947943.png" alt="image-20240519194705448" style="zoom: 33%;" />
 
@@ -107,7 +107,7 @@ Pixel RNN，顾名思义，就是在 Pixel 上使用 RNN。给出依赖关系（
 
 **缺点：**速度太慢。
 
-### Pixel CNN
+#### Pixel CNN
 
 另外还有一种 Pixel CNN，也就是 Mask CNN 的一个变种：
 
@@ -117,13 +117,13 @@ Pixel RNN，顾名思义，就是在 Pixel 上使用 RNN。给出依赖关系（
 
 当然，这虽然相比 pixel RNN 有所进步，但是其实也并不快。
 
-### Pros and Cons
+#### Pros and Cons
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/19_20_22_23_202405192022842.png" alt="image-20240519202220339" style="zoom:50%;" />
 
 当然，还有很多 tricks 可以提升这些 RNN 的效率。
 
-## Autoencoders
+### Autoencoders
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_17_10_3_202405201710931.png" alt="AutoEncoder (一)-認識與理解- NLP & Speech Recognition Note - Medium" style="zoom: 33%;" />
 
@@ -166,11 +166,11 @@ $$
 $$
 因此，我们找到了目标：找到这样的 encoder 和 decoder，使之能够最大化 $\mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL} [q_\phi(z|x) \parallel p(z)]$。
 
-## VAE
+### VAE
 
-### How To Optimize?
+#### How To Optimize?
 
-#### KL Divergence
+##### KL Divergence
 
 其中，$q_\phi(z|x)$ 由 encoder 给出，而 $p(z)$ 这个 prior 并不是估计，而是我们事先 fix 的一个 Gaussian distribution。
 
@@ -210,14 +210,14 @@ $$
 
 最后，我们设置 $p(z)$ 为一个 fixed distribution，就是为了让最后学习出来的 z 满足这样性质良好的分布，i.e. 我们使用高斯分布来采样 $z$，可以生成 reasonable 的图像。
 
-#### $\mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)]$
+##### $\mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)]$
 
 我们使用数据集中的 $x$，通过 encoder $q_\phi(z|x)$，生成若干个 $z$ 出来（记作 $Z$），然后就是：
 $$
 \mathbb E_{z \sim q_\phi(z|x)}[\log p_\theta(x|z)] \approx \frac1{|Z|}\sum_{z \in Z} \log p_\theta(x|z)
 $$
 
-### How to Train (in Details)?
+#### How to Train (in Details)?
 
 1. 将数据集的一个 x 通过 encoder，得到 $z_x \sim q_\phi(z|x)$
 2. 计算出该 x 为 condition 下的 KL 散度
@@ -227,27 +227,27 @@ $$
 6. 从而，通过 (2),（5)，我们就得到了 $\log p(x)$ 的一个估计的下界
 7. 对每一个数据集里的 x 都重复这样的操作，就计算得到了这个数据集的 likelihood 的下界。我们的目标就是最大化这个 likelihood，梯度上升即可
 
-### How to Generate?
+#### How to Generate?
 
 由于 $z$ 就是一个标准的高斯分布，因此我们可以直接进行采样，然后生成 $p_{x|z}(x)$，然后再在 $p_{x|z}(x)$ 中对 x 进行采样，从而得到结果 $x$。
 
-### Interpretability
+#### Interpretability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_20_13_16_202405202013526.png" alt="image-20240520201312848" style="zoom:50%;" />
 
 通过调整里面的参数，可以得到不同的分布。由于 z 的每两个参数之间是独立的，因此可以这样得到某一个参数的实际含义。
 
-### Practice: Image Editing
+#### Practice: Image Editing
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_20_24_47_202405202024058.png" alt="image-20240520202443575" style="zoom:50%;" />
 
 不足之处，就是 VAE 会导致图片变模糊——这有可能是因为我们对图片采用了不恰当的假设，图片的真实高斯分布不是对角矩阵。
 
-## Pros and Cons of Autoregressive Models and VAE
+### Pros and Cons of Autoregressive Models and VAE
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_20_24_23_202405202024681.png" alt="image-20240520202420018" style="zoom:50%;" />
 
-## VQ-VAE2
+### VQ-VAE2
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_20_33_58_202405202033976.png" alt="image-20240520203356402" style="zoom:50%;" />
 
@@ -256,7 +256,7 @@ $$
 1. 使用多层的 encoder 以及 decoder
 2. 在每一层上，使用 PixelCNN
 
-## GAN
+### GAN
 
 GAN 使用一个生成器和一个判别器：
 
@@ -303,13 +303,13 @@ $$
 
 由于 Jensen-Shannon Divergence 是一个度量，因此在 JSD 取到最小值，当且仅当 p 和 q 相等。
 
-### Problem: Gradient Vanishing
+#### Problem: Gradient Vanishing
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/20_22_18_58_202405202218989.png" alt="image-20240520221855351" style="zoom:50%;" />
 
 为了避免一开始的梯度消失（如图中蓝线所示），我们可以将 $\log (1 - D(G(z)))$ 改成 $\log D(G(z))$。这样，两个公式在趋势上是一致，形式上是类似的，但是后者在一开始可以有比较大的梯度。
 
-### Caveats of GAN
+#### Caveats of GAN
 
 1. 上文中说到：令 $D'(x) = \frac{p_{data}(x)}{p_{data}(x) + p_G(x)}$。但是，实际上 $D$ 可能根本表示不出来右边这个函数。
 
@@ -328,11 +328,11 @@ $$
     
 3. 最后一点，JSD 并不是 metric，因为不满足三角形不等式。当然这一点貌似无关紧要。
 
-### Practices of GAN
+#### Practices of GAN
 
 我们除了在 z 上随机取点以外，还可以通过 vector math 来进行更加复杂的操作。比如在两个 z 向量之间进行插值，就可以得到 very non-trivial interpolation between their corresponding images；乃至是 man w glasses - man w/o glasses + woman w/o glasses = woman w glasses。
 
-### Conditional GAN
+#### Conditional GAN
 
 为了在 GAN 中加入条件信息，我们需要向生成器和鉴别器中引入这个信息。
 

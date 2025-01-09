@@ -2,7 +2,7 @@ $$
 \newcommand{argmax}{\mathop{\arg\max}}
 $$
 
-# Definition
+## Definition
 
 Here are the ingredients of a general, multi-parameter mechanism design problem:
 
@@ -21,7 +21,7 @@ Multi-parameter 自然包括了 single-parameter。以 single-item auction 为�
 
 比如：$v_i(\omega) = \text{private valuation of } i * [\omega = i] - \text{private penalty of }i * [\omega \in \text{ opponents of } i]$。我们当然希望自己得到，但是即使得不到，也最好不要让竞争对手得到。
 
-# The VCG Mechanism
+## The VCG Mechanism
 
 > [!warning]+ 单变量和多变量的区别 1
 > 
@@ -97,9 +97,9 @@ $$
 > 
 > 因此，我们也需要加上一个常数，保证 utility is non-negative。而 $\underset{\omega \in \Omega} {\max} \sum_{j \neq i} b_j(\omega)$ 恰好可以保证 non-negative utility（自行验证）。
 
-# Example: Combinatorial Auctions
+## Example: Combinatorial Auctions
 
-## Definition
+### Definition
 
 A combinatorial auction has **$n$ bidders**
 
@@ -127,7 +127,7 @@ The outcome set $\Omega$ corresponds to $n$-vectors $(S_1, \ldots, S_n)$, with $
 > One generally assumes that $v_i(\emptyset) = 0$ and that $v_i(S) \leq v_i(T)$ whenever $S \subseteq T$ (i.e., "free disposal").
 
 
-## Computational Intractability of Welfare-Maximization
+### Computational Intractability of Welfare-Maximization
 
 有两大问题：
 
@@ -136,7 +136,7 @@ The outcome set $\Omega$ corresponds to $n$-vectors $(S_1, \ldots, S_n)$, with $
 
 其中，第一个问题，可以使用类似于 English auction (i.e. ascending auction，也就是喊价拍卖) 的方式，在平均意义上解决（当然最坏还是需要指数级别）；第二个问题，就是近似算法了。
 
-## Problems on Revenue
+### Problems on Revenue
 
 这里举两个例子：
 
@@ -152,7 +152,7 @@ The outcome set $\Omega$ corresponds to $n$-vectors $(S_1, \ldots, S_n)$, with $
 > 
 > 回想一下 Vickrey auction，可以发现 collusion 或者 false-name bidding 根本无效。但是，在这里，collusion（比如 2, 3 避免价格战，都只要一个）和 false-name（比如 2 为了零元购，就故意设立一个 3）
 
-## Yet Another Problem
+### Yet Another Problem
 
 Ascending auction 是重复博弈，因此就存在了各种使用数字进行合作、恐吓等等的可能性。如下：
 
@@ -162,9 +162,9 @@ Let’s consider license #378 in that auction, for spectrum use rights in Roches
 
 To make sure its message came through loud and clear, all of USWest’s retaliatory bids were a multiple of 1000 plus 378 — presumably warning McLeod to get the hell out of the market for Rochester, or else. This particular type of signaling can be largely eliminated by forcing all bids to be multiples of a suitably large number, but other opportunities for undesirable strategic behavior remain.
 
-# Case Study: Spectrum Auction
+## Case Study: Spectrum Auction
 
-## Terminology
+### Terminology
 
 > [!info]+ A dichotomy
 > 
@@ -182,14 +182,14 @@ To make sure its message came through loud and clear, all of USWest’s retaliat
 
 虽然在 spectrum auction 中，*complement* 非常常见，但是为简单起见，我们这一次就只考虑 *substitutes*。
 
-## Rookie Mistakes
+### Rookie Mistakes
 
 There are two naive mistakes that beginners often make:
 
 1. Sequential auction
 2. Seal-bid single-item auction
 
-### Sequential auction
+#### Sequential auction
 
 假如说组织两次拍卖，而且卖的是 identical items。
 
@@ -212,7 +212,7 @@ There are two naive mistakes that beginners often make:
 > 
 > The bids were surely far from equilibrium, and both the welfare and revenue achieved by this auction are suspect.
 
-### Seal-bid single-item auction
+#### Seal-bid single-item auction
 
 这样会有*非常明显的问题*：假如说有 10 个相同的 licenses，你只想获得一个。那么，你就必须仔细考虑自己的出价：
 
@@ -223,7 +223,7 @@ There are two naive mistakes that beginners often make:
 
 *另外一个问题*：如果有 3 个 bidder，分别 bid 两个相同的 licenses，每个 bidder 只要一个。那么，如果进行两次 bid where each bidder targets only one license, then **one of the licenses is likely to have only one bidder and will thus be given away for free** (or more generally, sold at the reserve price).
 
-## Simultaneous Ascending Auction
+### Simultaneous Ascending Auction
 
 > [!info]+ What is "ascending auction"?
 > 
@@ -245,16 +245,16 @@ There are two naive mistakes that beginners often make:
 - 但是，你可以在觉得某件商品太贵的时候，将这个 bid 移动到其它商品去。
     - 这就至少保证了，在拍卖 identical items 的时候，如果某个 item 太贵，就移到另外一个 identical item 上去
 
-### Benefits
+#### Benefits
 
 这样做，既没有直接让不同 bidder 之间“串通”，也给了 bidder 之间交流的可能（避免恶性竞争/不均匀竞争）：
 
 1. Price discovery: 假设有多个同样/类似的商品，那么，bidder 肯定是**哪一个 item 便宜，就把 bid 移动到哪一个上面**。从而，相同/类似的商品之间的价格**可以保持基本相同**，而不会出现 **bidder 一拥而上某一件商品，造成价格高；而其它同样的商品因为 bidder 少，因此价格低**。
 2. Valuation discovery: 在现实中，**对某一些商品进行估价，本身也是需要花钱的**。因此，随着拍卖的进行，对于一些价格高到离谱的商品，你就可以不用考虑了，从而避免多余的估价。
 
-### Vulnerabilities
+#### Vulnerabilities
 
-#### Demand Reduction
+##### Demand Reduction
 
 假设 $V_1(A/B) = 10, V_1(AB) = 20, V_2(A/B/AB) = 8$（也就是：1 号愿意要两件商品，且多一件就价格翻倍；2 号只愿意要一件）。
 
@@ -267,7 +267,7 @@ There are two naive mistakes that beginners often make:
 
 这只是一个简单的示例。在实际的复杂情形中，买家也会**尽量少选、慎选——越少人买，就越便宜，“你好我也好”**，从而需求量会下降。
 
-#### Issue with Complements: Exposure Problem
+##### Issue with Complements: Exposure Problem
 
 假设 $V_1(AB) = 100, V_2(A/B/AB) = 75$。
 
@@ -281,7 +281,7 @@ There are two naive mistakes that beginners often make:
 
 但是，如果 $V_2(A/B/AB) = 40$，那么 $V_1$ 还是应该出价的。从而就造成了 bidders 的**风险厌恶和谨慎出价**。
 
-### Variations of SAA
+#### Variations of SAA
 
 One design approach is to tack on one extra “proxy” round after the SAA where bidders can submit package bids on any subsets of items that they want, subject to an activity rule.
 
@@ -297,7 +297,7 @@ A second approach is to **predefine a limited set of allowable package bids**, r
     - etc. (all the way to sum of bids of leaf nodes).
 - 这样做是为了尽量避免 exposure problem
 
-# Case Study: Reverse Auction by FCC
+## Case Study: Reverse Auction by FCC
 
 **Reverse auction 相比前面的 SAA，有着截然不同的机制。**
 

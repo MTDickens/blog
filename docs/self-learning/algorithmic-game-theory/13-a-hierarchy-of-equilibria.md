@@ -1,4 +1,4 @@
-# Does pure Nash equilibrium always exist/unique?
+## Does pure Nash equilibrium always exist/unique?
 
 > [!note]+ Recap
 > 
@@ -26,7 +26,7 @@
 > 
 > 除此之外，还有无穷无尽的博弈规则，它们同样没有 pure-strategy Nash equilibrium.
 
-# Four Categories of Nash equilibrium
+## Four Categories of Nash equilibrium
 
 > [!note]+ Background
 > 
@@ -46,13 +46,13 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/22_0_30_42_202407220030216.png"/>
 
-## PNE: Pure Nash Equilibrium
+### PNE: Pure Nash Equilibrium
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/22_0_50_47_202407220050270.png"/>
 
 也就是说：如果只能改变自身策略，那么目前即最优。
 
-## MNE: Mixed Nash Equilibrium
+### MNE: Mixed Nash Equilibrium
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/22_1_22_34_202407220122020.png"/>
 
@@ -82,7 +82,7 @@
 > 
 > 因此，从原始定义出发的表示，和 Definition 是等价的
 
-## CE: Correlated Equilibrium
+### CE: Correlated Equilibrium
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/22_1_35_59_202407220135949.png"/>
 
@@ -108,7 +108,7 @@
 > - **直接计算**：可以使用单纯形法计算（因此已经是 P 问题）
 > - **巧妙计算**：有一种 learning algorithm，可以更快地算出（之后介绍）
 
-## CCE: Coarse Correlated Equilibrium
+### CCE: Coarse Correlated Equilibrium
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/22_2_30_16_202407220230975.png"/>
 

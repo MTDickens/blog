@@ -1,6 +1,6 @@
-# Lec 2.0：应用层概述
+## Lec 2.0：应用层概述
 
-## 网络应用的原理
+### 网络应用的原理
 
 - **网络应用协议的概念和实现方面**
   - 传输层的服务模型
@@ -9,7 +9,7 @@
   - 内容分发网络
 
 
-## 网络应用的实例
+### 网络应用的实例
 
 - **互联网流行的应用层协议**
   - HTTP
@@ -17,14 +17,14 @@
   - SMTP / POP3 / IMAP
   - DNS
 
-## 编程
+### 编程
 
 - **网络应用程序**
   - Socket API
 
-# Lec 2.1：应用层原理
+## Lec 2.1：应用层原理
 
-## 网络应用的体系结构
+### 网络应用的体系结构
 
 可能的应用架构：
 
@@ -32,7 +32,7 @@
 - 对等模式 (P2P:Peer To Peer)
 - 混合体：客户-服务器和对等体系结构 
 
-### CS 体系结构
+#### CS 体系结构
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402271717465.png" alt="image-20240227171723013" style="zoom:50%;" />
 
@@ -47,7 +47,7 @@
   - 可能是动态 IP
   - 不直接与其他客户端通信
 
-### P2P 体系结构
+#### P2P 体系结构
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402271723613.png" alt="image-20240227172321985" style="zoom:50%;" />
 
@@ -63,9 +63,9 @@
   - 可能是动态 IP
   - ~~不直接与其他~~任意端系统之间可以通信
 
-### 混合体系结构
+#### 混合体系结构
 
-#### Napster
+##### Napster
 
 - 文件搜索：集中
   - 主机在中心服务器上注册其资源
@@ -74,7 +74,7 @@
 - 文件传输：P2P
   - 任意Peer节点之间即时通信
 
-#### 即时通信
+##### 即时通信
 
 - 在线检测：集中
   - 当用户上线时，向中心服务器注册其IP地址
@@ -84,7 +84,7 @@
 
 总体而言，就是 **centralized register & lookup, decentralized communication**。
 
-## 进程通信
+### 进程通信
 
 进程：在主机上运行的应用程序
 
@@ -95,7 +95,7 @@
   - 按照应用协议交换报文
     - 借助传输层提供的服务 
 
-## 三个问题和解决方案
+### 三个问题和解决方案
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403020008891.png" alt="image-20240227233453236" style="zoom: 67%;" />
 
@@ -105,7 +105,7 @@
 - 服务者应该如何服务？
 - 客户如何使用服务？
 
-### 问题一方案
+#### 问题一方案
 
 - 进程为了接收报文，必须有一个标识 即：**SAP**
   - 主机：唯一的 32 位地址
@@ -118,7 +118,7 @@
 - 一个进程：用IP+port标示 -> 端节点
 - 因此，本质上，一对主机进程之间的通信由 2 个端节点构成 
 
-### 问题二方案
+#### 问题二方案
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402272344960.png" alt="image-20240227234443064" style="zoom:67%;" />
 
@@ -146,7 +146,7 @@
 - 等到每一次进行传输的时候，再给对方的端口+IP。
 - 接收的时候，也要指定接收人的端口+IP。
 
-### Sidenote: 什么是 PDU, SDU, IDU, ICI
+#### Sidenote: 什么是 PDU, SDU, IDU, ICI
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403171723064.png" style="zoom: 67%;" />
 
@@ -163,13 +163,13 @@
     - 其中的数据部分：SDU
     - 其中的信息部分：ICI
 
-#### 传输层应该向应用层提供怎样的服务？
+##### 传输层应该向应用层提供怎样的服务？
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402282307064.png" alt="image-20240228230725606" style="zoom:67%;" />
 
 数据丢失率、延迟、吞吐量、安全性
 
-### 问题三方案
+#### 问题三方案
 
 制定**应用层协议**
 
@@ -187,9 +187,9 @@
   - 应用=界面+I/O+内部处理逻辑+**应用协议**
   - Web应用：**HTTP协议**，web客户端，web服务器，HTML
 
-# Lec 2.2: Web & HTTP
+## Lec 2.2: Web & HTTP
 
-## Web 术语
+### Web 术语
 
 - **Web页**：由一些**对象**组成
    - 对象可以是HTML文件、JPEG图像、Java小程序、声音剪辑文件等
@@ -199,23 +199,23 @@
 - URL格式: `Prot://user:psw@www.someSchool.edu/someDept/pic.gif:port`
                     协议名    用户  口令 主机名                           路径名                         端口
 
-## HTTP
+### HTTP
 
 HTTP 本身无状态，其状态由 TCP 维护。
 
 Web Server 有一个守护 socket，相当于经理；每出现一个请求，创建一个 socket 用于服务，相当于叫服务员。
 
-### HTTP 1.0 概况
+#### HTTP 1.0 概况
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402290113625.png" alt="image-20240229011338760" style="zoom: 80%;" />
 
-### HTTP 1.1
+#### HTTP 1.1
 
 对于 HTTP 1.1，HTTP 支持**持久连接**，如图所示：
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402292132152.gif" alt="img" style="zoom: 80%;" />
 
-### HTTP 请求流程
+#### HTTP 请求流程
 
 假设用户输入 `https://www.cs.cmu.edu/~pavlo/` 的 URL，对于 HTTP 1.0，请求流程如下：
 
@@ -231,19 +231,19 @@ Web Server 有一个守护 socket，相当于经理；每出现一个请求，�
 
 对于 HTTP 1.1，在建立连接之后，会进行多次 HTTP Request。而且，会以**流水线**的方式，进行 HTTP 请求，即：如果有多个对象需要请求，那么就会同时请求。
 
-### HTTP 请求格式
+#### HTTP 请求格式
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402292224917.png" alt="image-20240229222431417" style="zoom: 67%;" />
 
 注意：request line 和 header line 都必须使用 ASCII 编码，不过 entity body 无需。
 
-### HTTP 状态保持：Cookie
+#### HTTP 状态保持：Cookie
 
 为了以某种等价的形式保持 HTTP 的状态，我们需要用到 cookie。
 
 Cookie 中的项，一般都会被保存在服务端的数据库里。从而，服务器可以用于 cookie 来 identify user。
 
-### Web 缓存
+#### Web 缓存
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402292312296.png" alt="image-20240229231221447" style="zoom:67%;" />
 
@@ -257,7 +257,7 @@ Web 缓存通常由 ISP 安装（大学、公司、居民区 ISP），用于
 
 至于如何判定缓存内容是否改名，Web 服务器会向 server 发一个 HTTP 请求，但是携带一个键为 If-Modified-Since header，值为 Last-Modified-Time 的信息。
 
-# Lec 2.3: FTP (File Transport Protocol)
+## Lec 2.3: FTP (File Transport Protocol)
 
 （主动模式下的）FTP 连接过程：
 
@@ -272,16 +272,16 @@ Web 缓存通常由 ISP 安装（大学、公司、居民区 ISP），用于
 
 FTP 显然是有状态的（应用层）协议。服务器和客户端都维持着通信状态。
 
-### FTP 控制命令&返回码示例
+#### FTP 控制命令&返回码示例
 
 ![image-20240301001606185](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403010016086.png)
 
-### 与 HTTP 区别
+#### 与 HTTP 区别
 
 1. 有状态
 2. 控制命令和数据传输分别在两个 TCP 连接上
 
-# Lec 2.4: Email
+## Lec 2.4: Email
 
 >3个主要组成部分： 
 >
@@ -292,14 +292,14 @@ FTP 显然是有状态的（应用层）协议。服务器和客户端都维持�
 >    - **邮件服务器之间传输**以及**用户代理传输给邮件服务器**，就是 SMTP 一种
 >    - **邮件服务器传输给用户代理**，可以是 POP3, IMAP, HTTP
 
-## 用户代理
+### 用户代理
 
 电子邮件应用的用户代理，就是电子邮件客户端（如 Outlook 等等）。
 
 - 就像 HTTP 的用户代理，就是 Web 浏览器；FTP 的用户代理，就是 FTP 客户端
   - “代理”的意思就是：这个东西代替你去完成一些事情，如 Web 浏览器代替用户去发送 HTTP 请求。
 
-## 邮件服务器
+### 邮件服务器
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021537576.png" alt="image-20240302153617811" style="zoom:67%;" />
 
@@ -313,9 +313,9 @@ FTP 显然是有状态的（应用层）协议。服务器和客户端都维持�
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021546980.png" alt="image-20240302154635159" style="zoom:50%;" />
 
-## SMTP
+### SMTP
 
-### SMTP via telnet
+#### SMTP via telnet
 
 ```
 ╭─root@mtdickens /home/mtdickens
@@ -369,19 +369,19 @@ Connection closed by foreign host.
   -  b/c of the ASCII tradition
 - SMTP服务器使用 `<CRLF>.<CRLF>` 决定报文的尾部 
 
-### SMTP 报文格式
+#### SMTP 报文格式
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021655678.png" alt="image-20240302165503967" style="zoom: 25%;" />
 
 SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP 不一样），比如同时有文本、附件等等。
 
-### SMTP extended encoding
+#### SMTP extended encoding
 
 由于 SMTP 只支持 ASCII，因此，多媒体文件和非英语语言，就需要用到 MIME (RFC 2045, 2056) via base64 encoding：
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021658878.png" alt="image-20240302165856736" style="zoom:67%;" />
 
-## POP3, IMAP 和 HTTP
+### POP3, IMAP 和 HTTP
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021701548.png" alt="image-20240302170108938" style="zoom: 33%;" />
 
@@ -396,11 +396,11 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
   - HTTP: Hotmail, Yahoo! Mail等
     - 方便
 
-### POP3 via telnet
+#### POP3 via telnet
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021712673.png" alt="image-20240302171242452" style="zoom:50%;" />
 
-### POP3 vs IMAP
+#### POP3 vs IMAP
 
 - POP3会话是无状态的
   - **下载并删除模式**：
@@ -411,9 +411,9 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
     - 这种模式下，POP3会话仍然可以看作是无状态的，因为服务器不需要跟踪每个会话的状态，只有客户端和服务器之间的简单交互。
 - IMAP会话是有状态的，因为**服务器会记住客户端的会话状态**。这意味着客户端可以在多次连接之间保持对服务器的持续连接，并且**服务器会跟踪邮件的状态和文件夹结构等信息**。
 
-# Lec 2.5: DNS
+## Lec 2.5: DNS
 
-## 三个问题
+### 三个问题
 
 - 问题1：
     - 如何命名设备：
@@ -425,7 +425,7 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
 - 问题3：
     - 如何维护：增加或者删除一个域，需要在域名系统中做哪些工作
 
-## DNS 的总体思路和目标
+### DNS 的总体思路和目标
 
 总体思路
 
@@ -444,15 +444,15 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
     - 比如域名邮箱，就需要使用 MX，将自己的域名指向 server 的（规范）域名。从而，如果某人发邮件给你，就可以发到对应的 server 上去
   - 负载均衡
 
-## DNS 名字空间
+### DNS 名字空间
 
-### 域名的分层
+#### 域名的分层
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403021939785.png" alt="在这里插入图片描述" style="zoom:50%;" />
 
 如图，这就是分层明明，形如 `jp`, `net` 被称为顶级域，`ac.jp`, `google.com` 被称为二级域，诸如此类。
 
-### 域名的管理
+#### 域名的管理
 
 - 域名的管理
   - **一个域管理其下的子域**
@@ -463,7 +463,7 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
   - 一个域的主机可以不在一个网络
   - 一个网络的主机不一定在一个域。域的划分是逻辑的，而不是物理的
 
-## 分布式查询
+### 分布式查询
 
 域名被分为不相交的**域（zone）**。
 
@@ -480,13 +480,13 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
   - 2LD：`eu.org` 记录着其它的 `*.eu.org` 的权威名字服务器的地址
     - 比如，`mtds.eu.org` 的地址就是 Cloudflare 的服务器
 
-### 资源记录
+#### 资源记录
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403022047784.png" alt="image-20240302204705218" style="zoom: 33%;" />
 
 其中，对于权威服务器上的 RR，TTL 是无限大，而对于非权威的，RR 只不过是缓存，因此 TTL 就是一个特定的有限值，过了时间就删除，以确保缓存一致性。
 
-## 查询流程
+### 查询流程
 
 如下图，
 
@@ -496,7 +496,7 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031417963.png" alt="image-20240303141738690" style="zoom: 50%;" />
 
-### Local Name Server
+#### Local Name Server
 
 - 并不严格属于层次结构
 - 一般而言，每个 ISP（居民区、公司、大学）都有一个 LNS
@@ -509,7 +509,7 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
   - Case 2: 缓存
 - 否则，就联系根服务器，顺着根-TLD-SLD-...，一直找到权威名字服务器
 
-### 递归查询、迭代查询
+#### 递归查询、迭代查询
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031423624.png" alt="image-20240303141946975" style="zoom: 33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031424035.png" alt="image-20240303142421425" style="zoom: 33%;" />
 
@@ -520,11 +520,11 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
 - TLD、权威服务器，均使用迭代查询（如右图，只需返回下级 DNS 服务器的 IP 地址）。
 - 至于像 1.1.1.1, 8.8.8.8 这样的公共/私人 DNS 服务器，它们是递归**解析器**（帮你直接查完，和 LNS 做的工作一样）
 
-### DNS 协议、报文
+#### DNS 协议、报文
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031544566.png" alt="image-20240303154354693" style="zoom:50%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403031544399.png" alt="image-20240303154405426" style="zoom:50%;" />
 
-## 增删域名
+### 增删域名
 
 比如，你希望在 Cloudflare 上托管 `mtds.eu.org`，那么，你把以下两种记录交给 `eu.org` 的 TLD 服务器：
 
@@ -547,9 +547,9 @@ SMTP 报文格式如上，其中，主体中**可以有多个对象**（与 HTTP
 - `.eu.org` 2LD 名字服务器让你去 `mtds.eu.org` 权威名字服务器
 - 然后，`ARON.NS.CLOUDFLARE.COM` 就可以给你正确的答复
 
-# Lec 2.6: P2P 应用
+## Lec 2.6: P2P 应用
 
-## 引入：文件分发时间
+### 引入：文件分发时间
 
 对于 C/S 模式，文件分发时间等于
 $$
@@ -561,7 +561,7 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403050001936.png" alt="image-20240305000129117" style="zoom:50%;" />
 
-## 纯 P2P 模式
+### 纯 P2P 模式
 
 文件分发时间，利用简单模型，理论上可以是：
 $$
@@ -573,7 +573,7 @@ $$
 - 中间一项是接受速率
 - 第一项是总需求/总发送能力
 
-### 分类
+#### 分类
 
 P2P 分为
 
@@ -598,9 +598,9 @@ P2P 分为
 - DHT（分布式哈希表，或者意译为“结构化”）P2P：节点之间构成某种（应用层上的、逻辑上的）树状、网状等关系
   - 
 
-### 应用：BitTorrent
+#### 应用：BitTorrent
 
-#### 名词介绍
+##### 名词介绍
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403050026602.png" alt="image-20240305002629782" style="zoom:50%;" />
 
@@ -615,7 +615,7 @@ P2P 分为
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403062200527.png" alt="image-20240306220056041" style="zoom:33%;" />
 
-#### 节点行为
+##### 节点行为
 
 对于整个洪流，每过一段时间，这些节点就会”泛洪“，也就是互相交换 bitmap。从而，节点之间就知道了其他节点的“有无”情况。
 
@@ -634,7 +634,7 @@ P2P 分为
 - 以三个小周期为一个大周期，对于前两个小周期，对于整个请求列表，我都会服务前 $n$ 个对我好的节点（$n$ 为我同时服务节点的数量）
 - 最后一个小周期，我会随机在请求列表中选一些节点进行服务（希望找到“黑马”）
 
-#### `.torrent` 文件
+##### `.torrent` 文件
 
 torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
 
@@ -653,7 +653,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
 
 我们向检索网站（比如海盗湾）查询的时候，检索网站会给我一个 `.torrent` 文件。然后，我通过 tracker 列表，向 tracker 进行请求，然后 tracker 会给我服务这些文件的一些 peers。
 
-#### 网络特征
+##### 网络特征
 
 - Peer加入torrent: 
 
@@ -669,7 +669,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
   - *服务不稳定*
 - 一旦一个peer拥有整个文件（i.e. 整个 bitmap 为 1，另外该 peer 被称为“种子”），它会（自私的）离开或者保留（利他主义）在torrent中 
 
-### 应用：Gnutella
+#### 应用：Gnutella
 
 - 全分布式（包括查询）
 - 使用泛洪（flooding）的方式查询
@@ -682,9 +682,9 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
 
 **总体而言，这个网络很不成功。**
 
-# Lec 2.7: CDN
+## Lec 2.7: CDN
 
-## 背景和挑战
+### 背景和挑战
 
 视频流化服务（也就是边传边播的服务，不同于必须先下载再播放的传统）是互联网的一个 killer application，消耗带宽极大（Netflix 和 YouTube 占据了 ISP 的 37%，16% 的下行带宽）。因此，除了流量极大以外，还有两个挑战
 
@@ -692,7 +692,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
     - 注意和流量大不一样，比如电话系统的用户规模虽然大，但是流量很小
 2. 异构性：不同用户拥有不同的能力（例如：有线接入和移 动用户；带宽丰富和受限用户） 
 
-## 多媒体：视频
+### 多媒体：视频
 
 视频特点：
 
@@ -701,7 +701,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
     - 空间（一张图片内）和时间（相邻的图片之间）的冗余度都很大
 3. 占据网络流量的 90%
 
-## 流视频传输
+### 流视频传输
 
 服务器在获得视频之后，会将其转换成多种码率，并逐个进行**切片**，将其变成若干个小 HTTP 块，便于流式传输。
 
@@ -746,7 +746,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
 
 从而，**客户端异构性**的问题得以解决（动态使用码率）。
 
-## 带宽瓶颈和重复流量的解决方案：CDN 
+### 带宽瓶颈和重复流量的解决方案：CDN 
 
 由于
 
@@ -757,7 +757,7 @@ torrent文件内容格式如下，所有的字符串均使用UTF-8编码：
 
 - 注意：ISP 的缓存比 CDN 小得多，而且主要用于缓存网页内容。
 
-### CDN 部署策略
+#### CDN 部署策略
 
 CDN 将节点部署在全球，并缓存 ICP 的内容，以便于快速、大量分发。一般采用的会有两种策略：
 
@@ -770,23 +770,23 @@ CDN 将节点部署在全球，并缓存 ICP 的内容，以便于快速、大�
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403092129773.png" alt="image-20240309212917419" style="zoom:33%;" />
 
-### CDN 工作原理
+#### CDN 工作原理
 
 用户先从源服务器上获取 manifest file，然后根据文件里的（多个）CDN 的 `<BaseURL>`，选择一个最适合自己的，进行访问。
 
 从而，CDN 对服务器而言，提供的是“（帮你把）内容分发服务”；对客户而言，提供的是“内容加速服务”。
 
-### CDN 特点: Over the Top (OTT) & On the Edge
+#### CDN 特点: Over the Top (OTT) & On the Edge
 
 CDN 工作在**网络边缘**，同时也工作在**应用层（也就是 Over The Top）**。
 
-### CDN 的挑战
+#### CDN 的挑战
 
 1. 从哪一个缓存节点获取内容？
 2. 用户在网络堵塞情况时的行为？
 3. 在哪些 CDN 里储存哪些内容？
 
-### 案例学习：Netflix
+#### 案例学习：Netflix
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403092118995.png" alt="image-20240309211833661" style="zoom: 67%;" />
 
@@ -796,7 +796,7 @@ CDN 工作在**网络边缘**，同时也工作在**应用层（也就是 Over T
 
 由于这一切都是在 DNS 中完成的，因此 DNS 之外的应用层完全无感。
 
-# Reference
+## Reference
 
 [^1]:[Linux Process Communication With Pipe: A Toy Example](https://raw.githubusercontent.com/MTDickens/dev/main/ustc-networking/ch2/process-communication.c)
 

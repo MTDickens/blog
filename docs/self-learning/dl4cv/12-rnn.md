@@ -1,4 +1,4 @@
-# Problems With Deep Neural Network
+## Problems With Deep Neural Network
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270140701.png" alt="image-20240327014014615" style="zoom: 33%;" />
 
@@ -17,7 +17,7 @@ Deep neural network，本质上还是一种**前馈神经网络**。因此，一
 
 - In fact, we can also process non-sequential data in a sequential way. 比如图像分类等等。
 
-# Recurrent Neural Network
+## Recurrent Neural Network
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270158124.png" alt="image-20240327015854923" style="zoom:33%;" />
 
@@ -33,29 +33,29 @@ $$
 y_t = g_V(h_t)
 $$
 
-## RNN Computational Graph
+### RNN Computational Graph
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270254186.png" alt="image-20240327025423104" style="zoom:33%;" />
 
 如图，我们 reuse the same weight every time。因此，求导的梯度需要叠加。
 
-### Many To Many
+#### Many To Many
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270444420.png" alt="image-20240327044410561" style="zoom:33%;" />
 
 如图，我们输出每一个 $y_t$，并得到 $L_t$，最终聚合成 $L$，并进行反向梯度传播。
 
-### Many To One
+#### Many To One
 
 类似，只不过只有最后一个 $h_T$ 输出成 $y_T$。
 
-### Sequence To Sequence
+#### Sequence To Sequence
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270448589.png" alt="image-20240327044820033" style="zoom: 33%;" />
 
 如上图，如果我们希望生成和输入串的长度不一样的 sequence，那么就要用到 first many to one then one to many 的方法。
 
-## Example: Language Modeling
+### Example: Language Modeling
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270500929.png" alt="image-20240327050050195" style="zoom: 33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270503075.png" alt="image-20240327050310944" style="zoom: 33%;" />
 
@@ -73,7 +73,7 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270507570.png" alt="image-20240327050743369" style="zoom:33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403270508081.png" alt="image-20240327050803162" style="zoom:33%;" />
 
-## Interpretability of Hidden State
+### Interpretability of Hidden State
 
 对于 hidden vector 的一个 index：
 
@@ -104,7 +104,7 @@ $$
 
 - 明显，分别是用来记录 if-statements, quote and comments, and code depth 的。
 
-## Image Captioning
+### Image Captioning
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403282220090.png" alt="image-20240328222008312" style="zoom: 33%;" />
 
@@ -120,11 +120,11 @@ $$
 
 **因此，我们其实就是通过增加一个 $W_{ih}v$ 的方式，将图片的 feature 引入了文本生成之中。**
 
-### Failure Modes
+#### Failure Modes
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403282245394.png" alt="image-20240328224533566" style="zoom:33%;" />
 
-## Vanilla RNN Gradient Flow
+### Vanilla RNN Gradient Flow
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403282310513.png" alt="image-20240328231018945" style="zoom: 33%;" />
 
@@ -143,7 +143,7 @@ if grad_norm > threshold:
 
 对于梯度消失，我们也不敢放大梯度啥的，所以，我们就直接换模型——LSTM。
 
-# Long Short Term Memory Architecture
+## Long Short Term Memory Architecture
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290550630.png" alt="image-20240329055003539" style="zoom: 33%;" />
 
@@ -156,7 +156,7 @@ if grad_norm > threshold:
     3. forget: cell 要忘记多少？
     4. gate: 最后，cell 需要表现出来多少？（表现出来的将被写入 hidden state）
 
-## How to solve gradient disappear problem?
+### How to solve gradient disappear problem?
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290546786.png" alt="image-20240329054602813" style="zoom:33%;" />
 
@@ -168,7 +168,7 @@ if grad_norm > threshold:
 
 因此，如果梯度**理应**被传回去，那么，它就应该被传回去。
 
-# Multilayer RNN
+## Multilayer RNN
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403290557042.png" alt="image-20240329055740551" style="zoom:50%;" />
 

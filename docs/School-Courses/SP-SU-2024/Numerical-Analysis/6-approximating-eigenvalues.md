@@ -1,4 +1,4 @@
-# Original Method
+## Original Method
 
 假设我们最大的 eigenvalue 是 dominant eigenvalue:
 $$
@@ -27,11 +27,11 @@ $$
     - 注意：是 maximum eigenvalue 相等，而不是它们的模相等！
 - 由于本质上这还是一个 sequence of vectors，因此可以用 Aitken's &Delta;<sup>2</sup> procedure 来加速求解。
 
-### Normalization
+#### Normalization
 
 由于 $\vec{x_k}$ 会迅速缩小，因此，我们需要在每一步中，对向量进行放缩，i.e. 令 $\|x\|_\infty = 1$ in each step
 
-### Convergence
+#### Convergence
 
 我们的目标就是：让 $|\lambda_2 / \lambda_1|$ 尽可能小。
 
@@ -39,7 +39,7 @@ $$
 
 - i.e. $|0.98 / 1.00| > |0.01 / 0.03|$
 
-# Inverse Power Method
+## Inverse Power Method
 
 如果我们希望求出 $A$ 最小的 eigenvalue，那么，就需要依靠 $A^{-1}$。
 

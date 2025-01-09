@@ -1,4 +1,4 @@
-# Methodology
+## Methodology
 
 理想情况下，以下三大性质都应该被满足：
 
@@ -15,8 +15,8 @@
 
 (2) 是重头戏，而我们可以通过 Myerson's Lemma 一窥究竟。
 
-# Abstractions and Definitions
-## An Abstraction for Auctions
+## Abstractions and Definitions
+### An Abstraction for Auctions
 
 为了更清晰地阐述 Myerson's Lemma，我们需要将一个 auction 进行形式化。在这里，我们使用 single-parameter environment abstraction。
 
@@ -45,7 +45,7 @@
 > 
 > - 也就是说，seller 不会倒贴钱，而且 auctioneer 也不会收益为负
 
-## Some Definitions of Allocation Rules
+### Some Definitions of Allocation Rules
 
 **定义 (implementable allocation rules)**：一个 allocation rule $\mathrm X(b)$ 被称为 implementable, if there exists a payment rule $\mathrm p(b)$, s.t. the seal-bid auction $(\mathrm X, \mathrm p)$ is DSIC.
 
@@ -58,7 +58,7 @@
 - 可以看出：**monotonicity** 相比于 **implementability**，是比较好判断的一个性质
 
 
-# Myerson's Lemma
+## Myerson's Lemma
 
 > [!abstract]+
 > 
@@ -68,7 +68,7 @@
 > 2. Monotonicity 可以推出唯一的 DSIC payment 方案
 > 3. 这个唯一的 payment 方案是容易构造的
 
-## Three Parts of Myerson's Lemma
+### Three Parts of Myerson's Lemma
 
 一共有三个部分：
 
@@ -90,7 +90,7 @@
 > 
 > $\blacksquare$
 
-## Proof
+### Proof
 
 > [!abstract]+ Proof Sketch
 > 
@@ -109,7 +109,7 @@
 
 从而，我们通过 Riemann–Stieltjes 积分（也就是允许 $\mathrm d$ 右侧是一个不连续函数的积分）的形式，就可以 $p(z)$ 表达出来。
 
-# Application: Sponsored Search Auction
+## Application: Sponsored Search Auction
 
 我们使用能够满足 optimal surplus strategy：谁给的多，就给谁优先分配。
 

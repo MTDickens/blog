@@ -1,15 +1,15 @@
-# Lec 6: Machine Level Programming: Control
+## Lec 6: Machine Level Programming: Control
 
 > This course uses Intel 64-bit version of the instruction set.
 
-## Outline
+### Outline
 
 - Control: Condition codes
 - Conditional branches
 - Loops
 - Switch Statements
 
-## Processor State (x86-64)
+### Processor State (x86-64)
 
 - Information about the current executing program
   - Temp Data
@@ -21,7 +21,7 @@
   - Status of recent tests
     - `(CF, ZF, SF, OF)`
 
-### Conditional Codes
+#### Conditional Codes
 
 Actually, there are 8 in total. But today we only discuss 4 of them.
 
@@ -35,7 +35,7 @@ They will be set by many instructions, but not including `lea`.
 
 Usually, we use `cmpq Src2, Src1` (src1 - src2) to compare two bins, `testq Src2 Src1` (src1 & src2) to `and` one bin with another (usually when one src is a mask). These two instructions will not store data in anywhere, but set the corresponding control bits.
 
-### Read Condition Codes
+#### Read Condition Codes
 
 <img src="img/image-20240112213801969.png" alt="image-20240112213801969" style="zoom:33%;" />
 
@@ -69,9 +69,9 @@ greater_than:
 	rtn
 ```
 
-## Conditional Branches
+### Conditional Branches
 
-### Jumping
+#### Jumping
 
 <img src="img/image-20240112225719679.png" alt="image-20240112225719679" style="zoom: 50%;" />
 
@@ -127,7 +127,7 @@ absdiff:
 	rtn
 ```
 
-### Conditional Move
+#### Conditional Move
 
 Since modern CPU use **pipelining** technology, it's like a heavy tanker on a ocean - when going on a straight line, it will be really fast; but when doing side turns, it needs loads of time. So, we often don't like too much branching.
 
@@ -145,9 +145,9 @@ Thus, we can calculate two branches (and store them in two registers), and use "
 - computation has **side effects**
   - say `val = x > 0 ? x *= 7 : x += 3`
 
-## Loops
+### Loops
 
-#### `do-while` loop
+##### `do-while` loop
 
 The most straight-forward way to implement loops in assembly is `do-while`-like loop:
 
@@ -155,7 +155,7 @@ The most straight-forward way to implement loops in assembly is `do-while`-like 
 
 It's easy to see that replacing `do-while` with `goto` is straight-forward.
 
-#### `while` loop
+##### `while` loop
 
 Also, you can implement `while` loop:
 
@@ -250,7 +250,7 @@ done:
 }
 ```
 
-#### `for` loop
+##### `for` loop
 
 The structure of `for`-loop:
 
@@ -274,7 +274,7 @@ while (Test) {
 
 
 ```c
-#define WSIZE 8*sizeof(int)
+##define WSIZE 8*sizeof(int)
 long pcount_for
     (unsigned long x) {
     long result = 0;
@@ -309,7 +309,7 @@ Here,
 Thus:
 
 ```c
-#define WSIZE 8*sizeof(int)
+##define WSIZE 8*sizeof(int)
 long pcount_for
     (unsigned long x) {
     long result = 0;
@@ -327,13 +327,13 @@ test:
 }
 ```
 
-## `switch` statements
+### `switch` statements
 
 `switch` statement is one of the most poorly designed statement in C (and this bad feature also passed down to Java, etc.). There is a rule of thumb that help you stay away from bugs:
 
 - If you want a `case` to fall through, add comment - `/* fall through */ `
 
-### Jump Table Structure
+#### Jump Table Structure
 
 <img src="img/image-20240113214348600.png" alt="image-20240113214348600" style="zoom: 33%;" />
 
@@ -381,7 +381,7 @@ switch_eg:
 
 - **So, in either case, the assembler does much better job than naive `if-else`.**
 
-## Summary
+### Summary
 
 The four major assembler controls are the basic primitives of almost all changes of flow execution, etc in a program.
 

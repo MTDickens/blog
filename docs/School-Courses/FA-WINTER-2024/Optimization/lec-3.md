@@ -2,7 +2,7 @@ $$
 \newcommand\R[]{\mathbb R}
 $$
 
-# Outline
+## Outline
 
 - Strongly Convex Functions
 	- Definition of The Strongly Convex and The Class $S_\mu^1 (\R^n)$
@@ -14,9 +14,9 @@ $$
 	- Property of Smooth and Strongly Convex Function
 - Conclusion
 
-# Strongly Convex Functions
+## Strongly Convex Functions
 
-## 	Definition of The Strongly Convex and The Class $S_\mu^1 (\R^n)$
+### 	Definition of The Strongly Convex and The Class $S_\mu^1 (\R^n)$
 
 如果 $f(x)$ 连续可微，且 $\exists \mu > 0, \forall x, y \in \R^n$:
 
@@ -32,7 +32,7 @@ $$
 > - $S^1_\mu: f(y) \geq f(x) + \langle \nabla f(x), y-x \rangle + \frac 1 2 \mu \|y-x\|^2$
 > - $C_\mu^{1,1}: f(x) + \langle \nabla f(x), y-x \rangle + \frac 1 2 \mu \|y-x\|^2 \geq f(y) \geq f(x) + \langle \nabla f(x), y-x \rangle - \frac 1 2 \mu \|y-x\|^2$
 
-### 性质
+#### 性质
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/17_22_19_42_20241017221941.png"/>
 
@@ -75,13 +75,13 @@ $$
 
 **Note**: (25) 就是**割线不等式**
 
-### Equivalent Definitions
+#### Equivalent Definitions
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/18_2_50_1_20241018025001.png"/>
 
 上面两个都是等价定义（证明略）。
 
-### $S_\mu^2 (\R^n) \subseteq S_\mu^1 (\R^n)$
+#### $S_\mu^2 (\R^n) \subseteq S_\mu^1 (\R^n)$
 
 如果 strongly convex function 同时还可以求二阶导（Hessian matrix），那么我们就有更加简单的判定方式：
 
@@ -91,18 +91,18 @@ $$
 
 **证明略**
 
-# Smooth and Strongly Convex Functions
+## Smooth and Strongly Convex Functions
 
-## Definition
+### Definition
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_7_34_32_20241117073431.png"/>
 
 - 注意条件数的定义
-## Example
+### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_7_29_18_20241117072917.png"/>
 
-## 性质
+### 性质
 
 > [!info]- Some Useful Lemmas
 > 
@@ -179,7 +179,7 @@ $$
 $$
 
 
-## Conclusion
+### Conclusion
 
 不同的 continuity，对于 0、1、2 阶的情况分别是什么？
 
@@ -189,7 +189,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_7_33_6_20241117073306.png"/>
 
-# Hierarchy of Functions
+## Hierarchy of Functions
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_8_26_59_20241117082658.png"/>
 

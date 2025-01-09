@@ -1,8 +1,8 @@
-# Basics
+## Basics
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/10_0_0_1_20241210000000.png"/>
 
-# I/O 的种类
+## I/O 的种类
 
 **Polling**：如果 I/O 设备忙，那么就 busy waiting。
 
@@ -10,7 +10,7 @@
 
 前者的问题在于如果 I/O 设备忙，那么需要一直等待；后者的问题在于，如果 I/O 请求很多，那么会造成程序一直在处理中断，根本没去运行代码。
 
-# DMA
+## DMA
 
 DMA 是一种技术，旨在让 I/O 设备读写内存的时候，不需要经过 CPU。从而我们可以实现 CPU 执行和 I/O 过程异步进行。
 
@@ -24,7 +24,7 @@ DMA 是一种技术，旨在让 I/O 设备读写内存的时候，不需要经�
 4. Drive controller 就会告知 DMA controller 开始 DMA transfer，直接将数据通过 PCIe bus 以及 CPU memory bus 写入 memory。此谓 **direct memory access**
 5. 写入完毕之后， DMA controller 就会给 CPU 发送 interrupt
 
-# Characters of I/O Devices
+## Characters of I/O Devices
 
 | aspect             | variation                                                          | example                               |
 | ------------------ | ------------------------------------------------------------------ | ------------------------------------- |
@@ -35,14 +35,14 @@ DMA 是一种技术，旨在让 I/O 设备读写内存的时候，不需要经�
 | device speed       | latency <br>seek time<br>transfer rate<br>delay between operations |                                       |
 | I/O direction      | read only<br>write only<br>read-write                              | CD-ROM<br>graphics controller<br>disk |
 
-- ﻿﻿Broadly, I/O devices can be grouped by the OS into
-	- ﻿﻿block I/O: read, write, seek
-	- ﻿﻿character I/O (Stream)
-	- ﻿﻿memory-mapped file access
-	- ﻿﻿network sockets
-- ﻿﻿OSs have usually an escape/back door that passes any I/O  
+- Broadly, I/O devices can be grouped by the OS into
+	- block I/O: read, write, seek
+	- character I/O (Stream)
+	- memory-mapped file access
+	- network sockets
+- OSs have usually an escape/back door that passes any I/O  
     commands from app to device
-- ﻿﻿Linux's `iocti` call to send commands to a device driver
+- Linux's `iocti` call to send commands to a device driver
 
 > [!info]+ Synchronous I/O vs Asynchronous I/O
 > 
@@ -52,7 +52,7 @@ DMA 是一种技术，旨在让 I/O 设备读写内存的时候，不需要经�
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/10_0_14_3_20241210001402.png"/>
 
-# Kernel I/O Subsystem
+## Kernel I/O Subsystem
 
 宏内核包含了 I/O 子系统。这个系统可以做下面的事情：
 
@@ -62,13 +62,13 @@ DMA 是一种技术，旨在让 I/O 设备读写内存的时候，不需要经�
 
 - spooling 就是输出缓存
 
-# I/O Protection
+## I/O Protection
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/10_0_45_12_20241210004511.png"/>
 
 键盘事件肯定不是所有软件都能监听到的。可能只有处于焦点的软件才能监听到（否则就难免会出现密码泄露）。因此键盘事件必须是 privileged。
 
-# UNIX I/O Kernel Structure
+## UNIX I/O Kernel Structure
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_6_21_11_20241214062110.png"/>
 
@@ -120,27 +120,27 @@ struct files_struct {
 
 其中，这个 `struct file * fd_array` 就是指向各种 record 的指针的 array。
 
-## I/O Request to Hardware
+### I/O Request to Hardware
 
-﻿﻿Consider ***reading a file from disk*** for a process:
-- ﻿﻿determine device holding file
-- ﻿﻿translate name to **device representation**
-	- ﻿﻿FAT, UNIX: major/minor
-- ﻿﻿physically read data from disk into buffer
-- ﻿﻿make data available to requesting process
-- ﻿﻿return control to process
+Consider ***reading a file from disk*** for a process:
+- determine device holding file
+- translate name to **device representation**
+	- FAT, UNIX: major/minor
+- physically read data from disk into buffer
+- make data available to requesting process
+- return control to process
 
 > [!info]+ Lifecycle of An I/O Request
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_6_40_18_20241214064017.png"/>
 
-## How to Reduce I/O Overhead
+### How to Reduce I/O Overhead
 
 一句话：make devices smarter。
 
 具体来说，能用 DMA 就用 DMA，设备的 controller 能够胜任就让它来负责——别所有东西都让 CPU 来决策。
 
-## Question: How to Register a Device on Linux
+### Question: How to Register a Device on Linux
 
 以 `tty` 为例：
 
@@ -148,14 +148,14 @@ struct files_struct {
 
 可以大致看出，需要进行注册。因此，我们在热插拔设备的时候，就会产生中断，然后进行设备的注册和取消注册。
 
-## Linux I/O Implementation
+### Linux I/O Implementation
 
-### `write`
+#### `write`
 
 `write` -> ... -> `vfs_write` -> (indirect call) `tty_write`
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/14_7_0_53_20241214070052.png"/>
-### `ioctl`
+#### `ioctl`
 
 `ioctl` -> `vfs_ioctl` -> (indirect call) `tty_ioctl`
 

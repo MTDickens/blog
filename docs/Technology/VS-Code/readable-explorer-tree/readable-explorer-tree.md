@@ -1,4 +1,4 @@
-# 前言
+## 前言
 
 VS Code 侧边栏的文件显示，在文件夹嵌套较多的时候，会相当不清晰。
 
@@ -20,14 +20,14 @@ VS Code 侧边栏的文件显示，在文件夹嵌套较多的时候，会相当
     
     然后，你就可以搜索、改变设置了。
 
-# 设置
+## 设置
 
-## Tree Indent
+### Tree Indent
 
 在 settings 中，搜索 `workbench.tree.indent`，并把它的值从 8 改为一个你喜欢的值。
 - 我个人使用的是 20
 
-## Tree Guide Stroke
+### Tree Guide Stroke
 
 搜索 `workbench.colorCustomizations`，并点击 `Edit in settings.json`。
 
@@ -44,7 +44,7 @@ VS Code 侧边栏的文件显示，在文件夹嵌套较多的时候，会相当
 其中，`#ff0000` 是<span style="color:#ff0000">红色</span>，你可以改为其他颜色。
 - 我选用红色的原因是：它比较醒目
 
-# 最终效果
+## 最终效果
 
 最终效果如图：
 

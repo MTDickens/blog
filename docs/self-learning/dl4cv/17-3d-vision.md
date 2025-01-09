@@ -1,13 +1,13 @@
 
-# Two Basic Problems
+## Two Basic Problems
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/12_21_24_45_202405122124552.png" alt="image-20240512212440459" style="zoom: 50%;" />
 
-# Shape Representations
+## Shape Representations
 
 主要有 5 种表示 3d 形状的方式。
 
-## depth map
+### depth map
 
 就是每一个像素点对应一个深度。
 
@@ -41,11 +41,11 @@ $$
 2. $(2)$：损失不再是 $L^2$，而是比较所有两点之间的 ground truth diff 和 predicted diff 之间的差别
 3. $(3)$：损失就是 $L^2$ 外加一个 $- \frac 1 {n^2} \sum_{i,j} d_i d_j$，如果 $d_i, d_j$ 都是 same direction 的，那么就可以减小误差
 
-## normal(法线) grid
+### normal(法线) grid
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_0_8_11_202405130008184.png" alt="image-20240513000807071" style="zoom:40%;" />
 
-## voxel grid
+### voxel grid
 
 上面的缺点：无法**完整**地表示出上面的东西。
 
@@ -65,11 +65,11 @@ $$
 - 但是，这样做会非常 computationally expensive
     - 3d 比 2d 还要多一维，因此计算成本增长更快
 
-### Convolution on 3D pictures
+#### Convolution on 3D pictures
 
 如果要在 3D 上进行卷积，也很简单。将卷积核变成 3D 的就行。其它都不变。
 
-### Convert 2D to 3D
+#### Convert 2D to 3D
 
 如下图，这是最 naive 的做法。缺点就是过于 computationally expensive（主要是后面的 deconvolution，因为用到了 3D 核，因此计算量很大）
 
@@ -84,7 +84,7 @@ $$
 
 当然，这样做也有缺点，如下：
 
-#### Drawback: Loss of Translational Invariance
+##### Drawback: Loss of Translational Invariance
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_2_15_42_202405130215928.png" alt="img" style="zoom: 50%;" /><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_2_15_52_202405130215797.png" alt="img" style="zoom:50%;" />
 
@@ -98,13 +98,13 @@ $$
 
 对于生成 3D voxel，也是类似的。如果 3D 图像在 z 轴上有平移，那么 deconvolution 就是让另一个 **de**convolution filter 去完成。而两者的参数很可能是很不一样的。
 
-### Drawback: Memory Usage
+#### Drawback: Memory Usage
 
 设想使用 1024x1024x1024，那么就要用到 4GB（如果使用的是 float32）的内存。
 
-## Scaling Voxels
+### Scaling Voxels
 
-### Voxel Oct-Tree
+#### Voxel Oct-Tree
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_2_29_25_202405130229825.png" alt="image-20240513022922568" style="zoom:50%;" />
 
@@ -112,23 +112,23 @@ $$
 
 - 当然，implementation is non-trivial
 
-### Nested Shape Layer
+#### Nested Shape Layer
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_2_31_35_202405130231052.png" alt="image-20240513023107723" style="zoom:33%;" />
 
 如图，我们从粗糙到精细，一加一减，逐渐精细化。
 
-## Implicit Surface
+### Implicit Surface
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_2_42_38_202405130242485.png" alt="image-20240513024234821" style="zoom:33%;" />
 
-## Point Cloud
+### Point Cloud
 
-### Categorize
+#### Categorize
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_4_33_35_202405130433400.png" alt="image-20240513043328681" style="zoom:40%;" />
 
-### Predict
+#### Predict
 
 我们使用 Chamfer loss: $d_{CD}(S_1,S_2) = \sum_{x \in S_1} \min_{y \in S_2} d(x,y) + \sum_{y \in S_2} \min_{x \in S_1} d(x,y)$​
 
@@ -138,7 +138,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/13_4_38_40_202405130438138.png" alt="image-20240513043836063" style="zoom: 33%;" />
 
-## Mesh
+### Mesh
 
 好处：
 
@@ -168,7 +168,7 @@ $$
 
 这两个问题均在 [smith-19](https://arxiv.org/pdf/1901.11461) 中得到解决（尤其是第二个问题）。
 
-# Comparing Shapes
+## Comparing Shapes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_8_29_48_202405140829592.png" alt="image-20240514082944189" style="zoom: 33%;" />
 
@@ -184,7 +184,7 @@ $$
 - F1 score 就很好地考虑到了这一点：只要距离在 t 以内就算，在 t 以外就不算。从而两张椅子的误差是一样的，符合直觉。
     - 缺点是有一个超参数
 
-# Camera System
+## Camera System
 
 给定一个 2D 图片，希望你 predict 一个 3D 模型。然后，我们拿这个 prediction 和 ground truth 3D shape 进行对比。
 
@@ -202,7 +202,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_9_24_14_202405140924296.png" alt="image-20240514092409931" style="zoom:50%;" />
 
-# Dataset
+## Dataset
 
 主要有 ShapeNet 和 Pix3D。
 
@@ -210,7 +210,7 @@ $$
 
 后者是通过 IKEA 的家具的 mesh 模型以及 Google 上搜到的买家评论制成的，实际中比前者更好。
 
-# Example: Mesh R-CNN
+## Example: Mesh R-CNN
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_9_41_53_202405140941794.png" alt="image-20240514094150839" style="zoom:50%;" />
 
@@ -229,7 +229,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_9_59_21_202405140959659.png" alt="image-20240514095918584" style="zoom:50%;" />
 
-## Failure Modes
+### Failure Modes
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/14_9_59_55_202405140959932.png" alt="image-20240514095952092" style="zoom:50%;" />
 

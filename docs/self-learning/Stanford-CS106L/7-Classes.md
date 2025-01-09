@@ -1,6 +1,6 @@
-# Classes
+## Classes
 
-## Comparison between `struct` and `class`
+### Comparison between `struct` and `class`
 
 Class contains
 
@@ -12,7 +12,7 @@ C++ `struct` is `class` without class restrictions.
 
 C `struct` is `class` without class restrictions and member functions.
 
-## `.h` vs `.cpp`
+### `.h` vs `.cpp`
 
 <img src="img/cpp-vs-h-file.png" alt="image-20240104175307527" style="zoom: 50%;" />
 
@@ -20,7 +20,7 @@ In short, apart from *function implementations* and *executable code*, other stu
 
 Also, header file is **interface**,whereas source file is **logic**.
 
-## Class Design
+### Class Design
 
 1. A **constructor** and a **destructor**
 2. Private member functions/variables
@@ -31,8 +31,8 @@ Demo:
 `lec7.h`
 
 ```cpp
-#pragma once
-#include <string>
+##pragma once
+##include <string>
 
 class Student
 {
@@ -56,8 +56,8 @@ public:
 `lec7.cpp`
 
 ```cpp
-#include "lec7.h"
-#include <string>
+##include "lec7.h"
+##include <string>
 
 /// Constructors
 /// C++11 support "list initialization constructor" (similar to uniform initializaiton, but not the quite)
@@ -87,7 +87,7 @@ std::string Student::getState()
 }
 ```
 
-### Type aliasing
+#### Type aliasing
 
 In C++, we prefer `using` to `typedef` in that:
 
@@ -96,8 +96,8 @@ In C++, we prefer `using` to `typedef` in that:
 Therefore, we can make slight adjustments to the code mentioned above in order to make it more concise.
 
 ```cpp
-#pragma once
-#include <string>
+##pragma once
+##include <string>
 
 class Student
 {
@@ -119,9 +119,9 @@ public:
 };
 ```
 
-## Class Hierarchy
+### Class Hierarchy
 
-### Base Class and Subclass
+#### Base Class and Subclass
 
 Inclusion polymorphism can be implemented by base-class-sub-class hierarchical structure.
 
@@ -154,13 +154,13 @@ private:
 };
 ```
 
-### Class Inheritance vs Container Adapter
+#### Class Inheritance vs Container Adapter
 
 **Class inheritance** is about subclass inheriting (virtual) methods from base class.
 
 **Container adapter** provides interface for several classes and act like a *template parameter*.
 
-## Footnote: Polymorphism
+### Footnote: Polymorphism
 
 There are three polymorphisms that are popular and broadly recognized in C++, namely:
 

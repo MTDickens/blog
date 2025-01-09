@@ -1,4 +1,4 @@
-# Prelude: What is "Type"?
+## Prelude: What is "Type"?
 
 > [!abstract]+
 > 
@@ -8,7 +8,7 @@
 
 - 如上图，这就是 type 的一个推导规则。
 
-## 类型的性质
+### 类型的性质
 
 对于上面的这个简单的类型系统，它满足：
 
@@ -21,7 +21,7 @@
         - **说人话**：如果是 well-typed 且可以再走一步，那么必然也是 well-typed
         - **另外**：对于我们这个不涉及 sub-typing 的简单类型系统，实际上还有更强的结论：the resulting term has the same type as the previous term
 
-# Example: Boolean
+## Example: Boolean
 
 我们在这个 lambda calculus 中，只用到 boolean。
 
@@ -35,7 +35,7 @@
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/6_15_31_46_202407061531650.png"/>
 
-# Erasure of types
+## Erasure of types
 
 如果将一个 typed lambda calculus 的类型抹去，那么就可以变成 untyped lambda calculus，而且满足：
 

@@ -1,7 +1,7 @@
 
-# Activation Functions
+## Activation Functions
 
-## Sigmoid and Tanh
+### Sigmoid and Tanh
 
 Problems:
 
@@ -10,7 +10,7 @@ Problems:
 3. (Sigmoid and Tanh) `exp` operation is a bit expensive
     - But this difference is mainly for CPU devices. For GPU, fetching data is the most expensive operation.
 
-### Problem 1
+#### Problem 1
 
 对于一个神经元而言：
 $$
@@ -28,7 +28,7 @@ $$
 
 **不过，由于我们一般采用 minibatch 来训练。不同的 samples 的梯度会互相抵消。**
 
-## ReLU Family
+### ReLU Family
 
 Merits:
 
@@ -40,7 +40,7 @@ Drawbacks:
 1. Still not zero-centered: but can be solved by minibatch
 2. If it's the case that if you use any data in the dataset as input, one of the layers gets all zero outputs (b/c of the weights and biases), then all the layers before this "all-zero" layer will be dead forever. Because "all-zero" layer cannot pass gradients.
 
-### 解决方案
+#### 解决方案
 
 让负数区域不那么平坦：
 
@@ -56,7 +56,7 @@ However, in practice, all ReLUs (including ReLU itself and its variations) are j
 - Try out Leaky ReLU ELU /SELU /GELUif you need to squeeze that last 0.1%
 - **Don't use sigmoid or tanh**
 
-# Data Preprocessing
+## Data Preprocessing
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403222217737.png" alt="image-20240322221710863" style="zoom: 33%;" />
 
@@ -80,29 +80,29 @@ $$
 
 ---
 
-## Why zero-centering?
+### Why zero-centering?
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403222310597.png" alt="image-20240322231054995" style="zoom:33%;" />
 
 如果没有 zero-centering，那么权重上很小的偏差，就会导致分类中很大的偏差（如左图，黑色稍微转一个角度，就会在红色和蓝色之间移动很大的举例）。
 
-## Data Processing for Images
+### Data Processing for Images
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403222314614.png" alt="image-20240322231414484" style="zoom:50%;" />
 
 图片处理中，我们一般使用如上的 normalization 方法，而不使用 SVD。
 
-## Preprocessing the Testing Set?
+### Preprocessing the Testing Set?
 
 在使用中，我们会对 test sample 进行和 training sample 一样的变换。
 
-## Relationship with Batch Normalization?
+### Relationship with Batch Normalization?
 
 一般情况下，人们会先进行显式的 preprocessing，然后同时做 batch normalization。
 
-# Weight Initialization
+## Weight Initialization
 
-## Problem
+### Problem
 
 <img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240322233222499.png" alt="image-20240322233222499" style="zoom:33%;" />
 
@@ -114,7 +114,7 @@ $$
 
 假设我们使用的是 tanh 函数，如果大了，就会导致输出非常靠近 &pm;1。那么虽然 output 不小，但是过于接近 1，也会使得梯度太小。
 
-## Xavier Initialization
+### Xavier Initialization
 
 Xavier 初始化适用于 zero-centered non-linear function。
 
@@ -145,24 +145,24 @@ $$
 
 - **注意：**这里的方差、期望值，就是 $x_i$, $y_j$ 本身。我们把它们视作随机变量。
 
-## Kaiming/MSRA Initialization
+### Kaiming/MSRA Initialization
 
 对于 ReLU 而言，我们就不能用 Xavier 初始化了。
 
 我们需要把标准差设到 $\frac 2 {\sqrt{Din}}$。直观来说，这是因为 ReLU 削掉了一半。
 
-## Residual Network
+### Residual Network
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230035065.png" alt="image-20240323003541808" style="zoom: 50%;" />
 
-# Regularization
+## Regularization
 
-## Dropout
+### Dropout
 
 我们在训练的时候，可以为每一层设置一个 mask，s.t. 将被 mask 的 output 设置为 0，也就是 dropout
 
 ```python
-# forward pass for example 3-layer neural network
+## forward pass for example 3-layer neural network
 H1 = np.maximum(0, np.dot(Wl, X) + bl) # Linear followed by ReLU
 U1 = np.random.rand(*H1.shape) < p # first dropout mask
 H1 *= Ul # drop!
@@ -176,7 +176,7 @@ Dropout 的好处是：
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230050885.png" alt="image-20240323005027700" style="zoom:33%;" />
 
-### How to predict?
+#### How to predict?
 
 一、我们不希望在 predict 的时候出现随机性。因此，我们不可以在 predict 的时候又进行 random dropout。
 
@@ -202,7 +202,7 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230105047.png" alt="image-20240323010538018" style="zoom: 33%;" />
 
-### Variation of Dropout: Inverted Dropout
+#### Variation of Dropout: Inverted Dropout
 
 为了避免 scale at test time，我们可以在 drop 一部分参数的同时，同时 rescale 另一部分参数，如下图所示：
 
@@ -210,17 +210,17 @@ $$
 
 我们在 drop `val < p` 的同时，将那些 `val >= p` 的 output scale 了 1/p。
 
-### Where to Insert The Dropout?
+#### Where to Insert The Dropout?
 
 一般情况下，我们是在参数最多的层 insert the dropout。
 
-## Data Augmentation
+### Data Augmentation
 
 我们可以通过 **background knowledge**，来为我们的数据集增加更多的数据，同时通过引入随机性，增加模型的 robustness，避免 overfitting。
 
 具体的方法，比如说：随机的旋转、对称、剪切、改变亮度、增加透镜效果等等。
 
-### Random Crops and Scales
+#### Random Crops and Scales
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230254529.png" alt="image-20240323025455703" style="zoom: 33%;" />
 
@@ -229,7 +229,7 @@ $$
 - 训练的时候，将图片 randomly resize，然后 randomly sample a patch，作为 augmented training data
 - 测试的时候，我们就不能够这样 random 了。因此，我们指定了 5 个 scales，并且指定了剪裁位置，在保证测试结果的稳定性的同时，增加了测试的难度。
 
-## A General Concept of Regularization: Introducing Randomness
+### A General Concept of Regularization: Introducing Randomness
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230208684.png" alt="image-20240323020814856" style="zoom: 33%;" />
 
@@ -244,7 +244,7 @@ $$
 
 对于更加现代的网络架构，最后的全连接层被 global pooling 所取代，因此参数量大大减少，很多时候我们并不用 dropout。
 
-## Which Regularization You Should Use?
+### Which Regularization You Should Use?
 
 1. Don't use dropout unless there are fully connected layer in your network
 2. **Batch normalization and data augmentation** are almost always good

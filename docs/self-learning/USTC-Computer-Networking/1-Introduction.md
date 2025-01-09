@@ -1,6 +1,6 @@
-# Lec 1.0: 介绍
+## Lec 1.0: 介绍
 
-## 计网核心：分层
+### 计网核心：分层
 
 计算机网络的核心就是**分层**。
 
@@ -12,7 +12,7 @@
 
 注：物理层的下一层可以视作**宇宙的物理规律**，应用层的上一层可以认为是**人**。
 
-## 各层简介
+### 各层简介
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402232042105.png" alt="The TCP/IP Five-layer Network Model | Parth Shandilya" style="zoom: 33%;" />
 
@@ -32,9 +32,9 @@
   - i.e. 主机到主机的过程中，会有很多跳。每一跳就是由两个网卡之间交互完成。网卡之间的交互，用的就是数据链路层协议。
 - 物理层将数字信号转换成光/电信号，借助各种媒介（光缆/同轴电缆/……）进行传输
 
-## 各个层的介绍和协议
+### 各个层的介绍和协议
 
-### 网络层
+#### 网络层
 
 传统上，通过以下两个协议来进行工作：
 
@@ -72,19 +72,19 @@
    - ……
 3. All in one，比如说防火墙等功能，均可以采用 SDN 实现
 
-### 数据链路层
+#### 数据链路层
 
 在相邻两点之间，传输以**帧**为单位的数据。
 
-# Lec 1.1：什么是 Internet
+## Lec 1.1：什么是 Internet
 
-## 什么是 Internet
+### 什么是 Internet
 
-### 网络
+#### 网络
 
 网络就是无向图。与长度和形状均无关。就是一个拓扑。
 
-### 计算机网络
+#### 计算机网络
 
 计算机网络就是联网的计算机所构成的系统。
 
@@ -107,7 +107,7 @@
 
 另外，链路的容量被称为**带宽**。
 
-### 互联网
+#### 互联网
 
 由以 TCP/IP 协议为主的一簇协议支撑起的、使用的人数最多的网络，就是互联网。
 
@@ -117,7 +117,7 @@
 - RFC：用于提交你认为互联网应该有的改进等
 - IETF：非营利组织。筛选靠谱的 RFC，进行编号，并放在网站上。所有 IP 及 IP 以上的协议，都在 RFC 上。
 
-## 什么是协议
+### 什么是协议
 
 定义：对等层的实体在通讯过程中，应该遵守的**规则集合**。
 
@@ -135,7 +135,7 @@
 
 总结：协议定义了在两个或多个通信实体之间交换的报文格式和次序，以及在报文传输和/或接收或其他事件方面所采取的动作。
 
-## 什么是 Internet：从服务角度
+### 什么是 Internet：从服务角度
 
 从应用的角度来看，互联网是**分布式的应用**，同时扮演基础设施的角色，为（分布式）应用提供**通讯服务**。
 
@@ -145,9 +145,9 @@
 - 互联网唯一存在的目的，就是为分布式应用提供服务。
   - i.e. 如果世界上没有分布式应用，也就不需要互联网了。
 
-# Lec 1.2：网络边缘
+## Lec 1.2：网络边缘
 
-## 网络的结构
+### 网络的结构
 
 从结构上考虑网络，网络可以分为三个部分：
 
@@ -161,7 +161,7 @@
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402241621035.png" alt="image-20240224162106227" style="zoom:50%;" />
 
-## 网络边缘
+### 网络边缘
 
 - 端系统（主机）
   - 运行应用程序
@@ -177,9 +177,9 @@
       - 具体地，在某些其他端系统眼中是 Server，在另外一些端系统眼中是 Client
     - 优点：每一个 Peer 在上线之后，在消耗服务资源的同时，还贡献了服务资源
 
-## 服务模式
+### 服务模式
 
-### 面向连接的服务
+#### 面向连接的服务
 
 > 注意：“面向连接”不是“有连接”
 >
@@ -194,7 +194,7 @@
 - 不仅是应用程序做好准备（i.e. 两者互相“打了招呼”），底层协议栈也做好了准备
   - e.g. 准备缓冲区、控制位置位、超时定时器设置好等等
 
-#### 例子：TCP
+##### 例子：TCP
 
 TCP 是 Internet 上**面向连接**的服务。TCP 服务 [RFC 9293] 可以
 
@@ -205,9 +205,9 @@ TCP 是 Internet 上**面向连接**的服务。TCP 服务 [RFC 9293] 可以
 - 拥塞控制
   - 当网络拥塞时，发送方降低发送速率
 
-### 无连接的服务
+#### 无连接的服务
 
-#### 例子：UDP
+##### 例子：UDP
 
 TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 
@@ -229,17 +229,17 @@ TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 - 使用 UDP 的应用
   - 流媒体、远程会议、DNS、Internet 电话
 
-# Lec 1.3：网络核心
+## Lec 1.3：网络核心
 
 网络核心就是**路由器的网状网络**。
 
-## 数据的传输
+### 数据的传输
 
 数据在网络的传输方式有两种：电路交换、分组交换。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402242333810.png" alt="image-20240224233328530" style="zoom: 67%;" />
 
-### 电路交换
+#### 电路交换
 
 电路交换，就是为每个呼叫**预留**一条专有电路（如电话网），如图
 <img src="https://raw.githubusercontent.com/MTDickens/mtd-images/main/img/202402241954795.png" alt="image" style="zoom: 67%;" />
@@ -257,7 +257,7 @@ TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 - 建立连接的时间太长（以秒为单位）
 - 计算机的请求往往是突发式的，因此电路交换极大地浪费带宽
 
-### 分组交换
+#### 分组交换
 
 - 将要传送的数据分成一个个范围：分组
 - 将分组从一个路由器传到相邻路由器（hop），一段段最终从源端传到目标端
@@ -277,7 +277,7 @@ TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 
 分组交换下的多路复用，其实是**统计多路复用**。也就是说，并没有明确规定那一段时间给哪一个源使用，而是按需分配。
 
-### 电路交换和分组交换的定量分析
+#### 电路交换和分组交换的定量分析
 
 假设我们有 $N$ 个用户，每个用户在每一刻活跃的概率只有 $p \in [0,1]$，每个用户活跃时需要的带宽为为 100 Kbps，总带宽为 1 Gbps。
 
@@ -290,7 +290,7 @@ TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 - 在那些 3-sigma 之外的时间，我们就利用缓冲区来应对。此时，延迟就会增加。
   - 3-sigma 之外的时间服从分布 $T_{3\sigma} \sim \lim_{k \to \infty} \operatorname{Bin}(kT,0.27\%) / k = 0.27\%$
 
-### 分组交换下的数据传输
+#### 分组交换下的数据传输
 
 在分组交换下，每个分组携带目标地址等 metadata，路由器根据目标地址进行路由。
 
@@ -300,11 +300,11 @@ TCP 是 Internet 上**无连接**的服务。TCP 服务 [RFC 9293] 可以
 - 对于维护状态的情况，我们使用的是**虚电路（Virtual Circuit）**
   - 端系统向网络发送指示虚电路启动与终止的报文，以及路由器之间传递的用于建立虚电路（即修改路由器表中的**连接状态**）的报文被称为信令报文，用来交换这些报文的协议常称为“信令协议”。
 
-# Lec 1.4：接入网和物理媒体
+## Lec 1.4：接入网和物理媒体
 
 接入网就是将网络边缘接入到网络核心的部分。
 
-### 住宅接入：DSL + 调制解调器（modem）
+#### 住宅接入：DSL + 调制解调器（modem）
 
 很早以前，每家每户有一条电话线，可以保证传输 300 Hz ~ 3.4 kHz （人耳听力范围）的信号。
 
@@ -319,7 +319,7 @@ Pitfall:
 
 后来，人们挖掘了 4 kHz 以上的频率用作上网，4 ~ 50 kHz 用于上行，50 ~ 1000 kHz 用于下行。从而使得上行可以达到 1 Mbps，下行可以达到 10 Mbps 左右。
 
-### 住宅接入：电缆模式 + modem
+#### 住宅接入：电缆模式 + modem
 
 不仅是电话线路，电视线路甚至电网也可以用于类似的接入。
 
@@ -328,13 +328,13 @@ Pitfall:
 - 线缆和光纤网络将各个家庭用户接入到 ISP 路由器
 - 各用户**共享**到线缆头端的接入网络
 
-### 接入网：家庭网络（Ethernet + WIFI）
+#### 接入网：家庭网络（Ethernet + WIFI）
 
 如图，家庭路由器通过有线、无线的方式，借助 NAT 技术，在 cable/DSL modem 的转换下，将所有设备接入了互联网。同时配备了防火墙等高级功能。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251243598.png" alt="image-20240225124257925" style="zoom: 67%;" />
 
-### 接入网：企业接入网络（Ethernet + WIFI）
+#### 接入网：企业接入网络（Ethernet + WIFI）
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251251922.png" alt="image-20240225125049372" style="zoom: 67%;" />
 
@@ -342,17 +342,17 @@ Pitfall:
 - 有多个接入点
 - 多层交换机
 
-### 广域无线接入：3/4/5G + LTE
+#### 广域无线接入：3/4/5G + LTE
 
 （详见之后）
 
-## 物理媒介
+### 物理媒介
 
 如图，前者是**导引型媒体**，后者是**非导引型媒体**。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251311473.png" alt="image-20240225131111891" style="zoom:60%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251310831.png" alt="image-20240225131046875" style="zoom:60%;" />
 
-# Lec 1.5：Internet 结构和 ISP
+## Lec 1.5：Internet 结构和 ISP
 
 > 互连网络结构：网络的网络
 
@@ -373,7 +373,7 @@ Pitfall:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251339856.png" alt="image-20240225133933652" style="zoom: 67%;" />
 
-## 分层
+### 分层
 
 因此，ISP 产生了分层（如下图），总体上分为 global ISP 和 regional ISP
 
@@ -383,7 +383,7 @@ Pitfall:
 
 同时，客户 ISPs 和提供者 ISPs 有经济合约
 
-## 竞争与合作
+### 竞争与合作
 
 **竞争：**但是，一个 global ISP 进行垄断肯定是不行的（政治/经济因素），因此，世界上有很多个 global ISPs。
 
@@ -396,7 +396,7 @@ Pitfall:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251356512.png" alt="image-20240225135557850" style="zoom:67%;" />
 
-## 业务细分
+### 业务细分
 
 并不是所有的端用户直接接入 global ISP。大多数端用户还是先接入 regional ISP（如图）。
 
@@ -404,7 +404,7 @@ Pitfall:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251357206.png" alt="image-20240225135744278" style="zoom:67%;" />
 
-## 互联网内容提供商（Internet Content Provider）
+### 互联网内容提供商（Internet Content Provider）
 
 经常，互联网内容提供商为了
 
@@ -421,13 +421,13 @@ Pitfall:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251410688.png" alt="image-20240225141033701" style="zoom:67%;" />
 
-## 总体结构
+### 总体结构
 
 ![image-20240225141221763](https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251412104.png)
 
-## 层次模型
+### 层次模型
 
-### Tier 1 ISP
+#### Tier 1 ISP
 
 - 国家/国际覆盖，速率极高
   - 不过，通常来说，点比较少
@@ -438,23 +438,23 @@ Pitfall:
 - 与大量的 Tier 2 ISP 和其他客户网络相连
   - 连接点的名称是 Point of Presence (POP)
 
-### Tier 2 ISP
+#### Tier 2 ISP
 
 向上给 Tier 1 ISP 交钱（有时也 peering），向下收 Tier 3 ISP 的费用，和 fellow  Tier 2 ISP 经常 peering。
 
-### Tier 3 ISP
+#### Tier 3 ISP
 
 向上给 Tier 1/2 ISP 交钱，向下收 local ISP 的费用。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251425332.png" alt="image-20240225142509782" style="zoom:67%;" />
 
-## ISP 之间的接入方式
+### ISP 之间的接入方式
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251429745.png" alt="image-20240225142936306" style="zoom: 80%;" />
 
-# Lec 1.6：分组延时、丢失和吞吐量
+## Lec 1.6：分组延时、丢失和吞吐量
 
-## 分组延时
+### 分组延时
 
 在路由器缓冲区的分组队列
 
@@ -507,7 +507,7 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402251845402.png" alt="image-20240225184502269" style="zoom:50%;" />
 
-## 延时及（去程）路由测试工具：Traceroute
+### 延时及（去程）路由测试工具：Traceroute
 
 Traceroute 的大致原理，就是
 
@@ -519,7 +519,7 @@ Traceroute 的大致原理，就是
 - 目标主机需要另外考虑。我们可以**向其一个随机高位端口进行请求**。大概率那个端口是没有进程占用的。从而，**主机会返回一个 ICMP 数据包，通知我们端口错误的信息**
   - 从而，源主机就可以计算出**和目标主机**往返时间
 
-## 丢包和重传
+### 丢包和重传
 
 当路由器的缓冲区满了之后，或者 QoS 等等，就会导致丢包。
 
@@ -536,11 +536,11 @@ Traceroute 的大致原理，就是
 3. **不重传**
    - 同上，除了使用的是 UDP 协议
 
-## 吞吐量
+### 吞吐量
 
 源主机 A 到目标主机 B 链路中的**瓶颈带宽**，很大程度上影响了 A 到 B 的吞吐量。
 
-# Lec 1.7：协议层次和服务模型
+## Lec 1.7：协议层次和服务模型
 
 服务（Service）：
 - 低层实体向上层实体提供它们之间的通信的能力
@@ -557,7 +557,7 @@ Traceroute 的大致原理，就是
   - 可以有不同的实现，队列
   - 例子: 传输层的SAP：端口（port）
 
-## 数据单元
+### 数据单元
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402262339566.png" alt="image-20240226233936956" style="zoom:50%;" />
 
@@ -565,7 +565,7 @@ Traceroute 的大致原理，就是
 
 - 注意：IDU 和 PDU 是不一样的。前者是**物理上**传给 **API** 的，后者是**逻辑上**传给**对等层实体**的。
 
-## 分层思想
+### 分层思想
 
 对付复杂的系统
 - 概念化：结构清晰，便于标示网络组件，以及描述其相互关系
@@ -576,7 +576,7 @@ Traceroute 的大致原理，就是
 - 分层思想被认为有害的地方？
   - 分层必然会带来层间交互，而交互就会带来较低的效率
 
-## Internet 协议栈
+### Internet 协议栈
 
 **应用层**：网络应用
 
@@ -602,11 +602,11 @@ Traceroute 的大致原理，就是
 
 - 2个相邻节点的电磁波的承载
 
-## 封装和解封装
+### 封装和解封装
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402270035989.png" alt="image-20240227003534052" style="zoom:67%;" />
 
-## 各层次的协议数据单元
+### 各层次的协议数据单元
 
 - 应用层：报文(message)
 - 传输层：报文段(segment)：TCP段，UDP数据报

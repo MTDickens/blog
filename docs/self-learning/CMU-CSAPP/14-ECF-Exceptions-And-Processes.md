@@ -1,6 +1,6 @@
-# Lec 14: Exceptional Control Flow - Exceptions and Processes
+## Lec 14: Exceptional Control Flow - Exceptions and Processes
 
-## The Control Flow
+### The Control Flow
 
 Up to now, we have learnt two mechanisms for changing the control flow:
 
@@ -19,7 +19,7 @@ But, these are insufficient to systems, which have to handle changes in ***syste
 
 These are **exceptional control flow**s, which are outside normal control flows. 
 
-## Exceptional Control Flow
+### Exceptional Control Flow
 
 - ECF exists in every level of a computer system.
 - Low-level mechanisms
@@ -34,7 +34,7 @@ These are **exceptional control flow**s, which are outside normal control flows.
   4. Nonlocal jumps: `setjmp()` and `longjmp()`
      - Implemented by **C runtime library**
 
-### Exceptions
+#### Exceptions
 
 An **exception** is **a transfer of control to the OS kernel** in response to some event (i.e.,change in processor state)
 
@@ -53,13 +53,13 @@ An **exception** is **a transfer of control to the OS kernel** in response to so
 > - Abort
 >   - e.g. protection faults
 
-### Exception Tables
+#### Exception Tables
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127205125788.png" alt="image-20240127205125788" style="zoom:50%;" />
 
-### Two Kinds of Exceptions
+#### Two Kinds of Exceptions
 
-#### Asynchronous Exceptions (Interrupts)
+##### Asynchronous Exceptions (Interrupts)
 
 Asynchronous exceptions happen as a result of changes in state that are **occurred outside of the processor**.
 
@@ -81,7 +81,7 @@ Asynchronous exceptions happen as a result of changes in state that are **occurr
   - Arrival of a data from the disk
   - ...
 
-#### Synchronous Exceptions
+##### Synchronous Exceptions
 
 Synchronous exceptions are caused by events that occur as a result of executing an instruction:
 
@@ -119,7 +119,7 @@ Synchronous exceptions are caused by events that occur as a result of executing 
   - Examples: illegal instruction, parity error, machine check
   - Aborts current program
 
-## Processes
+### Processes
 
 Definition: A process is an instance **of running program** (i.e. that is in execution)
 
@@ -132,7 +132,7 @@ Process provide each program with two key abstractions (or in another way, "illu
   - Each program seems to have exclusive use of main memory
   - Provided by kernel mechanism called *virtual memory*
 
-### Multiprocessing
+#### Multiprocessing
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127213050560.png" alt="image-20240127213050560" style="zoom:50%;" />
 
@@ -140,7 +140,7 @@ Once in a while, the kernel saves the registers in the CPU in the memory, load t
 
 For multi-core processor, several processes might be run concurrently. But if the number of processes outmatches the number of CPUs, the kernel still needs to do context switching.
 
-### Concurrent Processes
+#### Concurrent Processes
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127213635311.png" alt="image-20240127213635311" style="zoom:33%;" />
 
@@ -148,13 +148,13 @@ Note that concurrency might happen **no matter how many CPU cores you have**.
 
 - Even if you only have one core, as long as the processes overlap in their **logical control flow**, they are concurrent.
 
-### Context Switching
+#### Context Switching
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240127213939284.png" alt="image-20240127213939284" style="zoom: 50%;" />
 
-## Process Control
+### Process Control
 
-### System Call Error Handling
+#### System Call Error Handling
 
 On error, Linux system-level functions typically return -1 and set global variable `errno` to indicate cause.
 
@@ -192,7 +192,7 @@ int Fork() {
 
 
 
-### Creating and Terminating Processes
+#### Creating and Terminating Processes
 
 From a programmer’s perspective, we can think of a process as being in one of three states:
 
@@ -203,7 +203,7 @@ From a programmer’s perspective, we can think of a process as being in one of 
 - Terminated
   - Process is stopped permanently
 
-#### Terminate Process
+##### Terminate Process
 
 - Process becomes terminated for one of three reasons:
 
@@ -223,15 +223,15 @@ From a programmer’s perspective, we can think of a process as being in one of 
 
 - `exit` is called but **never returns**
 
-#### Creating Process
+##### Creating Process
 
 We use `fork()` to create processes in C.
 
 ```c
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <stdlib.h>
+##include <stdio.h>
+##include <unistd.h>
+##include <sys/types.h>
+##include <stdlib.h>
 
 int main() {
     int *ptr = malloc(sizeof(int));
@@ -271,7 +271,7 @@ Hello from child process! Child PID == 0, *ptr == 114514, x == 0
   - The only difference between parent and child is their PIDs.
 - 在 Github Codespaces 中，父进程先于子进程。但是，事实上，不同平台的顺序可能不同。并不存在一个 100% 确定的顺序关系。因此，don't make assumptions
 
-##### Modeling `fork` with Process Graphs
+###### Modeling `fork` with Process Graphs
 
 ```c
 // header files
@@ -296,7 +296,7 @@ int main()
 
 如图和上述代码，我们可以根据进程之间的关系，作出进程图，并进行拓扑排序。每一个 valid topological sort，都代表一个可能的执行顺序（i.e. feasible total ordering）。
 
-##### More Examples of `fork`
+###### More Examples of `fork`
 
 假如我们设计以下 `fork2()` 函数：
 
@@ -385,11 +385,11 @@ void fork5()
 }
 ```
 
-#### Reap Child Processes
+##### Reap Child Processes
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240128152924722.png" alt="image-20240128152924722" style="zoom:50%;" />
 
-##### Zombie Example
+###### Zombie Example
 
 ```c
 void fork7()
@@ -426,7 +426,7 @@ Terminating Child, PID = 38126
 
 As you can see, `ps` shows the child process, i.e. process 38126, as "defunct", meaning that it's currently a  zombie.
 
-#### `wait`: Synchronizing with Children
+##### `wait`: Synchronizing with Children
 
 How to reap a children? By calling `wait` (or `waitpid` if you want to reap a child with specific PID).
 
@@ -463,7 +463,7 @@ Process Graph (you can see it actually becomes a DAG instead of a tree, after th
 
 More code examples on [GeekForGeeks](https://www.geeksforgeeks.org/wait-system-call-c/).
 
-### Load and Running Processes
+#### Load and Running Processes
 
 You can use `int execve (char *filename, char *argv[], char *envp[])` to **override this process with a new process specified by `filename`, `argv` and `envp`**.
 
@@ -472,13 +472,13 @@ You can use `int execve (char *filename, char *argv[], char *envp[])` to **overr
   - as well as **open files** and **signal context** 
 - it is called once and never returns (if successful)
 
-#### Structure of a Stack When a New Program Starts
+##### Structure of a Stack When a New Program Starts
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240128163249200.png" alt="image-20240128163249200" style="zoom:33%;" />
 
 The arguments of `execve` is compatible with the structure of the stack.
 
-#### Example of Executing `/bin/ls -lt /usr/include`
+##### Example of Executing `/bin/ls -lt /usr/include`
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240128163515962.png" alt="image-20240128163515962" style="zoom: 50%;" />
 
@@ -487,11 +487,11 @@ We executes `/bin/ls -lt /usr/include` in child process using current environmen
 Code:
 
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
+##include <stdio.h>
+##include <stdlib.h>
+##include <unistd.h>
+##include <errno.h>
+##include <string.h>
 
 void unix_error(char *msg) {
     fprintf(stderr, "%s: %s\n", msg, strerror(errno));

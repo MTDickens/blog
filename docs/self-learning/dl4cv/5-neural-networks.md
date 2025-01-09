@@ -1,22 +1,22 @@
-# Feature Extraction
+## Feature Extraction
 
 Raw data sometimes hardly mean anything, so in order to extract the implicit features, you have to map it to feature space, like this image below:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131832144.png" alt="image-20240313183230709" style="zoom: 33%;" />
 
-## Color Diagram
+### Color Diagram
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131833600.png" alt="image-20240313183316512" style="zoom: 33%;" />
 
 As shown in the image, only the color feature is extracted, and the position feature is discarded. Thus, this extraction algorithm is robust with object shift and rotations.
 
-## Histogram of Oriented Gradients
+### Histogram of Oriented Gradients
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131835514.png" alt="image-20240313183544863" style="zoom: 33%;" />
 
 As opposed to "color diagram", the color feature is discarded, and what remains is the gradient of the light.
 
-## Bag of Words
+### Bag of Words
 
 In the two cases above, we have to manually specify the feature that we want to extract. But the "bag of words" algorithm can somehow "learn" from data what features to extract.
 
@@ -28,7 +28,7 @@ In the two cases above, we have to manually specify the feature that we want to 
 2. 我们将 patches 进行聚类，将每个聚类的中心映射到 one-hot encoding 的一个向量
 3. 之后，我们把每一个 test image 的每一个 patch，通过 codebook，找到距离最近的聚类中心对应的 one-hot vector。然后将所有这些 one-hot vector 相加，得到这个图像的 vector。
 
-# Traditional Feature Extraction and DNN
+## Traditional Feature Extraction and DNN
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403131857952.png" alt="image-20240313185658246" style="zoom: 33%;" />
 
@@ -43,7 +43,7 @@ However, we also want to tune the feature extraction module. And that's why we u
 
 As you can see, we can tune both the feature extraction module and the learnable module during training. 
 
-# Geometric View of Neural Network
+## Geometric View of Neural Network
 
 Without **activation function**, the neural network is just layers and layers of affine transformation, useless! 
 
@@ -63,7 +63,7 @@ But, with ReLU,
 
 Now its linear separable, and the boundary is non-linear.
 
-# Universal Approximation Property
+## Universal Approximation Property
 
 对于 ReLU，我们可以通过 bump function（可以由四个 ReLU 相加而成）来拟合任何函数。
 
@@ -71,7 +71,7 @@ Now its linear separable, and the boundary is non-linear.
 
 - 不过，在实际的训练中，神经网络并不用的 bump function 来进行拟合，而是通过调整其它的参数
 
-# Back Propagation
+## Back Propagation
 
 前馈神经网络中，主要由三个参数（不用纠结下面具体的编号，like 从 0 开始还是从 1 开始，只需知道大致情况即可）：
 

@@ -1,4 +1,4 @@
-# Live Variables Analysis
+## Live Variables Analysis
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230412017.png" alt="image-20240323041249822" style="zoom:33%;" />
 
@@ -7,7 +7,7 @@
 - 在一个 program point 处，live variables analysis 的 bit vector 是 variable，而 reaching definitions analysis 是 definitions
 - live variables analysis 关注的是在点 $p$ 处的某个变量的值会不会在没有修改之前被使用；而 reaching definitions analysis 是某个定义能不能活到点 $p$，i.e. 没有被重定义
 
-## Constraints
+### Constraints
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403230459469.png" alt="image-20240323045935058" style="zoom: 33%;" />
 
@@ -15,7 +15,7 @@
 
 - 可以这么理解：由于 OUT 是 IN 的可能路径的一部分。因此，要从 OUT 往 IN 去分析。
 
-## Transfer Function
+### Transfer Function
 
  我们考虑 B 处的语句：
 
@@ -23,13 +23,13 @@
 2. 如果 B 处没有 use v，但是重新定义了 v，那么 IN[B] 就一定不能含有 v
 3. 其他情况，IN[B] 和 OUT[B] 保持一致
 
-## Algorithm
+### Algorithm
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403231531432.png" alt="image-20240323153144309" style="zoom: 33%;" />
 
 - 由于是 may analysis，因此所有的 IN[B] 需要是并集
 
-### How to Deal With Basic Blocks that Contains Multiple `define`s
+#### How to Deal With Basic Blocks that Contains Multiple `define`s
 
 另外，对于一个块里有多个重定义语句的，我们应该如下处理。举例：
 
@@ -53,7 +53,7 @@ w = v / 3
 
 
 
-# Available Expressions Analysis
+## Available Expressions Analysis
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403231556401.png" alt="image-20240323155629134" style="zoom:33%;" />
 
@@ -71,11 +71,11 @@ w = v / 3
 - 对于 live variable analysis，我们要判断的是 is this variable still alive? 只要 this variable **may** alive，我们就不能把它当成是 dead（比如优化掉）
 - 对于 available variable analysis，我们要判断的是 is this expression available at point p? 只有 this expression **must** be available ，我们才能直接替换
 
-## Algorithm
+### Algorithm
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403231614215.png" alt="image-20240323161359225" style="zoom:33%;" />
 
-# Conclusion and Comparison
+## Conclusion and Comparison
 
 **May analysis:** false positive (i.e. you say it's positive, but actually it isn't) allowed, false negative forbidden.
 

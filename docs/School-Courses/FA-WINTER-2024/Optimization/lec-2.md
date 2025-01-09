@@ -3,7 +3,7 @@ $$
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 $$
 
-# Outline
+## Outline
 
 1. Relaxation and Approximation
 	2. Concepts
@@ -14,9 +14,9 @@ $$
 	2. Class $C^{1,1}_L(\mathbb R^n)$
 	3. Class $C^{2,2}_M(\mathbb R^n)$
 
-# Relaxation and Approximation
+## Relaxation and Approximation
 
-## Concepts
+### Concepts
 
 > [!Definition]
 > 
@@ -30,9 +30,9 @@ $$
 
 而我们的目标，就是 replace an initial complex object (i.e. $f$) by a simplified one, which is close by is properties to the original.
 
-## 一阶优化
+### 一阶优化
 
-### 梯度下降的局部最优性
+#### 梯度下降的局部最优性
 
 一阶优化，就是喜闻乐见的梯度下降。但是我们还是进行一番推导：
 
@@ -60,7 +60,7 @@ $$
 > 
 > 显然，令 $y-x = \frac {\epsilon} {\norm{\nabla f(\bar x)}}\nabla f(\bar x)$，就是最好的选择。$\blacksquare$
 
-### 梯度的正交空间
+#### 梯度的正交空间
 
 > [!Definition]
 >
@@ -79,13 +79,13 @@ $$
 > 
 > *Proof*: <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/23_20_30_28_20240923203028.png"/>
 > 
-### 最小值和梯度
+#### 最小值和梯度
 
 如果函数 $f$ 在极小值点 $x^\ast$ 附近一阶光滑，那么显然 $\nabla f(x^\ast) = 0$。
 
 - 当然，反之不对，因为存在鞍部
 
-### 线性约束下的梯度下降
+#### 线性约束下的梯度下降
 
 > [!Colloary]
 > 
@@ -111,11 +111,11 @@ $$
 > 
 > 因此，我们就是要找出这样的 $\lambda^\ast$，使得 $\nabla f(x^\ast) = A^T \lambda^\ast$ 的同时，也有 $Ax^\ast = b$。
 
-## 二阶优化
+### 二阶优化
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/23_21_1_12_20240923210112.png"/>
 
-### 极小值和 $\nabla^2 f(x)$
+#### 极小值和 $\nabla^2 f(x)$
 
 > [!note]+ Notation
 > 
@@ -126,7 +126,7 @@ $$
 
 - 注意，一阶、二阶导数的关系，只是极小值点的**必要条件**。
 
-### 严格极小值和 $\nabla^2 f(x)$
+#### 严格极小值和 $\nabla^2 f(x)$
 
 > [!Definition]
 > 
@@ -141,9 +141,9 @@ $$
 > **证明**：易证。
 
 
-# 可微函数
+## 可微函数
 
-## Class $C_L^{k,p} (\mathbb R^n)$
+### Class $C_L^{k,p} (\mathbb R^n)$
 
 Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)$ should have the following properties:
 
@@ -164,7 +164,7 @@ Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)
 2. 若 $q > k$，那么 $C_L^{q,p} (\mathbb R^n) \supseteq C_L^{k,p} (\mathbb R^n)$
 3. 若 $f_1 \in C_{L_1}^{k,p} (\mathbb R^n), f_2 \in C_{L_2}^{k,p} (\mathbb R^n)$，且给定任意 $\alpha, \beta \in \mathbb R^1$，那么，$\alpha f_1 + \beta f_2 \in C_{L_3}^{k,p} (\mathbb R^n), \text{ where } L_3 = |\alpha| L_1 + |\beta| L_2$
 
-## Class $C_L^{1,1}(\mathbb R^n)$
+### Class $C_L^{1,1}(\mathbb R^n)$
 
 相比 $C_L^{1,1}(\mathbb R^n)$，$C_L^{2,1}(\mathbb R^n)$ 具有更加良好的性质。因此我们经常用后者的充要条件，当做前者的充分条件。
 
@@ -194,7 +194,7 @@ Let $Q$ be a subset of $\mathbb R^n$。A function $f \in C_L^{k,p} (\mathbb R^n)
 > 
 > 因此：$f(x) \in C_1^{1,1}(\mathbb R^1)$
 
-### Geometric Interpretation of Class $C_L^{1,1}(\mathbb R^n)$
+#### Geometric Interpretation of Class $C_L^{1,1}(\mathbb R^n)$
 
 > [!Lemma]
 > 
@@ -233,7 +233,7 @@ $$
 > 
 > 如图：$g = \phi_1, h = \phi_2$
 
-## Class $C_M^{2,2}(\mathbb R^n)$
+### Class $C_M^{2,2}(\mathbb R^n)$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/24_16_13_7_20240924161307.png"/>
 

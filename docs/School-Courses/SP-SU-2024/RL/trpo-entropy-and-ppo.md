@@ -1,4 +1,4 @@
-# 前言：置信域方法
+## 前言：置信域方法
 
 目标问题：$\min_{\theta \in \mathbb R^n} J(\theta)$
 
@@ -22,7 +22,7 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/8_20_40_7_202407082040510.png"/>
 
-## 伪代码
+### 伪代码
 
 ```python
 def TrustRegion(theta, J, L, max_times):
@@ -31,7 +31,7 @@ def TrustRegion(theta, J, L, max_times):
     return theta
 ```
 
-## 如何选择 $L(\theta | \theta_\text{now})$
+### 如何选择 $L(\theta | \theta_\text{now})$
 
 我们很多时候，会直接选择：
 
@@ -49,7 +49,7 @@ $$
 
 当然，也可以使用 KL 散度等等。
 
-# TRPO
+## TRPO
 
 对比：
 
@@ -60,7 +60,7 @@ $$
 
 TRPO 遵循置信域方法的框架，重复**做近似**和**最大化**两个步骤，直到算法收敛。
 
-## 1. 做近似
+### 1. 做近似
 
 我们通过 importance sampling 改写一下 $J(\mathrm \theta)$:
 
@@ -93,7 +93,7 @@ $$
 \widetilde L(\theta | \theta_\text{now}) = \frac 1 n \sum_{t=1}^n \frac {\pi(a_t|s_t; \mathrm \theta)} {\pi(a_t|s_t; \mathrm \theta_\text{now})} u_t
 $$
 
-## 2. 最大化
+### 2. 最大化
 
 我们的最大化问题：
 
@@ -115,7 +115,7 @@ $$
 \mathcal N(\mathrm \theta_\text{now}) = \left\{\ \mathrm \theta : \frac 1 t \sum_{i=1}^t \operatorname{KL}\left[ \pi \left( \cdot | s_i; \mathrm \theta_\text{now} \right)  {\|} \pi \left( \cdot | s_i; \mathrm \theta \right) \right] \leq \Delta \right\}
 $$
 
-## 3. 如何进行优化？
+### 3. 如何进行优化？
 
 求一个**由不规则函数所定义的区域**内的一个**不规则目标函数**的最大值，只能将**区域和目标函数**两者都进行近似：要么梯度、要么进一步用 Hessian matrix。
 
@@ -129,7 +129,7 @@ $$
 
 [<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/07/9_3_22_45_202407090322073.png"/>](https://hrl.boyuai.com/chapter/2/trpo%E7%AE%97%E6%B3%95#113-%E8%BF%91%E4%BC%BC%E6%B1%82%E8%A7%A3)
 
-### 共轭梯度法
+#### 共轭梯度法
 
 得到了最终的可以用来计算的式子之后，我们就采用共轭梯度法来求解。
 
@@ -147,7 +147,7 @@ $$
 > 
 > 结果为 ![{\displaystyle {x}_{k+1}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c88bea93faadfd84aeb50f02ca29d0cc1aabe6a0).
 
-# 熵正则
+## 熵正则
 
 熵损失就是：
 
@@ -176,7 +176,7 @@ $$
 > 
 > 一个好的办法是用 Tsallis Entropy 做正则，让离散概率具有稀疏性，每次决策只给少部分动作非零的概率，“过滤掉”很差的动作。有兴趣的读者可以阅读相关论文。
 
-# PPO 算法
+## PPO 算法
 
 由于 TRPO 算法的求解比较 computationally expensive，因此我们采用近似的 PPO 算法。
 

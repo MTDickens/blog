@@ -1,11 +1,11 @@
-# Failure Case: Unsynchronized 
+## Failure Case: Unsynchronized 
 
 给一个例子：
 
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
+##include <stdio.h>
+##include <stdlib.h>
+##include <pthread.h>
 
 
 int counter = 0;
@@ -53,7 +53,7 @@ int main() {
 
 
 
-# Race Condition
+## Race Condition
 
 如果多个进程（或者线程）并行执行，而且输出结果取决于这几个进程/线程指令的执行顺序，那么这种情况就被称为 race condition
 
@@ -63,7 +63,7 @@ int main() {
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_5_17_47_20241108051746.png"/>
 
-# Critical Section
+## Critical Section
 
 Critical section 用于访问**不能所有处理器共享**的资源。
 
@@ -76,13 +76,13 @@ Critical section 用于访问**不能所有处理器共享**的资源。
 - 在 exit section，进程执行退出 critical section（同时释放 critical section 的资源）的步骤
 - 然后，进入 remainder section，最后重新回到 entry section
 
-# Sufficient Requirements for Solution
+## Sufficient Requirements for Solution
 
 如何避免上图中出现 race condition？充分条件是下面的三个：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_5_21_15_20241108052115.png"/>
 
-## Peterson's Solution
+### Peterson's Solution
 
 在只有两个进程的情况下，Peterson 构造出了一种可行的方案：
 
@@ -104,7 +104,7 @@ Critical section 用于访问**不能所有处理器共享**的资源。
 > 
 > 如果进程 A 进入了，进程 B 等待。那么，只需要等进程 B 执行完毕，并且完成 exit section，进程 A 就可以进去执行。这显然是 bounded waiting。
 
-## Drawbacks of Peterson's Solution
+### Drawbacks of Peterson's Solution
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_5_47_52_20241108054752.png"/>
 
@@ -121,9 +121,9 @@ Critical section 用于访问**不能所有处理器共享**的资源。
 > 同理可以考虑 Peterson's solution 在编译优化或者乱序执行下可能造成的后果。
 
 
-# Hardware Fix
+## Hardware Fix
 
-## Memory Barrier
+### Memory Barrier
 
 首先，在**多核模型**下，我们看看 memory hierarchy：
 
@@ -158,7 +158,7 @@ void * thread2(void * args) {
 }
 ```
 
-## Atomic `test-and-set`
+### Atomic `test-and-set`
 
 `test-and-set` 功能上等价于下面这个函数：
 
@@ -195,7 +195,7 @@ bool test_set (bool *target)
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_22_45_28_20241108224527.png"/>
 
-## Atomic `compare-and-swap`
+### Atomic `compare-and-swap`
 
 `compare-and-swap` 功能上等价于下面这个函数：
 
@@ -226,7 +226,7 @@ while (true) {
 
 即可实现除了 bounded-waiting 以外的其它两个功能。
 
-## Example: arm64
+### Example: arm64
 
 ARM64 并没有 `compare-and-swap` 这个指令，我们用到的是 `ldxr/stxr` 指令对。我们可以使用这对指令，实现一样的功能。
 
@@ -253,12 +253,12 @@ ARM64 并没有 `compare-and-swap` 这个指令，我们用到的是 `ldxr/stxr`
 
 **注意**：线程 A 设置的 `ldxr`，线程 B 不能够解锁。
 
-# Abstractions
+## Abstractions
 
-## `atomic` library
+### `atomic` library
 
 我们可以使用（库中）实现好的 atomic variable，来当作原子变量（i.e. 锁）。比如 C++ 的 `std::atomic` 类型。
-## Mutex
+### Mutex
 
 Basically，互斥锁就是下面这个东西。
 
@@ -270,7 +270,7 @@ Basically，互斥锁就是下面这个东西。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_23_51_0_20241108235100.png"/>
 
-## Semaphore（信号量）
+### Semaphore（信号量）
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/8_23_52_46_20241108235246.png"/>
 
@@ -283,11 +283,11 @@ Basically，互斥锁就是下面这个东西。
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_3_2_57_20241109030256.png"/>
 
 同时，我们需要让 semaphore 的 `wait` 以及 `signal` 也是原子操作（i.e. `wait` 和 `signal` 内部本身就是 critical section）。对此，我们还需要用更轻量的 mutex w/o blocking 来进行保护。
-## Blocking Or Not?
+### Blocking Or Not?
 
 对于 CS 较短的情况，我们可以 non-blocking，避免过多进行调度；对于较长的情况，就是 blocking，避免资源浪费。
 
-## Semaphore in Practice
+### Semaphore in Practice
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_3_48_58_20241109034857.png"/>
 
@@ -307,7 +307,7 @@ Basically，互斥锁就是下面这个东西。
 >    
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_3_50_51_20241109035051.png"/>
 
-## 死锁和饥饿
+### 死锁和饥饿
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_3_50_38_20241109035037.png"/>
 
@@ -315,7 +315,7 @@ Basically，互斥锁就是下面这个东西。
 
 死锁会造成 starvation，但是 starvation 不一定是死锁造成的。还可能是一直抢不到资源造成的。
 
-### Priority Inversion
+#### Priority Inversion
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_6_54_59_20241109065459.png"/>
 
@@ -331,7 +331,7 @@ Basically，互斥锁就是下面这个东西。
 
 从而，本次的执行中，是“中>低>高”——优先级倒置了。
 
-## Implementation in Linux
+### Implementation in Linux
 
 在 Linux 中，
 
@@ -344,7 +344,7 @@ Basically，互斥锁就是下面这个东西。
 
 至于用户态的，POSIX 标准要求实现，因此 C 中有专门的库去实现。
 
-## Conditional Variable
+### Conditional Variable
 
 有三个基本操作：
 
@@ -356,13 +356,13 @@ Basically，互斥锁就是下面这个东西。
 
 和 semaphore 相比，condition variables 可以 broadcast——在 condition is fulfilled 的情况下，将所有的线程叫醒。
 
-# Three Problems in Synchronization
+## Three Problems in Synchronization
 
 - Bounded-Buffer Problem
 - Readers-Writers Problem
 - Dining Philosopher Problem
 
-## Bounded-Buffer Problem
+### Bounded-Buffer Problem
 
 **问题描述**：有两个进程，一个是 producer、一个是 consumer，它们 share a buffer of size **N**。Producer 不断 add data into buffer，而 consumer 不断 remove data from buffer。我们需要让：
 
@@ -411,16 +411,16 @@ do {
 } while (TRUE);
 ```
 
-## Readers-Writers Problem
+### Readers-Writers Problem
 
 **问题描述**：
 
-- ﻿﻿A data set is shared among a number of concurrent processes
-	- ﻿﻿readers: only read the data set; they do not perform any updates
-	- ﻿﻿writers: can both read and write
-- ﻿﻿The readers-writers problem:
-	- ﻿﻿allow multiple readers to read at the same time (shared access)
-	- ﻿﻿only one single writer can access the shared data (exclusive access)
+- A data set is shared among a number of concurrent processes
+	- readers: only read the data set; they do not perform any updates
+	- writers: can both read and write
+- The readers-writers problem:
+	- allow multiple readers to read at the same time (shared access)
+	- only one single writer can access the shared data (exclusive access)
 
 **解决方法**：
 
@@ -469,7 +469,7 @@ do {
 
 - 如上面的代码：只有**第一个** reader 需要尝试抢夺以及释放 `write`。只要抢到了（i.e. 保证 `write` 不在 writer 手上），就可以读了。
 
-### Variations: Read/Writer Priority
+#### Variations: Read/Writer Priority
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/9_19_56_45_20241109195645.png"/>
 
@@ -480,7 +480,7 @@ do {
 
 我们之前的 implementation 显然是 reader first。如果希望 writer first 的话，其实也很好办：可以加上一个 `reader_allow_get_write_lock`（不过这其实就是一个 atomic variable。同时，如果这个变量变成 1 了，那么所有的 reader 都要 wake up）
 
-## Dining Philosopher Problem
+### Dining Philosopher Problem
 
 并没有现实中直接对应的应用，只是这个问题比较难，可以用来测试 primitive 的设计是否恰当。
 
@@ -518,16 +518,16 @@ do {
 > 
 > 因此，在***1 号哲学家已经拿起了左手边的筷子***的情况下，不会发生死锁。其它情况可以类似推理。
 
-# Deadlocks
+## Deadlocks
 
 比如下面这个程序
 
 ```c
-#include <pthread.h> #include <stdio.h>
+##include <pthread.h> #include <stdio.h>
 
 pthread_mutex_t first_mutex; pthread_mutex_t second_mutex;
 
-#include <pthread.h> #include <stdio.h>
+##include <pthread.h> #include <stdio.h>
 
 pthread_mutex_t first_mutex; pthread_mutex_t second_mutex; pthread_mutex_t add_lock;
 
@@ -590,7 +590,7 @@ int main() { pthread_mutex_init(&first_mutex, NULL); pthread_mutex_init(&second_
 
 一眨眼功夫就会出现 deadlock。因此，deadlock 是必须要预防的问题；如果无法预防，那么也要在出现 deadlock 之后进行解决。
 
-## System Model
+### System Model
 
 对于资源以及对其的 request 和 allocation，我们可以使用 resource allocation graph 来表示：
 
@@ -617,13 +617,13 @@ int main() { pthread_mutex_init(&first_mutex, NULL); pthread_mutex_init(&second_
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/10_5_39_44_20241110053944.png"/>
 
-## Four Conditions of Deadlock
+### Four Conditions of Deadlock
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/10_5_41_1_20241110054101.png"/>
 
 只有四个条件均达成，才**有可能**导致死锁。
 
-## Deadlock Prevention
+### Deadlock Prevention
 
 只要打破四个条件其中之一，就不会发生死锁。
 
@@ -647,17 +647,17 @@ int main() { pthread_mutex_init(&first_mutex, NULL); pthread_mutex_init(&second_
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/10_6_5_32_20241110060532.png"/>
 
-## Deadlock Avoidance
+### Deadlock Avoidance
 
 除了通过打破规则的方法，使得死锁**不可能出现**以外，我们还可以实时检测是否会出现死锁。最著名的算法，就是 banker's algorithm。
 
 （下面截取自 Wikipedia）
 
-### 背景
+#### 背景
 
 在银行中，客户申请贷款的数量是有限的，每个客户在第一次申请贷款时要声明完成该项目所需的最大资金量，在满足所有贷款要求时，客户应及时归还。银行家在客户申请的贷款数量不超过自己拥有的最大值时，都应尽量满足客户的需要。在这样的描述中，银行家就好比操作系统，资金就是资源，客户就相当于要申请资源的进程。
 
-### 进程
+#### 进程
 
 ```
       Allocation　　　Max　　　Available
@@ -739,7 +739,7 @@ P2的需求小于能用的，所以配置给他再回收
 > 
 > IRL, Linux 等操作系统中，其实并不使用这样的算法。最主要原因是因为 MAX 是难以预先估计的。
 
-## Deadlock Detection
+### Deadlock Detection
 
 > [!note]+ 
 > 
@@ -753,7 +753,7 @@ P2的需求小于能用的，所以配置给他再回收
 
 我们可以把第一张图（i.e. system model 中的经典图）转换成第二张图。然后，**存在死锁，当且仅当第二张图有环**。
 
-## Deadlock Recovery
+### Deadlock Recovery
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/10_7_27_36_20241110072736.png"/>
 

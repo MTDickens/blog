@@ -1,6 +1,6 @@
-# Lec 0: PyTorch
+## Lec 0: PyTorch
 
-## 类型和 shape
+### 类型和 shape
 
 shape 就是张量的形状。从外到内，比如：
 
@@ -17,7 +17,7 @@ shape 就是张量的形状。从外到内，比如：
 
 我们建立张量的时候，可以让 pytorch 自动推断类型，也可以自己指明类型。
 
-### 创建张量
+#### 创建张量
 
 创建一个新的张量，一般使用 `full`（填充）、`zeros`（全零）、`ones`（全一）、`rand`（随机）来创建。
 
@@ -30,7 +30,7 @@ x2 = x0.new_zeros(4, 5)                 # Shape (4, 5), dtype torch.float64 # co
 x3 = torch.ones(6, 7).to(x0)            # Shape (6, 7), dtype torch.float64) # copy type
 ```
 
-## Slicing
+### Slicing
 
 Slicing 的语法就是 `[start:end(:step), ...]`。其中，start 和 end 的值有以下含义
 
@@ -40,7 +40,7 @@ Slicing 的语法就是 `[start:end(:step), ...]`。其中，start 和 end 的�
 
 当然，还有一种特殊形式，就是 `start:end:step` 是一个数字（下面会讲）。
 
-### 降维
+#### 降维
 
 如果其中一个 `start:end:step` 就是一个数字，那么就会降维；如果采用了 length-one slice，那么就不会降维，比如：
 
@@ -63,13 +63,13 @@ tensor([[1, 2, 3]])
 tensor([1, 2, 3])
 ```
 
-### 深复制
+#### 深复制
 
 本质上，slicing 可以和 SQL 里的 view（视窗）、C++ 里的引用进行类比——就是一个 alias。如果改动了视窗、引用，那么原来的数组也会改动。
 
 因此，我们通过 `.clone()` 的方法，得到一个 slicing 的深复制，从而避免互相干扰。
 
-### Integer Slicing
+#### Integer Slicing
 
 除了经典的 `start:end:step` 方式指定，我们还可以直接通过列表来指定。
 
@@ -79,23 +79,23 @@ tensor([1, 2, 3])
 
 ```python
 import pytorch as torch
-# Create the following rank 2 tensor with shape (3, 4)
-# [[ 1  2  3  4]
-#  [ 5  6  7  8]
-#  [ 9 10 11 12]]
+## Create the following rank 2 tensor with shape (3, 4)
+## [[ 1  2  3  4]
+##  [ 5  6  7  8]
+##  [ 9 10 11 12]]
 a = torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
 print('Original tensor:')
 print(a)
 
-# Create a new tensor of shape (5, 4) by reordering rows from a:
-# - First two rows same as the first row of a
-# - Third row is the same as the last row of a
-# - Fourth and fifth rows are the same as the second row from a
+## Create a new tensor of shape (5, 4) by reordering rows from a:
+## - First two rows same as the first row of a
+## - Third row is the same as the last row of a
+## - Fourth and fifth rows are the same as the second row from a
 idx = [0, 0, -1, 1, 1]  # index arrays can be Python lists of integers
 print('\nReordered rows:')
 print(a[idx])
 
-# Create a new tensor of shape (3, 4) by reversing the columns from a
+## Create a new tensor of shape (3, 4) by reversing the columns from a
 idx = torch.tensor([3, 2, 1, 0])  # Index arrays can be int64 torch tensors
 print('\nReordered columns:')
 print(a[:, idx])
@@ -131,7 +131,7 @@ tensor([[ 4,  3,  2,  1],
 - 首先，选取表格中的第 0,1,2 行
 - 然后，在新的表格中，从第 0 行选取第 1 列，从第 1 行选取第 2 列，从第 2 行选取第 3 列。也就是次对角线。
 
-### Boolean Slicing
+#### Boolean Slicing
 
 1. 首先通过 `predicate(a)` 来获取一个 mask
 2. 然后通过 `a[mask]` 来得到一个一维数组
@@ -142,20 +142,20 @@ a = torch.tensor([[1,2], [3, 4], [5, 6]])
 print('Original tensor:')
 print(a)
 
-# Find the elements of a that are bigger than 3. The mask has the same shape as
-# a, where each element of mask tells whether the corresponding element of a
-# is greater than three.
+## Find the elements of a that are bigger than 3. The mask has the same shape as
+## a, where each element of mask tells whether the corresponding element of a
+## is greater than three.
 mask = (a > 3)
 print('\nMask tensor:')
 print(mask)
 
-# We can use the mask to construct a rank-1 tensor containing the elements of a
-# that are selected by the mask
+## We can use the mask to construct a rank-1 tensor containing the elements of a
+## that are selected by the mask
 print('\nSelecting elements with the mask:')
 print(a[mask])
 
-# We can also use boolean masks to modify tensors; for example this sets all
-# elements <= 3 to zero:
+## We can also use boolean masks to modify tensors; for example this sets all
+## elements <= 3 to zero:
 a[a <= 3] = 0
 print('\nAfter modifying with a mask:')
 print(a)
@@ -183,19 +183,19 @@ tensor([[0, 0],
         [5, 6]])
 ```
 
-## Reshaping
+### Reshaping
 
-### Flattened-Order-Preserving Reshaping
+#### Flattened-Order-Preserving Reshaping
 
 通过 `view()`，我们可以去 reshape 一个 tensor，同时**保证两个 tensor 在一维展开 (flattened) 之后，完全相同**。
 
 - 如果将 view 的某个 axis 设置为 `-1`，那么就相当于让程序自动推断这个 axis 的大小。至多只能设置一个 `-1`
 
-### Transpose
+#### Transpose
 
 转置一个 tensor，会使得它和原 tensor 在一维展开之后，表示不同。因此，不能通过上述的 `view()` 来转置，而要通过专门的 `torch.t(a)` 或者 `a.t()`来进行。
 
-### Geometric-Order-Preserving Reshaping
+#### Geometric-Order-Preserving Reshaping
 
 更一般地，转置本身就是 **axes swapping**。而 **axes swapping** 又是 **axes mutation** 的特例。
 
@@ -204,7 +204,7 @@ tensor([[0, 0],
 如下：
 
 ```python
-# Create a tensor of shape (2, 3, 4)
+## Create a tensor of shape (2, 3, 4)
 x0 = torch.tensor([
      [[1,  2,  3,  4],
       [5,  6,  7,  8],
@@ -216,17 +216,17 @@ print('Original tensor:')
 print(x0)
 print('shape:', x0.shape)
 
-# Swap axes 1 and 2; shape is (2, 4, 3)
+## Swap axes 1 and 2; shape is (2, 4, 3)
 x1 = x0.transpose(1, 2)
 print('\nSwap axes 1 and 2:')
 print(x1)
 print(x1.shape)
 
-# Permute axes; the argument (1, 2, 0) means:
-# - Make the old dimension 1 appear at dimension 0;
-# - Make the old dimension 2 appear at dimension 1;
-# - Make the old dimension 0 appear at dimension 2
-# This results in a tensor of shape (3, 4, 2)
+## Permute axes; the argument (1, 2, 0) means:
+## - Make the old dimension 1 appear at dimension 0;
+## - Make the old dimension 2 appear at dimension 1;
+## - Make the old dimension 0 appear at dimension 2
+## This results in a tensor of shape (3, 4, 2)
 x2 = x0.permute(1, 2, 0)
 print('\nPermute axes')
 print(x2)
@@ -276,7 +276,7 @@ tensor([[[ 1, 13],
 shape: torch.Size([3, 4, 2])
 ```
 
-### Contiguous Errors
+#### Contiguous Errors
 
 Some combinations of reshaping operations will fail with cryptic errors. The exact reasons for this have to do with the way that tensors and views of tensors are implemented, and are beyond the scope of this assignment. However if you're curious, [this blog post by Edward Yang](http://blog.ezyang.com/2019/05/pytorch-internals/) gives a clear explanation of the problem.
 
@@ -291,7 +291,7 @@ try:
 except RuntimeError as e:
   print(type(e), e)
 
-# We can solve the problem using either .contiguous() or .reshape()
+## We can solve the problem using either .contiguous() or .reshape()
 x1 = x0.transpose(1, 2).contiguous().view(8, 3)
 x2 = x0.transpose(1, 2).reshape(8, 3)
 print('x1 shape: ', x1.shape)
@@ -306,31 +306,31 @@ x1 shape:  torch.Size([8, 3])
 x2 shape:  torch.Size([8, 3])
 ```
 
-## Element-wise Arithmetics
+### Element-wise Arithmetics
 
 使用 `torch` 的 `add, sub, mul, div, pow` 或者直接使用 `+, -, *, /, **` 即可。
 
-## Reduction
+### Reduction
 
 我们可以对一个 axis 做 reduction。
 
 可以理解为：我们把高维的这个立方体的对应的 axis “压扁”。
 
 ```python
-# Create a tensor of shape (128, 10, 3, 64, 64)
+## Create a tensor of shape (128, 10, 3, 64, 64)
 x = torch.randn(128, 10, 3, 64, 64)
 print(x.shape)
 
-# Take the mean over dimension 1; shape is now (128, 3, 64, 64)
+## Take the mean over dimension 1; shape is now (128, 3, 64, 64)
 x = x.mean(dim=1)
 print(x.shape)
 
-# Take the sum over dimension 2; shape is now (128, 3, 64)
+## Take the sum over dimension 2; shape is now (128, 3, 64)
 x = x.sum(dim=2)
 print(x.shape)
 
-# Take the mean over dimension 1, but keep the dimension from being eliminated
-# by passing keepdim=True; shape is now (128, 1, 64)
+## Take the mean over dimension 1, but keep the dimension from being eliminated
+## by passing keepdim=True; shape is now (128, 1, 64)
 x = x.mean(dim=1, keepdim=True)
 print(x.shape)
 ```
@@ -347,7 +347,7 @@ torch.Size([128, 1, 64])
 - 如果 `keepdim=False`（默认），那么这一个被“压扁”的 axis 就会自动剔除
 - 如果 `keepdim=True`，那么这一个被“压扁”的 axis 就会保留成大小为 1 的 axis
 
-## Matrix Multiplication
+### Matrix Multiplication
 
 可以用
 
@@ -361,11 +361,11 @@ torch.Size([128, 1, 64])
 
 另外，使用 `stack` 可以将 a list of dim-n tensors 变成 a dim-(n+1) tensor。
 
-## Broadcasting
+### Broadcasting
 
 **Broadcasting** is a powerful mechanism that **allows PyTorch to work with arrays of different shapes** when performing arithmetic operations. Frequently we have a smaller tensor and a larger tensor, and we want to use the smaller tensor multiple times to perform some operation on the larger tensor.
 
-### 工作流程
+#### 工作流程
 
 1. 将 shape 较小的 tensor 的 shape 左侧填充 1
     - e.g. `x.shape = [1,2,3], y.shape = [3]`, then before broadcasting, the rank of y will be padded to `[1,1,3]`
@@ -373,7 +373,7 @@ torch.Size([128, 1, 64])
 3. 将每一个“两者的值有一个为 1”的 axis 中，值为 1 的 tensor 复制
 4. 执行 element-wise arithmetics
 
-### Example
+#### Example
 
 ```python
 import torch as tc
@@ -424,14 +424,14 @@ transformed_a * transformed_b =
 """
 ```
 
-## In-Place and Out-of-Place Operators
+### In-Place and Out-of-Place Operators
 
 Out-of-place operators (e.g. `add()`) are like **functional programming** (doesn't change the value/state of the operands involved), and in-place ones (e.g. `add_()` or `add(.., .., out-x)`) are like **OOP** (does change the value/state of the operands involved)
 
 Examples:
 
 ```python
-# Out-of-place addition creates and returns a new tensor without modifying the inputs:
+## Out-of-place addition creates and returns a new tensor without modifying the inputs:
 x = torch.tensor([1, 2, 3])
 y = torch.tensor([3, 4, 5])
 print('Out-of-place addition:')
@@ -446,7 +446,7 @@ print('z: ', z)
 print('z is x: ', z is x)
 print('z is y: ', z is y)
 
-# In-place addition modifies the input tensor:
+## In-place addition modifies the input tensor:
 print('\n\nIn-place Addition:')
 print('Before addition:')
 print('x: ', x)
@@ -489,5 +489,5 @@ z is x:  True
 z is y:  False
 ```
 
-## GPU Acceleration
+### GPU Acceleration
 

@@ -1,5 +1,5 @@
 
-# PL and Static Analysis
+## PL and Static Analysis
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403172122268.png" alt="image-20240317212218118" style="zoom: 50%;" />
 
@@ -15,7 +15,7 @@ How to ensure the
 
 of large-scale and complex programs.
 
-# Why we Learn Static Analysis
+## Why we Learn Static Analysis
 
 对于程序可靠性
 
@@ -33,7 +33,7 @@ of large-scale and complex programs.
 
 - 调用关系分析、类型推断
 
-# What is Static Analysis
+## What is Static Analysis
 
 Static analysis analyzes a program P to reason about its behaviors and determines whether it satisfies some properties before running P.
 
@@ -51,7 +51,7 @@ Static analysis analyzes a program P to reason about its behaviors and determine
 
 用另一种方法说：没有 perfect static analysis。Sound 和 Complete 里面，二选一。
 
-### Sound VS Complete
+#### Sound VS Complete
 
 我们以“空指针解引用”为例：
 
@@ -64,15 +64,15 @@ Static analysis analyzes a program P to reason about its behaviors and determine
 
 
 
-# Static Analysis Features and Examples
+## Static Analysis Features and Examples
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403172357173.png" alt="image-20240317235718156" style="zoom: 50%;" />
 
 有效的静态分析，就是**在（几乎）满足 soundness 的前提下，实现分析精度和速度的平衡**。
 
-## Two Words to Conclude Static Analysis: Abstraction + Over-Approximation
+### Two Words to Conclude Static Analysis: Abstraction + Over-Approximation
 
-## Abstraction
+### Abstraction
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403180008613.png" alt="image-20240318000821260" style="zoom:50%;" />
 
@@ -81,7 +81,7 @@ Static analysis analyzes a program P to reason about its behaviors and determine
 - 我们不知道 `e` 是什么，因此 `v = e ? 1 : -1` 就是 &top;
 - 由于除零是未定义的，因此 `v = w / 0` 就是 &bot;
 
-## Over-Approximation: Transfer Functions
+### Over-Approximation: Transfer Functions
 
 我们对右侧的 abstract domain 定义一套运算法则 (i.e. transfer functions)，**such that 得到的结果一定是 sound 的，i.e. 顶多误报，不会漏报**。
 
@@ -102,14 +102,14 @@ p = arr[y]; // indexing by neg: undefined     // This is a true positive
 q = arr[a]; // indexing by unknown: undefined // This is a false positive
 ```
 
-## Over-Approximation: Control Flow
+### Over-Approximation: Control Flow
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403180034817.png" alt="image-20240318003414679" style="zoom:50%;" />
     
 
 如图，我们在这个分支中，并没有考虑 input 具体的值，而是考虑了两个分支的情况。在实际的例子之中，由于分支可以指数爆炸，因此，我们肯定不能够分别考虑，而是需要进行图上的 flow merging。
 
-## Teaching Plan
+### Teaching Plan
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403180131733.png" alt="image-20240318013112932" style="zoom:67%;" />
 

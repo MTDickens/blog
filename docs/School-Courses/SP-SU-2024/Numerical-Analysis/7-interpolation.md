@@ -1,6 +1,6 @@
-# Lagrangian Interpolation
+## Lagrangian Interpolation
 
-## Definition
+### Definition
 
 **定义：**
 $$
@@ -16,12 +16,12 @@ P_n(x) = \sum_{i=0}^n f(x_i) L_{n,i}(x)
 $$
 也就是说：$P_n$ 就是一个 $n$ 阶多项式。它在 $x_0, x_1, \dots x_{n-1}, x_n$ 处分别为 $f(x_0), f(x_1), \dots, f(x_{n-1}), f(x_n)$。
 
-## Properties
+### Properties
 
 1. 如果 n+1 个点的横坐标不相同，那么，有且只有一个 n 阶多项式，能够经过这 n+1 个点
     - 假如有两个 n 阶多项式都经过这 n+1 个点，那么，两式之差必然以这 n+1 个点为零点。因此，两式之差的 n+1 个点要么是 1，
 
-## Remainder Analysis
+### Remainder Analysis
 
 **前提：** 
 
@@ -74,15 +74,15 @@ $$
 
 如果和泰勒展开的拉格朗日余项进行对比，会发现两者的形式其实很像，除了泰勒展开后面不是 $\prod_{i=0}^n (x' - x_i)$，而是 $(x'-a)^{n+1}$。
 
-### Example: `sin`
+#### Example: `sin`
 
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_15_9_10_202404101509979.png)
 
 也就是说：如果采用均匀插值的方式，那么后面的多项式会随着插入点的增加，以 $\mathcal O(\frac 1 {n^n})$ 的速度收敛。我们只需要保证前面的 $f^{(n)}(x)$ 的导数不爆炸就行。
 
-# Neville Interpolation
+## Neville Interpolation
 
-## Lift the Degree of a Polynomial
+### Lift the Degree of a Polynomial
 
 我们可以发现，令多项式 $p_{\text{some indices}}$ 经过的点的 index 即为其下标，且阶数为 $\#\text{ of indices} - 1$。那么，如果已知两个 $n$ 阶多项式 $p_{1,2,\dots,i-1,i+1,\dots,n}, p_{1,2,\dots,j-1,j+1,\dots,n}$，我们就可以凑出：
 
@@ -90,7 +90,7 @@ $$
 p_{1, 2, \dots, n} = \frac {(x-x_i) p_{1,2,\dots,i-1,i+1,\dots,n} - (x-x_j) p_{1,2,\dots,j-1,j+1,\dots,n}} {x_j - x_i}
 $$
 
-## Interpolation
+### Interpolation
 
 对于高阶的插值，我们可以用 neville 插值：
 
@@ -119,7 +119,7 @@ $$
 
 因此，如果我们不仅要多项式在某个点 $x^\ast$ 处的值，更需要多项式本身，那么，还需要下面的**牛顿插值法**。
 
-# Newton Interpolation
+## Newton Interpolation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_16_49_29_202404101649776.png" alt="image-20240410164922610" style="zoom:50%;" />
 
@@ -131,12 +131,12 @@ $$
 
 从而，我们只需要通过 $f_i := f(x_i)$ 反解出 $\vec \alpha$​ 即可。
 
-## Properties
+### Properties
 
 1. 由于 $\forall i \geq j: N^{(i)}(x_j) = 0$，因此矩阵是下三角矩阵 ，本质上是可以直接用来求解线性方程组的。
 2. 由插值多项式的唯一性：Newton 插值、Lagrange 插值乃至所有的多项式插值，在最终结果上是**等价**的。
 
-## Computation
+### Computation
 
 我们通过差商来计算，差商的定义如下：
 
@@ -148,7 +148,7 @@ $$
 N(x)=[y_{0}]+[y_{0},y_{1}](x-x_{0})+\cdots +[y_{0},\ldots ,y_{k}](x-x_{0})(x-x_{1})\cdots (x-x_{k-1})
 $$
 
-### Example
+#### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/10_17_33_37_202404101733586.png" alt="image-20240410173335910" style="zoom:50%;" />
 
@@ -159,7 +159,7 @@ $$
 - 差商表的递推顺序，和 Neville 的递推顺序完全一样。差别就在于递推函数
 - 由于**差商即系数**，因此建表只需要 $\mathcal O(N^2)$，增加一个点只需要 $\mathcal O(N)$。从而，Newton 多项式的复杂度，和 Neville 的值的复杂度一样。（具体对比见下）
 
-# Comparison of Neville and Newton
+## Comparison of Neville and Newton
 
 **Newton vs Neville vs 待定系数: Matrix form**
 
@@ -178,11 +178,11 @@ $$
 - Neville 是 $p_{m, n} = \frac{(x-x_m) p_{m, n-1} - (x - x_n)p_{m+1,n}} {x_n - x_m}$
     - $p_{\dots}$ 是**值**或者**多项式**。如果 $p_{\dots}$ 是多项式，由于多项式的各系数比例是**不固定**的，因此必须用数组表示。从而造成了 $\mathcal O(N^3)$ 的复杂度。
 
-# Hermite Interpolation
+## Hermite Interpolation
 
 Hermite Interpolation 结合了 Na&iuml;ve Interpolation 以及 Taylor Expansion 两个多项式近似方法。也就是：在每一个插值点上，我们不仅要考虑零阶导数（i.e. 函数值），也要考虑一阶及以上的导数。
 
-## Example
+### Example
 
 假设我们希望通过 $f(x_0), f(x_1), f(x_2), f'(x_1)$ 进行插值。那么，4 个约束，就对应 3 阶多项式。
 $$
@@ -224,7 +224,7 @@ $$
 $$
 最后，我们通过待定系数法解出其中的系数。注意 $h_1(x)$ 有两个系数。
 
-### Error
+#### Error
 
 误差也和 Lagrange 是类似的：
 $$
@@ -235,7 +235,7 @@ K(x) &= \frac {f^{(4)}(\xi_x)}{4!}
 \end{aligned}
 $$
 
-## 二重 Hermite 插值
+### 二重 Hermite 插值
 
 常用的插值方法，就是使用所有插值点的函数值和一阶导数值。
 $$
@@ -256,6 +256,6 @@ $$
 - 因为除了 $x_i$ 以外，所有都是重根；$x_i$​ 处为单根。
     - 所以可以直接求出在 $x_i$ 处的式子，只用 $C$ 一个待定量
 
-### Error 
+#### Error 
 
 误差和 Lagragian 的形式类似。

@@ -1,5 +1,5 @@
 
-# Operating System Services
+## Operating System Services
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/18_22_7_47_20240918220746.png"/>
 
@@ -8,10 +8,10 @@
 1. system call 就是 user space 和 kernel space 之间的桥梁
 2. 红圈内的就是为用户提供服务（抽象资源），蓝圈内的就是优化服务（分配资源）
 
-# User and Operating System-Interface
+## User and Operating System-Interface
 
 （略）
-# System Calls
+## System Calls
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_11_37_19_20240919113718.png"/>
 
@@ -34,7 +34,7 @@
 > syscall 的完整流程如上
 
 
-## Types of System Calls
+### Types of System Calls
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_13_1_3_20240919130103.png"/>
 
@@ -44,17 +44,17 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_13_1_58_20240919130158.png"/>
 
-# System Services
+## System Services
 
 （略）
 
-# Linkers and Loaders
+## Linkers and Loaders
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_13_5_34_20240919130534.png"/>
 
 **注**：中间缺了一个预处理环节
 
-## ELF Format
+### ELF Format
 
 > [!tips]+ 使用 `readelf` 查看 ELF 格式文件
 > 
@@ -82,7 +82,7 @@
 ```
 
 **Note**: A(alloc), X(execute), W(write)
-## Details of Loader
+### Details of Loader
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_13_57_5_20240919135705.png"/>
 
@@ -90,7 +90,7 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/19_14_32_22_20240919143221.png"/>
 
-## Running a binary
+### Running a binary
 
 对于动态加载库的 elf 文件，在操作系统上运行，初始化如下：
 
@@ -134,9 +134,9 @@
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_3_14_20240925020313.png"/>
 
-# Why Applications are Operating System Specific Operating-System Design and Implementation
+## Why Applications are Operating System Specific Operating-System Design and Implementation
 
-# Operating System Structure
+## Operating System Structure
 
 > [!info]- TL;DR
 > 
@@ -152,7 +152,7 @@
 > 
 > <iframe src="https://makelinux.github.io/kernel/map/" width="100%" height="600px"></iframe>
 
-## Different Kernels
+### Different Kernels
 
 - 宏内核（Monolithic Structure）：各种 driver 等等辅助组件都在 kernel 内部，并且通过 privileged mode 运行
 	- PROS
@@ -175,11 +175,11 @@
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/09/25_2_11_52_20240925021151.png" scale='50%'/>
 
 
-# Building and Booting an Operating System
+## Building and Booting an Operating System
 
 （略，见 lab0）
 
-# Operating System Debugging
+## Operating System Debugging
 
 > [!note]- 工具一览
 > 

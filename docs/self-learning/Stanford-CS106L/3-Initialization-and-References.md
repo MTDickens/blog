@@ -1,23 +1,23 @@
-# Lec 3: Initialization and references
+## Lec 3: Initialization and references
 
-## Plan
+### Plan
 
 1. Initialization 
 2. References 
 3. L-values vs R-values 
 4. Const
 
-## Initialization
+### Initialization
 
 > **[Definition](https://en.cppreference.com/w/cpp/language/initialization):** Initialization of a variable provides its initial value **at the time of construction**.
 
-### Ways of initialization
+#### Ways of initialization
 
 1. Direct initialization
 2. Uniform initialization
 3. Structured Binding
 
-#### Direct initialization
+##### Direct initialization
 
 Direct initialization will do **implicit type conversion**, which is *bug-prone*.
 
@@ -48,7 +48,7 @@ int criticalSystemValueExample() {
 }
 ```
 
-#### Uniform initialization
+##### Uniform initialization
 
 Uniform initialization will not allow for **implicit *narrowing* conversion** (which means it doesn't care about widening conversion al well).
 
@@ -97,7 +97,7 @@ Uniform initialization is awesome because:
       }
       ```
 
-#### Structured binding (C++ 17)
+##### Structured binding (C++ 17)
 
 - A useful way to initialize some variables **from data structures with fixed sizes** at compile time.
 - Ability to access multiple values returned by a function
@@ -144,11 +144,11 @@ int main()
 
 
 
-## References
+### References
 
 > Definition: Declares a named variable as a reference, that is, **an alias to an already-existing object or function**.
 
-### Pass by reference vs pass by copy
+#### Pass by reference vs pass by copy
 
 ```cpp
 // Pass by reference
@@ -162,12 +162,12 @@ double sqr(double num) {
 }
 ```
 
-#### Reference copy bug
+##### Reference copy bug
 
 ```cpp
-#include <iostream>
-#include <math.h>
-#include <vector>
+##include <iostream>
+##include <math.h>
+##include <vector>
 void shift(std:vector<std:pair<int,int>> &nums) {
     // THIS IS WRONG
     // num1 and num2 are NOT references of each elements in nums
@@ -185,7 +185,7 @@ void shift(std:vector<std:pair<int,int>> &nums) {
 }
 ```
 
-## l/r-value
+### l/r-value
 
 > Formal definition: an l-value refers to an expression that identifies a memory location and can be modified (**if not `const`**)
 
@@ -213,7 +213,7 @@ then, `sqr(5)` will be erroneous.
 
 Wait, **non-const**? Well, if we add `const`  qualifiers, will this work?
 
-## `const`
+### `const`
 
 By using `const` qualifier, you can now bind this **const l-value** reference to an **r-value**
 
@@ -233,7 +233,7 @@ Now, you have a method for implementing a search function that is efficient (i.e
 
 
 
-### Also note
+#### Also note
 
 You CANNOT bind **non-const l-value** reference to a **`const` l-value.**
 

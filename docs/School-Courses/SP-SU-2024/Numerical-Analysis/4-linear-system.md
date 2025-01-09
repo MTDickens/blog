@@ -1,5 +1,5 @@
 
-# Recap: Gaussian Elimination
+## Recap: Gaussian Elimination
 
 高斯消元法，就是：
 
@@ -12,7 +12,7 @@
 1. 如果某一行全零，如果右侧也为 0，那就是自由变量
 2. 如果某一行全零，右侧不为 0，那就方程无解
 
-# Better Gaussian Elimination: Pivoting Strategy
+## Better Gaussian Elimination: Pivoting Strategy
 
 **Problem:** Small pivot elements may cause trouble.
 
@@ -25,13 +25,13 @@
 
 其中，$\Delta$ 指的是误差范围。
 
-## Partial Pivoting
+### Partial Pivoting
 
 每一次，我们都选取该列、待计算行以下的最大的 pivot 作为目标行，和本行进行交换。
 
 额外操作的时间复杂度是：$\mathcal O(\sum_i^n (n-i)^2) = \mathcal O(n^2)$。其中，需要 $\mathcal O(n^2)$ 的比较。
 
-## Scaled Partial Pivoting
+### Scaled Partial Pivoting
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403201548618.png" alt="image-20240320154831269" style="zoom: 50%;" />
 
@@ -78,7 +78,7 @@ x1 = 10.00
 
 - 否则，额外的时间复杂度就是：$\mathcal O(\sum_{i}^{n}(n-i)^2) = \mathcal O(n^3)$。其中，需要 $\mathcal O(n^2)$ 的浮点除法和 $\mathcal O(n^3)$ 的比较。
 
-## Complete Pivoting
+### Complete Pivoting
 
 简单来说：我们不仅换行，还换列。
 
@@ -108,7 +108,7 @@ x1 = 10.00
 
 - 额外的时间复杂度就是：$\mathcal O(\sum_{i}^{n}(n-i)^2) = \mathcal O(n^3)$。其中，需要 $\mathcal O(n^3)$ 的比较。
 
-## 总结
+### 总结
 
 Partial pivoting 是最快的方法，因为不涉及浮点除法（常数很大）。Scaled partial pivoting 也还好。
 
@@ -125,7 +125,7 @@ Partial pivoting 是最快的方法，因为不涉及浮点除法（常数很大
 
 因此，很多时候，还是不用 complete pivoting 为好。
 
-# LU 分解
+## LU 分解
 
 如果我们不进行任何的行交换，对一个矩阵进行上对角化，那么，我们对一个 $I$ 施以对应的变换，就可以实现 $I$ 变成下对角阵。
 
@@ -137,15 +137,15 @@ i.e. $L_n \dots L_2 L_1 A = U \implies A = (IL_1^{-1}\dots L_n^{-1}) U = LU$
 
 - 每次求解时，只用计算 $Ly=b$，再计算 $Ux=y$。由于均为三角阵，因此无需消元，复杂度大大降低。
 
-# Special Type of Matrices
+## Special Type of Matrices
 
 对于特殊矩阵而言，我们可以 take advantage of its properties，从而大大加速运算。
 
-## Strictly Diagonally Dominant Matrix
+### Strictly Diagonally Dominant Matrix
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403201717246.png" alt="image-20240320171744754" style="zoom: 50%;" />
 
-## Choleski's Method for Positive Definite Matrices
+### Choleski's Method for Positive Definite Matrices
 
 如果 $A$ 是正定矩阵，我们可以将其分解为 $A = \widetilde L \widetilde L^t$。这也被称为 LLT method（类似的还有 LDLT method）。
 
@@ -167,7 +167,7 @@ i.e. $L_n \dots L_2 L_1 A = U \implies A = (IL_1^{-1}\dots L_n^{-1}) U = LU$
 
 **NOTE:** Choleski's method 比一般的 LU 分解可以快上很多倍。因此，如果你的矩阵是正定的，就用 Choleski 的方法（i.e. LLT）求解吧。当然，也可以用 LDLT。不过前者更加 cache friendly。
 
-### Sidenote: LLT vs LDLT
+#### Sidenote: LLT vs LDLT
 
 LLT和LDLT都是矩阵分解的方法，用于解决线性方程组和矩阵求逆的问题。它们之间的主要区别在于对称正定矩阵的处理方式。
 
@@ -181,7 +181,7 @@ LLT和LDLT都是矩阵分解的方法，用于解决线性方程组和矩阵求�
 
 总的来说，LLT和LDLT分解都是用于解决对称正定矩阵的分解问题的方法，选择哪种方法取决于具体的应用场景和数值计算的需求。
 
-## 三对角矩阵
+### 三对角矩阵
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403201805079.png" alt="image-20240320180459831" style="zoom: 50%;" />
 
@@ -194,7 +194,7 @@ LLT和LDLT都是矩阵分解的方法，用于解决线性方程组和矩阵求�
 - $\exists i: \alpha_i = 0 \iff \det(A) = 0$。因此，能用这个方法当且仅当 $A$ 不是奇异矩阵。
 - Non-singular 的充分条件：如果 A 满足上面 theorem 里面的条件，那么 $A$ 就不是奇异矩阵，就可以这样算。
 
-# Selected Problem
+## Selected Problem
 
 使用 four digit rounding arithmetics 来求 $\widehat H = (H^{-1})^{-1}$，然后求 $\|\widehat H - H \|_\infty$
 
@@ -239,6 +239,6 @@ def inf_norm(x):
     x_sum = np.sum(np.abs(x), axis=1)
     return np.max(x_sum)
 
-# print(inf_norm(hat3_cnt(m4, 1) - m4))
+## print(inf_norm(hat3_cnt(m4, 1) - m4))
 print(inf_norm(m4_hat - m4))
 ```

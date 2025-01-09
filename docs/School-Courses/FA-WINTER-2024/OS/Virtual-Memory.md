@@ -1,22 +1,22 @@
-# Outline
+## Outline
 
-- ﻿﻿Demanding paging
-- ﻿﻿Copy-on-write  
+- Demanding paging
+- Copy-on-write  
 - Page replacement algorithm
-	- ﻿﻿FIFO, optimal, LRU, ...
-- ﻿Allocation of frames  
+	- FIFO, optimal, LRU, ...
+- Allocation of frames  
 - Thrashing
-- ﻿﻿Examples
+- Examples
 
-# Demand Paging
+## Demand Paging
 
 > [!info]+ 四个问题
 > 
-> - ﻿﻿Demand paging vs page fault
-> 	- ﻿﻿What is the relationship?
+> - Demand paging vs page fault
+> 	- What is the relationship?
 > 		- Demand paging 在 "demand" 的时候，发生 page fault
-> - ﻿﻿What causes page fault?
-> 	- ﻿﻿User space program accesses an address
+> - What causes page fault?
+> 	- User space program accesses an address
 > - Which hardware issues page fault?
 > 	- MMU
 > 	- <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_9_9_42_20241115090942.png" width="20%"/>
@@ -39,7 +39,7 @@ tl;dr: 除非必须分配内存，否则就不分配。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_9_6_33_20241115090632.png"/>
 
-## Page Fault Handling
+### Page Fault Handling
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_9_13_35_20241115091335.png"/>
 
@@ -52,7 +52,7 @@ tl;dr: 除非必须分配内存，否则就不分配。
 
 另外，为了加速，可以使用 page prefetching 的操作——一次 fetch 多个 page。这样做，某种意义上算是”空间换时间“。
 
-## Paging Process
+### Paging Process
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_9_48_54_20241115094853.png"/>
 
@@ -67,20 +67,20 @@ tl;dr: 除非必须分配内存，否则就不分配。
 	- 更改 page table
 	- 返回到 user space
 
-## Quantized Analysis
+### Quantized Analysis
 
-- ﻿﻿Page fault rate: $0 \leq p \leq 1$
-	- ﻿﻿if p = 0 no page faults
-	- ﻿﻿if p = 1, every reference is a fault
-- ﻿﻿Effective Access Time (EAT): $(1 - p) * \text{memory access} + p * ( \text{page fault overhead + swap page out + swap page in + instruction restart overhead})$
+- Page fault rate: $0 \leq p \leq 1$
+	- if p = 0 no page faults
+	- if p = 1, every reference is a fault
+- Effective Access Time (EAT): $(1 - p) * \text{memory access} + p * ( \text{page fault overhead + swap page out + swap page in + instruction restart overhead})$
 
-## Some Optimizations
+### Some Optimizations
 
 1. 让 swap space 的 I/O 比 file space 的 I/O 更快。我们可以做到这一点，因为 swap space 不需要文件系统，而且可以使用更大的 page
 2. Copy entire process image from disk to swap space at load time，从而如果 memory 满了，victim page 就可以被置换到 swap 上，而不是更慢的 disk 上
 3. 对于 not dirty 且关联到某个硬盘文件的 page（反例：heap 和 stack 就没有关联到任何硬盘文件，所以如果被当成 victim，那就必须 write 出去），如果选择它来当 victim page，那么也无需 write to disk。只需要 discard 即可
 
-# Page Replacment
+## Page Replacment
 
 有四个思想：
 
@@ -388,7 +388,7 @@ tl;dr: 除非必须分配内存，否则就不分配。
 >     main(args)
 > ```
 
-## Page Buffering
+### Page Buffering
 
 在真实的 OS 中，我们还有和 replacement 算法本身无关的改进：
 
@@ -399,13 +399,13 @@ tl;dr: 除非必须分配内存，否则就不分配。
 - 部分程序（比如数据库）会**自己维护 cache**，因此，如果操作系统也对同样的磁盘数据进行 cache，就会造成冗余
 	- OS 有 raw disk mode，允许直接从磁盘上读取（i.e. OS 本身不会对这些数据进行 cache）
 
-# Frame Allocation
+## Frame Allocation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/20_5_32_41_20241120053241.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/20_5_32_50_20241120053249.png"/>
 
-# Page Reclaim
+## Page Reclaim
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/20_5_46_19_20241120054618.png"/>
 
@@ -419,14 +419,14 @@ tl;dr: 除非必须分配内存，否则就不分配。
 
 如图：如果空闲内存过少，那么 OS 就开始从每一个进程回收内存，直到内存充分之后，再停止回收。
 
-## How to Reclaim?
+### How to Reclaim?
 
-- ﻿﻿Reclaim pages aggressively
-	- ﻿﻿Kill some processes
-		- ﻿﻿According to OOM score: how likely it is to be terminated in case of low available memory
+- Reclaim pages aggressively
+	- Kill some processes
+		- According to OOM score: how likely it is to be terminated in case of low available memory
 
 具体的 OOM 机制，详见 [CSDN](https://blog.csdn.net/top_explore/article/details/107733974)。
-# Non-Uniform Memory Access
+## Non-Uniform Memory Access
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/20_6_4_31_20241120060430.png"/>
 
@@ -434,7 +434,7 @@ tl;dr: 除非必须分配内存，否则就不分配。
 
 如果有多个 CPU 和内存，那么内存访问时间就不统一，因此跑在不同 CPU 上的进程，最好用不同的 memory。
 
-# Thrashing (抖动)
+## Thrashing (抖动)
 
 如果进程过多，导致内存占用过多**且由于不同进程的 locality 不一样，因此会造成页频繁的换进换出**，从而 CPU 随着进程数的增加，反而占用率降低，因为时间都用在 page fault 上了。
 
@@ -454,7 +454,7 @@ tl;dr: 除非必须分配内存，否则就不分配。
 1. 任何一个进程工作集内的页面不要被调出去
 2. 如果所有进程工作集内页面加起来太多了，那么就“杀掉/暂停进程保平安”
 
-## 工作集
+### 工作集
 
 > [!info]
 > 
@@ -486,13 +486,13 @@ tl;dr: 除非必须分配内存，否则就不分配。
 1. 所有在 $\Delta$ 时间内访问过的页，都在工作集中
 2. 所有在工作集中的页，都在 $\Delta + T = (1 + \frac 1 b) \Delta$ 时间内访问过 
 
-# Kernel Memory Allocation
+## Kernel Memory Allocation
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_2_48_2_20241123024801.png"/>
 
-# Other Considerations
+## Other Considerations
 
-## Prepaging
+### Prepaging
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_2_49_24_20241123024924.png"/>
 
@@ -503,7 +503,7 @@ Prepaging 就是一次取多页
 
 这显然是一个 tradeoff。如果 prepaging 做的太多了，那么 $\alpha$ 就过于小，导致大量页面被浪费；如果太少了，那么就不能有效节省时间。同时，选取哪些页面来进行 prepaging，也是需要好好设计的。
 
-## Page Size
+### Page Size
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_2_58_53_20241123025852.png"/>
 
@@ -514,28 +514,28 @@ Prepaging 就是一次取多页
 
 但是，总体上，现在的 page size 是越来越大，因为硬件便宜了（Internal fragmentation 不那么重要了）。
 
-## TLB
+### TLB
 
 增加 page size，就可以在 TLB 大小不变的情况下，让 TLB 的所有缓存页面对应的实际物理空间地址更大。因此增加 page size，可以有效减小 TLB miss 的发生频率。
 
-## Program Structure
+### Program Structure
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_3_2_53_20241123030253.png"/>
 
 Program 1 是按列访问的，因此 locality 很差。
 
-## Example: Windows XP
+### Example: Windows XP
 
-- ﻿﻿Uses demand paging with clustering
-	- ﻿﻿Clustering brings in **pages surrounding the faulting page**: locality
-- ﻿﻿Processes are assigned **working set** minimum and set maximum
-	- `﻿﻿wsmin`: minimum number of pages the process is guaranteed to have
-	- ﻿﻿`wsmax`: a process may be assigned as many pages up to its `wsmax`
-- ﻿﻿When the amount of free memory in the system falls below a threshold:
-	- ﻿﻿Automatic ***working set trimming*** to restore the amount of free memory
-	- ﻿﻿It removes pages from processes that have more pages than the `wsmin`
+- Uses demand paging with clustering
+	- Clustering brings in **pages surrounding the faulting page**: locality
+- Processes are assigned **working set** minimum and set maximum
+	- `wsmin`: minimum number of pages the process is guaranteed to have
+	- `wsmax`: a process may be assigned as many pages up to its `wsmax`
+- When the amount of free memory in the system falls below a threshold:
+	- Automatic ***working set trimming*** to restore the amount of free memory
+	- It removes pages from processes that have more pages than the `wsmin`
 
-# Realworld Example: Linux Paging Management
+## Realworld Example: Linux Paging Management
 
 ```c
 struct mm_struct {
@@ -543,18 +543,18 @@ struct mm_struct {
 		struct vm_area_struct *mmap;		/* list of VMAs */
 		struct rb_root mm_rb;
 		u64 vmacache_seqnum;                   /* per-thread vmacache */
-#ifdef CONFIG_MMU
+##ifdef CONFIG_MMU
 		unsigned long (*get_unmapped_area) (struct file *filp,
 				unsigned long addr, unsigned long len,
 				unsigned long pgoff, unsigned long flags);
-#endif
+##endif
 		unsigned long mmap_base;	/* base of mmap area */
 		unsigned long mmap_legacy_base;	/* base of mmap area in bottom-up allocations */
-#ifdef CONFIG_HAVE_ARCH_COMPAT_MMAP_BASES
+##ifdef CONFIG_HAVE_ARCH_COMPAT_MMAP_BASES
 		/* Base addresses for compatible mmap() */
 		unsigned long mmap_compat_base;
 		unsigned long mmap_compat_legacy_base;
-#endif
+##endif
 		unsigned long task_size;	/* size of task vm space */
 		unsigned long highest_vm_end;	/* highest vma end address */
 		pgd_t * pgd;
@@ -571,7 +571,7 @@ struct mm_struct {
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_3_38_45_20241123033844.png"/>
 
-## Page Fault Handling
+### Page Fault Handling
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_4_1_58_20241123040157.png"/>
 
@@ -831,7 +831,7 @@ struct mm_struct {
 > }
 > ```
 
-## Buddy System
+### Buddy System
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_6_29_49_20241123062948.png"/>
 
@@ -840,7 +840,7 @@ struct mm_struct {
 - **好处**：可以 hierarchically 将 free 掉的内存再 merge 起来（另外可以保证在一次 `alloc_pages` 中，分配到的物理页面是连续的）
 - **坏处**：Internal fragmentation 严重（比如只需要 21 MiB，但是必须一次请求 32 MiB）
 
-## Slab System
+### Slab System
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_6_29_42_20241123062941.png"/>
 
@@ -854,7 +854,7 @@ struct mm_struct {
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_6_40_48_20241123064048.png" width="70%"/>
 
 
-# Appendix: What Does the Industry Say?
+## Appendix: What Does the Industry Say?
 
 以下是工业界对 VM 的认识：
 
@@ -885,7 +885,7 @@ struct mm_struct {
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/23_7_27_23_20241123072723.png"/>
 
-# Realworld Scenario: Virtual Address Allocation for Linux
+## Realworld Scenario: Virtual Address Allocation for Linux
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_21_16_48_20241204211647.png"/>
 
@@ -912,7 +912,7 @@ struct mm_struct {
 2. 其次可以保证**当前页表下**，虚拟地址可以通过减去一个常数得到物理地址
 
 如果 RAM 空间大于 kernel address space 怎么办？
-## Large RAM
+### Large RAM
 
 对于 32 bit 而言，如果采用 `CONFIG_VMSPLIT_1G`，那么最高位的虚拟空间只有 1G。
 
@@ -923,7 +923,7 @@ struct mm_struct {
 1. 首先保证部分 RAM 能够线性映射到 kernel 去（具体来说，就是映射到 kernel logical address 去）
 2. 其次还要预留 128M 的空间，称为 kernel virtual address，这些空间可以与任意的 physical memory 进行映射（i.e. 虽然没法把整个 RAM 都映射到 kernel 中去，但是起码还有足够的空间，可以将任意 RAM 中的地址映射过去）
 
-## Conclusion
+### Conclusion
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/4_21_44_39_20241204214438.png"/>
 

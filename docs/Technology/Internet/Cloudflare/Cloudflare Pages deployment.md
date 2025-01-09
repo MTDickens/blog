@@ -1,6 +1,6 @@
-# Requirements 
+## Requirements 
 
-## Prerequisites 
+### Prerequisites 
 
 1. 一个 Github 账号
 2. 一个 Cloudflare 账号
@@ -11,13 +11,13 @@
     - 也可以用 powershell 替代
         - 但是，powershell 必须用 `python3 -m mkdocs` 而非 `mkdocs`
 
-## Optional
+### Optional
 
 1. 一个 custom domain 
 
-# Steps 
+## Steps 
 
-## 本地搭建
+### 本地搭建
 
 根据 [mkdocs 中文教程](https://markdown-docs-zh.readthedocs.io/zh_CN/latest/) 或 [mkdocs 官方教程](https://www.mkdocs.org/user-guide/)
 
@@ -28,7 +28,7 @@
 
 :warning:警告：不要擅自把 **.yml** 后缀 改为 **.yaml** 后缀，mkdocs 不认后面的！
 
-## 上传 Github
+### 上传 Github
 
 1. 使用 `cd` 命令，进入到博客的**根文件夹**（即：有 mkdocs.yml 文件和 docs 目录的文件夹）
 2. 使用 `git init` 命令，创建 **.git** 文件夹（即初始化 Git）
@@ -44,7 +44,7 @@
 7. `git add .; git commit -m <commit message>; git push`
     1. commit message 任写
 
-## 使用 cloudflare pages 构建
+### 使用 cloudflare pages 构建
 
 [Pages 官方文档主页](https://developers.cloudflare.com/pages/)
 

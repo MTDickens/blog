@@ -1,6 +1,6 @@
-# Lec 2-3: Bits, Bytes And Integers
+## Lec 2-3: Bits, Bytes And Integers
 
-## Why use `unsigned`?
+### Why use `unsigned`?
 
 Firstly, *DON'T* use `unsigned` without understanding implications.
 
@@ -13,7 +13,7 @@ for (i = cnt - 1; i >= 0; --i) {
 ```
 
 ```c
-#define DELTA sizeof(int)
+##define DELTA sizeof(int)
 
 int arr[10];
 // Also an infite loop,
@@ -24,7 +24,7 @@ for (i = sizeof(arr); i - DELTA >= 0; i -= DELTA) {
 }
 ```
 
-### Counting Down with Unsigned
+#### Counting Down with Unsigned
 
 Second, you can do counting down with `unsigned`.
 
@@ -50,7 +50,7 @@ for (size_t i = cnt - 1; i < cnt; --i) {
 }
 ```
 
-### Tips
+#### Tips
 
 Use `unsigned` in the cases of
 
@@ -60,7 +60,7 @@ Use `unsigned` in the cases of
 
 Because the overflow/underflow of `unsigned` is well-defined in C standard, as opposed to signed types.
 
-## Words and Bytes
+### Words and Bytes
 
 Any given computer has a **word size**.
 

@@ -1,4 +1,4 @@
-# Outline
+## Outline
 
 - Three transmission media
 	- Guided Transmission Media
@@ -13,9 +13,9 @@
 	- Comparing Different Access Networks
 - Policy at the PHY layer
 
-# Media
+## Media
 
-## Guided Transmission Media (有限数据传输)
+### Guided Transmission Media (有限数据传输)
 
 > [!info] Terminology
 > 
@@ -48,7 +48,7 @@
 
 **总体来说，光纤是长距离传输和大带宽传输的首选。**
 
-## Wireless Transmission
+### Wireless Transmission
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/15_0_28_43_20241015002842.png"/>
 
@@ -60,7 +60,7 @@
 - 大多数传输都采用 narrow frequency band
 	- 如果需要利用 wide frequency band，就要使用**扩频**技术（如下）
 
-### 扩频
+#### 扩频
 
 Some transmission protocols spread its frequency over a wide frequency band:
 
@@ -72,7 +72,7 @@ Some transmission protocols spread its frequency over a wide frequency band:
 - UWB (Ultra WideBand)
 	- 使用很宽的频段，但是每一个频点上功率很低
 
-### 不同频段的性质
+#### 不同频段的性质
 
 > [!info] 频段名称
 > 
@@ -84,16 +84,16 @@ Some transmission protocols spread its frequency over a wide frequency band:
 - 到了红外波这种量级之后，波就几乎无法穿透固体了，从而适用于遥控器等等；同时，红外波和可见光很接近，因此室外（小功率）无法使用
 - 到了可见光量级之后，如果是激光传输，那么环境干扰就会造成很大的影响，因此不能在开放环境使用
 
-## 卫星通信
+### 卫星通信
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/15_1_41_59_202410150141840.png"/>
 
-# From Waveform To Bits
+## From Waveform To Bits
 
-## The Theoretical Basis for Data Communication: Fourier Transformation
+### The Theoretical Basis for Data Communication: Fourier Transformation
 
 （略）
-## The Max. Data Rate of a Channel
+### The Max. Data Rate of a Channel
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/15_3_16_7_20241015031606.png"/>
 
@@ -114,11 +114,11 @@ $$
 
 套用 Nyquist 即可得到结果。
 
-## Digital Modulation 
+### Digital Modulation 
 
 - **基带传输**：频率从 0 到最大值之间
 - **通带传输**：频率在某个特定值附近
-## Multiplexing
+### Multiplexing
 
 分为：
 
@@ -140,21 +140,21 @@ $$
 		- 图例
 			- <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/15_4_16_17_20241015041616.png" width="80%"/>
 
-# Three Examples
+## Three Examples
 
-## The Public Switched Telephone Network
+### The Public Switched Telephone Network
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/16_20_31_25_20241016203124.png"/>
 
 我对信号进行采样，不只是对电压信息进行采样，还同时包括相位信息（通过解调可以得到）。上图中，相位信息就是幅角。
 
-## SONET
+### SONET
 
 SONET 规范了电缆、光纤传输的格式和采样频率。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/16_20_14_57_20241016201456.png"/>
 
-## Cellular Network
+### Cellular Network
 
 问题：
 
@@ -165,10 +165,10 @@ SONET 规范了电缆、光纤传输的格式和采样频率。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/16_20_46_5_20241016204604.png"/>
 
-## Cable Networks
+### Cable Networks
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/16_20_50_29_20241016205029.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/10/16_20_50_42_20241016205041.png"/>
 
-## Comparing Different Access Networks
+### Comparing Different Access Networks

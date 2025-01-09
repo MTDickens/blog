@@ -1,4 +1,4 @@
-# 大纲
+## 大纲
 
 I. Network Layer Design Issues（网络层设计概述）
 II. Routing Algorithm（路由算法）
@@ -8,51 +8,51 @@ V. The Network Layer in the Internet
 VI.\*Congestion Control Algorithms（拥塞控制算法）
 VIL.\*QoS Control Algorithms（服务质量控制算法）
 
-# 网络层设计概述
+## 网络层设计概述
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/11_22_41_24_20241111224123.png"/>
 
 具体细节略。
 
-# 路由算法
+## 路由算法
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_0_17_45_20241112001744.png"/>
 
-## 路由的模式（pattern）和技术
+### 路由的模式（pattern）和技术
 
 - **目的**：根据需求，实现各种路由的模式（红字）。
 - **方法**：使用各种技术（蓝字）来进行实现。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_0_44_13_20241112004413.png"/>
 
-## Introduction
+### Introduction
 
-### What is a routing algorithm
+#### What is a routing algorithm
 
 The routing algorithm is used to decide which output line an incoming packet should be transmitted on
 
-- ﻿﻿For datagram networks, this decision must be **made anew for every arriving data packet** since the best route may have changed since last time.
+- For datagram networks, this decision must be **made anew for every arriving data packet** since the best route may have changed since last time.
 	- 说人话：**就是每来一个数据包，都会针对它做决定（动态决定）**
-- ﻿﻿For virtual-circuit networks, this decision is **made only when a new virtual circuit is being set up**.  
+- For virtual-circuit networks, this decision is **made only when a new virtual circuit is being set up**.  
 	- Thereafter, **data packets just follow the previously established route**.
 
 由于互联网是 datagram network，因此路由是**动态决定**的。
 
 A router performs two tasks:
 
-- ﻿﻿Forwarding: To forward the incoming packet according to the routing table
-- ﻿﻿Routing: To fill in and update the routing table 
+- Forwarding: To forward the incoming packet according to the routing table
+- Routing: To fill in and update the routing table 
 
-### Desirable properties in a routing algorithm
+#### Desirable properties in a routing algorithm
 
-- ﻿﻿Correctness (正确性），simplicity (简单性）：实现简单，且最终能将数据包送到应该送的地方
-- ﻿﻿Robustness (健壮性): 如果一个网络的拓扑、网络拥塞程度发生了变化，或者一部分路由器炸了，也不应该使得整个网络所有的路由器都中断/重启，而是应该适应目前的变化并做出调整
-- ﻿﻿Stability (稳定性）：在网络变化的时候，路由器能够（分布式地）平滑做出变化，而不是发生剧烈抖动
-- ﻿﻿Fairness (公平性），efficiency (高效率）：Conflict between fairness and efficiency
+- Correctness (正确性），simplicity (简单性）：实现简单，且最终能将数据包送到应该送的地方
+- Robustness (健壮性): 如果一个网络的拓扑、网络拥塞程度发生了变化，或者一部分路由器炸了，也不应该使得整个网络所有的路由器都中断/重启，而是应该适应目前的变化并做出调整
+- Stability (稳定性）：在网络变化的时候，路由器能够（分布式地）平滑做出变化，而不是发生剧烈抖动
+- Fairness (公平性），efficiency (高效率）：Conflict between fairness and efficiency
 	- <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_1_0_30_20241112010030.png" width="70%"/>
 	- 如图，最大的总流量就是 3，但是会造成严重的不公平；在完全公平的情况下，总流量只有 2，但是够公平
 
-### Classification of algorithms
+#### Classification of algorithms
 
 分为两种算法：自适应和非自适应。
 
@@ -61,7 +61,7 @@ A router performs two tasks:
 非自适应算法就是 use the route computed in advance, i.e. the route is computed either in a centralized or decentralized way, and it will be downloaded to the router before it is even booted.
 
 
-## 最优化原理
+### 最优化原理
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/12_1_10_6_20241112011005.png"/>
 
@@ -73,8 +73,8 @@ A router performs two tasks:
 
 至于用什么来充当 metric，可以是网络延时、费用等等。
 
-## Unicast Routing (One to One)
-### Distance Vector Routing
+### Unicast Routing (One to One)
+#### Distance Vector Routing
 
 使用 Bellman-Ford 算法，算是自适应式算法。这里，distance vector，就是每一个节点保存到其它所有节点的 dist 信息（解释见下）
 
@@ -103,7 +103,7 @@ Distance Vector Routing，本质上就是分布式 Bellman-Ford。
 - 每过一段时间（比如若干毫秒），就将自己维护的 `distTo` 发送给所有邻居（`distTo` 就是 distance vector），同时收到邻居发来的 DV
 - 所有节点根据所有邻居发送来的 DV，来更新自己的 distTo。同时更新自己的路由表
 
-#### Drawbacks
+##### Drawbacks
 
 对于网络而言，我们希望的是：好事不出门，坏事传千里。因为如果坏事发生（比如一个链路断了），那么就必须紧急取消所有到这条链路的路由；如果好事发生（比如一个链路恢复正常），我们仍然要假以时日，直到链路确认是恢复正常，才会用它。
 
@@ -125,7 +125,7 @@ Distance Vector Routing，本质上就是分布式 Bellman-Ford。
 
 根本原因，是因为 b、c 前往 a 的路由表之间形成了**环路**，因此 gg。
 
-#### Solutions
+##### Solutions
 
 一个简单的想法是：我们只要检测出来这个环路就行。如果存在这样的环路，那么我们直接破坏它。
 
@@ -183,7 +183,7 @@ $$
 
 因此，这里的数是成**指数级**增长的，很快就会超过最大允许延时（超过这个延时，系统自动标记为链路损坏）。所以其实不是非常麻烦。
 
-### Link State Routing
+#### Link State Routing
 
 DV 算法的缺陷：
 
@@ -194,7 +194,7 @@ LS 算法，是基于 Dijkstra 算法，每一个节点可以计算出来源点�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_22_34_37_20241115223436.png"/>
 
-#### Step 1
+##### Step 1
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/15_22_41_9_20241115224108.png"/>
 
@@ -206,11 +206,11 @@ LS 算法，是基于 Dijkstra 算法，每一个节点可以计算出来源点�
 
 上图中的所有节点都连接在黄色的总线上。逻辑上，它们两两都是相连的，因此有着 quadratic edges。假如它们都要向 neighbor 发送数据包并且收到回复的话，那么网络的拓扑就会过于复杂。
 
-#### Step 2
+##### Step 2
 
 如果 metric 是 latency 的话，那么就测一下 RTT，再除以 2 即可。
 
-#### Step 3
+##### Step 3
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_0_48_11_202411160048235.png"/>
 
@@ -221,7 +221,7 @@ LS 算法，是基于 Dijkstra 算法，每一个节点可以计算出来源点�
 
 这两个信息。
 
-#### Step 4
+##### Step 4
 
 如何传播这些信息？一般而言，为了传播给全网，我们需要采用 flooding 的方法。
 
@@ -249,14 +249,14 @@ LS 算法，是基于 Dijkstra 算法，每一个节点可以计算出来源点�
 - 回复 ACK
 	- 因为这个数据包本身就是从 A 发过来的，因此要回复 ACK
 
-### Comparison Between LS and DV
+#### Comparison Between LS and DV
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_2_11_38_20241116021138.png"/>
 
 - DV 中，所有节点只知道相邻节点到所有节点最短距离
 - LS 中，所有节点都知道整张图
 
-### Hierarchical Routing
+#### Hierarchical Routing
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_2_16_13_20241116021613.png"/>
 
@@ -294,10 +294,10 @@ tldr：假设 multiple-level routing 分为 region1 -> region2 -> region3 -> ...
 > 
 > 因此，最好用 $\ln N$ 层，每个路由器有 $\ln(N) N^{\frac 1 {\ln N}} - (\ln N - 1) = (e-1) \ln N + 1$ 个表项。每层有 $e$ 个不同的 regions。
 
-## Broadcasting Routing (One to All)
+### Broadcasting Routing (One to All)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_2_51_40_20241116025139.png"/>
-### Flooding
+#### Flooding
 
 采用泛洪的方式：对于进入的任意数据包，发送给（除了发进来的地址之外的）所有地址。
 
@@ -306,7 +306,7 @@ tldr：假设 multiple-level routing 分为 region1 -> region2 -> region3 -> ...
 - 不计成本、对可靠性要求极高的领域，比如军事
 - 非常不可靠的链路，比如 DTN (Delay-Tolerant Network)
 
-### Sink-Tree Based Broadcast
+#### Sink-Tree Based Broadcast
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_3_5_22_20241116030521.png"/>
 
@@ -316,7 +316,7 @@ tldr：假设 multiple-level routing 分为 region1 -> region2 -> region3 -> ...
 
 **问题**：对于 DV 协议而言，节点并不知道全局的状态，也就是说，并不知道 `src` 的 sink tree 在自己上面的边有几条、是哪几个？
 
-### Reverse path forwarding
+#### Reverse path forwarding
 
 对于 DV 协议而言，我们不知道 `src` 的 sink tree 在自己上面的边有几条、是哪几个？我们**只知道，自己到 `src` 的最短路的下一跳是哪个**。
 
@@ -327,8 +327,8 @@ tldr：假设 multiple-level routing 分为 region1 -> region2 -> region3 -> ...
 具体的，伪代码如下：
 
 ```python
-# packet p arrives
-# and also 
+## packet p arrives
+## and also 
 	# let `prev` be the node that send p here
 	# let lines be all lines connected to nearby nodes
 should_come_from_this = dv[p.src].next
@@ -358,7 +358,7 @@ else:
 
 又由于 I 的 sink tree 在 I 处的度数为 4（注意：sink tree 的度数不要和节点度数搞混！），因此总共有 $24$ 次 transmission。
 
-## Multicast (One to Many)
+### Multicast (One to Many)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_4_23_51_20241116042350.png"/>
 
@@ -374,25 +374,25 @@ else:
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_4_35_28_20241116043528.png"/>
 
-## Anycast (One to NEAREST One)
+### Anycast (One to NEAREST One)
 
 Anycast 就是**播到离你最近的节点**。
 
 如何实现呢？任播相当于，若干个处于不同位置的主机，**都有共同的名字**。然后，其余的算法，就和 unicast routing 一样。
 
-## Ad Hoc Network
+### Ad Hoc Network
 
 对于拓扑结构瞬息万变的（无线组网的）网络，我们采用下面的方法：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_7_27_27_20241116072726.png"/>
 
-# Internetworking (网络互联)
+## Internetworking (网络互联)
 
-## How are Networks Connected
+### How are Networks Connected
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_8_28_1_20241116082800.png"/>
 
-## Tunneling
+### Tunneling
 
 以 6to4 为例：
 
@@ -400,11 +400,11 @@ Anycast 就是**播到离你最近的节点**。
 
 **Note**: 隧道机制和上面的包转换机制最大的区别就是，隧道不更改原有的包头，而是外面再增加一个包头；包转换则是直接修改包头。
 
-## Internetwork Routing
+### Internetwork Routing
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_8_34_15_20241116083415.png"/>
 
-## Fragmentation
+### Fragmentation
 
 为了传输一个大数据包，我们必须采用分片的形式：
 
@@ -422,10 +422,10 @@ Anycast 就是**播到离你最近的节点**。
 > 
 > 所以**除了最后一片以外**，其它片的数据部分大小都必须是 8 bytes 的倍数。
 
-### MTU
+#### MTU
 
 不同的路由器，不同 MTU 大小。Basically，MTU 就是**某个路由器**最大允许转发的包长。如果 packet 大小大于 MTU，要么路由器会将其分段，要么就直接丢弃。
-### Path MTU Discovery
+#### Path MTU Discovery
 
 如果我们希望传输尽量大的数据包，**但是事先不知道链路上 MTU bottleneck 的大小**，那么可以采用下面的方法：
 
@@ -438,7 +438,7 @@ Anycast 就是**播到离你最近的节点**。
 - Cheaper to send a packet that gets ICMP feedback than one that does not 
 - Use a table of MTU values to guide the search
 
-## 软件定义网络
+### 软件定义网络
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_8_56_1_20241116085601.png"/>
 
@@ -448,7 +448,7 @@ Anycast 就是**播到离你最近的节点**。
 
 SDN 并不是对路由器进行修改，而是在路由器之外，加上一个集中控制器。从而，路由器就仅仅作为数据平面使用。而这个可编程的集中控制器，就是支持复杂规则、任意协议的**控制平面**。
 
-### SDN vs Traditional Router
+#### SDN vs Traditional Router
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_9_10_45_20241116091044.png" width="60%"/> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_9_11_7_20241116091107.png" width="60%"/>
 
@@ -461,7 +461,7 @@ SDN 并不是对路由器进行修改，而是在路由器之外，加上一个�
 1. 集中控制，避免每个路由器自己出问题（i.e. 集中控制出了问题好排查），同时避免需要在每个路由器上都安装一遍
 2. 集中控制，从而控制平面可以获得全局信息
 
-### Some Examples: Flow-based Forwarding
+#### Some Examples: Flow-based Forwarding
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_9_20_19_20241116092018.png"/>
 
@@ -475,7 +475,7 @@ Example 2: Load balancing
 
 Example 3: Source/Previous\-hop-based forwarding
 
-### Conclusion
+#### Conclusion
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_9_28_30_20241116092829.png"/>
 
@@ -486,7 +486,7 @@ Takeaways:
 - 使用软件来控制
 - 可编程
 
-### SDN 结构
+#### SDN 结构
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/16_9_59_8_20241116095908.png"/>
 
@@ -518,7 +518,7 @@ Takeaways:
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_1_14_3_20241122011402.png" width="70%"/><img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_1_22_37_20241122012236.png"  width="70%"/>
 
 
-### 流表
+#### 流表
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_0_51_54_20241122005154.png"/>
 
@@ -537,7 +537,7 @@ Takeaways:
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_1_2_7_20241122010207.png"/>
 
-# The Network Layer in the Internet
+## The Network Layer in the Internet
 
 > [!info]+ 网络层协议十诫
 > 
@@ -545,14 +545,14 @@ Takeaways:
 > 
 > 其中，第 8 点就是一句话：do for the best and prepare for the worst
 
-## 自治系统
+### 自治系统
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_1_49_44_20241122014943.png"/>
 
 - 每个自治系统都是一个相对独立的实体，任何其它人无权干涉一个自治系统内的配置
 - 而且，网络本身就是异构的（主干网上的跨洋光缆以及最后一公里的同轴线缆）
 
-## IPV4 字段
+### IPV4 字段
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_1_54_43_20241122015443.png"/>
 
@@ -575,7 +575,7 @@ Takeaways:
 10. Options: <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_2_48_50_20241122024850.png"/>
 
 
-## CIDR
+### CIDR
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_3_33_8_20241122033307.png"/>
 
@@ -585,13 +585,13 @@ Takeaways:
 
 - 当然，只是取消了这种“大字母”的粗糙分配方式而已。特殊 IP（比如 D、E 类）目前仍然是特殊 IP
 
-### 特殊 IP 地址
+#### 特殊 IP 地址
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_3_40_46_20241122034046.png"/>
 
 因此，可用的主机号 = 主机号 - 2
 
-## NAT
+### NAT
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_3_56_16_20241122035615.png"/>
 
@@ -599,7 +599,7 @@ NAT **内部**地址一般是上图三者之一。
 
 具体转换流程也很简单，请见 [yanfukun](https://yanfukun.com/read/deep-tcpip/nat)。
 
-### NAT 分类
+#### NAT 分类
 
 设想一下，
 
@@ -631,7 +631,7 @@ NAT **内部**地址一般是上图三者之一。
 
 不难发现，论安全性：对称型 > 端口受限锥型 > 受限锥型 > 全锥型
 
-## IPV6 字段
+### IPV6 字段
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_4_37_15_20241122043715.png"/>
 
@@ -644,7 +644,7 @@ NAT **内部**地址一般是上图三者之一。
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_4_42_2_20241122044201.png"/>
 
-### headers
+#### headers
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_4_45_10_20241122044510.png"/>
 
@@ -660,7 +660,7 @@ IPV6 的 optional header 如上图所示。如果你需要其中几个，应该�
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_4_48_28_20241122044828.png"/>
 
-## ICMP: 控制平面协议
+### ICMP: 控制平面协议
 
 IPV4 和 IPV6 都是用来传输数据的**数据平面协议**，而 ICMP 是用来检测连通性等等的**控制平面协议**。
 
@@ -673,13 +673,13 @@ IPV4 和 IPV6 都是用来传输数据的**数据平面协议**，而 ICMP 是�
 
 Type 以及 code 两者相组合，就决定了这个 ICMP packet 的语义。具体语义见 [Wikipedia](https://zh.wikipedia.org/wiki/%E4%BA%92%E8%81%94%E7%BD%91%E6%8E%A7%E5%88%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE#%E6%8A%A5%E6%96%87%E7%B1%BB%E5%9E%8B)
 
-## ARP 协议
+### ARP 协议
 
 > [!info] tl;dr
 > 
 > 很简单，如果你希望找到 IP 地址对应的 MAC 地址，那么就通过将 ARP 协议在局域网上广播即可找到
 
-## DHCP 协议
+### DHCP 协议
 
 > [!question]
 > 
@@ -689,19 +689,19 @@ Type 以及 code 两者相组合，就决定了这个 ICMP packet 的语义。�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_5_12_50_20241122051250.png"/>
 
-## MPLS
+### MPLS
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_5_17_15_20241122051714.png"/>
 
 类似于在路由器上，建立了一个类似于 circuit switching 的东西。也就是说，我们可以保证数据包通过某条线路。
 
-## BGP
+### BGP
 
 更详细的内容可以参考 [cnblogs](https://www.cnblogs.com/linfangnan/p/13036026.html#bgp-%E5%8D%8F%E8%AE%AE)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_5_40_53_20241122054052.png"/>
 
-### BGP 广播信息
+#### BGP 广播信息
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_6_12_28_20241122061227.png"/>
 
@@ -713,7 +713,7 @@ Type 以及 code 两者相组合，就决定了这个 ICMP packet 的语义。�
 3. nextHop
 
 就是告诉收到该 BGP 协议的路由器：如果你想访问 prefix，只需要跳到 nextHop。这样就能依次通过 AS-path 上的路径访问到 prefix 了。
-### 例子
+#### 例子
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_5_40_17_20241122054016.png"/>
 
@@ -731,7 +731,7 @@ Type 以及 code 两者相组合，就决定了这个 ICMP packet 的语义。�
 1. 如果 A 希望和 C 进行通信，由于 AS2 只收到了 `(C, [AS1, AS4], 1-2)`，因此别无选择，只能把路由发给 `1-2` 这个边界路由器
 2. 如果 B 希望和 C 进行通信，由于 AS3 收到了 `(C, AS4, 3-4)` 以及 `(C, [AS1, AS4], 1-3)` 两个 BGP 包，因此就要进行一番选择（见下文）
 
-### BGP Route Selection
+#### BGP Route Selection
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_6_34_53_20241122063453.png"/>
 
@@ -755,11 +755,11 @@ B 希望和 C 进行通信，由于 AS3 收到了 `(C, AS4, 3-4)` 以及 `(C, [A
 	- 否则就是 eBGP
 3. BGP 包在边界处传送的时候，nextHop 和 AS-Path 就会有改动
 
-### 对比：Infra-AS vs Inter-AS Routing
+#### 对比：Infra-AS vs Inter-AS Routing
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/22_6_55_23_20241122065523.png"/>
 
-# 拥塞控制
+## 拥塞控制
 
 传输层的拥塞控制（i.e. TCP）是最有名的，但是如果配合上网络层，效果更好。
 
@@ -771,7 +771,7 @@ B 希望和 C 进行通信，由于 AS3 收到了 `(C, AS4, 3-4)` 以及 `(C, [A
 > 
 > 两者共同点是：都是为了让 sender 停下来，要么是因为 receiver 处理能力不够，要么是因为带宽不够（i.e. sender 的 waiting queue 越积越长）
 
-## Approaches
+### Approaches
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/12_1_48_46_20241212014846.png"/>
 

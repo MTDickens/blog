@@ -1,4 +1,4 @@
-# Data Storage Structure
+## Data Storage Structure
 
 详见 [HobbitQia](https://note.hobbitqia.cc/DB/db9/#fixed-length-records)
 
@@ -26,7 +26,7 @@
 1. 一种方法是把后面的记录挪过去，让自由空间更紧凑，这样需要修改 entries, free space 的指针，偏移量也要调整。
 2. 也可以暂时不调整，等后面如果需要分配内存但不够用时，再一次性重整之前的空间。
 
-# 文件中 record 的组织方式
+## 文件中 record 的组织方式
 
 > **注意：**
 >
@@ -67,7 +67,7 @@
 
 我们也需要来储存它。
 
-# Buffer Management
+## Buffer Management
 
 详见[HobbitQia](https://note.hobbitqia.cc/DB/db9/#storage-access-buffer-manager)。
 

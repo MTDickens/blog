@@ -1,6 +1,6 @@
-# Vector Database
+## Vector Database
 
-## Data Form
+### Data Form
 
 ~~~json
 {
@@ -30,7 +30,7 @@
 
 ~~~
 
-# Data Retrieval Algorithm
+## Data Retrieval Algorithm
 
 Due to the curse of dimension and the large data amount, we have to use approximatation algorithm, like HNSW (Hierarchical Navigable Small World).
 
@@ -41,15 +41,15 @@ Below are some often-used industrial algorithms:
 - Locality sensitive hashing
 - SCANN
 
-# HNSW Algorithm
+## HNSW Algorithm
 
 That's basically a combination of skip list and small-world network.
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/08/8_22_15_25_202408082215824.png"/>
 
-# API
+## API
 
-## Some Examples
+### Some Examples
 
 SOAP: Simple Object Access Protocol
 RPC: Remote Procedure CAlls
@@ -59,16 +59,16 @@ Other protocols:
 - Graph QL: GraphQL allows developers to make requests to fetch data from multiple data sources with a single API call.
 - WebScoket: Server can send messages to clients without the clients' request.
 
-## REST API
+### REST API
 
-### Conventions
+#### Conventions
 
 POST=CREATE
 GET=SELECT
 PUT=UPDATE
 DELETE=DELETE
 
-## Why do we need APIs?
+### Why do we need APIs?
 
 Basically, API acts as an ABSTRACTION (and CONSISTENCT layer) between client and the implementation details.
 

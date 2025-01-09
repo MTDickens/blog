@@ -1,5 +1,5 @@
 
-# Compilers and Static Analyzers: Difference
+## Compilers and Static Analyzers: Difference
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403181511020.png" alt="image-20240318151143154" style="zoom:50%;" />
 
@@ -15,7 +15,7 @@
 
 为什么要翻译成 IR 呢？因为编译器要做优化。即使不做优化，也要进行 bug、安全漏洞的检查。
 
-# AST vs.IR: Difference
+## AST vs.IR: Difference
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403181541345.png" alt="image-20240318154125740" style="zoom: 50%;" />
 
@@ -31,7 +31,7 @@
 - 与 AST 相比，IR 含有直接的数据流信息
     - 显然
 
-# IR: Three-Address Code(3AC)
+## IR: Three-Address Code(3AC)
 
 Definition: 
 
@@ -46,9 +46,9 @@ e.g. `c = a + b + 3` &longrightarrow; `t1 = a + b, c = t1 + 3`
 - Constant: 3
 - Compiler-generated temporary: t1
 
-# 3AC in Real Static Analyzer: Soot
+## 3AC in Real Static Analyzer: Soot
 
-## Example 1
+### Example 1
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403181643193.png" alt="image-20240318164340495" style="zoom: 50%;" />
 
@@ -58,7 +58,7 @@ e.g. `c = a + b + 3` &longrightarrow; `t1 = a + b, c = t1 + 3`
     - 也就是说，在程序运行到某个类型的一瞬间（比如说 `B b = ...` 中的 `B`，不管有没有 `new`），就会调用 `<clinic>`
 2. 由于我们没有显式定义 `<init.`，因此在 `<init>` 里面，需要让 r0 调用其父类的构造函数，也就是 `specialinvoke`
 
-## Example 2
+### Example 2
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403181626635.png" alt="image-20240318162628809" style="zoom:50%;" />
 
@@ -70,7 +70,7 @@ e.g. `c = a + b + 3` &longrightarrow; `t1 = a + b, c = t1 + 3`
 
 
 
-## Sidenote: JVM `invoke`'s
+### Sidenote: JVM `invoke`'s
 
 `invokespecial`: call constructor, call superclass methods, call private methods
 
@@ -82,7 +82,7 @@ e.g. `c = a + b + 3` &longrightarrow; `t1 = a + b, c = t1 + 3`
 
 **Java 7:** `invokedynamic` - Java static typing dynamic language runs on JVM
 
-## Sidenote: Method Signature
+### Sidenote: Method Signature
 
 The structure of signature in Java is 
 
@@ -98,7 +98,7 @@ specialinvolk java.lang.StringBuilder: void <init>()
 
 
 
-# Static Single Assignment(SSA)
+## Static Single Assignment(SSA)
 
 SSA 是一个过时的技术。它主要有两个特征：
 
@@ -107,14 +107,14 @@ SSA 是一个过时的技术。它主要有两个特征：
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403190018224.png" alt="image-20240319001827079" style="zoom: 50%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403190019668.png" alt="image-20240319001905885" style="zoom:33%;" />
 
-# Basic Blocks (BB)
+## Basic Blocks (BB)
 
 Basic Block 就是一段连续的 3AC，其中
 
 - 只有第一个指令可以通过 goto, jump 等跳转到
 - 只有最后一个指令可以通过 goto, jump 等跳走
 
-## 算法
+### 算法
 
 算法的目的是分化出尽可能少的 blocks。
 
@@ -129,11 +129,11 @@ Basic Block 就是一段连续的 3AC，其中
 - 所有**（条件）跳转指令的下一条指令**是 leader
     - 因为本条指令必须代表着一个块的结束，因此下一条指令必须代表一个块的开始
 
-## Example
+### Example
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403190052014.png" alt="image-20240319005213299" style="zoom:50%;" />
 
-# Control Flow Graphs(CFG)
+## Control Flow Graphs(CFG)
 
 通过 basic block，我们就可以画出 control flow graph。
 

@@ -1,4 +1,4 @@
-# Definition
+## Definition
 
 Formally,  the descent direction is defined as follows.
 
@@ -25,7 +25,7 @@ $$
 }
 $$
 
-# Steepest Descent Direction
+## Steepest Descent Direction
 
 给定一个范数 $\|\cdot\|$，我们就可以定义**这个范数意义下的 steepest descent direction**。
 
@@ -43,7 +43,7 @@ $$
 1. 其实，我们是希望让 $\Delta_{\|\cdot\|}\boldsymbol{x}\triangleq\underset{\boldsymbol{v}:\|\boldsymbol{v}\|\leq1}{\operatorname*{argmin}} f (\boldsymbol{x} + \boldsymbol{v})$ 的。但是由于直接最小化是不现实的，因此我们只能采用近似策略：$f(\boldsymbol{x} + \boldsymbol{v}) \approx f(\boldsymbol{x}) + \langle \boldsymbol v, \Delta f(\boldsymbol{x}) \rangle, \text{where } f(\boldsymbol{x}) \text{ is constant}$
 2. 显然，如果使用 2-范数的话，那么这个 domain 就是 high-dimensional sphere，等价于梯度下降
 
-## Examples: Different Norms
+### Examples: Different Norms
 
 $$
 \begin{aligned} & \Delta_{\|\cdot\|_2} \boldsymbol{x}=- \nabla f(\boldsymbol{x}), \newline & \Delta_{\|\cdot\|_1} \boldsymbol{x}=-\operatorname{sign}\left(\frac{\partial f(\boldsymbol{x})}{\partial \boldsymbol{x}_l}\right) \boldsymbol{e}_l, \quad l=\underset{i \in 1, \ldots, n}{\operatorname{argmax}}\left|\frac{\partial f(\boldsymbol{x})}{\partial \boldsymbol{x}_i}\right|, \newline & \Delta_{\|\cdot\|_A} \boldsymbol{x}=-\|\nabla f(\boldsymbol{x})\|_{A^{-1}}^{-1} A^{-1} \nabla f(\boldsymbol{x})\end{aligned}
@@ -63,7 +63,7 @@ $$
 \end{aligned}
 $$
 
-## Example: TRPO
+### Example: TRPO
 
 TRPO 是强化学习的一个最优化方式。
 
@@ -110,9 +110,9 @@ $$
 \end{aligned}
 $$
 
-## Randomized Schemes
+### Randomized Schemes
 
-### Coordinate Descent
+#### Coordinate Descent
 
 For **coordinate descent** method, the direction of $f$ at $\boldsymbol{x}$ can be randomly chosen, and is given by
 $$
@@ -122,7 +122,7 @@ where $i_k$ chosen uniformly at random from $\{1,2, \ldots, n\}$ at each $k$.
 
 **Note**: 由于 $\langle -[\nabla f(\boldsymbol x)]_{i_k} \boldsymbol e_{i_k}, \nabla f(\boldsymbol x) \rangle = -\nabla f(\boldsymbol x)_{i_k}^2 \leq 0$，因此满足条件
 
-### Stochastic Gradient
+#### Stochastic Gradient
 
 For **stochastic gradient** method, the direction of $f$ at $\boldsymbol{x}$ is given by
 $$

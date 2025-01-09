@@ -1,10 +1,10 @@
-# Lec 13: Move Semantics
+## Lec 13: Move Semantics
 
-## Introduction: `push_back` vs `emplace_back`
+### Introduction: `push_back` vs `emplace_back`
 
 ```cpp
-#include <vector>
-#include <iostream>
+##include <vector>
+##include <iostream>
 
 using namespace std;
 
@@ -37,10 +37,10 @@ int main() {
 }
 ```
 
-### Recap: Destructor
+#### Recap: Destructor
 
 ```cpp
-#include <bits/stdc++.h>
+##include <bits/stdc++.h>
 
 using namespace std;
 
@@ -132,7 +132,7 @@ So:
 
 
 
-## l-value vs r-value
+### l-value vs r-value
 
 > This is a simplification of the reality, but it's enough for today's topic.
 
@@ -144,7 +144,7 @@ r-value has no identity.
 
 - can't be addressed
 
-### r-value reference
+#### r-value reference
 
 ```cpp
 int main()
@@ -158,7 +158,7 @@ int main()
 }
 ```
 
-### Why r-value is the key to `std::move`
+#### Why r-value is the key to `std::move`
 
 An object that is an I-value is NOT disposable, so you can copy from, but definitely cannot move from.
 
@@ -166,7 +166,7 @@ An object that is an r-value is disposable, so **you can either copy or move fro
 
 - "move" here just means "steal"
 
-### Move constructor and move assignment
+#### Move constructor and move assignment
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202401232228821.png" style="zoom:33%;" />
 
@@ -201,7 +201,7 @@ public:
 };
 ```
 
-### Example: `swap`
+#### Example: `swap`
 
 ```cpp
 template <typename T>

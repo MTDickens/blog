@@ -18,9 +18,9 @@ $$
 > 
 > 因此，我们就转而研究一个谱半径近似替代品——矩阵范数，因为容易求出，且具有良好的性质。
 
-# Norm
+## Norm
 
-## Vector Norm
+### Vector Norm
 
 范数很简单，对于向量范数，只需要满足：
 
@@ -30,7 +30,7 @@ $$
 
 即可。
 
-### Converge w.r.t Norm
+#### Converge w.r.t Norm
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403271619934.png" alt="image-20240327161918543" style="zoom: 50%;" />
 
@@ -65,7 +65,7 @@ $$
 2. 向量（的一个子列）收敛
 3. 由范数函数的连续性：向量（的一个子列）的收敛点的值等于 0，与 positive definite 矛盾
 
-## Matrix Norm
+### Matrix Norm
 
 对于矩阵范数，需要满足：
 
@@ -76,7 +76,7 @@ $$
 
 注意第四点是矩阵范数独有的。
 
-### Some Popular Norms
+#### Some Popular Norms
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403271718091.png" alt="image-20240327171833109" style="zoom:50%;" />
 
@@ -90,9 +90,9 @@ $$
 2. 1-范数：逐行相加，取最大的那一列
 3. 2-范数：对于一个高维球面，我们对其进行线性变换，然后取其最长轴。或者就是取矩阵最大的奇异值。
 
-# Eigenvalues and Eigenvectors
+## Eigenvalues and Eigenvectors
 
-## Spectral Radius
+### Spectral Radius
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403271745887.png" alt="image-20240327174556634" style="zoom:50%;" />
 
@@ -107,7 +107,7 @@ $$
 
 重要的定理是：对于任意的 natural norm，矩阵的谱半径一定不大于 natural norm。
 
-### Convergence of Matrix w.r.t its norm
+#### Convergence of Matrix w.r.t its norm
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403271937818.png" alt="image-20240327193724500" style="zoom: 50%;" />
 
@@ -119,15 +119,15 @@ $$
 >
 > 同时，不难证明，若尔当型收敛 iff $\abs{\lambda} < 1$。因此只要所有特征值的绝对值小于 1，矩阵就收敛
 
-# Iterative Techniques
+## Iterative Techniques
 
-## Jacobi Method
+### Jacobi Method
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272031265.png" alt="image-20240327203131134" style="zoom:33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272031477.png" alt="image-20240327203100794" style="zoom: 33%;" />
 
 我们在这里，用的也是类似于不动点迭代的方法。
 
-### 举例
+#### 举例
 
 <p>一个形如 <span class="mwe-math-element"><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML"  alttext="{\displaystyle Ax=b}">
   <semantics>
@@ -1055,19 +1055,19 @@ $$
   </semantics>
 </math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5458d3839311975d33a349c54b41fbd82e3f7e98" class="mwe-math-fallback-image-inline mw-invert" aria-hidden="true" style="vertical-align: -2.505ex; width:15.386ex; height:6.176ex;" alt="{\displaystyle x={\begin{bmatrix}7.111\\-3.222\end{bmatrix}}.}"></span></dd></dl>
 
-## Gauss-Seidal Method
+### Gauss-Seidal Method
 
 Gauss-Seidal 方法，在形式上，上和 Jacobi 方法的区别不大。
 
 - 但是 Gauss-Seidal 比较难并行化，因为每计算一个 $x_j^{(k)}$ 都要用到之前的 $x_{j-1}^{(k)}, x_{j-2}^{(k)}, \dots$。
 
-## Comparison
+### Comparison
 
 如图，左侧是 Gauss - Seidel 方法，右侧是 Jacobi 方法。两者最大的不同，就是 Gauss - Seidel 方法，总是使用最新的数据。
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272103743.webp" alt="img" style="zoom:33%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272103022.webp" alt="img" style="zoom:33%;" />
 
-## Convergence: Proof
+### Convergence: Proof
 
 标准的收敛情况，是 $T_j = D^{-1}(L+U)$ 的谱半径小于 1。
 
@@ -1083,7 +1083,7 @@ Gauss-Seidal 方法，在形式上，上和 Jacobi 方法的区别不大。
 
 因此，如果我们希望误差收敛，就必须要求 $T$ 本身就是收敛的。而 $T$ 是收敛的条件，就是谱半径小于 1（上文已经证明）。
 
-### Other convergence conditions
+#### Other convergence conditions
 
 保证收敛的条件还可以是矩阵 $A$ 为严格或不可约地对角占优矩阵。不过，有时即使不满足此条件，雅可比法仍可收敛。
 
@@ -1097,7 +1097,7 @@ Gauss-Seidal 方法，在形式上，上和 Jacobi 方法的区别不大。
 
 因此，$\rho(T) < 1$。
 
-## Error Bound Estimation
+### Error Bound Estimation
 
 矩阵的 normal norm 相比谱半径更适合用来估计误差。
 
@@ -1105,7 +1105,7 @@ Gauss-Seidal 方法，在形式上，上和 Jacobi 方法的区别不大。
 
 由于谱半径小于等于任意的自然范数，因此：<img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403272123492.png" alt="image-20240327212308128" style="zoom:67%;" />
 
-# Conditional Number
+## Conditional Number
 
 $$
 \newcommand{abs}[1]{|#1|}
@@ -1113,11 +1113,11 @@ $$
 
 
 
-## 推导
+### 推导
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202404031825788.jpg" alt="a8d8877d-e0fd-4164-8e5e-3812ccfb71b1" style="zoom:50%;" />
 
-## 求 $K(A)$
+### 求 $K(A)$
 
 由于 $K(A) = \|A\| \|A^{-1}\|$，因此，一般而言，我们需要求出 $A^{-1}$ 才行。但是我们并不希望使用 $\mathcal O(n^{\log_2 7})$ 的复杂度来求逆矩阵。
 

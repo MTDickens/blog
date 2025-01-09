@@ -1,8 +1,8 @@
-# Lec 4: Streams
+## Lec 4: Streams
 
 > Definition: a general input/output(IO) **abstraction** for C++
 
-## `cout` and `cin`
+### `cout` and `cin`
 
 They are known as the standard iostreams.
 
@@ -34,7 +34,7 @@ Also:
 1. `std::cin` is a **input stream**
 2. `std::cout` is an instance of `std::ostream` which represents the standard output stream!
 
-## Generalizing the Stream
+### Generalizing the Stream
 
 `std::cin` is
 
@@ -70,7 +70,7 @@ graph LR
 
 **In summary,streams allow for a universal way of dealing with external data**
 
-## What streams actually are?
+### What streams actually are?
 
 Input streams (I) 
 
@@ -80,11 +80,11 @@ Output streams (O)
 
 - a way to write data to a destination
 
-### Example: `std::stringstream`
+#### Example: `std::stringstream`
 
 ```cpp
-#include <stringstream>
-#include <iostream>
+##include <stringstream>
+##include <iostream>
 
 using namespace std;
 
@@ -124,16 +124,16 @@ So, you **SHOULDN'T** use `>>` and `getline` together. Because they parse data d
   - (\ngood\n) read (), stop at (g)
   - ( good\nboy) read ( good), stop at (b)
 
-### Example: `std::cout`
+#### Example: `std::cout`
 
 `std::cout` also has a **intermediate buffer** that stores the chars to be printed on the console.
 
 Example:
 
 ```cpp
-#include <sstream>
-#include <iostream>
-#include <iomanip>
+##include <sstream>
+##include <iostream>
+##include <iomanip>
 
 using namespace std;
 
@@ -158,12 +158,12 @@ Output:
 
 Which means that the buffer of `cout` is 1024 bytes (at least in my machine), and when it is about to add ` 257` into the buffer, the buffer is full, and it has to flush it to the console. And then the exception happens, and the remainders in the buffer is ignored.
 
-### Example: `std::cerr` and `std::clog`
+#### Example: `std::cerr` and `std::clog`
 
 `cerr`: used to output errors (unbuffered) 
 
 `clog`: used for non-critical event logging (buffered)
 
-### Example: `std::fstream`
+#### Example: `std::fstream`
 
 `std::fstream` also has a **intermediate buffer** that stores the chars to be printed on the console.

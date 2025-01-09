@@ -1,4 +1,4 @@
-# Policy Gradient
+## Policy Gradient
 
 > [!warning] 注意
 > 
@@ -30,7 +30,7 @@
 
 目前的问题就是：$\frac{\partial} {\partial \theta} \log p_\theta (x)$ 如何计算？
 
-### $\frac{\partial} {\partial \theta} \log p_\theta (x)$ 的计算
+#### $\frac{\partial} {\partial \theta} \log p_\theta (x)$ 的计算
 
 我们令 $x = (s_0, a_0, s_1, a_1, \dots)$，这就是遵循 $\pi_\theta(a|s)$ 策略之后的轨迹，也是一个随机向量。
 
@@ -55,7 +55,7 @@ $$
 \end{aligned}
 $$
 
-### PyTorch 实现
+#### PyTorch 实现
 
 我们要做的，就是
 
@@ -64,7 +64,7 @@ $$
     - 其中 ... 就是 $\frac 1 N \sum_{j = 1}^N \left(\sum_{t \geq 0} \gamma^t r_t^{(j)}\right) \left(\sum_{i \geq 0} \log \pi_\theta (a_i^{(j)} | s_i^{(j)}) \right)$
 3. 最后，`loss.backward()`，求导、更新即可
 
-## 改进一：Baseline
+### 改进一：Baseline
 
 为了避免抽样上的偏差，造成的以下后果：
 
@@ -117,7 +117,7 @@ $$
 > \end{aligned}
 > $$
 
-## 改进二：离策略梯度
+### 改进二：离策略梯度
 
 由于 vanilla policy gradient 是典型的同策略算法，因此
 
@@ -130,7 +130,7 @@ $$
 
 - 如何求重要性采样下的策略梯度呢？其实就是按照 policy gradient 的方式去推就行了。**注意不需要对 $\theta'$ 求梯度**
 
-# 演员-评论员方法
+## 演员-评论员方法
 
 > [!abstract]+ 宏观框架
 > 
@@ -138,9 +138,9 @@ $$
 > 
 > 我们可以结合之前的 $Q(s, a)$ 函数的方法（i.e. Q 学习、Sarsa），使用 $Q(s, a)$ 来代替上图中的 $r(\tau)$
 
-## Vanilla (Deep) Actor-Critic
+### Vanilla (Deep) Actor-Critic
 
-### 训练 actor
+#### 训练 actor
 
 **对比**：
 
@@ -149,7 +149,7 @@ $$
     - 从而，$\frac{\partial J} {\partial \theta} \triangleq \frac{\partial} {\partial \theta}\left[ \frac 1 N \sum_{j=1}^N q_\omega(s_0, a_0) \log \pi_\theta(a_0, s_0) \right]$
     - 其中，$q_\omega(s, a)$ 就是 critic 的评分
 
-### 训练 critic
+#### 训练 critic
 
 我们使用 **Deep** SARSA 来充当这里的 critic。
 
@@ -159,7 +159,7 @@ $$
 > 
 > 可以这么认为：**不使用经验回放的 DQN，就是 Deep SARSA**
 
-### 最终流程
+#### 最终流程
 
 总流程如下：
 
@@ -167,7 +167,7 @@ $$
 
 - **注意**：至于 critic 的 loss，那么仍然是均方差。**不难发现，此时的 TD 目标 (i.e. $\widehat {y_t}$)，不是按照 critic 的 $\mathop{\arg\max}Q(s, a)$ + ε-greedy 的策略，而是按照 actor 的策略**。从而，TD 误差中，包含了 actor 和 critic 两者的“思考”，在梯度下降的时候，就会促使 critic 和 actor 靠近。
 
-## Vanilla Deep A2C
+### Vanilla Deep A2C
 
 就是使用了 Baseline 的 AC 算法。同时，这里的算法实现中，采用了
 
@@ -232,7 +232,7 @@ $$
 > 
 > - **注意**：$\widehat A(s_{t+k}^i, a_{t+k}^i) = 0$，无论是否是 terminal state
 
-## Improved (Deep) A2C
+### Improved (Deep) A2C
 
 实际上，我们也可以采用**经验回放**，也就是 DQN。但是，假如直接使用四元组 $(s, a, s', r)$ 进行策略梯度更新的话，由于是“异策略”的，因此更新的时候，会造成统计上的偏差。
 

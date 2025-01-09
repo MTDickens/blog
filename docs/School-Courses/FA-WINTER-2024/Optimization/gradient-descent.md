@@ -1,4 +1,4 @@
-# How to Choose Step Size
+## How to Choose Step Size
 
 (1) The sequence $\left\{\left\{h_k\right\}_{k=1}^{\infty}\right.$ is chosen in advance. For example,
 
@@ -28,7 +28,7 @@ where, $0<\alpha<\beta<1$ are some fixed parameters.
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_9_59_29_20241117095928.png"/>
 > 
 > 如图：我们要找到这样的 $x_{k+1}$，使得它落在红线和蓝线之间（也就是橙色区域）
-# Performance for $C_L^{1,1}(\mathbb R^n)， F_L^{1,1}(\mathbb R^n), S_{\mu,L}^{1,1}(\mathbb R^n)$
+## Performance for $C_L^{1,1}(\mathbb R^n)， F_L^{1,1}(\mathbb R^n), S_{\mu,L}^{1,1}(\mathbb R^n)$
 
 > [!info]- Proof for $C_L^{1,1}(\mathbb R^n)$
 > 

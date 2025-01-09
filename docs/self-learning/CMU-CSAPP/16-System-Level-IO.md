@@ -1,6 +1,6 @@
-# Lec 16: System Level I/O
+## Lec 16: System Level I/O
 
-## Unix I/O Overview
+### Unix I/O Overview
 
 > Definition: A Linux *file* is a sequence of $m$ bytes
 >
@@ -12,13 +12,13 @@ Elegant mapping of files to devices allows kernel to export simple interface cal
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240130221246643.png" alt="image-20240130221246643" style="zoom:50%;" />
 
-### File Types
+#### File Types
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240130221507932.png" alt="image-20240130221507932" style="zoom:50%;" />
 
 - Note: pipes (e.g. `ls -lah | grep csapp`) are also files
 
-### Regular Files
+#### Regular Files
 
 - A regular file contains **arbitrary data**
 - Applications oft distinguish between *text files* and *binary files*
@@ -27,7 +27,7 @@ Elegant mapping of files to devices allows kernel to export simple interface cal
     - e.g., object files, JPEG images
   - Kernel doesn't know the difference!
 
-### Directories
+#### Directories
 
 - Directory consists of an array of *links*
   - Each link maps a *filename* to a file
@@ -35,7 +35,7 @@ Elegant mapping of files to devices allows kernel to export simple interface cal
   - `.` is a link to itself
   - `..` is a link to the parent directory
 
-### Directory Hierarchy
+#### Directory Hierarchy
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240130235328935.png" alt="image-20240130235328935" style="zoom:50%;" />
 
@@ -43,7 +43,7 @@ The kernel maintains *current working directory (cwd)* for each process.
 
 - Modified using the `cd` command (for shell)
 
-### Open/Close/Read/Write
+#### Open/Close/Read/Write
 
 `open` takes in file name, and returns a file descriptor, or -1 if an error occurred.
 
@@ -68,12 +68,12 @@ The kernel maintains *current working directory (cwd)* for each process.
   ```
   
 
-## RIO (Robust I/O Library)
+### RIO (Robust I/O Library)
 
-### Unbuffered I/O
+#### Unbuffered I/O
 
 ```c
-#include "csapp.h"
+##include "csapp.h"
 ssize_t rio_readn(int fd, void *usrbuf, size_t n);
 ssize_t rio_writen(int fd, void *usrbuf, size_t n);
 /* Return:num.bytes transferred if OK, 0 on EOF (rio readn only), -1 on error */
@@ -110,21 +110,21 @@ ssize_t rio_readn(int fd, void * usrbuf, size_t n) {
 
 
 
-### Buffered I/O
+#### Buffered I/O
 
-#### Example: Buffered Input
+##### Example: Buffered Input
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240201014423243.png" alt="image-20240201014423243" style="zoom:50%;" />
 
-### Buffered I/O Implementation
+#### Buffered I/O Implementation
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240201014518113.png" alt="image-20240201014518113" style="zoom:50%;" />
 
 - **Explanation:** You read a batch of bytes from a file at once *in reality*, but provide the content to the process in several times *in logic*.
 
-## Metadata, Sharing and Redirection
+### Metadata, Sharing and Redirection
 
-### Metadate
+#### Metadate
 
 - *Metadata* is data about data, in this case file data.
 
@@ -150,7 +150,7 @@ struct stat {
 };
 ```
 
-### Sharing
+#### Sharing
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240201173135963.png" alt="image-20240201173135963" style="zoom: 50%;" />
 
@@ -168,7 +168,7 @@ This is how Unix kernel represents open files.
 - Two entries of open file table can point to the same entry of v-node table
   <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240201173400361.png" alt="image-20240201173400361" style="zoom: 33%;" />
 
-### I/O Redirection
+#### I/O Redirection
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/image-20240201202911801.png" alt="image-20240201202911801" style="zoom:50%;" />
 
@@ -177,13 +177,13 @@ This is how Unix kernel represents open files.
 Example:
 
 ```c
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
+##include <stdio.h>
+##include <sys/types.h>
+##include <sys/stat.h>
+##include <fcntl.h>
+##include <unistd.h>
 
-#define MAX_LENGTH 200
+##define MAX_LENGTH 200
 
 int main(int argc, char* argv[]) {
   char input[MAX_LENGTH] = {0};
@@ -199,7 +199,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-## Closing Remarks
+### Closing Remarks
 
 **如何选择要使用的 I/O？**
 

@@ -1,8 +1,8 @@
-# Lec 4: Optimization
+## Lec 4: Optimization
 
 **Note:** 下面的不同 formulae 之间，加减号、常数可能会不太一样。在实际中，不同人写的书、代码里面，也不尽相同。不过这些都无关紧要。
 
-## Stochastic Gradient Descent
+### Stochastic Gradient Descent
 
 Normal Gradient Descent:
 $$
@@ -14,7 +14,7 @@ But actually, you can use **a random minibatch** of the whole set.
 
 So, instead of $F$, you can just use $f$ here, where $f := \frac 1 n \sum_{x \text{ from a random subset of size }n} L(x; y; w)$, and $n \ll N$ or even $n = 1$
 
-### Problems
+#### Problems
 
 If the noise is big, the gradient might be really unstable, and make the descending route shape like this:
 
@@ -22,7 +22,7 @@ If the noise is big, the gradient might be really unstable, and make the descend
 
 That's partly because the loss function has a **high condition number**.
 
-## Momentum
+### Momentum
 
 $$
 v_{t+1} = \rho v_{t} - \nabla \alpha f(w_t) \\
@@ -33,7 +33,7 @@ In the formula above, $\rho$ is like the friction parameter (and the quicker, th
 
 If you set $\rho$ to zero, the formula degenerates to normal gradient descent.
 
-## Nesterov Momentum
+### Nesterov Momentum
 
 $$
 v_{t+1} = \rho v_{t} - \nabla \alpha f(w_t + \rho v_t) \\
@@ -47,7 +47,7 @@ v_{t+1} = \rho v_{t} - \alpha \nabla f(\widetilde x_t) \newline
 $$
 You can see the difference is that Nesterov momentum has $v_{t+1} - v_t$.
 
-## AdaGrad & RMSDrop
+### AdaGrad & RMSDrop
 
 $$
 s_{t+1} := s_{t} + \nabla f^2(w_t) \newline
@@ -61,7 +61,7 @@ x_{t+1} := x_t - \frac {\alpha\nabla f(w_t)} {\sqrt{s_{t+1}} + 10^{-7}}
 $$
 这样，$s_t$ 就可以自适应地增减。
 
-## Adam
+### Adam
 
 $$
 \newcommand{\sone}{s^{(1)}}
@@ -87,17 +87,17 @@ $$
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403110144027.png" alt="image-20240311014405721" style="zoom: 50%;" />
 
-### Adam in Action
+#### Adam in Action
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403110145681.png" alt="image-20240311014535475" style="zoom:33%;" />
 
 因此，Adam 优化方法，直到现在，也没有过时。
 
-## Comparison Between These Optimizers
+### Comparison Between These Optimizers
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403110156327.png" alt="image-20240311015628976" style="zoom:50%;" />
 
-## 一阶优化和二阶优化
+### 一阶优化和二阶优化
 
 二阶优化的 robustness 往往强于一阶优化（如下图，我们如果知道了 Hessian matrix，就可以根据其得到曲率，从而适当加大 step）。
 
@@ -120,7 +120,7 @@ $$
 
 - 注意算式中要对 Hessian 阵取逆。由于 Hessian 矩阵是稠密矩阵，因此没什么好方法，一般而言，复杂度就是在 $\mathcal O(n^3)$ 这个量级的。
 
-# In Practice
+## In Practice
 
 - **Adam** is a good default choice in many cases. **SGD+Momentum** can outperform Adam but may require more tuning
 - If you can afford to do full batch updates and the dimension is low, then try out **L-BFGS** (and don't forget to disable all sources of noise)

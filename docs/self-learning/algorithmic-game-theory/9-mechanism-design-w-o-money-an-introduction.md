@@ -1,10 +1,10 @@
-# Introduction
+## Introduction
 
 有些时候，用钱是不道德的（比如说 kidney exchange）或者是不现实的（比如说 house swapping）。此时，套用 Lec 8 的理论：budget 就是 0，但是我们仍然希望达到 DSIC 以及（尽量）最大化 surplus（此时收益就别管了）。
 
 一般而言，auction without money 是很难有好的效果的。但是仍然有几个特殊的例子，可以实现好的效果。
 
-# Example: House Swapping
+## Example: House Swapping
 
 There are $n$ agents, and each initially owns one house. Each agent has a **total ordering** over the $n$ houses, and need not prefer their own over the others.
 
@@ -20,7 +20,7 @@ There are $n$ agents, and each initially owns one house. Each agent has a **tota
 
 由于每一次一定至少形成 1 个环，因此至多 $n$ 轮就算法就可以结束。
 
-## 证明：DSIC
+### 证明：DSIC
 
 *Proof*: 固定其他人在相同格局下的意愿（i.e. 格局包括轮数和该轮中剩余的 agents 数量），假设我们在第 i 轮中试图不按照真实意愿行事，仔细考虑下面三种情况：
 
@@ -42,7 +42,7 @@ There are $n$ agents, and each initially owns one house. Each agent has a **tota
 
 从而，按照真实意愿，**任何情况下不会更差**。■
 
-## 证明：Unique Core Allocation
+### 证明：Unique Core Allocation
 \
 > [!info]+ Core Allocation
 > 
@@ -58,14 +58,14 @@ We now prove uniqueness. In the TTCA allocation, all agents of $N_1$ receive the
 > 
 > 1, 2, 3 都认为 1 > 2 > 3，然后将 1 分给 2，2 分给 3，3 分给 1。那么这样的话，任何两个人/三个人之间，都不希望交换。貌似也是 core allocation，但是对 1 造成了损害（换到的房，在他眼中，比换之前还差）。
 
-# Example: Kidney Exchange
+## Example: Kidney Exchange
 
 Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e. 配对越好的肾脏，在 total ordering 中越靠前。
 
 但是，直接使用 house swapping 的算法，会有以下几个问题。
 
-## Problems
-### Problem 1: Altruistic Donor and Patients w/o Donor
+### Problems
+#### Problem 1: Altruistic Donor and Patients w/o Donor
 
 由于**存在无私的 donor（比如捐献遗体）以及不存在 donor 的病人**。因此，我们的算法不仅要考虑 donor-patient pair，还要额外考虑上述两种情况——同时，保证公平性：所有人在重分配之后，只会更好或者不变，不会更差。
 
@@ -74,7 +74,7 @@ Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e
 
 当然，这个问题是容易解决的：TTCA 存在一个专门为此设计的扩展（细节这里不谈）。
 
-### Problem 2: Long Cycles
+#### Problem 2: Long Cycles
 
 > [!info]+ 示意图
 > 
@@ -102,7 +102,7 @@ Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e
 > 
 > - 实践中，存在过长达 30 多人的链。手术一直断断续续持续了 2 个月。
 
-## Algorithms
+### Algorithms
 
 应对第二个问题，我们决定使用 matching（两两配对）而不是 cycle 来实现。
 
@@ -111,7 +111,7 @@ Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e
 1. 建立无向图，其中每一个节点代表 patient-(initial-)patient pair，每一条边代表**双方可以交换肾脏（i.e. Donor 1's kidney is compatible with Patient 2, and Donor 2's kidney is compatible with Patient 1）**。
 2. 在图中找出 [**maximum cardinality matching**](https://en.wikipedia.org/wiki/Maximum_cardinality_matching)（从而最大化 surplus）。此即为最后的结果。
 
-### Problem: Multiple Maximum Cardinality Matches
+#### Problem: Multiple Maximum Cardinality Matches
 
 > [!note]+ Example
 > 
@@ -135,7 +135,7 @@ Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e
 
 直观来说，我们尽量先满足优先级高的（i.e. 排除掉无法满足优先级高的 agents 的 MCMs，直到无法排除）。当然，细节还是看算法。
 
-### Properties: DSIC
+#### Properties: DSIC
 
 **Theorem 1.1** For every collection $\{E_i\}^n_{i=1}$ of edge sets and every ordering of the vertices, the priority matching mechanism above is DSIC: no agent can go from unmatched to matched by reporting a strict subset $F_i$ of $E_i$ rather than $E_i$ .
 
@@ -144,7 +144,7 @@ Kidney Exchange 在某种意义上，也是 house swapping 的一种特例，i.e
 1. 所有的 agents **不**能够改变自己的排名（国家统一排名），只能够改变自己的 report
 2. **必须是 agent 自己进行 report，且 agent 只能够依赖国家系统来获得肾脏资源**。因为如果让医院进行 report，就会出现一些问题（下面会说）。
 
-### Problems: Incentives of Hospitals
+#### Problems: Incentives of Hospitals
 
 由于
 

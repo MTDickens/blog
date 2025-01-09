@@ -1,9 +1,9 @@
-# Recap: Why We Start by Discussing Surplus Maximization?
+## Recap: Why We Start by Discussing Surplus Maximization?
 
 1. 社会利益最大化，很多时候是**政府拍卖**的 main objective——相比在拍卖中的收益，政府更加注重社会收益。
 2. 我们有 Myerson's Lemma，可以 get a surplus maximizing strategy for free。因此适合教学。
 
-# Example: One Bidder and One Item
+## Example: One Bidder and One Item
 
 为什么 maximizing surplus 比 maximizing revenue 复杂得多？我们通过下面这个 one-bidder-one-item model 来简单阐述。
 
@@ -13,7 +13,7 @@
 
 如果要 maximizing revenue，那么就必须考虑 $v$ 的价格，并且**希望定价恰好就是 $v$**。因此，**我们还必须考虑 $v$ 的概率分布**。
 
-## Bayesian Analysis
+### Bayesian Analysis
 
 我们这里采用 Bayesian 的模型，并且仍然 focus on DSIC (**but not necessarily surplus-maximizing**) models，对“概率分布”进行严格化：
 
@@ -41,7 +41,7 @@
 > 
 > 如果 $v \sim \text{Uniform}([0,1])$，那么显然 $\max \mathrm E[p(b)] = 1/4$（此时 $r = 1/2$）。
 
-## What About More Complicated Scenario?
+### What About More Complicated Scenario?
 
 如果是 2 bidders 呢？采用和上面一样的均匀分布，如果是 2-price auction，那么 $\mathrm E[p(b)] = \mathrm E[\min\{v_1, v_2\}] = 1/2 * \mathrm E[v_1 + v_2 - |v_1 - v_2|] = 1/2(1/2+1/2-1/3) = 1/3$。
 
@@ -71,7 +71,7 @@ $$
 
 但是：满足 **DSIC** 的方法（换言之：monotone functions）无穷无尽，如何找到最好的那一个呢？
 
-# Expected Revenue Equals Expected Virtual Welfare
+## Expected Revenue Equals Expected Virtual Welfare
 
 > [!info]+
 >
@@ -81,7 +81,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/8_2_49_44_202406080249545.png"/>
 
-## Optimization
+### Optimization
 
 如果我们希望最优化上面的 expectation，实际上就是**对于每一个 $\vec v$ 都进行最优化**，i.e. $\forall \vec v \in ([0, v_\max])^n: \underset{x(\vec v)}{\text{maximize}} \sum_{i=1}^n \varphi_i(v_i) x_i(\vec v)$。
 
@@ -92,7 +92,7 @@ $$
 - 对于高斯、指数、均匀分布而言，$\varphi_i(z)$ is indeed monotone, which is perfect since these two distributions are often used.
 - 对于双峰分布和一些非常重尾的分布，可能也会让 $\varphi_i(z)$ 变成非 monotone
 
-## Example: Revenue Maximization in the Context of Uniform i.i.d
+### Example: Revenue Maximization in the Context of Uniform i.i.d
 
 对于 single item auction 而言，假设所有的 bidder 都是 i.i.d，那么，我们可以很容易地进行 revenue maximization auction：
 

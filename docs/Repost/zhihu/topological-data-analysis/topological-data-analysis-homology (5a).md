@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 n = 30 #number of points to generate
 
-#generate space of parameter
+##generate space of parameter
 theta = np.linspace(0, 2.0*np.pi, n) 
 
 a, b, r = 0.0, 0.0, 5.0
@@ -30,7 +30,7 @@ a, b, r = 0.0, 0.0, 5.0
 x = a + r*np.cos(theta)
 y = b + r*np.sin(theta)
 
-#code to plot the circle for visualization
+##code to plot the circle for visualization
 plt.plot(x, y)
 plt.show()
 ```
@@ -252,21 +252,21 @@ $\\\partial_{reduced} = \begin{Bmatrix} 0 & 0 & 0 & 1 & 1 & 0 & 0 \\ 0 & 0 & 0 &
 在我们的例子中，所有三个顶点 (前三列) 都是生成的新特性(它们的列都是 $0$ ，**low**( $j$ ) $=-1$ )，因此我们记录 $3$ 个新的间隔，起始点是它们的列索引。因为我们从左到右进行顺序扫描，我们还不知道这些特征何时会消失，所以我们只是暂时将端点设置为 $-1$ ，以表示结束或无限。这是前三段：
 
 ```
-#Remember the start and end points are column indices
+##Remember the start and end points are column indices
 [0,-1], [1,-1], [2,-1]
 ```
 
 然后我们继续从左到右扫描，到了第 $4$ 列 ( $j=3$ )，我们计算 **low**( $3$ )= $1$ 。所以这意味着在 $j=1$ (第 $2$ 列) 中生成的特性在 $j=3$ 的时候消失了。现在我们可以返回并更新这个间隔的暂定终点，我们的更新间隔为：
 
 ```
-#updating intervals...
+##updating intervals...
 [0,-1], [1,3], [2,-1]
 ```
 
 我们继续这个过程直到最后一列，我们得到所有的间隔：
 
 ```
-#The final set of intervals
+##The final set of intervals
 [0,-1], [1,3], [2,4], [5,6]
 ```
 

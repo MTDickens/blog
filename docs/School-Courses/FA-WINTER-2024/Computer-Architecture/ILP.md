@@ -1,4 +1,4 @@
-# 竞争与冒险
+## 竞争与冒险
 
 一共三种 hazards：
 
@@ -9,7 +9,7 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/2_21_42_22_202411022142824.png"/>
 
-# Multi-Cycle Operation
+## Multi-Cycle Operation
 
 对于
 
@@ -27,7 +27,7 @@
 	- 对于 fully pipelined，只需要 1
 	- 对于 non-pipelined，就是 latency + 1
 
-## Example: Pipeline doing issuing *in order* and completion *out of order*
+### Example: Pipeline doing issuing *in order* and completion *out of order*
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/2_23_44_37_20241102234436.png"/>
 
@@ -35,7 +35,7 @@
 
 由于除法器难以流水线实现，因此我们只能 non-pipelined。
 
-## Hazards
+### Hazards
 
 - 对于 non-pipelined module（比如除法器），就会造成 **structural hazard**。
 - 由于不同的模块，执行时间不一样，因此
@@ -53,7 +53,7 @@
 	- 其实还应该包括异常处理
 	- 为什么不包含 WAR 呢？因为 WAR 要求前一个指令的读操作在后一个指令的写操作之前。如果是**顺序发射**的，那么一定不会出现这种情况；只有**乱序发射**，才会出现这种情况
 
-## Example: Issuing *in order* and completion *out of order* instruction execution routine
+### Example: Issuing *in order* and completion *out of order* instruction execution routine
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_3_0_34_20241103030033.png"/>
 
@@ -62,9 +62,9 @@
 1. 红色：寄存器堆写口的结构竞争
 2. 绿色：(potential) WAW hazard
 
-## Solution
+### Solution
 
-### 结构竞争：移位寄存器
+#### 结构竞争：移位寄存器
 
 我们引入一个移位寄存器（i.e. `write_reg`）。每当一个 ID 的指令准备发射到之后某个模块的时候，就会检查 `write_reg[latency_of_this_inst]` 是否为 1。如果是 0，那么就代表**如果自己在下一个 clk 上升沿就发射，那么到时候自己执行完毕了，寄存器写口不存在结构竞争**；如果是 1，那么就代表……，**存在结构竞争**，从而**本次需要 stall**。
 
@@ -76,7 +76,7 @@
 > 
 > 其实还有更好的方法，就是在模块计算结束处进行来选择写的顺序。这样可以增加计算模块的利用率。
 
-### 数据竞争
+#### 数据竞争
 
 对于 RAW、WAW、WAR，**真**竞争是 RAW，**假**竞争是 WAW、WAR。因为 RAW 中，read 是真要用到 write 的结果；但是，为了避免 WAW 和 WAR，我们只要避免后面的 write 影响到前面的 write/read 即可。如何避免影响？**寄存器重命名**（可以在编译器层面进行，也可以在硬件层面实现）以及**写覆盖**（仅限 WAW，后面的指令把前面的指令输出覆盖掉）。
 
@@ -84,22 +84,22 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_4_22_2_20241103042201.png"/>
 
-# 软件优化
+## 软件优化
 
 - **Basic Compiler Technique** for Exposing ILP
 	- Loop unrolling
-- ﻿**Static Branch Prediction**
+- **Static Branch Prediction**
 	- 更可能 true 还是 false？我们要 make common case faster，因此在更可能的情况下，不应该跳转。
-- ﻿**Static multiple Issue**: VLIW
-- ﻿**Advanced Compiler** Support for Exposing and Exploiting ILP
+- **Static multiple Issue**: VLIW
+- **Advanced Compiler** Support for Exposing and Exploiting ILP
 	- Software pipelining
 		- 本质上是让编译出来的 inst 在硬件上的并行性更好
 	- Global Code scheduling
 		- 相当于 global-scale software pipelining
 - **Hardware Support** for Exposing More Parallelism at compile time
-	- ﻿﻿Conditional or Predicated instructions
+	- Conditional or Predicated instructions
 		- 避免跳转
-	- ﻿﻿Compiler speculation with hardware support
+	- Compiler speculation with hardware support
 
 
 
@@ -107,7 +107,7 @@
 
 **Note**: 上图中，除了 VLIW 包含软件实现的部分以外，其它都是硬件实现。
 
-## Loop Unrolling
+### Loop Unrolling
 
 给定这样一个代码：
 
@@ -159,7 +159,7 @@ LOOP:
 	BNEZ R1, LOOP
 ```
 
-## Reorganizing
+### Reorganizing
 
 上文的 loop unrolling 的做法，虽然 branch 对性能的影响没那么大了，但是存在 RAW 冲突（第二、三行的 F0，第三、四行的 F4，等等）。
 
@@ -253,7 +253,7 @@ ADDD F4, F0, F2
 SD -32(R1), F4
 ```
 
-## Trace Scheduling
+### Trace Scheduling
 
 对于循环结构，由于**内容是重复的**，因此可以通过展开来减少 branch；但是，对于同样非常常见的 `if-else` 结构，我们就不能用循环展开了。
 
@@ -268,7 +268,7 @@ SD -32(R1), F4
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/18_20_42_43_20241118204243.png" width="60%"/>
 
 
-# 硬件优化：Dynamic Scheduling
+## 硬件优化：Dynamic Scheduling
 
 假设我们的指令如下：
 
@@ -302,7 +302,7 @@ MULD F16,F14,F4
 > 
 > 我们把完成阶段一称为**发射**，完成阶段二称为**执行**。
 
-## Scoreboard Algorithm
+### Scoreboard Algorithm
 
 算法和示例见 [知乎](https://zhuanlan.zhihu.com/p/496078836)。
 
@@ -315,7 +315,7 @@ Limitation：
 	- 我们可以额外加上 renaming 等模块进行解决
 		- 实际上，在后面的 Tomasulo 算法中，我们只是使用了 renaming 的*思想*，而并没有真正进行 renaming（i.e. 没有整什么逻辑寄存器与物理寄存器分离等等）。
 
-## Tomasulo 算法
+### Tomasulo 算法
 
 在开始了解Tomasulo之前，首先观察一下这个结构：
 
@@ -331,7 +331,7 @@ Limitation：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_2_55_34_20241117025534.png" width="90%"/>
 
-### 保留站
+#### 保留站
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_3_3_43_20241117030343.png"/>
 
@@ -343,7 +343,7 @@ Limitation：
 - A 储存 dst 的**位置**
 - Busy 其实就是 valid bit
 
-### Reg Result Status
+#### Reg Result Status
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_4_11_27_20241117041127.png"/>
 
@@ -352,23 +352,23 @@ Limitation：
 - Q 就是**这个寄存器将要被哪一条指令所写入**
 	- 用于解决 WAW 问题。后面 write 会覆盖前面 write
 
-### Instruction Status
+#### Instruction Status
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_4_14_11_20241117041410.png"/>
 
 一目了然，不言而喻。
 
-### Example
+#### Example
 
 详见 [3.1、案例讲解](https://zhuanlan.zhihu.com/p/499978902)。
 
-## Tomasulo with Reorder Buffer
+### Tomasulo with Reorder Buffer
 
 Tomasulo 是顺序发射、乱序执行、乱序写回的。为了实现**精确中断**（同时还可以正确实现跳转指令），我们需要进行**顺序写回**。这就需要额外再加一个模块——reorder buffer（如下图红字）。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/17_4_17_5_20241117041704.png"/>
 
-### 实现
+#### 实现
 
 > [!info]+ 表的结构
 > 
@@ -396,7 +396,7 @@ Tomasulo 是顺序发射、乱序执行、乱序写回的。为了实现**精确
 
 那么就把 head 后移，并且在 ROB 中设置自己为 not busy，同时也将 register result status 清零改为 not busy（如果 RRS 的 `reorder #` 是自己的话）。等等。
 
-## Example
+### Example
 
 还是参考 [知乎](https://zhuanlan.zhihu.com/p/501631371)
 

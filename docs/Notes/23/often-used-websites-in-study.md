@@ -1,28 +1,28 @@
-# Forums
+## Forums
 
-## 1. [Reddit](https://reddit.com)
+### 1. [Reddit](https://reddit.com)
 
-### Subject-Oriented
+#### Subject-Oriented
 
 1. [Mathematics](https://www.reddit.com/r/math/)
 2. [Computer Science](https://www.reddit.com/r/computerscience/)
 3. [Programming Languages](https://www.reddit.com/r/learnprogramming/)
    1. [Haskell](https://www.reddit.com/r/haskell/)
 
-### Tool-Oriented
+#### Tool-Oriented
 
 1. [Github](https://www.reddit.com/r/github/)
 2. Free books, papers, etc
    1. [Library Genesis](https://www.reddit.com/r/libgen/)
 3. [Linux](https://www.reddit.com/r/linux/)
 
-### School-Oriented
+#### School-Oriented
 
 1. [UC Berkeley](https://www.reddit.com/r/berkeley/)
 2. [MIT](https://www.reddit.com/r/MIT)
 3. [ZJU](https://www.reddit.com/r/zju/)（其实这个基本无人问津，还是建议上 [cc98](https://www.cc98.org)）
 
-## 2. Stack* Series
+### 2. Stack* Series
 
 The main sites are:
 
@@ -32,19 +32,19 @@ The main sites are:
 
 ---
 
-### Subject-Oriented
+#### Subject-Oriented
 
 1. [Mathematics](https://math.stackexchange.com)
 2. [Computer Science](https://cs.stackexchange.com)
 
-### Tool-Oriented
+#### Tool-Oriented
 
 1. [Vim](https://vi.stackexchange.com/)
 2. [LaTeX](https://tex.stackexchange.com/)
 
-### 3. [知乎](https://www.zhihu.com)
+#### 3. [知乎](https://www.zhihu.com)
 
-# Memos and RSS reader
+## Memos and RSS reader
 
 > Memos are for storing unread web pages and I can read them later.
 

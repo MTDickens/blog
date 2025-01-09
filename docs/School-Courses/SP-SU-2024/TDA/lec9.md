@@ -1,4 +1,4 @@
-# Vectorization of Persistent Diagrams
+## Vectorization of Persistent Diagrams
 
 > [!abstract]+ Motivation
 > 
@@ -13,25 +13,25 @@
 
 下面我们介绍几个向量化的方法。
 
-## Binning
+### Binning
 
 第一个 proposed method。非常原始，也没有稳定性而言（比如数据稍微偏差一点，某一个点可能就从 bin A 变成 bin B 了）。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/31_3_57_44_202405310357023.png"/>
 
-## Persistent Landscape
+### Persistent Landscape
 
 第一个被证明 stable 的向量化方法。具体方法如图可知。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/31_3_58_50_202405310358283.png"/>
 
-## Persistent Images
+### Persistent Images
 
 就是将点云变成高斯，然后采样离散化（i.e. 每一个网格内，积分求出概率），从而得出一个二维网格。之后要 CNN 或者普通 NN 都可以。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/31_4_2_29_202405310402382.png"/>
 
-## Kernel Method
+### Kernel Method
 
 > [!abstract]+ Recap
 > 
@@ -47,7 +47,7 @@
 
 构造出合适的内积（i.e. 核函数）之后，就可以直接用在各种核方法上，kernel SVM/PCA/etc。
 
-## Persistent B-spline Grids
+### Persistent B-spline Grids
 
 就是下面这样，可以看一下：
 
@@ -55,7 +55,7 @@
 
 B-spline 相比 persistent image 而言，直观上的好处就是：persistent image 是通过采样得到的，实际上的有用信息并不多，就是看着好看；而 persistent B-spline 的控制点是实打实的富含有用信息。
 
-# 持续景观 (Persistent Images)
+## 持续景观 (Persistent Images)
 
 > [!abstract]+ 研究动机
 > 
@@ -83,7 +83,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_1_27_8_202406020127192.png"/>
 
-## Mean and Variance
+### Mean and Variance
 
 > [!info]+
 > 
@@ -107,7 +107,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 > 
 > 而这两个 frechet mean 解的持续景观，恰好就是红绿两 PD 图（右上和左下）的持续景观的 mean（右下）。
 
-## Statistical Guarantees
+### Statistical Guarantees
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_1_42_14_202406020142328.png"/>
 
@@ -119,11 +119,11 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 > 
 > 不过，“采样”具体是什么严格数学定义，我还不知道。
 
-## Stability
+### Stability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_17_28_27_202406021728067.png"/>
 
-## Example: Torus
+### Example: Torus
 
 > [!info]+ 为什么可以求平均？
 > 
@@ -139,7 +139,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 
 如上：一个圆环的**持续景观**，可以由多次采样求平均的方法得到。
 
-## Example: Torus VS Sphere
+### Example: Torus VS Sphere
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_17_43_25_202406021743868.png"/>
 
@@ -147,7 +147,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 
 如图，通过 $H_1$ 的 PD 图，就可以将 torus 和 sphere 分开。
 
-# 持续图像
+## 持续图像
 
 首先，我们需要在 PD 上生成一个标量场 $\rho_B(\mathrm z): \mathbb R^2 \to \mathbb R$，也就是 persistent **surface**：
 
@@ -168,7 +168,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_17_57_43_202406021757687.png"/>
 
-## Stability
+### Stability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_18_0_11_202406021800643.png"/>
 
@@ -180,7 +180,7 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 
 同时：对于**一般**的核函数，bound 的常数中，会有一个 A（图像面积）存在；而对于高斯核函数，就不存在这样的 A。因此，**我们就不必担心处理大图像的时候，会造成常数过大**。
 
-## Example: Circle and Square
+### Example: Circle and Square
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_18_44_9_202406021844722.png"/>
 
@@ -188,18 +188,18 @@ B-spline 相比 persistent image 而言，直观上的好处就是：persistent 
 
 可以发现，分类精度对分辨率和方差并不敏感。
 
-## 可解释性
+### 可解释性
 
 通过 SVM 进行分类，可以找到其中一些**在分类过程中起到重要作用的 features**。如下图中的 $\Huge\color{cyan}{\boxtimes}$。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_18_45_49_202406021845896.png"/>
 
-## Example: Dynamic System
+### Example: Dynamic System
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/2_18_54_55_202406021854134.png"/>
 
 如图：图中蓝色点就是该 dynamic system 在某种参数下的路径。不同的参数有着不同的路径，而这些不同的路径分别有着不同的拓扑结构。我们可以通过持续同调挖掘出这些拓扑结构，并且向量化成 PI。然后就可以通过 SVM 进行多类别分类。
 
-# 持续 B 样条网络
+## 持续 B 样条网络
 
 ***TODO***

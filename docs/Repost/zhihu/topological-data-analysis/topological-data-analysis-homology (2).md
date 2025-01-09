@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 
 n = 30 #number of points to generate
 
-#generate space of parameter
+##generate space of parameter
 theta = np.linspace(0, 2.0*np.pi, n) 
 
 a, b, r = 0.0, 0.0, 5.0
@@ -29,7 +29,7 @@ a, b, r = 0.0, 0.0, 5.0
 x = a + r*np.cos(theta)
 y = b + r*np.sin(theta)
 
-#code to plot the circle for visualization
+##code to plot the circle for visualization
 plt.plot(x, y)
 plt.show()
 ```
@@ -99,7 +99,7 @@ for i, txt in enumerate(raw_data):
 我们将用原始数据数组中的索引号来表示我们单纯复形中的每个顶点。例如点 $[0, 2]$ 出现在我们数据数组的开头，因此我们把它当作单纯复形中的参考点。
 
 ```
-#Build neighorbood graph
+##Build neighorbood graph
 nodes = [x for x in range(raw_data.shape[0])] #initialize node set, reference indices from original data array
 edges = [] #initialize empty edge array
 weights = [] #initialize weight array, stores the weight (which in this case is the distance) for each edge
@@ -162,14 +162,14 @@ plt.scatter(raw_data[:,0],raw_data[:,1]) #plotting just for clarity
 for i, txt in enumerate(raw_data):
     plt.annotate(i, (raw_data[i][0]+0.05, raw_data[i][1])) #add labels
 
-#add lines for edges
+##add lines for edges
 for edge in [e for e in theComplex if len(e)==2]:
     pt1,pt2 = [raw_data[pt] for pt in [n for n in edge]]
     print(pt1,pt2)
     line = plt.Polygon([pt1,pt2], closed=None, fill=None, edgecolor='r')
     plt.gca().add_line(line)
     
-#add triangles
+##add triangles
 for triangle in [t for t in theComplex if len(t)==3]:
     pt1,pt2,pt3 = [raw_data[pt] for pt in [n for n in triangle]]
     line = plt.Polygon([pt1,pt2,pt3], closed=False, color="blue",alpha=0.3, fill=True, edgecolor=None)

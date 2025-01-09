@@ -1,12 +1,12 @@
-# Training Dynamics
+## Training Dynamics
 
-## Learning Rate Schedules
+### Learning Rate Schedules
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403242209750.png" alt="image-20240324220901108" style="zoom: 33%;" />
 
 很多时候，我们既希望快速让 loss 下降，也希望能让 loss 降到尽量低。因此，我们往往会在学习的时候改变 learning rate。而改变学习率的方法，称为 learning rate schedule。
 
-### Step Decay
+#### Step Decay
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403242252214.png" alt="image-20240324225228129" style="zoom: 33%;" />
 
@@ -21,7 +21,7 @@
 
 因此，tuning can be a little tricky.
 
-### Cosine Decay
+#### Cosine Decay
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403242300067.png" alt="image-20240324230020511" style="zoom: 33%;" />
 
@@ -33,7 +33,7 @@
 - Inverse square root decay: $a_t = a_0 / \sqrt{t}$
 - And ...,  just constant decay: $a_t = a_0$
 
-### Rule of Thumb
+#### Rule of Thumb
 
 1. **不要在一开始就调整** learning schedule，这应该是最后做的事
 2. 一开始请**直接使用 constant schedule**
@@ -43,7 +43,7 @@ Sidenote: Plotting losses like the image below (i.e. average training loss as we
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403242324823.png" alt="image-20240324232348770" style="zoom:33%;" />
 
-### Sidenote: Early Stopping
+#### Sidenote: Early Stopping
 
 在训练的时候，我们需要一直关注以下两张图：
 
@@ -51,7 +51,7 @@ Sidenote: Plotting losses like the image below (i.e. average training loss as we
 
 从而，我们可以在 validation accuracy 下降的时候，及时停止 training。
 
-## Hyperparameter Optimization
+### Hyperparameter Optimization
 
 一种方法，就是 grid search；另一种方法，就是 random search (in some interval)。
 
@@ -74,36 +74,36 @@ Random search 的好处：
 
 另外，我们甚至可以对 hyperparameter 求梯度，从而实现所谓 hyper gradient descent。当然，这种做法并不 popular，因为计算成本太高。
 
-## How To Choose Hyperparameters
+### How To Choose Hyperparameters
 
-### Step 1: Check initial loss without any weight decay
+#### Step 1: Check initial loss without any weight decay
 
 - 因为我们可以解析地计算出最开始的 loss 的期望值大概是多少。因此，这可以作为一开始的 sanity check，用于 debug
 
-### Step 2: Overfit a small sample
+#### Step 2: Overfit a small sample
 
 - 进一步 debug
 - 因为 small sample 可以瞬间训练完，因此，这一步中，你还可以 **interactively** 选择合适的 learning rate（范围）、architecture、optimizer, initialization 等等
     - i.e. 保证 architecture, optimizer, learning rate, initialization etc 适合你的 data
 - 这一步确定下来了 architecture, optimizer, initialization，以及 learning rate 大致的范围
 
-### Step 3: Tune the learning rate
+#### Step 3: Tune the learning rate
 
 - Use the architecture from the previous step, use all training data, **turn on small weight decay**, find a learning rate that makes the lossdrop significantly within ~100 iterations
 - Good learning rates to try:1e-1,1e-2,1e-3,1e-4
 - 这一步排除掉了一些不能用的 learning rate
 
-### Step 4: Coarse grid
+#### Step 4: Coarse grid
 
 - Choose a few values of learning rate and weight decay around whatworked from Step 3, train a few models for ~1-5 epochs.
 - Good weight decay to try:1e-4,1e-5,0
 - 这一步
 
-### Step 5: Refine grid, train longer
+#### Step 5: Refine grid, train longer
 
 - Pick best models from Step 4, train them for longer (~10-20 epochs) without learning rate decay
 
-### Step 6: Look at learning curves
+#### Step 6: Look at learning curves
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251708322.png" alt="image-20240325170839135" style="zoom:33%;" />
 
@@ -124,28 +124,28 @@ Random search 的好处：
 3. 如果两者虽然在上升，但是两者之间得 gap 太小，就是 underfitting
     - 目前没有好的理论解释。只能说 training 和 validation 之间有一条天然的“鸿沟”。
 
-### Step 7: Repeat Step 5, Until It's Paper Submission Deadline
+#### Step 7: Repeat Step 5, Until It's Paper Submission Deadline
 
-### Sidenote: Track Ratio of Weight Update / Weight Magnitude
+#### Sidenote: Track Ratio of Weight Update / Weight Magnitude
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251724490.png" alt="image-20240325172449721" style="zoom:50%;" />
 
-# After Training
+## After Training
 
-## Model Ensembles
+### Model Ensembles
 
 1. Train multiple independent models
 2. At test time average their results (e.g. Take average of predicted probability distributions, then choose `argmax`)
 
 Normally, you can enjoy 2% extra performance via this method
 
-### Multiple Snapshots
+#### Multiple Snapshots
 
 Instead of training independent models, use multiple snapshots of a single model during training!
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251739339.png" alt="image-20240325173907673" style="zoom: 50%;" />
 
-### Polyak Averaging
+#### Polyak Averaging
 
 Instead of using actual parameter vector, keep a moving average of the parameter vector and use that at test time.
 
@@ -161,7 +161,7 @@ while True:
 
 
 
-## Transfer Learning
+### Transfer Learning
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251800359.png" alt="image-20240325180000946" style="zoom: 33%;" />
 
@@ -178,13 +178,13 @@ while True:
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251810801.png" alt="image-20240325181045565" style="zoom:33%;" />
 
-## Transfer Learning in Practice
+### Transfer Learning in Practice
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251819866.png" alt="image-20240325181929748" style="zoom: 33%;" />
 
 如上：我们先**训练**分类，再**微调**图形检测；同时**训练**一个 NLP 模型。然后把图形检测模型和 NLP 模型结合起来，**训练** joint image / language modeling。最后再对目标任务，i.e. image captioning, visaual question answering 任务进行**微调**。
 
-## Is Pre-training a Must?
+### Is Pre-training a Must?
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251834054.png" alt="image-20240325183126238" style="zoom: 25%;" /><img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403251834902.png" alt="image-20240325183432418" style="zoom: 25%;" />
 
@@ -197,7 +197,7 @@ while True:
 1. Pretrain + fine-tuning 一般是不差于 traning from scratch 的
 2. 即使你的数据量很丰富，pretrain + fine-tuning 可以节省时间
 
-## Large-Batch Learning
+### Large-Batch Learning
 
 In modern days，我们一般不会使用 model parallelism，而是使用 data parallelism，如下图所示：
 

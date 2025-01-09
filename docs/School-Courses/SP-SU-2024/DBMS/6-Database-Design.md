@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_19_27_25_202404131927254.png)
 
@@ -11,11 +11,11 @@
 - 插入异常：如果学校新成立了一个系——大模型系，但是系里目前还没有老师，那么这个系就无法在表格中体现出来
 - 更新困难：如果计算机系有 300 个老师，那么，如果计算机系大楼搬迁/改名等等，那么就必须更新 300 次
 
-## Motivation
+### Motivation
 
 我们发现了这个表并不是一个好的表。因此，`inst_dept` 应该被拆开。
 
-## 为什么要拆开？
+### 为什么要拆开？
 
 我们可以在 `inst_dept(ID, name, salary, dept_name, building, budget)` 里发现两个映射关系：
 
@@ -29,11 +29,11 @@
 
 因此，我们可以 losslessly 地拆开两张表。
 
-## 如何拆开
+### 如何拆开
 
 就按照上面的方式拆开即可。
 
-## Lossloss-Join Decomposition
+### Lossloss-Join Decomposition
 
 **定义：** 将一个关系 $R$ 分解成 $R_1, R_2$，如果是无损的，那么必须满足：
 
@@ -62,33 +62,33 @@
 
 ![](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_20_51_30_202404132051072.png)
 
-# Functional Dependencies
+## Functional Dependencies
 
-## Definition
+### Definition
 
 令 R 为一个 relation schema，$\alpha, \beta \subset R$。
 
 如果：$\forall r(R), \forall t_1, t_2 \in r: t_1[\alpha] = t_2[\alpha] \implies t_1[\beta] = t_2[\beta]$，那么就称 **function dependency $\alpha \to \beta$ holds on $R$**。
 
-## Superkey and Candidate Key
+### Superkey and Candidate Key
 
 $K$ is a **superkey** of $R$ iff: $K \to R$
 
 $K$ is a **candidate key** of $R$ iff: $K \to R$ and $\lnot\exists \alpha \subsetneq K: \alpha \to R$
 
-### Example
+#### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_21_0_1_202404132100127.png" alt="image-20240413205957855" style="zoom: 67%;" />
 
-## Trivial Function
+### Trivial Function
 
 如果 $\alpha \to \beta$ 中，$\beta \subset \alpha$，那么就称这是 trivial 的依赖。
 
-## Closure of a *Set* of Functional Dependencies
+### Closure of a *Set* of Functional Dependencies
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_21_2_49_202404132102524.png" alt="image-20240413210246159" style="zoom: 67%;" />
 
-### Axioms
+#### Axioms
 
 我们可以通过公理来推导出函数族的闭包（具体方法就是不断迭代生成）：
 
@@ -99,7 +99,7 @@ $K$ is a **candidate key** of $R$ iff: $K \to R$ and $\lnot\exists \alpha \subse
 
 这些 rules，不仅 sound（i.e. generate only valid ones），而且 complete（i.e. generate all the valid ones)。
 
-### Lemmas
+#### Lemmas
 
 **引理 1:** $\alpha \to \beta, \alpha \to \gamma \iff \alpha \to \beta\gamma$
 
@@ -127,11 +127,11 @@ $\alpha \to \gamma \implies \alpha\beta\to \beta\gamma$
 
 $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见。
 
-## Closure of *Attribute* Sets
+### Closure of *Attribute* Sets
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_21_22_36_202404132122530.png" style="zoom: 80%;" />
 
-### Usages
+#### Usages
 
 计算一个某个 $R$ 上的一族函数 $F$ 的闭包往往是非常困难的，因此，我们会选择只计算 $R$ 的某个属性集关于 $F$ 的闭包。属性集的闭包的就可以代替 $F^+$，来判断一些属性集是否满足某些条件：
 
@@ -142,7 +142,7 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_22_6_50_202404132206508.png" style="zoom: 33%;" />
 
-## Canonical Cover
+### Canonical Cover
 
 正则覆盖就是不存在冗余的覆盖。也就是：里面不存在一个函数，可以通过公理，被其它函数推出来。
 
@@ -154,11 +154,11 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 我们可以通过画图的方式来求出正则覆盖。不过，如果要严谨地求出，那么还是需要依靠下面的算法。
 
-### Extra Attribute
+#### Extra Attribute
 
 如果删去 $F$ 一个 $\alpha \to \beta$ 处
 
-### Compute Extra Attribute
+#### Compute Extra Attribute
 
 对于 $\alpha \to \beta$，
 
@@ -172,14 +172,14 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 因此，我们只需要证明：删去 $A$ 之后，同时有 $F'^+ \subseteq F^+$ ；删去 $B$ 之后，必然有 $F'^+ \supseteq F^+$。即可证明两者等价。
 
-### 计算方法
+#### 计算方法
 
 1. 将所有 $\alpha \to \beta, \alpha \to \gamma$ 合并为 $\alpha \to \beta\gamma$
 2. 对于所有 $\alpha \to \beta$，判断是否有 extra attribute either in $\alpha$ or $\beta$
 3. 如果有，就删除
 4. 如果存在一个 $\alpha \to \beta$ 有 extra attribute，就返回第 (2) 步，否则结束
 
-## BCNF
+### BCNF
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/13_22_10_28_202404132210424.png"  />
 
@@ -191,7 +191,7 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 由于 `dept_name` &rarr; `{building, budget}`，但是 `dept_name` 并不是 superkey。
 
-### Decomposing of BCNF
+#### Decomposing of BCNF
 
 如果有一条 $\alpha \to \beta$ 违反了 BCNF，那么，我们把 $R$ 分解为：
 
@@ -200,7 +200,7 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 由于 $R_1 \cap R_2 = (\alpha \cup \beta) \cap (\bar\beta \cup \alpha) = \alpha$，因此自然有：$R_1 \cap R_2 \to R_1$。满足 lossless join。
 
-### Example
+#### Example
 
 对于下面的依赖图：
 
@@ -224,7 +224,7 @@ $\alpha \to \beta \implies \alpha \gamma \to \beta\gamma$，之后显而易见�
 
 - 同时可以发现，$R_1$ 和 $R_2$ 之间是 lossless join，因为 $R_1 \cap R_2 = B$，而 $B$ 正是 $R_1$ 的 superkey。
 
-# Even stricter: Dependency Preservation
+## Even stricter: Dependency Preservation
 
 令 $F_i \overset{\text{def}}= F_{R_i}^+$，如果一个 decomposition 是 dependency preserving，那么就必须满足：
 $$
@@ -235,7 +235,7 @@ $$
     - 毕竟 $(\bigcup_{i=1}^n \text{any F})^+ = (\bigcup_{i=1}^n \text{any F}^+)^+ = (\bigcup_{i=1}^n F_{R_i}^+)^+ = F^+$​
     - 也就是说：检查的时候，使用 Canonical Cover 即可。
 
-## 意义
+### 意义
 
 我们发现，
 
@@ -243,7 +243,7 @@ $$
     - 对应 SQL 操作，就是通过任意一个属性集查询任意其闭包内的元素，其难度不会高于属性集本身的大小
 - 如果不满足 dependency preservation，就可能导致必须用极高的成本来完成本身很简单的搜索。请看下面的例子。
 
-## Example
+### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/15_21_31_43_202404152131875.png"  />
 
@@ -263,7 +263,7 @@ Case 2: 我希望查询一个 A 属性对应的 C
 - 如果采用例一，那么就是 `R1 join R2`。开销是 100 亿级别。和 A 的大小相符。
 - 如果采用例二，那么就要 `R2`，开销也是 100 亿级别。并不比例一好。和 A 的大小相符。
 
-## Can We Always Arrive at a Dependency Preserved Solution?
+### Can We Always Arrive at a Dependency Preserved Solution?
 
 如果使用之前的 BNCF 方式，一定能够分解成满足 dependency preserved solution 吗？
 
@@ -285,7 +285,7 @@ Case 2: 我希望查询一个 A 属性对应的 C
 
 这个 $R$ 显然不是 BCNF。但是只要对其进行分解，就会使得这个 $JK\to L$ 无法被还原。因此，我们通过反例证伪：并非所有 $R$ 都可以同时满足 BCNF 和 DP。
 
-## 3NF
+### 3NF
 
 既然已经通过反例证伪，我们就只能退而求其次，不用 BCNF，而用 3NF。
 
@@ -297,7 +297,7 @@ Case 2: 我希望查询一个 A 属性对应的 C
 
 其中，最后一个条件就是松弛条件。
 
-### 3NF分解
+#### 3NF分解
 
 ![img](https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_0_25_12_202404160025003.webp)
 
@@ -310,7 +310,7 @@ Case 2: 我希望查询一个 A 属性对应的 C
 
 可以证明：这样的分解，满足 3NF，同时满足 DP。 
 
-### Example
+#### Example
 
 还是以上图为例。
 

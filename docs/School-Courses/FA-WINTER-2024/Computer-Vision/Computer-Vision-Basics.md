@@ -1,16 +1,16 @@
-# 定义
+## 定义
 
 **定义**：根据场景图像，实现场景中信息的**恢复**和**利用**
 
-# 几何特性
+## 几何特性
 
-## 面积（零阶矩）
+### 面积（零阶矩）
 
 $$
 A = \sum_{i=0}^{n-1} \sum_{i=0}^{m-1} B[i,j]
 $$
 
-## 区域中心（一阶矩）
+### 区域中心（一阶矩）
 
 $$
 \begin{aligned}
@@ -19,7 +19,7 @@ $$
 \end{aligned}
 $$
 
-## 方向
+### 方向
 
 对于直线 $\rho = x \cos \theta + y \sin \theta$，任意一点到该直线距离 $r = x \cos \theta + y \sin \theta - \rho$
 
@@ -49,17 +49,17 @@ $$
 $$\sin2\theta=\pm\frac{b}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 $$\cos2\theta=\pm\frac{a-c}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 
-## 其它特性
+### 其它特性
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_22_25_14_20241125222513.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_22_25_45_20241125222544.png"/>
 
-## 投影计算
+### 投影计算
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_22_26_35_20241125222634.png"/>
 
-## 连通路径标记
+### 连通路径标记
 
 > [!info]- 四联通和八连通
 > 
@@ -71,7 +71,7 @@ $$\cos2\theta=\pm\frac{a-c}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_22_55_48_20241125225548.png"/>
 
-## 区域边界跟踪
+### 区域边界跟踪
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_23_1_41_20241125230140.png"/>
 
@@ -88,7 +88,7 @@ $$\cos2\theta=\pm\frac{a-c}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 - 我们选择 $n_2$ 为 next b，$n_3$ 为 next c（见图三、四）
 - ……
 
-## 数学形态学算子
+### 数学形态学算子
 
 两个基本算子：膨胀、腐蚀
 
@@ -109,7 +109,7 @@ $$\cos2\theta=\pm\frac{a-c}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 - **开操作**就是 $(A \ominus B) \oplus B$
 - **闭操作**就是 $(A \oplus B) \ominus B$
 
-# 边缘检测
+## 边缘检测
 
 > [!info]+ 边缘的四种不连续
 > 
@@ -125,13 +125,13 @@ $$\cos2\theta=\pm\frac{a-c}{\sqrt{b^{2}+\left(a-c\right)^{2}}}$$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_23_29_18_20241125232918.png"/>
 
-## 噪声
+### 噪声
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/25_23_33_49_20241125233348.png"/>
 
 不论是一阶导还是二阶导，对于最下面的情况，根本分辨不出来
 
-## 一维卷积算子
+### 一维卷积算子
 
 我们可以使用卷积算子来模拟方向导数：
 
@@ -145,7 +145,7 @@ $$
 \begin{bmatrix} 1 & 0 \newline 0 & -1 \end{bmatrix}
 $$
 
-## 二维卷积算子
+### 二维卷积算子
 
 如果我们希望计算二阶导数的话，可以这样：
 
@@ -171,7 +171,7 @@ $$
 \newline\end{bmatrix}
 $$
 
-## LoG (Laplacian of Gaussian) 边缘检测
+### LoG (Laplacian of Gaussian) 边缘检测
 
 先用 Gaussian 算子将整个图像平滑化，然后使用 Laplacian 算子将图像的边缘找出来
 
@@ -179,20 +179,20 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_9_54_20241126000953.png"/>
 
-## Canny Edge Detector
+### Canny Edge Detector
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_17_54_20241126001754.png"/>
 
-### Step 1-2
+#### Step 1-2
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_18_40_20241126001840.png"/>
 
-### Step 3
+#### Step 3
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_18_53_20241126001853.png"/>
 
 **如上图**：如果计算出来的幅角是 22.4 度，那么就算在 0 区内；如果是 22.6 度，就算在 1 区内。
-#### Example
+##### Example
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_19_58_20241126001957.png"/>
 
@@ -200,7 +200,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_19_12_20241126001911.png"/>
 
-### Step 4
+#### Step 4
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_0_22_40_20241126002239.png"/>
 
@@ -208,7 +208,7 @@ $$
 
 1. 对于一个高阈值图的点，将其视作**边缘点**；对于非低阈值图的点，将其视作**内部点**
 2. 对于一个属于低阈值图，但是不属于高阈值图的点，将其视作**准边缘点**。如果该点通过其它**准边缘点**和某个边缘点连在一起了（这里使用 8 邻域的连接），那么就将其视作**边缘点**，否则视作**内部点**
-#### 算法
+##### 算法
 
 其实就是将整张图片打上记号：
 
@@ -223,9 +223,9 @@ $$
 3. 对于所有的 1 的 pixels，将其记号改成所属连通分量的记号
 
 
-# 轮廓
+## 轮廓
 
-## 曲线拟合：分线段拟合
+### 曲线拟合：分线段拟合
 
 最经典的是  算法
 
@@ -239,13 +239,13 @@ $$
 2. 我们以 $d_\max$ 所在点为界，把曲线分成两部分，然后分别使用该方法。右侧曲线满足 $d_\max < D$，所以终止迭代；左侧曲线还是 $d_\max \geq D$，因此继续迭代
 3. ……
 
-## 曲线拟合：椭圆拟合
+### 曲线拟合：椭圆拟合
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_2_30_27_20241126023026.png"/>
 
-## 曲线检测：Hough 变换
+### 曲线检测：Hough 变换
 
-### 理论：w/o noise
+#### 理论：w/o noise
 
 如果我们希望检测某些点的序列是否构成了某种几何图形，那么可以这样做：
 
@@ -265,7 +265,7 @@ $$
 
 因此，理论上，我们只需要求出这些点的交点就行了。如果都交于一点，那么即为所求。
 
-### 实践: w/o noise
+#### 实践: w/o noise
 
 如下图：令 $f(x, y; a, b) = ax+b-y = 0$。那么，任意点 $(x_0, y_0)$，在参数空间中就对应着 $\{\boldsymbol \theta: f(x_0, y_0; a, b) = x_0a + b - y_0 = 0\}$，也就是参数空间曲线 $b = -x_0a + y_0$ 对应的点集。
 
@@ -285,7 +285,7 @@ $$
 - 这里，Euclidean space 中的点，和 Hough space 中的三角函数曲线（x 轴上任意平移、y 轴上任意拉伸）是一一对应的
 - 然后求出 Hough space 中所有三角函数曲线的交点即可
 
-### 理论：w/ noise
+#### 理论：w/ noise
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_2_46_23_20241126024622.png" width="50%"/>
 
@@ -293,37 +293,37 @@ $$
 
 如上图所示：如果 $\boldsymbol \theta = (\rho, \theta)$，因此参数空间就有两个维度。我们在这两个维度中划分若干个 bins。然后，如果有一条曲线经过这个 bin，那么就对这个 bin 加一。最后，得分最高的 bin 胜出。
 
-# More Info
+## More Info
 
 详见[博客](https://sikasjc.github.io/2018/04/20/Hough/#detection-of-infinite-lines)
 
-# Local Feature
+## Local Feature
 
-## 5 Key Advantages of SIFT (Scale-Invariant Local Features)
+### 5 Key Advantages of SIFT (Scale-Invariant Local Features)
 
-- ﻿﻿**Locality**: features are local, so robust to occlusion and clutter (no prior segmentation)
+- **Locality**: features are local, so robust to occlusion and clutter (no prior segmentation)
 	- 即使有遮挡，因为是局部特征，**未受遮挡的特征不会受到影响**，仍然和原来几乎一样
-- ﻿﻿**Distinctiveness**: individual features can be matched to a large database of objects
+- **Distinctiveness**: individual features can be matched to a large database of objects
 	- 特征不能过于 "invariant"，仍然需要保证不同场景下的可区分性
-- ﻿﻿**Quantity**: many features can be generated for even small objects
+- **Quantity**: many features can be generated for even small objects
 	- 特征数量不能太少
-- ﻿﻿**Efficiency**: close to real-time performance
+- **Efficiency**: close to real-time performance
 	- 特征算起来要快（否则我们就用深度特征了）
-- ﻿﻿**Extensibility**: can easily be extended to wide range of differing feature types, with each adding robustness
+- **Extensibility**: can easily be extended to wide range of differing feature types, with each adding robustness
 
-## What Can SIFT Do?
+### What Can SIFT Do?
 
 - Image alignment (homography, fundamental matrix)
-- ﻿﻿3D reconstruction
-- ﻿﻿Motion tracking
-- ﻿﻿Object recognition
-- ﻿﻿Indexing and database retrieval
-- ﻿﻿Robot navigation
-- ﻿﻿... other
+- 3D reconstruction
+- Motion tracking
+- Object recognition
+- Indexing and database retrieval
+- Robot navigation
+- ... other
 
-## Feature Detection
+### Feature Detection
 
-### Harris Corner Detection
+#### Harris Corner Detection
 
 哪一些位置具有良好的定位能力（i.e. 两个相同场景、略微不同视角拍出来的图片，不仅特征要对应，而且特征的位置也要良好对应）？
 
@@ -333,7 +333,7 @@ $$
 
 因此，我们主要需要依靠 corner 来进行定位。而第一步就是找到这些 corners。
 
-#### Mathematics
+##### Mathematics
 
 **定义**：Change in the window $w(x,y)$ for the shift $[u, v]$
 
@@ -356,7 +356,7 @@ $$
 2. 进行 $(u, v)$ 的平移，i.e. 放在 $(x_0 + u, y_0 + v)$ 处，然后再为 window 内部的每个像素计算出来一个值
 3. 最后，将这平移前后 window 内像素的值作差，然后求平方和
 
-#### Approximation
+##### Approximation
 
 假如这个 $u, v$ 都很小，那么根据 Taylor expansion:
 
@@ -411,7 +411,7 @@ $$
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/26_23_32_26_20241126233225.png" width="50%"/>
 
 椭圆越大，证明这个二次型越平缓。
-#### What Do We Want?
+##### What Do We Want?
 
 - 对于内部而言，应该是 $\lambda_1, \lambda_2$ 都很小——都不怎么增加
 - 对于边缘而言，应该是 $\lambda_1$ 很小，$\lambda_2$ 比较大——只有于边缘的方向可以有效改变
@@ -440,13 +440,13 @@ $k$ 越大，对边缘的抑制效果就越强
 > 
 > 这显然是很有区分度的
 
-#### Algorithm
+##### Algorithm
 
 1. 用 sliding window 遍历所有点（也许除了图片边缘的），求出这些点的 $R$
 2. 将所有 $R > \text{threshold}$ 的点找出来
 3. 应用非极大值抑制
 
-#### Invariance of Harris Algorithm
+##### Invariance of Harris Algorithm
 
 我们需要保证 feature 具有以下的不变性：
 
@@ -483,7 +483,7 @@ $k$ 越大，对边缘的抑制效果就越强
 > 
 > 如上图，如果进行旋转，那么 metric 基本不变
 
-### Scale-Invariant Methods
+#### Scale-Invariant Methods
 
 最大的问题就是 scale 会有变。因此，我们就需要设法构造出一种 scale 上不变的特征。
 
@@ -499,7 +499,7 @@ $k$ 越大，对边缘的抑制效果就越强
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/27_9_19_41_20241127091941.png"/>
 
-#### Laplacian of Gaussian (LoG)
+##### Laplacian of Gaussian (LoG)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/27_10_51_9_20241127105109.png" width="50%"/>
 
@@ -531,7 +531,7 @@ $k$ 越大，对边缘的抑制效果就越强
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/27_10_26_8_20241127102607.png"/>
 
-#### Difference of Gaussian (DoG)
+##### Difference of Gaussian (DoG)
 
 还有另一种 scale invariant 的形式，就是 difference of Gaussian.
 
@@ -554,11 +554,11 @@ $$
 - 对于 DoG + 补丁而言，我们先 Gaussian 卷积+差分一遍，求出来 local maximum，然后将低于下界的去掉。然后算出来 $\mathbf H$ 这个二阶导，再算出来 Tr/Det，然后再将高于这个上界的又去掉
 	- Tr/Det 这种打补丁的思路，其实和 Harris 的异曲同工
 
-#### Performance Comparison
+##### Performance Comparison
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/27_12_9_41_20241127120941.png"/>
 
-### Affine Invariant Detection
+#### Affine Invariant Detection
 
 除了旋转、平移以及缩放，还可能存在剪切。
 
@@ -566,13 +566,13 @@ $$
 
 此时就要用到 Laplacian of Gaussian with Harris 的进化版——Harris affine region detector（此处不介绍）
 
-## Feature Descriptor
+### Feature Descriptor
 
-### SIFT
+#### SIFT
 
 SIFT feature descriptor，本质上就是 DoG 加上各种去噪的方法。下面是 SIFT 的流水线：
 
-#### 制造特征
+##### 制造特征
 
 首先，我们找出所有的 SIFT key points:
 

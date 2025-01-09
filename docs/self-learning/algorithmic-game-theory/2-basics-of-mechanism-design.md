@@ -1,4 +1,4 @@
-# First & Second Price Seal-Bid Auction
+## First & Second Price Seal-Bid Auction
 
 ***First Price***: 每一个 bidder 写下一个价格，然后 auctioneer 选择其中最高的价格，出价最高的 bidder pay the price and get the thing。
 
@@ -6,19 +6,19 @@
 
 - 直观上的逻辑就是：理论上，出价最高的人，只需要出价比第二高的人**高出那么一点**，就可以赢得拍卖。因此，拍卖方不如就让出价最高的人赢，但是只用支付第二高的人的价格（也许加一个零头，不过无关紧要）。
 
-## Quasi-Linear Utility Function
+### Quasi-Linear Utility Function
 
 假设每一个 bidder 心中自有一杆秤：$v_i$。那么，其效用函数（i.e. 奖励函数）就是 $u_i(b_1, b_2, \dots, b_n) = v_i - p \text{ if } b_i > B, 0 \text{ otherwise}$，其中 $p$ 为其实际需要支付的金额，$B$ 就是其他人最大的 bid。
 
 不难发现，**固定其他人的 bid，只改变自身的 bid，那么 $\phi_{i,\{b_1, b_2, \dots, b_{i-1}, b_{i+1}, \dots, b_n\}}(x) = u_i(b_1, b_2, \dots, b_{i-1}, x, b_{i+1}, \dots, b_n)$ 是线性的**。因此称为 quasi-linear。
 
-## Analysis of Second Seal-Bid Auction
+### Analysis of Second Seal-Bid Auction
 
 我们很容易证明：对于某一个人而言，**在固定下来其他人的出价（其他人的出价可以任意，但是要固定）之后**，这个人的出价必然是 $v_i$ 才能达到效用最大化。
 
 对于任意一组出价 $b_1, b_2, \dots, b_{i-1}, b_{i+1}, \dots, b_n$，其中最大值为 B，假如我的出价是 $b_i$，那么效用就是 $v_i - B \text{ if } b_i > B, 0 \text{ otherwise}$。因此，必须 $v_i = b_i$。
 
-## Properties of Second Seal-Bid Auction
+### Properties of Second Seal-Bid Auction
 
 1. ***Strong Incentive Guarantee***: 所有人都是**即使在利益驱动下，也是诚实的；而且这不仅是纳什均衡，还是 dominant strategy**。用专业术语，就是：dominant strategy incentive compatible (DSIC)
     - which means that **truth-telling is a weakly-[dominant strategy](https://en.wikipedia.org/wiki/Dominant_strategy "Dominant strategy")**
@@ -33,7 +33,7 @@
 > 
 > 上面两个 properties，分别的意义就是 optimal revenue (for auctioneer) and optimal social surplus。最下面的，就不用我说了，只要是 CSer，就肯定会考虑。
 
-# Case Study: Sponsored Search Auctions
+## Case Study: Sponsored Search Auctions
 
 > [!abstract]+
 > 

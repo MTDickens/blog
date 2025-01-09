@@ -210,12 +210,12 @@ def reduce_matrix(matrix):
     rank=_reduce(0)
     return [matrix, rank, n-rank]
 
-# Source: < https://triangleinequality.wordpress.com/2014/01/23/computing-homology/
+## Source: < https://triangleinequality.wordpress.com/2014/01/23/computing-homology/
 ```
 
 ```
 reduce_matrix(b1)
-#Returns the matrix in Smith normal form as well as rank(B_n-1) and rank(Z_n)
+##Returns the matrix in Smith normal form as well as rank(B_n-1) and rank(Z_n)
 ```
 
 ```
@@ -230,17 +230,17 @@ reduce_matrix(b1)
 因为每个边界映射给我们 $Z_n$ （循环）和 $B_{n-1}$ （ $(n-1)$ 维链群的边界），为了计算链群 $n$ 的连通数，我们需要 $\partial_n$ 和 $\partial_{n+1}$ 。记住，我们现在用 $b_n = rank(Z_n)\ -\ rank(B_n)$ 来计算连通数。
 
 ```
-#Initialize boundary matrices
+##Initialize boundary matrices
 boundaryMap0 = np.matrix([[0,0,0,0]])
 boundaryMap1 = np.matrix([[1,0,1,0,0],[1,1,0,0,1],[0,1,1,1,0],[0,0,0,1,1]])
 boundaryMap2 = np.matrix([[1,1,1,0,0]])
 
-#Smith normal forms of the boundary matrices
+##Smith normal forms of the boundary matrices
 smithBM0 = reduce_matrix(boundaryMap0)
 smithBM1 = reduce_matrix(boundaryMap1)
 smithBM2 = reduce_matrix(boundaryMap2)
 
-#Calculate Betti numbers
+##Calculate Betti numbers
 betti0 = (smithBM0[2] - smithBM1[1])
 betti1 = (smithBM1[2] - smithBM2[1])
 betti2 = 0  #There is no n+1 chain group, so the Betti is 0
@@ -268,7 +268,7 @@ Betti #2: 0
 但我们跳过了一个重要的步骤。我们首先手动设计了边界矩阵，为了算法化整个过程，从构建单纯复形的数据到计算连通数，我们需要一个算法来用简单复形建立边界矩阵。现在让我们来解决它。
 
 ```
-#return the n-simplices in a complex
+##return the n-simplices in a complex
 def nSimplices(n, complex):
     nchain = []
     for simplex in complex:
@@ -277,7 +277,7 @@ def nSimplices(n, complex):
     if (nchain == []): nchain = [0]
     return nchain
 
-#check if simplex is a face of another simplex
+##check if simplex is a face of another simplex
 def checkFace(face, simplex):
     if simplex == 0:
         return 1
@@ -285,7 +285,7 @@ def checkFace(face, simplex):
         return 1
     else:
         return 0
-#build boundary matrix for dimension n ---> (n-1) = p
+##build boundary matrix for dimension n ---> (n-1) = p
 def boundaryMatrix(nchain, pchain):
     bmatrix = np.zeros((len(nchain),len(pchain)))
     i = 0

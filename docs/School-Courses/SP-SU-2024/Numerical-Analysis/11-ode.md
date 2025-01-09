@@ -1,6 +1,6 @@
-# Definition
+## Definition
 
-## IVP (Initial Value Problem)
+### IVP (Initial Value Problem)
 
 （一阶）初值问题的定义就是：
 
@@ -14,13 +14,13 @@ s.t. $\mathrm f: \mathbb R^n \times \mathbb R \to \mathbb R$
 
 然后，需要你求出 $\mathrm y(t)$ 的表达式。
 
-## Lipschitz
+### Lipschitz
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_21_27_2_202405232127020.png"/>
 
 - 注意：上面说的是 Lipschitz condition **in the variable $y$**，而不是 both $y, t$
 
-## Well-Posedness (适定性)
+### Well-Posedness (适定性)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_21_56_36_202405232156408.png"/>
 
@@ -48,9 +48,9 @@ s.t. $\mathrm f: \mathbb R^n \times \mathbb R \to \mathbb R$
 > 而 Lipschitz 恰好可以实现这样的保证。
 
 
-# Basic Numerical Methods
+## Basic Numerical Methods
 
-## Euler's Method
+### Euler's Method
 
 欧拉方法是最 naive 的方法，具体如下所示：
 
@@ -76,8 +76,8 @@ $$
 
 圆括号中的 $\left(\frac {hM} 2 + \frac \delta h\right)$ 是有下界的：$\sqrt{2 M \delta}$。即使你可以把步长取得很短，也无法避免 round-off error，从而欧拉方法有着一个不可逾越的误差界。
 
-## Higher Order Taylor Methods
-### Local Truncation Error (LTE)
+### Higher Order Taylor Methods
+#### Local Truncation Error (LTE)
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_22_43_40_202405232243235.png"/>
 
@@ -89,7 +89,7 @@ $$
 
 - 不难算出，Euler's method 的 local truncation error 是 $\frac h 2y''(\xi_1) = \mathcal O(h)$，并不算小。
 
-### A Heuristic
+#### A Heuristic
 
 我们不妨这样设计一个 heuristic：
 
@@ -97,7 +97,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_22_50_35_202405232250961.png"/>
 
-## Implicit Euler's Method
+### Implicit Euler's Method
 
 欧拉法是：
 $$
@@ -113,7 +113,7 @@ $$
 
 - 求解出来的误差是 $-\frac h 2y''(\xi_1)$
 
-### Trapezoidal Method & Double-Step Method
+#### Trapezoidal Method & Double-Step Method
 
 隐式欧拉误差：$-\frac h 2y''(\xi_1)$
 
@@ -129,7 +129,7 @@ $$
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/23_23_59_45_202405232359236.png" alt="image-20240523235940161" style="zoom:67%;" />
 
-## Comparison
+### Comparison
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/24_0_1_52_202405240001584.png" style="zoom:80%;" />
 
@@ -137,7 +137,7 @@ $$
 
 但是，对于长序列计算，double-step 就会变得不稳定，从而一般我们都是使用 Euler's Implicit 以及 Trapezoidal 方法计算。
 
-# Runge-Kutta Method
+## Runge-Kutta Method
 
 > [!abstract]+ 引入
 > 
@@ -217,7 +217,7 @@ $$
 > 1. 不难发现，modified Euler's Method 就是令 $p=1$ 时的公式。
 > 2. 由于可以随便改变 $p$，因此方法是无穷无尽的。这个类方法的集合，就是所谓的 Runge-Kutta Method of Order 2
 
-## Higher-Order Runge-Kutta
+### Higher-Order Runge-Kutta
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/29_18_17_21_202405291817624.png"/>
 
@@ -241,7 +241,7 @@ $$
 > 其次，Runge-Kutta 的 bound 非常依赖泰勒展开。因此，对于“导数比较飘”的函数，高阶展开不是好的选择，同样，高阶 Runge-Kutta 也不是。
 > - 此时，就应该像**插值**一样：我们可以减小步长 $h$，然后使用低阶的方法计算。
 
-# Multi-Step Method
+## Multi-Step Method
 
 > [!abstract]+ 引入
 > 
@@ -263,7 +263,7 @@ $$
 > 
 > 原因是为了**方便插值计算**。比如如果要用到前面的 $m$ 个点，那么这 $m$ 个点就分别对应 $t_i - (m-1)*h, t_i - (m-2)*h, \dots, t_i$，在 $P$ 中就是 $s = -(m-1), -(m-2), \dots, 0$。
 
-### Explicit Multistep Method
+#### Explicit Multistep Method
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/05/29_20_47_25_202405292047345.png"/>
 
@@ -290,7 +290,7 @@ $$
 > 
 > 对于更加高阶的，计算思路一样。
 
-## Implicit Multistep Method
+### Implicit Multistep Method
 
 **隐式方法，和之前一样，本质上就是提前用到下一个点的数据，然后求不动点。**
 
@@ -311,7 +311,7 @@ $$
 
 同样，我们一般也是使用 4 阶的 Adams-Moulton。不过，如果不算 $w_{i+1}$ 的话，那就只需要用到 3 个之前的点。
 
-### Real World Calculation
+#### Real World Calculation
 
 一般而言，在现实中，我们采用：
 1. Runge-Kutta 方法来计算出前几个点
@@ -319,7 +319,7 @@ $$
 2. Explicit Method 先求一遍
 3. Implicit Method 再 correct 一遍
 
-# Higher Order ODE
+## Higher Order ODE
 
 上面的若干个公式中，我们只考虑了 1 阶 ODE。下面我们拓展到任意阶的 ODE：
 
@@ -347,13 +347,13 @@ $$
 > 我们可以将上面的方程组，抽象成一个**多元向量值函数的方程**（$\vec y'(t) = \vec f(t, \vec y)$），然后**形式上**就和 1 阶 ODE 方程统一了。
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_9_25_202406052009915.png"/>
-## Example: Higher Order Modified Euler's Method
+### Example: Higher Order Modified Euler's Method
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_6_43_202406052006836.png"/>
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_20_23_35_202406052023182.png"/>
 
-# Stability
+## Stability
 
 > [!abstract]+
 > 
@@ -368,7 +368,7 @@ $$
 - 如图：可以发现 explicit 和 modified methods 的**趋势就是错的**，implicit method 的**趋势是正确的，虽然值差了不少**
     - 其实，如果 $h > 1 / 15$，就会出现不断上升的情况；而如果 $h < 1 / 15$，那么就是不断下降。但是，implicit method 可以保证在 $h = 0.1$ 的情况下下降，说明 **implicit method has better *stability* than explicit/modified ones**。
 
-## Definition of Stability
+### Definition of Stability
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_13_18_202406052113093.png"/>
 
@@ -384,7 +384,7 @@ $$
 > 1. **为什么要求 $\Re(\lambda) < 0$**： 因为只有小于 0，才是右侧的图，真实函数值最终收敛到 0；大于 0，就是左侧的图，本身就是发散的。**本身就发散的函数，谈何“误差”能够收敛？只有本身能够收敛的函数，才能考虑其*误差*也收敛**
 > 2. **如何判断 initial error will decrease**：实际上，我们根本不需要判断 initial error。因为在 $\Re(\lambda) < 0$ 的情况下，**真实函数值**随着 $t_i$ 增大收敛到 0，所以只要**数值计算的一系列值 $\{w_i\}$ 也收敛到 0，就必然有 "initial error will decrease"**。
 
-## Example: Explicit & Implicit Euler's Method
+### Example: Explicit & Implicit Euler's Method
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_21_25_19_202406052125824.png"/>
 
@@ -394,7 +394,7 @@ $$
 
 - 因为 $\Re(\lambda) < 0, h \in \mathbb R^+$，因此 $\Re(H) = \Re(\lambda h) < 0$。而小于 0 的区域，不难看出，全部是蓝色的。
 - 也就是说：**unconditionally stable**
-## Example: Implicit & Explicit Runge-Kutta Method
+### Example: Implicit & Explicit Runge-Kutta Method
 
 > [!note]+ **Implicit** 2nd-order Runge-Kutta method
 > 
@@ -419,7 +419,7 @@ $$
 > 
 > 另外，这还说明了：local truncation error **has nothing to do with** stability
 
-## Stability of Linear System
+### Stability of Linear System
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/5_22_18_1_202406052218308.png"/>
 

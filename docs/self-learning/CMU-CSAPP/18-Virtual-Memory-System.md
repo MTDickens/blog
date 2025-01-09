@@ -1,10 +1,10 @@
-# Lec 18: Virtual Memory System
+## Lec 18: Virtual Memory System
 
-## Intel Core i7 Memory System
+### Intel Core i7 Memory System
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181123317.png" alt="image-20240218112252094" style="zoom: 33%;" />
 
-## End-to-end i7 memory translation
+### End-to-end i7 memory translation
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181124915.png" alt="image-20240218112417006" style="zoom:33%;" />
 
@@ -18,7 +18,7 @@
   - 如果 TLB miss，那么，就在 page table 中进行逐级查询
 - 物理地址是 52 位。由于页大小为 4 KiB ($2^{12}$ bits)，因此 PPO 为 12 位，从而 PPN 为 40 位。
 
-### Table Entries
+#### Table Entries
 
 Core i7 Level 1-3 Page Table Entries 
 
@@ -42,7 +42,7 @@ Core i7 Level 4 Page Table Entries
 | Page physical base address | 40 most significant bits of physical page address (forces pages to be 4KB aligned) |
 | XD                         | Disable or enable instruction fetches from this page<br />(modern systems use to protect the stack from code injection attack) |
 
-### Core i7 Page Table Translation 
+#### Core i7 Page Table Translation 
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181554651.png" alt="image-20240218155423588" style="zoom: 33%;" />
 
@@ -56,13 +56,13 @@ Core i7 Level 4 Page Table Entries
       - 二级 PT with 30-bit offset：1 GiB page
 - CR3 是一个**控制寄存器**，储存（第 1 级）页表的起始地址。
 
-### Cute Trick for Speeding Up L1 Access 
+#### Cute Trick for Speeding Up L1 Access 
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181640592.png" alt="image-20240218164036135" style="zoom: 50%;" />
 
 如图，本来 L1 Cache 需要的是 CI 和 CO。但是，由于 VPO = PPO，而且 PPO 与 CI+CO 对齐了。因此，我们可以在 CT 得到之前，先上传 VPO，使得 L1 Cache 与 Address Translation **并行**，从而加快速度。
 
-## Virtual Address Space for Linux Process
+### Virtual Address Space for Linux Process
 
 <img src="C:/Users/mtdickens/AppData/Roaming/Typora/typora-user-images/image-20240218164655288.png" alt="image-20240218164655288" style="zoom:50%;" />
 
@@ -73,7 +73,7 @@ Core i7 Level 4 Page Table Entries
 - Kernel virtual memory 中，部分 virtual memory 是 shared，其它是 dedicated。
   - 在 shared 中，部分是永远指向**与虚拟地址相同的** physical memory 的（i.e. 上图中的 "physical memory"），其它是指向与 shared but not the same physical address。
 
-### Linux organize VM as a collection of "area"s
+#### Linux organize VM as a collection of "area"s
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181718906.png" alt="image-20240218171804058" style="zoom: 33%;" />
 
@@ -81,7 +81,7 @@ Core i7 Level 4 Page Table Entries
 
 - 注意：在真实的 OS 中，所有的 `vm_area_struct` 会用红黑树等高效的数据结构进行存储。
 
-### Linux Page Fault Handling  
+#### Linux Page Fault Handling  
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402181722520.png" alt="image-20240218172209160" style="zoom: 33%;" />
 
@@ -91,7 +91,7 @@ Core i7 Level 4 Page Table Entries
 - 如果写入只读的 area，那么就是 protection exception
 - 其他情况下，可能是 normal page fault
 
-## Memory Mapping
+### Memory Mapping
 
 VM areas initialized by **associating them with disk objects**.
 
@@ -108,13 +108,13 @@ Area can be backed by (i.e.,get its initial values from):
 
 Dirty pages are copied back and forth between memory and a special swap file.
 
-### Sharing Revisited: Shared Objects
+#### Sharing Revisited: Shared Objects
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402191725519.png" alt="image-20240219172535993" style="zoom: 50%;" />
 
 如图，两个进程共享一个 object。也就是说，无论读写，磁盘上的同一个 page 会缓存在同一段 memory 里。
 
-### Sharing Revisited: Copy-on-write (COW) Objects
+#### Sharing Revisited: Copy-on-write (COW) Objects
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402191727194.png" alt="image-20240219172713671" style="zoom:50%;" />
 
@@ -128,7 +128,7 @@ Dirty pages are copied back and forth between memory and a special swap file.
 
 也就是说，如果只有读操作，磁盘上的同一个 page 会缓存在同一段 memory 里；只要包含了写操作，磁盘上的同一个 page 就会缓存在不同段的 memory 里。
 
-#### Implementation
+##### Implementation
 
 - *Instruction* writing to private page triggers *protection fault*.
 - *Handler* creates *new R/W page*.
@@ -136,18 +136,18 @@ Dirty pages are copied back and forth between memory and a special swap file.
 
 In all, copying is deferred as long as possible!
 
-### `fork` revisited
+#### `fork` revisited
 
 Naive implementation of `fork`, as you can easily figure out, is incredibly expensive (i.e. you have to copy all those memory).
 
-#### Implementation
+##### Implementation
 
 - 将父进程的数据结构（i.e. `mm_struct`, `vm_area_struct` 以及 page table）复制到子进程
   - 这些通常而言不会太多
 - 将父进程和子进程的**每一页**（在 PTE 中）都标为 read-only
 - 将父进程和子进程的**每个** `vm_area_struct` 都标为 COW
 
-### `execve` revisited
+#### `execve` revisited
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202402210017263.png" alt="image-20240221001753740" style="zoom:50%;" />
 
@@ -159,11 +159,11 @@ Naive implementation of `fork`, as you can easily figure out, is incredibly expe
 
 **注意：**我们现在只建立了内存映射，而没有实际使用内存，从而非常 efficient。
 
-### User-level memory mapping - `mmap`
+#### User-level memory mapping - `mmap`
 
 ```c
-#include <unistd.h>
-#include <sys/mman.h>
+##include <unistd.h>
+##include <sys/mman.h>
 
 void *mmap(void *start, size_t length, int prot, int flags,
            int fd, off_t offset);

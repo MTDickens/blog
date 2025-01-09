@@ -1,6 +1,6 @@
-# Lec 11: The Memory Hierarchy
+## Lec 11: The Memory Hierarchy
 
-## Random Access Register (RAM)
+### Random Access Register (RAM)
 
 SRAM vs DRAM
 
@@ -9,15 +9,15 @@ SRAM vs DRAM
 | SRAM | 4 or 6              | 1X          | No             | Maybe      | 100x | Cache memories               |
 | DRAM | 1                   | 10X         | Yes            | Yes        | 1x   | Main memories, frame buffers |
 
-## I/O with memory
+### I/O with memory
 
 <img src="img/image-20240122155355071.png" alt="image-20240122155355071" style="zoom: 50%;" />
 
 Since reading from memory is slow, and memory is far away from CPU, you have to use 50~100 ns to retrieve data from main memory, whereas typical operations between registers can be sub-nanosecond.
 
-## HDD
+### HDD
 
-### Geometry of a Disk
+#### Geometry of a Disk
 
 <img src="img/image-20240122160048632.png" alt="image-20240122160048632" style="zoom: 33%;" />
 
@@ -30,7 +30,7 @@ Also, aligned tracks form a cylinder
 
 <img src="img/image-20240122160314696.png" alt="image-20240122160314696" style="zoom:33%;" />
 
-### Disk Capacity
+#### Disk Capacity
 
 **Capacity**: Maximum number of bits that can be stored.
 
@@ -44,7 +44,7 @@ Capacity is determined by these technology factors:
 
 - **Areal density (bits/in^2)**: Product of recording and track density.
 
-### Recording Zone
+#### Recording Zone
 
 In order not to waste space, modern hard disk uses recording zones to partition the disk into disjoint units.
 
@@ -58,7 +58,7 @@ Modern disks partition tracks into disjoint subsets called **recording zones**.
   - in order not to waste space
 - Therefore, we use the **average** number of sectors per track when computing capacity.
 
-### Compute Disk Capacity
+#### Compute Disk Capacity
 
 Capacity = (#bytes/sector) x (avg. #sectors/track) x
 (#tracks/surface) x (#surfaces/platter) x
@@ -79,7 +79,7 @@ $$
 \end{aligned}
 $$
 
-### Disk Access Time
+#### Disk Access Time
 
 Average time to access some target sector approximated by:
 
@@ -103,11 +103,11 @@ Average time to access some target sector approximated by:
 
 **Rule of thumb:** est. time of avg time is twice of seek time.
 
-### I/O with HDD
+#### I/O with HDD
 
 <img src="img/image-20240122165303401.png" alt="image-20240122165303401" style="zoom: 25%;" />
 
-#### Step 1
+##### Step 1
 
 CPU initiates a disk read by writing a 
 
@@ -119,19 +119,19 @@ to a port (address) associated with disk controller.
 
 <img src="img/image-20240122165432096.png" alt="image-20240122165432096" style="zoom:25%;" />
 
-#### Step 2
+##### Step 2
 
 Disk controller then reads the sector and performs a direct memory access (DMA) transfer into main memory. 
 
 <img src="img/image-20240122165457188.png" alt="image-20240122165457188" style="zoom:25%;" />
 
-#### Step 3
+##### Step 3
 
 When the DMA transfer completes, the disk controller **notifies the CPU with an interrupt** (i.e., asserts a special “interrupt” pin on the CPU).
 
 <img src="img/image-20240122165553543.png" alt="image-20240122165553543" style="zoom:33%;" />
 
-## SSD
+### SSD
 
 <img src="img/image-20240122171608675.png" alt="image-20240122171608675" style="zoom:33%;" />
 
@@ -158,7 +158,7 @@ When the DMA transfer completes, the disk controller **notifies the CPU with an 
   - MP3 players, smart phones, laptops
   - Beginning to appear in desktops and servers
 
-## Locality of Programs
+### Locality of Programs
 
 **Principle of Locality:** Programs tend to use data and instructions with *addresses near or equal to* those *they have used recently*
 
@@ -170,15 +170,15 @@ Example:
 
 <img src="img/image-20240122173347619.png" alt="image-20240122173347619" style="zoom:50%;" />
 
-### Good vs Bad Locality
+#### Good vs Bad Locality
 
 ```c
-#include <stdio.h>
-#include <time.h>
+##include <stdio.h>
+##include <time.h>
 
-#define ROWS 10
-#define COLS 100000
-#define TOT_TIME 1000
+##define ROWS 10
+##define COLS 100000
+##define TOT_TIME 1000
 
 int main() {
     int arr[ROWS][COLS];
@@ -222,7 +222,7 @@ Good locality code time: 1.134834 seconds
 Bad locality code time: 1.991599 seconds
 ```
 
-## Memory Hierarchy
+### Memory Hierarchy
 
 Some fundamental and enduring properties of hardware and software:
 
@@ -238,7 +238,7 @@ These fundamental properties complement each other beautifully. They suggest an 
 
 To **take advantage of locality**, we copy a chunk of data from $k+1$-th hierarchy to $k$-th hierarchy, so that it will probably be used some time in the future, and the value of its nearby addresses are also tend to be used in the near future. Thus, we can continue to use data from $k$-th hierarchy for a period of time, and thus saves much access time.
 
-### General Caching Concepts: Types of Cache Misses
+#### General Caching Concepts: Types of Cache Misses
 
 - Cold (compulsory) miss
   - Cold misses occur because the cache is empty
@@ -250,7 +250,7 @@ To **take advantage of locality**, we copy a chunk of data from $k+1$-th hierarc
     Suppose we visit `a[0], a[4], a[8]` alternatively, then since `0%4 = 4%4 = 8%4 = 0`, these memory addresses conflict each other, and result in conflict misses.
   - (More details in tomorrow's course)
 
-### Examples of Caching in the Mem. Hierarchy
+#### Examples of Caching in the Mem. Hierarchy
 
 | Cache  Type          | What is Cached?      | Where is it Cached? | Latency (cycles) | Managed By       |
 | -------------------- | -------------------- | ------------------- | ---------------- | ---------------- |

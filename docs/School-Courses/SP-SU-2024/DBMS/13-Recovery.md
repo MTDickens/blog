@@ -1,8 +1,8 @@
-# Failure Classification
+## Failure Classification
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/6_19_34_6_202406061934180.png"/>
 
-# 日志的宗旨
+## 日志的宗旨
 
 每一条日志，就对应着每一个 block 的 update, insert 等操作。
 
@@ -27,7 +27,7 @@
 > 
 
 
-# Fuzzy Checkpoint
+## Fuzzy Checkpoint
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/06/6_21_1_29_202406062101051.png"/>
 
@@ -50,7 +50,7 @@
 > 因此，**我们需要记录下来 checkpoint 标记，是因为我们必须回溯到那个 checkpoint 时刻（而不是写完脏页的那一刻）**。
 
 
-# Logical Undo
+## Logical Undo
 
 对于并行控制，除了两阶段协议以外，还可以使用**可以提前解锁**的 tree 协议。使用这种协议的时候，
 
@@ -120,7 +120,7 @@
 <T1, O1, operation begin>          # Lock acquired
 <T1, B, 10, 11>
 [system crashed, need recovert!]   # Lock haven't been released yet, so don't worry about rewrite
-# Just use <T1, B, 10, 11> <T1 abort> to recover
+## Just use <T1, B, 10, 11> <T1 abort> to recover
 ``` 
 
 > [!warning]+
@@ -130,6 +130,6 @@
 > [这里](https://help.aliyun.com/zh/polardb/polardb-for-mysql/innodb-physiological-logging)有另外一个解释
 
 
-# ARIES 算法
+## ARIES 算法
 
 详见 [coredump 博客](https://www.codedump.info/post/20220521-weekly-16/#fuzzy-checkpoint%E6%B5%81%E7%A8%8B)。

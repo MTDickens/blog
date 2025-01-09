@@ -1,6 +1,6 @@
-# Overview
+## Overview
 
-## Instruction Set
+### Instruction Set
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_20_32_18_202404162032868.png"/>
 
@@ -56,7 +56,7 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_21_23_34_202404162123431.png" style="zoom: 33%;" />
 
-## 区分指令
+### 区分指令
 
 我们依靠
 
@@ -66,7 +66,7 @@
 
 由于有一些类型的指令拓展的可能性大，因此会有 funct7，便于之后拓展；有一些类型指令拓展的可能性没什么，因此只有 funct3 甚至什么也没有。对于后面的这种指令，有时候就只能靠增加 opcode 来拓展了。
 
-# 指令执行过程
+## 指令执行过程
 
 1. fetch：从 imem 中取回来
     - 注意：RISC-V 基于 harvard 架构，因此内存分为 Instruction Memory 和 Data Memory
@@ -83,15 +83,15 @@
     - If R-type, ALU write to rd
     - If I-type, memory data written to rd
 
-# Datapath
+## Datapath
 
 下面是一个简化版的 datapath（注意：我们的实现中，immgen 的输出还是 32 位，不用 64 位）：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_23_11_55_202404162311845.png" alt="image-20240416231154751" style="zoom: 50%;" />
 
-## Example
+### Example
 
-### `jal rd, offset`
+#### `jal rd, offset`
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_23_13_1_202404162313337.png" alt="image-20240416231257934" style="zoom:50%;" />
 
@@ -101,7 +101,7 @@
 2. 然后通过第二个 mux 选上自己，喂给 PC
 3. 同时，将 PC + 4 的值储存到 rd 中
 
-### `beq rs1, rs2, offset`
+#### `beq rs1, rs2, offset`
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_23_14_26_202404162314038.png" alt="image-20240416231422940" style="zoom:50%;" />
 
@@ -111,7 +111,7 @@
 2. 同时，取出立即数作为 offset，然后和 PC 进行相加，得到 PC + offset
 3. 根据比较结果，如果结果为 1，就通过第一个 mux 选上自己，从而把 PC + offset 喂给 mux；
 
-# Controller
+## Controller
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/16_23_21_6_202404162321689.png" alt="image-20240416232102408" style="zoom: 33%;" />
 
@@ -120,7 +120,7 @@
 - 7 指的是：Branch, jump, MemtoReg, MemWrite, MemRead, ALUSrc, RegWrite
 - 4 指的是 ALU operation 有 4 条控制线
 
-## ALU Control
+### ALU Control
 
 | ALU Control Lines | Function         |
 | ----------------- | ---------------- |
@@ -138,19 +138,19 @@
 1. 上述只是一个例子，可以有多种 implementation
 2. 上面只用到了 3 个 code，当然你可以后续增加指令
 
-## Control
+### Control
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_0_34_28_202404170034133.png" alt="image-20240417003422705" style="zoom: 80%;" />
 
 如上图，control 接收 opcode，输出 "7" 个控制信号以及 ALU Op[1:0]。我们把 ALU Control 单独抽离出来，通过 ALU Op[1:0] 将 Control 的信息传到 ALU Control 去，然后在 ALU Control 处变成最终的位宽为 "4" 的 ALU 控制信号。
 
-## Integration
+### Integration
 
 如下图，ALU Control 根据 ALU Op[1:0] 以及 func7, func3 来决定最终的 function。
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_0_40_8_202404170040215.png" alt="image-20240417004002646" style="zoom:50%;" />
 
-### 为什么要用两级 decoder？
+#### 为什么要用两级 decoder？
 
 这是因为，
 
@@ -160,11 +160,11 @@
 
 因此，我们只需要量 opcode 分为三类，然后将其中一类（R\-type）挑出来，做进一步的精细化处理。
 
-## DataPath with Controls
+### DataPath with Controls
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_0_38_53_202404170038897.png" alt="image-20240417003847882" style="zoom: 80%;" />
 
-# Pipelining
+## Pipelining
 
 假设
 
@@ -182,7 +182,7 @@
 3. 由于实际的代码中，ld/sd 指令并不多，主要还是计算/跳转的指令，但是时钟周期还是要收到 ld/sd 的制约。因此，单周期的设计，会大大降低 CPU 的性能。
     - 从而 **violates "make the common case fast" principle**
 
-## Stages
+### Stages
 
 Five stages, one step per stage
 
@@ -194,11 +194,11 @@ Five stages, one step per stage
 
 实际上，并非每一条指令都必须经历上面 5 步，但是为了使用标准化的流水线，我们“强行”让每一条指令都要执行上面的五步。
 
-### Example: `ld`
+#### Example: `ld`
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_1_22_6_202404170122637.png" alt="image-20240417012202976" style="zoom:67%;" />
 
-## *Notes*
+### *Notes*
 
 如上图所示，我们不难发现：
 
@@ -213,7 +213,7 @@ Five stages, one step per stage
 1. sub-insts 之间的耗时尽量平衡
 2. 尽量避免跳转
 
-## Advantages of RISC-V
+### Advantages of RISC-V
 
 RISC-V 就是为 pipelining 而生的，这是因为
 
@@ -222,14 +222,14 @@ RISC-V 就是为 pipelining 而生的，这是因为
 2. **RISC-V 的指令少而规整**：我们可以在 decode 的同时，就 read register
 3. **RISC-V 的访问内存方式，只有 ld 和 sd**：operand 和 memory 无关，因此只需要执行 read register + add 即可
 
-# Hazards (冒险)
+## Hazards (冒险)
 
-## Hazard of Pipelining
+### Hazard of Pipelining
 
 流水线的竞争，很简单，比如：
 
 ```asm
-# Suppose a0 := 0 here
+## Suppose a0 := 0 here
 addi a0, a0, 1
 addi a0, a0, 1
 ```
@@ -240,7 +240,7 @@ addi a0, a0, 1
 
 因此，两条指令 ID stage 读取的都是 0，EX stage 得到的结果都是 1，在 WB stage 中，向寄存器写入的值也是 1，因此 a0 最终就是 1，而不是正确的 2。
 
-## Other Hazards
+### Other Hazards
 
 **Definition:** Situations that prevent starting the next instruction in the next cycle.
 
@@ -269,21 +269,21 @@ addi a0, a0, 1
         li 	a2, 1919810	# Or this?
         ```
 
-# Solution to the Hazards
+## Solution to the Hazards
 
-## Structure Hazard
+### Structure Hazard
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_2_56_57_202404170256441.png" style="zoom:67%;" />
 
 - 关键：区分 imem 和 dmem，使得每一个 stage 之间都是独立的
 
-## Data Hazard
+### Data Hazard
 
 我们最初的想法是，加两个 bubbles。如下图所示：
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_2_57_53_202404170257904.png" style="zoom:50%;" />
 
-### Bypassing
+#### Bypassing
 
 但是，两个 bubble 未免太浪费性能的。于是，我们决定采用 **bypassing** 的方式：
 
@@ -297,7 +297,7 @@ addi a0, a0, 1
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/17_2_59_30_202404170259429.png" alt="image-20240417025927562" style="zoom:50%;" />
 
-### Code Scheduling
+#### Code Scheduling
 
 除此之外，我们还可以通过 code scheduling，进一步减小 overhead：
 
@@ -307,6 +307,6 @@ addi a0, a0, 1
 
 当然，这要求编译器对底层的实现足够了解才行，于是从一方面展示了 Intel 自家的编译器比通用编程器（如 LLVM, gcc）更快的原因。
 
-## Control Hazard
+### Control Hazard
 
 ***TODO***

@@ -1,6 +1,6 @@
-# C++ 的类
+## C++ 的类
 
-## 构造函数、析构函数顺序
+### 构造函数、析构函数顺序
 
 对于一个类而言，构造函数的顺序是：
 
@@ -52,7 +52,7 @@ private:
 2. 调用成员变量的析构函数
 3. 调用父类的析构函数
 
-## 继承
+### 继承
 
 一个类可以派生自多个类，这意味着，它可以从多个基类继承数据和函数。定义一个派生类，我们使用一个类派生列表来指定基类。类派生列表以一个或多个基类命名，形式如下：
 
@@ -62,7 +62,7 @@ class derived-class: access-specifier base-class
 
 其中，访问修饰符 access-specifier 是 **public、protected** 或 **private** 其中的一个，base-class 是之前定义过的某个类的名称。如果未使用访问修饰符 access-specifier，则默认为 private。
 
-### 访问控制和继承
+#### 访问控制和继承
 
 派生类可以访问基类中所有的非私有成员。因此基类成员如果不想被派生类的成员函数访问，则应在基类中声明为 private。
 
@@ -83,7 +83,7 @@ class derived-class: access-specifier base-class
 - 基类的友元函数。
     - e.g. `friend std::ostream& operator<<(std::ostream& os, const MyClass &obj)`
 
-### 继承类型
+#### 继承类型
 
 当一个类派生自基类，该基类可以被继承为 **public、protected** 或 **private** 几种类型。继承类型是通过上面讲解的访问修饰符 access-specifier 来指定的。
 
@@ -100,7 +100,7 @@ class derived-class: access-specifier base-class
     - public, protected -> private
     - private -> &cross;
 
-### 多继承
+#### 多继承
 
 多继承即一个子类可以有多个父类，它继承了多个父类的特性。
 
@@ -115,14 +115,14 @@ class <派生类名>:<继承方式1><基类名1>,<继承方式2><基类名2>,…
 
 其中，访问修饰符继承方式是 **public、protected** 或 **private** 其中的一个，用来修饰每个基类，各个基类之间用逗号分隔，如上所示。
 
-## 多态
+### 多态
 
-### 虚函数
+#### 虚函数
 
 话不多说，先举一例：
 
 ```cpp
-#include <iostream> 
+##include <iostream> 
 using namespace std;
 
 class Shape {
@@ -229,10 +229,10 @@ shape->virtual_area: Triangle class area :25
 另外，如果直接从底层入手，在 RISC-V 汇编中：
 
 ```assembly
-# area(): static
+## area(): static
         lw      a0,-20(s0)
         call    Shape::area() # static
-# virtual_area(): dynamic
+## virtual_area(): dynamic
         lw      a5,-20(s0)
         lw      a5,0(a5)
         lw      a5,0(a5)
@@ -245,7 +245,7 @@ shape->virtual_area: Triangle class area :25
 - 具体地，如果采用 `virtual` 进行动态链接，compiler 就会为每一个派生类的变量添加一个 vtable，里面有对应的 `virtual_area()` 的地址（i.e. 要么是 `Rectangle::virtual_area()`，要么是 `Triangle::virtual_area()`）。
     - 寻址的时候，就是通过上面 `lw` 进行寻址。
 
-### 纯虚函数
+#### 纯虚函数
 
 至于纯虚函数，才是真正的所谓“接口”。
 
@@ -264,12 +264,12 @@ class Shape {
 };
 ```
 
-## 一个有趣的例子
+### 一个有趣的例子
 
 ~~（同时也是作业题）~~
 
 ```c++
-#include <iostream>
+##include <iostream>
 using namespace std;
 
 class A
@@ -342,9 +342,9 @@ int main()
 6. 就是 `a2` 调用 `f()`。自然是调用 `A::f()`
     - **输出：**`A::f(), 1`
 
-## 其他知识点
+### 其他知识点
 
-### 成员函数的 const 修饰符
+#### 成员函数的 const 修饰符
 
 成员函数本身默认有一个参数，就是 `this`。对于显式的参数，我们可以显式地加上约束，如 `int List::operator[](int index)`；但是对于隐式的 `this`，如何加约束呢？这就要用到成员函数的 `const` 修饰符。这个 `const` 可以让 `*this` 不仅是一个顶层 const（i.e. 指针指向的地址不能变，所有的 `this` 都这样），而且还是底层 const（i.e. 指针指向的地址的值是常量）。
 

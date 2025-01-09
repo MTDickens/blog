@@ -1,11 +1,11 @@
-# Binomial Queue
+## Binomial Queue
 
 1. 每一步操作，都可以考虑和二进制加法、减法的c
 2. Binomial Queue 本质上是一个最小多叉树的森林
 3. 具体实现的时候，由于我们使用 left-child-right-sibling，将多叉树表示成二叉树。因此，我们希望将一个最小二叉树的最大的子树存在最左侧，每次插入也是插入在左侧
 4. 可以使用链表来连接各个子树，其实比使用数组更加方便、高效
 
-# Appendix
+## Appendix
 
 **1.** Left-child-right-sibling
 

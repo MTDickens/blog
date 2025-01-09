@@ -1,14 +1,14 @@
-# Why Estimate Motion?
+## Why Estimate Motion?
 
 Lots of uses
 
-- ﻿﻿Track object behavior
-- ﻿﻿Correct for camera jitter (stabilization)
-- ﻿﻿Align images (mosaics)
-- ﻿﻿3D shape reconstruction
-- ﻿﻿Special effects
+- Track object behavior
+- Correct for camera jitter (stabilization)
+- Align images (mosaics)
+- 3D shape reconstruction
+- Special effects
 
-# Optical Flow（光流）
+## Optical Flow（光流）
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/8_22_37_34_20241208223734.png"/>
 
@@ -20,7 +20,7 @@ Lots of uses
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/9_20_31_56_20241209203155.png"/>
 
-## 三大假设
+### 三大假设
 
 光流法的三大假设是：
 
@@ -28,7 +28,7 @@ Lots of uses
 - **小运动**：物体的位移足够小（从而我们可以对灰度值才能对位置求偏导）
 - **空间一致**：一个场景上邻近的点投影到图像上也是邻近点，且邻近点速度一致
 
-## 推导：亮度恒定+小运动
+### 推导：亮度恒定+小运动
 
 不妨令前一张照片为 $H(x, y)$，后一张照片为 $I(x, y)$
 
@@ -63,7 +63,7 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/9_21_7_53_20241209210752.png" width="70%"/>
 
-## 推导：空间恒定
+### 推导：空间恒定
 
 我们进一步利用“空间恒定”这一假设：相邻的点，速度应该差不多。
 
@@ -80,7 +80,7 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/9_21_7_43_20241209210742.png"/>
 
-## 算法：Lucas-Kanade Flow
+### 算法：Lucas-Kanade Flow
 
 对于某一点 $(x, y)$，取以该点为中心的 5x5 窗口，一共 25 个点（$p_1, p_2, \cdots, p_{25}$）
 
@@ -126,11 +126,11 @@ A^T A v = Ab \implies v =
 \end{bmatrix}
 $$
 
-### More Constraints: RGB Version of the Algorithm
+#### More Constraints: RGB Version of the Algorithm
 
 如果把每一个点的 RGB 值都算上，那么就有了 75 个约束（25 个点，每一个点有 3 个约束）。
 
-### Numerical Considerations
+#### Numerical Considerations
 
 我们希望：
 
@@ -167,13 +167,13 @@ $$
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/9_21_54_12_20241209215411.png"/>
 
-## 改进：Iterative Lucas-Kanade
+### 改进：Iterative Lucas-Kanade
 
 我们之前的方程是 $\nabla I \begin{bmatrix} u \newline v\end{bmatrix} \approx -I_t$。可见这里用到了约等号。如果希望提升精度，那么就应该多次迭代求出准确值。
 
 每求一次 $(u, v)$，我们就对 $H$ 根据 $(u, v)$ 进行一次更改（使用双线性插值），直到收敛。
 
-## 改进：Coarse-To-Fine Lucas-Kanade
+### 改进：Coarse-To-Fine Lucas-Kanade
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/12/9_22_18_40_20241209221840.png"/>
 

@@ -1,5 +1,5 @@
 
-# View the Iterative Algorithm in Another Way
+## View the Iterative Algorithm in Another Way
 
 Given a CFG (program) with k nodes, the iterative algorithm updates `OUT[n]` for every node n in each iteration.
 
@@ -11,7 +11,7 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 
 因此，每一次 iteration 可以抽象为函数 $F: V^k \to V^k$
 
-## Some Questions
+### Some Questions
 
 本质上，我们就是找 $F$ 的不动点。
 
@@ -23,13 +23,13 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 - When will the algorithm reach the fixed point, or when can we get the solution?
     - Time complexity?
 
-# Lattice
+## Lattice
 
-## Background: Upper and Lower Bounds
+### Background: Upper and Lower Bounds
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_59_23_202404091759255.png" alt="image-20240401065837486" style="zoom: 50%;" />
 
-## Definition
+### Definition
 
 **Lattice:** Given a poset $(P, \sqsubseteq)$, $\forall a, b \in P$, if a $a \sqcup b$ and $a \sqcap b$ exist, then $(P, \sqsubseteq)$ is called a lattice.
 
@@ -44,7 +44,7 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_56_202404091758866.png" alt="image-20240401071147630" style="zoom:50%;" />
 
-# Dataflow Analysis Framework via Lattice
+## Dataflow Analysis Framework via Lattice
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_51_202404091758964.png" alt="image-20240401235420991" style="zoom:67%;" />
 
@@ -54,7 +54,7 @@ as an element of set $(V_1, V_2, \dots, V_k)$ denoted as $V^k$, to hold the valu
 - 然后，IN[s1] 通过 transfer function 来得到 OUT[s1]
 - And so on and so forth
 
-# Fix-Point Theorem
+## Fix-Point Theorem
 
 定义（单调性）：A function $F: L \to L$ is monotonic if 
 $$
@@ -76,7 +76,7 @@ $$
 
 $\blacksquare$
 
-## $F$ is monotonic
+### $F$ is monotonic
 
 F 可以认为是
 
@@ -104,7 +104,7 @@ $$
 $$
 偶数步（易证）。
 
-### Answer to the first two questions
+#### Answer to the first two questions
 
 从而，我们证明了前面三个问题中的两个：
 
@@ -114,7 +114,7 @@ $$
     - For the first part, not necessarily!
     - For the second part, our solution will be the least or greatest fixed point, depending on where we start.
 
-### Answer to the third question
+#### Answer to the third question
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_39_202404091758269.png" alt="image-20240402020117968" style="zoom: 50%;" />
 
@@ -123,7 +123,7 @@ $$
 - $k$ 就是 $F: V^k \to V^k$ 中的 $k$，i.e. basic block 的数量。
 - $h$ 就是 set lattice 的高度，i.e. bit vector 的长度。
 
-# Fixed-Point And Algorithm
+## Fixed-Point And Algorithm
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_17_58_33_202404091758784.png" alt="image-20240402024747058" style="zoom: 67%;" />
 
@@ -142,7 +142,7 @@ Available expression analysis (must analysis) 同理。
 2. 由于我们已经保证了 fixed point 必须在 safe zone 里，我们不需要担心找到 unsafe fixed point
 3. 由于我们保证 $F$ 是单调函数，我们一定可以找到不动点，而且是最精确不动点。
 
-## Another Point of View
+### Another Point of View
 
 对于 $F$ 而言，transfer function 已经被写死了。因此，我们能够改变的，只有 merge function。
 
@@ -150,9 +150,9 @@ Available expression analysis (must analysis) 同理。
 
 因此，通过“小步走”，我们可以避免走到过分 unprecise 的地方。
 
-# Precision
+## Precision
 
-## MOP: Meet Over All Paths
+### MOP: Meet Over All Paths
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_18_26_31_202404091826512.png" alt="image-20240409182628855" style="zoom:50%;" />
 
@@ -171,12 +171,12 @@ li a5, 0
 bne a5, zero, if # Assume no statement would jump to this
 jal zero, else   # Assume no statement would jump to this 
 if:
-# ...
+## ...
 else:
-# ...
+## ...
 ```
 
-## Compare To Iterative Approach
+### Compare To Iterative Approach
 
 对于这个简单的示例 (assuming it's may analysis) 而言：
 
@@ -206,11 +206,11 @@ $$
 
 Q.E.D.
 
-## A counterexample: Constant Propagation
+### A counterexample: Constant Propagation
 
 Constant prop 是一个类 must analysis。但是，**使用 MOP 和 iterative method 不是等价的**。
 
-### Lattice and Meet Rules
+#### Lattice and Meet Rules
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_20_57_45_202404092057690.png" alt="image-20240409205741923" style="zoom:50%;" />
 
@@ -232,13 +232,13 @@ meet 的运算是：
 
 我们这里给出解答：**constant propagation** 的设计里面，已经**假设**了变量使用之前一定已经被初始化了。至于检测是否初始化，那就是 **uninitialized variable detection** 需要做的事了。
 
-### Transfer Function
+#### Transfer Function
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_23_36_202404092123974.png" alt="image-20240409212334085" style="zoom:50%;" />
 
 一条语句就是一个 transfer function。如果语句不是赋值操作，那么 transfer function 就是 identity。
 
-### $F$ is non-homomorphic
+#### $F$ is non-homomorphic
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_30_0_202404092130537.png" alt="image-20240409212955584" style="zoom:67%;" />
 
@@ -268,7 +268,7 @@ $$
 
 - 不过，还是可以证明：$f(X \sqcap Y) \sqsubseteq f(X) \sqcap f(Y)$​，也就是说，使用 iterative method 的分析方式，不会优于 meet over all paths 的分析方式。也就是说：iterative method 肯定不会比 MOP 更准。
 
-# Optimization: Worklist Algorithm
+## Optimization: Worklist Algorithm
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/9_21_42_38_202404092142665.png" alt="image-20240409214235354" style="zoom:50%;" />
 

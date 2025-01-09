@@ -1,4 +1,4 @@
-# 单形的符号
+## 单形的符号
 
 如果 $L \sub K$，且 K 只比 L 多一个单形（记作 $\sigma$​，假设是 d-单形），那么，不难证明：
 
@@ -19,22 +19,22 @@
 
 - 当 $K = \emptyset$ 的时候，所有 betti number 均为 0，因此可以从零开始加
 
-# 加速计算
+## 加速计算
 
-## 基于线性空间的计算
+### 基于线性空间的计算
 
 通过递推的方法，我们逐一添加单形。每一次计算出单形的边界，判断 (2) 是否成立。
 
 - 如果不能被表出，就记为负，并将单形添加至边界集合
 - 如果能够被表出，就记为正
 
-## 直接搜索
+### 直接搜索
 
 0 维同调群可以通过并查集来搜索出来。
 
 高维同调群可以通过 Alexander duality 归约到 0 维同调群和点集本身[^1]。
 
-### Example: 基于线性空间的计算
+#### Example: 基于线性空间的计算
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/18_12_29_48_202404181229162.png" style="zoom: 67%;" />
 
@@ -51,7 +51,7 @@
 
 从而，列的空与非空，就是单形的符号；而深红色方块，就是同调元的生成与消亡。
 
-## 谱序列算法
+### 谱序列算法
 
 不难发现，这个矩阵就是一个上三角矩阵，因此，我们可以通过以下的方法进行消元：
 
@@ -68,17 +68,17 @@
 
 不难发现，由于上图深色的方块之前本身就只有 3 列非零列，因此，在三次消元之后，就完成了这些方块的消元。
 
-## 稀疏矩阵
+### 稀疏矩阵
 
 使用稀疏矩阵来表示这个矩阵，然后进行消元，会更加节省空间和时间。
 
-## 对偶理论
+### 对偶理论
 
 通过 union find，可以在 practically linear time 完成。而更高维的，可以通过 Alexander duality 来计算。
 
 ***TODO***
 
-# 扩展过滤
+## 扩展过滤
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/22_2_45_25_202404220245238.png" alt="image-20240422024522682" style="zoom:50%;" />
 
@@ -97,6 +97,6 @@
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/img/2024/04/22_2_45_40_202404220245441.png" alt="image-20240422024534416" style="zoom: 67%;" />
 
-# Reference
+## Reference
 
 [^1]: [Delfinado93](https://www.cs.jhu.edu/~misha/ReadingSeminar/Papers/Delfinado93.pdf)

@@ -1,4 +1,4 @@
-# 定位与功能
+## 定位与功能
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_4_55_56_20241103045556.png"/>
 
@@ -9,7 +9,7 @@
 - 成帧
 	- 因为传输有延迟（一次必须发一堆数据）、以及信道存在噪声（数据量大的时候，更容易接近香农极限），因此需要将数据打包到一起发送，这些打包到一起的数据“一荣俱荣一损俱损”（i.e. 只要 frame 少量数据损坏且无法修复，那么整个 frame 的数据都用不了了）
 
-# 功能介绍
+## 功能介绍
 
 差错控制，详见 Hamming code 和 CRC。
 
@@ -17,7 +17,7 @@
 
 - 同时，也起到了差错**纠正**的作用。因为纠错码可能只能检错但是无法纠错（e.g. CRC），或者错误位数之多以至于无法纠错，从而就直接通过**重传机制**进行**纠错**。
 
-# 协议：PPP (Point to Point Protocol) over SONET
+## 协议：PPP (Point to Point Protocol) over SONET
 
 > [!note] 位置
 > 
@@ -40,7 +40,7 @@
 
 **缺点**：没有任何地址信息，因此只能用于一对一通信，不能用于多对多通信（i.e. 每一个通信实体需要和其它多个通信实体进行通信）。从而，诞生了 PPPoE (i.e. PPP over Ethernet)。Ethernet 提供了地址功能，而 PPP 提供了各种认证、协商功能，相得益彰。
 
-# MAC (Medium Access Control) layer
+## MAC (Medium Access Control) layer
 
 有两种网络：
 1. **点对点链路**：两个 相邻 节点 , 通过 单一 链路 连接 , 第三方 无法收到任何信息 ;
@@ -51,7 +51,7 @@
 
 对于第二种链路，我们就需要使用这样的协议来协调多个通信实体，使得它们之间通信不会冲突。
 
-## 静态分配
+### 静态分配
 
 根据 M/M/1 排队理论，如果
 
@@ -73,11 +73,11 @@ $$
 
 也就是**等待时间线性增加**。而等待时间增加的原因，其实就是**没用动态分配，使得信道容量浪费严重**。
 
-## 动态分配
+### 动态分配
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_6_38_46_20241103063845.png"/>
 
-### ALOHA & 分隙 ALOHA
+#### ALOHA & 分隙 ALOHA
 
 ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了，那么都无效**。
 
@@ -99,7 +99,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_7_14_44_20241103071443.png"/>
 
-### CSMA 协议
+#### CSMA 协议
 
 - 非持续CSMA
     - 侦听，如果空闲就发送；否则就等待一个随机时间然后重复上一步。
@@ -114,7 +114,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
     - 在保留 1-persistent CSMA 优点的同时，让碰撞的概率减小
 
 
-#### CSMA 冲突
+##### CSMA 冲突
 
 先听再发也会发生冲突。
 
@@ -127,26 +127,26 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 	数值上：等于**最远两站传播时间的两倍**，等于RTT（Round Trip Time）
     
 
-#### CSMA/CD (Collision Detection)
+##### CSMA/CD (Collision Detection)
 
 - 原理：先听后发、边发边听。发送的时候，如果检测到了冲突，那么就**立即终止发送，并且发送强化信号**。
 - [![image-20221019141429903](https://github.com/CSWellesSun/ZJUCourse/raw/main/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%BD%91.assets/image-20221019141429903.png)](https://github.com/CSWellesSun/ZJUCourse/blob/main/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%BD%91.assets/image-20221019141429903.png)
 
-### 信道利用率分析
+#### 信道利用率分析
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/3_7_38_39_20241103073839.png"/>
 
-### 无冲突协议
+#### 无冲突协议
 
 对于高负荷的情况，我们需要尽量避免冲突，因此宁愿采用含有 overhead 的无冲突协议。
 
-#### Bitmap 协议
+##### Bitmap 协议
 
 假设一共 $N$ 个用户，那么竞争周期就是 $N$ 轮。第 $i$ 轮的时候，第 $i$ 个用户就声明自己是否需要使用。然后，之后，需要使用的用户，就按照从用户 id 大到小的顺序，逐次发送。
 
-#### 改良版 bitmap: Binary Countdown
+##### 改良版 bitmap: Binary Countdown
 
-#### Adaptive Tree Walk
+##### Adaptive Tree Walk
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/4_4_0_32_20241104040032.png"/>
 如图，实际上，adaptive tree walk 就是一个深度优先搜索+剪枝的过程。
@@ -157,7 +157,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 
 另：d在负载比较低的情况下，自然就是从 0 开始；对于负载很高的情况，显然较小的编号是根本不可能的。
 
-### 无线协议: 以 Vanilla MACA 为例
+#### 无线协议: 以 Vanilla MACA 为例
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/4_4_14_32_20241104041431.png"/>
 
@@ -174,11 +174,11 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 
 如果任何设备收到了 CTS 回复，但是自己并没有发出与之对应的 RTS 请求，那么，就说明**自己此时如果发送的话，就会造成干扰，因此应该等待**。
 
-# 802.11 协议栈
+## 802.11 协议栈
 
 - MAC子层协议：由于是无线连接，因此不能用经典的 CSMA/CD。我们采用的是 CSMA/**CA** 协议，vanilla MACA 的变种。
 
-## 帧格式
+### 帧格式
 
 802.11 MAC帧由帧头（MAC Header）、帧主体（Frame Body）和帧校验（FCS）字段组成，主要依靠帧头中各属性字段的设置来确定帧的类型。802.11 MAC帧格式如[图2-3](https://support.huawei.com/enterprise/zh/doc/EDOC1100033976/35825214#fig_dc_fd_wlan_basic_000502)所示。
 
@@ -233,9 +233,9 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 - QoS Control字段：该字段只存在数据帧中，用来实现基于802.11e标准的WLAN QoS功能。
 - Frame Body字段：也称为数据字段，负责传输上层有效载荷（Payload）。在802.11标准中，传输的载荷报文也被称为MSDU（MAC Service Data Unit）。
 - 帧校验序列FCS（Frame Check Sequence）字段：用于检查接收帧的完整性。类似于Ethernet中的CRC。
-# Ethernet 协议栈
+## Ethernet 协议栈
 
-### 经典 Ethernet
+#### 经典 Ethernet
 
 - 最高10Mbps
 - 物理层协议：曼彻斯特编码
@@ -250,7 +250,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 - 冲突重传
 	- ![image-20221019151404063](https://github.com/CSWellesSun/ZJUCourse/raw/main/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%BD%91.assets/image-20221019151404063.png)
 
-# 组网
+## 组网
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/5_20_9_52_20241105200951.png"/>
 
@@ -282,7 +282,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 > 
 > <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/5_20_22_45_20241105202244.png"/>
 
-## VLAN
+### VLAN
 
 物理上，我们的网络连在一起；但是，逻辑上，我们物理连在一起的 LAN，可以**分成若干个逻辑上相互独立的 LAN**。这就是 VLAN 技术。也就是，我们可以给每一个 MAC 地址/端口/IP 地址或者其他 layer 3 协议地址进行“染色”，每一种颜色代表属于一个 VLAN。
 
@@ -294,7 +294,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/5_20_42_43_20241105204243.png"/>
 
-## 广义的各种“交换机”
+### 广义的各种“交换机”
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/5_20_43_42_20241105204341.png"/>
 
@@ -302,7 +302,7 @@ ALOHA 协议，就是随便发送，只不过：**如果两 frames 之间撞了�
 
 **Note**: 所谓“不同” layer 上面，其实际意思是，这个“交换机”可以最多读取到这层 layer 的信息。比如说 application gateway，可以读取 HTTP、SSH 等等包头；至于 router，只能读取 IP 包头，至于 TCP 以及更上层，一概不管；而 switch，只知道 Ethernet 包头，对于 IP 的信息，一概不考虑。
 
-## 冲突域和广播域
+### 冲突域和广播域
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2024/11/5_21_1_26_20241105210125.png"/>
 

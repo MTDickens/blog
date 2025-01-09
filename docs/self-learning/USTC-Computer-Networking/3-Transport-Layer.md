@@ -1,7 +1,7 @@
 
-# Lec 2.8: TCP Socket Programming
+## Lec 2.8: TCP Socket Programming
 
-## 基本流程
+### 基本流程
 
 1. 服务器进程必须先处于运行状态
 
@@ -28,7 +28,7 @@
 
 4. 连接 API 调用有效时，客户端就与服务器建立了 TCP 连接
 
-## 数据结构
+### 数据结构
 
 `sockaddr_in`：**IP 地址和端口**的数据结构
 
@@ -57,12 +57,12 @@ struct hostent {
    int    h_length;          /* length of address */
    char **h_addr_list;       /* list of addresses */
 };
-#define h_addr h_addr_list[0] /* for backward compatibility */
+##define h_addr h_addr_list[0] /* for backward compatibility */
 ```
 
 `hostent` 作为调用域名解析函数时的参数。返回后，将 IP 地址拷贝到 `sockaddr_in` 的 IP 地址部分。
 
-## TCP 连接
+### TCP 连接
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403100049906.png" alt="image-20240310004910250" style="zoom:50%;" />
 
@@ -76,7 +76,7 @@ struct hostent {
 4. 图中黑线是连接建立过程，红线是实际数据包发送过程。
 5. 图中红线显示的是“先发再收”。但是，普遍而言，“先发再收”还是“先收再发”，取决于应用协议的具体定义。
 
-## UDP 连接 VS TCP 连接
+### UDP 连接 VS TCP 连接
 
 对于 TCP 而言，客户端分这几个步骤：
 
@@ -141,7 +141,7 @@ struct hostent {
 2. **需要指定地址**
 3. **无需创建新的 connection socket 用于服务这个连接**
 
-# Lec 3.1: Introduction
+## Lec 3.1: Introduction
 
 <img src="https://cdn.jsdelivr.net/gh/mtdickens/mtd-images/img/202403170308600.png" alt="image-20240317030810612" style="zoom:50%;" />
 
@@ -153,9 +153,9 @@ struct hostent {
 
 当然，不论是 TCP 还是 UDP，它们能够提供的服务都是有限的。对于延时和带宽，它们无能为力。
 
-# Lec 3.2: Mux and Demux
+## Lec 3.2: Mux and Demux
 
-## TCP
+### TCP
 
 TCP 套接字需要提供 `(Source IP, Source Port, Dest IP, Dest Port)` 这一个四元组。通过这个四元组，我们就可以唯一标识一个 TCP 连接。
 
@@ -169,11 +169,11 @@ TCP 套接字需要提供 `(Source IP, Source Port, Dest IP, Dest Port)` 这一�
 4. 对方的 IP 将 TCP segment 以及 IP 信息传给 TCP
 5. 对方的 TCP 将 HTTP 数据包以及 IP, port 信息传给 HTTP，从而完成了一次发送
 
-## UDP
+### UDP
 
 UDP 相比 TCP 的套接字，创建的时候，无需指定对方的 IP 和 port，但是进行传输的时候需要指定。所以，具体的过程和 TCP 其实是大同小异的。
 
-### UDP 和 TCP 定位进程方式的区别
+#### UDP 和 TCP 定位进程方式的区别
 
 但是，**UDP 只以目标 IP 和目标 port 来区分进程**。因此，如果多个不同的主机指定了同一个 IP:port，那么就会被转发到同一个对方主机的 PID 上处理。
 

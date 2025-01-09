@@ -1,11 +1,11 @@
-# Lec 12: Special Member Functions
+## Lec 12: Special Member Functions
 
-## more of `const`-ness
+### more of `const`-ness
 
 Example:
 
 ```cpp
-#include <iostream>
+##include <iostream>
 
 using namespace std;
 
@@ -39,7 +39,7 @@ int main()
 
 - 注意：`const` objects 只能在 constructor 和 destructor 处更改自己的
 
-## Special Member Functions
+### Special Member Functions
 
 1. Default construction
    - object **created** with **no parameters**
@@ -72,7 +72,7 @@ StringVector function(StringVector vec0 /* (2) */) {
 }
 ```
 
-### Copy Constructor
+#### Copy Constructor
 
 Take `StringVector` as example:
 
@@ -103,7 +103,7 @@ The copy constructor is automatically invoked in two scenarios:
 In these cases, the copy constructor is responsible for creating a copy of the object being passed or returned.
 
 ```cpp
-#include <iostream>
+##include <iostream>
 using namespace std;
 
 class Test {
@@ -150,7 +150,7 @@ int main()
 }
 ```
 
-### Copy Assignment
+#### Copy Assignment
 
 ```cpp
 StringVector& StringVector::operator= (const StringVector& other) {
@@ -167,7 +167,7 @@ StringVector& StringVector::operator= (const StringVector& other) {
 }
 ```
 
-### `delete`: Explicitly Preventing Copy
+#### `delete`: Explicitly Preventing Copy
 
 In `ifstream`, objects are NOT allowed to be copied. Thus:
 
@@ -179,16 +179,16 @@ public:
 };
 ```
 
-## Rules
+### Rules
 
-### Rule of Zero
+#### Rule of Zero
 
 If the default operations work,then don't define your own custom ones.
 
 - makes the code clean
 - you won't make a mistake
 
-### Rule of Three
+#### Rule of Three
 
 If you decide to define (or delete) at least one of
 
@@ -198,7 +198,7 @@ If you decide to define (or delete) at least one of
 
 **you should define ALL three of them.**
 
-## Optimization
+### Optimization
 
 Without optimization, if you initialize an array in `main` and call `findAllWords`:
 
@@ -206,13 +206,13 @@ Without optimization, if you initialize an array in `main` and call `findAllWord
 
 The array will be repetitively created three times, which is a waste of time.
 
-### Return Value Optimization (RVO)
+#### Return Value Optimization (RVO)
 
 If the compiler know that you are going to return the vector anyway, when you create the vector in local scope, the compiler actually create it in the stack frame.
 
 <img src="img/image-20240112184040836.png" alt="image-20240112184040836" style="zoom:33%;" />
 
-### Even Better?
+#### Even Better?
 
 Using `std::move`, you can actually *steal* the resource from the `findAllWords`
 
