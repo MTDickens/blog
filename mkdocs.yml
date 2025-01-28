@@ -226,6 +226,9 @@ nav:
       - 19. Generative Models: "self-learning/dl4cv/19-generative-models.md"
       - 20. Reinforcement Learning: "self-learning/dl4cv/20-reinforcement-learning.md"
     - RAIL RL:
+      - 5. Policy Gradient: "self-learning/rail-rl/lec5.md"
+      - 6. Actor-Critic Algorithm: "self-learning/rail-rl/lec6.md"
+      - 7. Q-Learning: "self-learning/rail-rl/lec7.md"
       - 13-14. Exploration and Exploitation: "self-learning/rail-rl/lec-13-14.md"
   - PL & SA:
     - PKU 编程语言理论:
