@@ -185,6 +185,7 @@ Online Q iteration 乍看起来像是某种 gradient descent（i.e. 试图优化
 > 但是，一开始，$Q$ 是随机的，因此必然很差。此时 policy 不好，只能拿“多样性”来凑。我们就让 trajectory 多样一些。此时就需要引入 **exploration**
 
 我们通常用到下面两种 exploration 的方式：
+
 $$
 \begin{array}{ll}
 \pi\left(\mathbf{a}_t \mid \mathbf{s}_t\right)= \begin{cases}1-\epsilon \text { if } \mathbf{a}_t=\operatorname{arg~max}_{\mathbf{x}_t} Q_\phi\left(\mathbf{s}_t, \mathbf{a}_t\right) \newline
