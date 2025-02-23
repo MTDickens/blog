@@ -202,6 +202,11 @@ nav:
       - Image Stitching : "School-Courses/FA-WINTER-2024/Computer-Vision/Image-Stitching.md"
       - Motion Estimation : "School-Courses/FA-WINTER-2024/Computer-Vision/Motion-Estimation.md"
       - Single View : "School-Courses/FA-WINTER-2024/Computer-Vision/Single-View.md"
+  - Spring/Summer 2025:
+    - 软件工程:
+      - "School-Courses/SP-SU-2025/Software-Engineering/lec1.md"
+    - 编译原理:
+      - "School-Courses/SP-SU-2025/Compiler/lec1.md"
 
 - 自学课程:
   - AI:
@@ -229,6 +234,7 @@ nav:
       - 5. Policy Gradient: "self-learning/rail-rl/lec5.md"
       - 6. Actor-Critic Algorithm: "self-learning/rail-rl/lec6.md"
       - 7. Q-Learning: "self-learning/rail-rl/lec7.md"
+      - 11-12. Model-Based RL: "self-learning/rail-rl/lec-11-12.md"
       - 13-14. Exploration and Exploitation: "self-learning/rail-rl/lec-13-14.md"
   - PL & SA:
     - PKU 编程语言理论:
@@ -337,6 +343,8 @@ nav:
     - 如何祛费拉化: "Notes/23/how-to-not-be-a-fellah.md"
   - 2024 年:
     - 模拟计算: "Notes/24/analog-computing.md"
+  - 2025 年:
+    - 如何阅读论文: "Notes/25/how-to-read-paper.md"
 - 转载:
   - 知乎:
     - 库，框架，架构，平台的区别: "Repost/zhihu/distinguish-between-library-framework-architecture-platform.md"
