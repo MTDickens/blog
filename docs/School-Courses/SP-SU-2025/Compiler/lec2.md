@@ -101,17 +101,6 @@
 - 自顶向下：LL(1)
 - 自底向上：LR(1), LALR(1)
 
-## 复杂度类简介
-
-> [!info]+ Complexity Hierarchy
-> 
-> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/3_11_22_19_20250303112219.png" width="50%"/>
-
-- LL grammar
-	- 终结符长度只有 k 个字符
-	- ${\displaystyle {\begin{array}{ccccccc}S&\Rightarrow ^{L}&w_{1}A\chi &\Rightarrow &w_{1}\nu \chi &\Rightarrow ^{*}&w_{1}w_{2}w_{3}\\S&\Rightarrow ^{L}&w_{1}A\chi &\Rightarrow &w_{1}\omega \chi &\Rightarrow ^{*}&w_{1}w'_{2}w'_{3},\\\end{array}}}$
-		- 对于上面的情况，如果 $\nu \neq \omega$，那么 $w_2w_3, w_2'w_3'$ 的前 k 个字符必然不同
-
 ## Types of Parsers for Grammars
 
 有三种：
@@ -490,5 +479,166 @@ S  -> a
 
 <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/20_0_25_39_202503200025908.png"/>
 
-*(TODO)*
+#### 更简单的转换方法
+
+实际上，由于这个 NFA 实际上是 $\varepsilon$-DFA（i.e. 在 DFA 的基础上，允许 $\varepsilon$ 边；或者说，在 NFA 的基础上，不允许重复的非 $\varepsilon$ 边），因此我们可以用更简单的转换方法：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_2_8_19_20250322020818.png"/>
+
+如上图：
+
+- `Closure` 相当于把**一个状态 ($I$)** 以及**从这个状态出发，无需消耗任何字符（i.e. 经过 $\varepsilon$ 边）即可达的状态**都包含到大状态中
+- `Goto` 返回从这个状态出发，消耗 $X$ 这个字符即可达的大状态
+	- 别忘了 `Closure(J)` 的 `Closure`!
+- 最后我们不断迭代，即可求出 `E` 和 `T`
+
+#### 例子
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_2_15_38_20250322021537.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_2_30_14_20250322023013.png" width="50%"/>
+
+如上上表和上表：
+
+- 分为三种状态
+	- 13589 状态：我们无脑选择 shift
+		- 以上上表第二行为例：我们目前在 3 状态，就无脑先 shift。如果下一个字符是 `x`，就根据上表跳转到 2 状态去；如果下一个字符是 `,`，就是 error。等等。
+	- 278 状态：无脑 reduce+goto
+		- 以上上表第八行为例：我们目前在 6 状态，就无脑 reduce。由于规则里是 `r1`，因此就用第一条规则（i.e. `S -> (L)`）来 reduce，暂时来到状态 3；之后，我们获得了 `S`，因此 goto 状态 7
+	- 4 状态：无脑 accept
+		- 就是第九行
+- 概念上来说，分为状态栈和符号栈。实际上，每一个符号就对应一个状态，状态栈就应该比符号栈多一个初始状态（e.g. 上面的 `1`）而已。因此，状态栈和符号栈实际上可以用同一个 `pair` 栈来存
+
+#### 反例
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_2_50_57_20250322025057.png"/>
+
+如上图，状态 3 在下一个字符为 `+` 的时候，既可以 `reduct+goto` 也可以 `shift`，因此用 LR(0) 无法解决了。
+
+但是，不难觉察到：如果你要应用规则 2 来 reduce 的话，首先，reduce 之后，会产生一个 `E`。因此，你起码必须保证，**`E+` 这种情况是存在的**
+
+- 换句话说，如果 `+` 不属于 `FOLLOW(E)` 的话，那么此时 `E` 根本不应该被 reduce 成 `+`
+
+经过计算：`FOLLOW(E) = {$}`。因此，r2 只能存在于 `[3, $]` 这个格子中。也就是下图：
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_3_14_57_20250322031457.png"/>
+
+### Simple LR (SLR) parsing
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/22_3_15_38_202503220315164.png"/>
+
+如上图，我们将 LR(0) 的算法计算出来的表格**进一步简化**，从而得到 SLR 表格。这就是 simple 的意思。
+
+### LR(1) parsing
+
+LR(1) parsing比简单 LR（SLR）parsing 更强大。
+
+- LR(0)：仅根据当前状态来选择 shift 或者 reduce。
+- SLR：根据更多信息（下一个 token 是否在特定的 FOLLOW set 中）来选择 shift 或 reduce。 
+
+但是，即便是 SLR，仍然免不了 conflict（如下图）
+
+> [!example]+ 反例
+> 
+> 如下图：红框内的状态中，既可以 shift，也可以 reduce。而且 `S -> V.=E` 这条规则，确实满足要求（i.e. $= \ \in \text{Follow}(E) = \{\$, =\}$）
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_3_45_7_20250323034507.png"/>
+
+因此我，我们需要使用更多的信息。对于 LR(1) 而言，就是**往 DFA 中加入更多信息**。
+
+> **回忆**：LR(0) item 就是形如 $(A \to \alpha.\beta)$ 这样的。
+
+LR(1) item 包含一个 LR(0) item 以及一个 lookahead symbol: $(A \to \alpha.\beta, x)$。
+
+> **回忆**：$(A \to \alpha.\beta)$ 的意思是：$\alpha$ 位于符号栈栈顶，剩余字符（的前缀）可以推出 $\beta$
+
+$(A \to \alpha.\beta, x)$：$\alpha$ 位于符号栈栈顶，剩余字符（的前缀）可以推出 $\beta x$
+
+> **回忆**：SLR 中，对于规则 $A \to \alpha$，只有在 $X \in \text{Follow}(A)$ 的情况下，才能使用
+
+对于 $(A \to \alpha.\beta, x)$ 而言，由于 $\text{First}(\beta x) \neq \emptyset$，因此我们可以直接说：只有在 $X \in \text{First}(\beta x)$ 的时候才能用。
+
+- 实际上，SLR 和 LR(1) 都采取了 track the lookahead symbol 的措施。但是，对于规则 $A \to \alpha$，
+	- SLR 用的是 Follow($A$)，也就是粗粒度的 $A$，而且是在已经推导完 DFA 之后才加入这个限制
+	- 而 LR(1) 用的是细粒度的 First($\beta x$)，并将这个限制引入到推导 DFA 这个过程中去
+
+#### 推导过程
+
+这里我们采用对比的方式进行讲解。
+
+##### Closure
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_21_39_20250323042138.png"/>
+
+如上图：
+
+- start state 的 `?` 的意思就是：由于 `$` 已经是终止符了，因此我们根本不关心 `$` 右边是什么符号（i.e. 直接 accept）
+- 对于规则 $(A \to \alpha.X\beta, z)$ 而言，我们要求能够推出 $X\beta z$。因此，$X$ 也得能够推出 $\gamma$ + First($\beta z$) 才行。
+
+##### Goto
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_30_49_20250323043048.png"/>
+
+其实没有变化。
+
+##### Reduce
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_31_28_20250323043127.png"/>
+
+相比 SLR 而言，LR(1) 更加精确。
+
+#### 例子
+
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_34_28_20250323043427.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_34_46_20250323043446.png"/>
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_34_56_20250323043456.png"/>
+
+**注意**：对于上表中第三行，可见我们通过 LR(1) 这种更加细粒度的 DFA 构建，将 s4 和 r3 成功分开了。
+
+#### LALR(1)
+
+由于 LR(1) 可能对每一个 lookahead symbol 都要维护一个状态，因此当 lookahead symbol 很多的时候，这个表可能会很大。
+
+因此，我们可以尝试把一些 states **whose items are identical except for lookahead sets** 合并起来，如下图：
+
+> [!example]+
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_41_25_20250323044125.png"/>
+> 
+> <img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_41_32_20250323044131.png"/>
+
+## A Hierarchy of Complexity
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/3_11_22_19_20250303112219.png"/>
+
+## LR Parsing of Ambiguous Grammars
+
+我们用最简单的例子进行说明（dangling else）。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_4_59_1_20250323045900.png"/>
+
+如图，大部分语言都会使用 **else 就近原则**——也就是说，(1) 是正确结果。所以，我们怎样能够正确 parse 这个 dangling else 呢？以下是两种解法。
+
+### 改写语法
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/23_5_0_36_20250323050035.png"/>
+
+如上图：`U -> if E then M else U` 这一条规则，就是说，如果你需要匹配一个完整的 `if then else`（i.e. 最后的 `else` 和最前面的 `if` 绑定），那么中间的 then 内部就必须是全部完整的。
+
+### 使用 priority
+
+还记得我们之前说的吗？能够 shift 就 shift，不能 shift 才考虑 reduce。
+
+因此，如果 shift 和 reduce 规则冲突，那么我们就 shift。
+
+更广义来说，如果产生了 conflict，我们其实可以通过手动规定优先级的方式，去消除这个 conflict。
+
+> [!warning]
+> 
+> 但是，除了一些特殊的例子（比如说这个 dangling else）以外，出现其它的 shift-reduce conflict 或者 reduce-reduce conflict，都意味着**你的文法有问题**
+
+
 
