@@ -641,4 +641,61 @@ $(A \to \alpha.\beta, x)$：$\alpha$ 位于符号栈栈顶，剩余字符（的�
 > 但是，除了一些特殊的例子（比如说这个 dangling else）以外，出现其它的 shift-reduce conflict 或者 reduce-reduce conflict，都意味着**你的文法有问题**
 
 
+## Error Recovery
+
+### Local Error Recovery
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/24_11_16_46_20250324111645.png"/>
+
+如上图：左侧蓝框内，蓝色规则（i.e. 最下面两条规则）就用于 error recovery。
+
+如果产生了 error，那么：
+
+- 我们需要不断 pop symbol stack，直到满足 error 的左侧
+- 不断 discard new input，直到满足 error 的右侧
+
+#### 问题
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/24_11_42_30_20250324114229.png"/>
+
+如上图：
+
+- 文法匹配若干以分号相隔的含括号的表达式
+- 生成 error 之后，它需要
+	- 左边匹配一个 `;`
+	- 右边匹配一个 `;`
+
+如果在读取若干左括号之后，出现了 error，那么就会先左边 pop，把左括号删掉，然后再右边 discard，把右括号删掉。
+
+但是，由于左括号已经导致了 `nest = nest + 1` 这个副作用，而右括号在导致 `nest = nest - 1` 之前已经被 discarded，因此，最终输出就是 nest 不为 0。
+
+**解决方法**：我们最好不要用有副作用的 semantic action。
+
+---
+
+除此之外，另外一个问题就是：local error recovery 只能够**局部删除/修改**。
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/24_11_54_28_20250324115427.png"/>
+
+以上图为例：肉眼可见，错误其实来源于 `var` 被错误写成了 `type`。
+
+但是，由于出错的地方在 `:=`，因此，修改错误的时候：
+
+1. 要么是用上面所说的“删除式修改”，即把 `type ... of 0` 全部都删了。这样会**导致错误信息不够清晰**
+2. 即便用“修改式删除”，如果把 `:=` 改成了 `=`，在后面的 `intArray[10]` 这里也会出问题。因为 type 后面是不能接 `[...]` 的
+
+因此，只有用全局修改，我们才能直接将错误根源 `type` 找出来、
+
+### Global Error Recovery
+
+**目的**：通过最少的插入/删除操作集合，**将语法错误的输入修改成语法正确的输入**（从而，即便“真正出错”的位置并不是 parsing 阶段报错的位置，我们也一定程度上可以通过这种 global 的方式找出来）
+
+#### Burke-Fisher Error Repair (back up $k$ tokens)
+
+除了正常的符号栈（这里称为 current stack）以外，我们还额外维护一个 old stack 以及 queue：
+
+- 这个 queue 的长度就是 k
+- old stack + queue = current stack
+
+每当我们遇到错误之后，我们就轮流对这个 queue 中的所有可能的位置进行**deletion/insertion/substitution** 三种操作。只要找到一种位置+方式，使得我们可以成功往前 parse $r$ 个 tokens 以上，我们就采用这种位置+方式。
 
