@@ -209,7 +209,10 @@ nav:
     - 编译原理:
       - "School-Courses/SP-SU-2025/Compiler/lec1.md"
       - "School-Courses/SP-SU-2025/Compiler/lec2.md"
-
+      - "School-Courses/SP-SU-2025/Compiler/lec3.md"
+- 论文:
+  - LLM:
+    - 用“电路追踪”揭示计算图: "papers/llm/circuit-tracing-revealing-computational-graphs-in-language-models.md"
 - 自学课程:
   - AI:
     - EECS 498-007 / 598-005:

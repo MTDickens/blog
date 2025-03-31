@@ -216,6 +216,20 @@ Tiger 有两套 namespaces:
 
 ### Type Checking in Action
 
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/03/31_11_40_1_20250331114000.png"/>
+
+如上图：
+
+- `Ty_ty_` 就是类型结构体
+	- `kind` 代表类型
+	- `name` 只有在 `kind` 为 `Ty_record/array/name` 时才会有用
+		- `record` 在 `Ty_record` 有用，指向一个 field list
+		- `array` 在 `Ty_array` 有用，指向另一个 `Ty_ty_`（也就是这个 array 的元素类型）
+		- `name` 在 `Ty_name` 有用。以 `let list = {first: int, rest: list}` 为例，`sym` 就是 `list`，而 `ty` 就指向 `{first: int, rest: list}`
+			- 正由于这是一个指针，我们可以循环引用
+
+下面是具体的操作：
+
 - Type-checking expressions
     - `transExp`可以在给定的两个环境下将输入的表达式标记上type（如果发现非法则报错）
 - Type-checking **declarations**
@@ -234,7 +248,11 @@ Tiger 有两套 namespaces:
 	        - pass#1: 记录函数声明（签名）放入环境
 	        - pass#2: 处理函数体
 
-**注意**：在 C 语言中，initialization 和 declaration 是不一样的。如果两者存在”循环使用“的情况，那么就需要 declaration 在前。这样做，只需要 one pass 即可。
+**注意**：
 
-当然，对于更加现代的语言，就没有所谓 declaration 了。但是这样做，编译器就需要 two passes。
+1. 在 C 语言中，initialization 和 declaration 是不一样的。如果两者存在”循环使用“的情况，那么就需要 declaration 在前。这样做，只需要 one pass 即可。
+2. 当然，对于更加现代的语言，就没有所谓 declaration 了。但是这样做，编译器就需要 two passes。
+3. 这部分内容，其实也不是非常有“理论性”。用 C 或者 OCaml 实现一个就清楚了。中心思想就是：维护两个表，一个是 type 定义，一个是 variable 定义；然后不断往这两个表里面添加 item，并且检查是否存在冲突
+
+## Activation Record
 
