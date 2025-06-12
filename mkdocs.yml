@@ -213,8 +213,11 @@ nav:
 - 论文:
   - LLM:
     - 用“电路追踪”揭示计算图: "papers/llm/circuit-tracing-revealing-computational-graphs-in-language-models.md"
+    - "papers/llm/solomonoff-prior-and-llm.md"
 - 自学课程:
   - AI:
+    - diffusion:
+      - ddpm: "self-learning/diffusion/ddpm.md"
     - EECS 498-007 / 598-005:
       - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
       - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
