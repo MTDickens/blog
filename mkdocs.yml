@@ -218,6 +218,7 @@ nav:
   - AI:
     - diffusion:
       - ddpm: "self-learning/diffusion/ddpm.md"
+      - roadmap: "self-learning/diffusion/roadmap.md"
     - EECS 498-007 / 598-005:
       - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
       - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
