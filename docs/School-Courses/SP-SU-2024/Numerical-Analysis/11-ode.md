@@ -5,9 +5,11 @@
 （一阶）初值问题的定义就是：
 
 假设 $\mathrm y = \mathrm y(t)$，其中 $\mathrm y: \Omega \subset \mathbb R^n \to \mathbb R$，给定一个微分约束：
+
 $$
 \nabla_t \mathrm y(t) = \mathrm f(\mathrm y, t)
 $$
+
 s.t. $\mathrm f: \mathbb R^n \times \mathbb R \to \mathbb R$
 
 同时，给定一点 $(\mathrm y(t_0), t_0) \in \Omega$。
