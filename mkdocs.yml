@@ -217,6 +217,8 @@ nav:
 - 自学课程:
   - AI:
     - diffusion:
+      - sde: "self-learning/diffusion/sde.md"
+      - neural-ode: "self-learning/diffusion/neural-ode.md"
       - ddpm: "self-learning/diffusion/ddpm.md"
       - roadmap: "self-learning/diffusion/roadmap.md"
     - EECS 498-007 / 598-005:
