@@ -221,6 +221,7 @@ nav:
       - neural-ode: "self-learning/diffusion/neural-ode.md"
       - ddpm: "self-learning/diffusion/ddpm.md"
       - roadmap: "self-learning/diffusion/roadmap.md"
+      - Rectified Flow: "self-learning/diffusion/rectified-flow.md"
     - EECS 498-007 / 598-005:
       - 0. PyTorch: "self-learning/dl4cv/0-pytorch.md"
       - 1. Introduction: "self-learning/dl4cv/1-introduction.md"
