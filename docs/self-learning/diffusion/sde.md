@@ -21,10 +21,10 @@ More often than not，对于生成模型，给定一个 $x$，我们可以拟合
 
 如何选择拟合时的 loss 呢？
 
-- 对于 likelihood-based model，其实不是最小二乘法，而是 KL 散度，但是跟 scored-based 在形式上有类似之处
-  
-  $$\begin{aligned}
-  &D_{KL}(p || p_\theta) \newline=& \mathbb{E}_{p({x})}\left[\log p({x})-\log p_\theta({x})\right] = \int_x p(x) \log \frac {p(x)} {p_\theta(x)} \mathrm dx \newline=& \sum_{i=1}^N p(x_i) \log \frac {p(x_i)} {p_\theta(x_i)} = -\frac 1 N \log p_\theta(x_i) + \mathrm{Const}\end{aligned}$$
+- 对于 likelihood-based model，其实不是最小二乘法，而是 KL 散度，但是跟 scored-based 在形式上有类似之处： 
+
+	$$\begin{aligned} &D_{KL}(p || p_\theta) \\ =& \mathbb{E}_{p({x})}\left[\log p({x})-\log p_\theta({x})\right] = \int_x p(x) \log \frac {p(x)} {p_\theta(x)} \mathrm dx \\ =& \sum_{i=1}^N p(x_i) \log \frac {p(x_i)} {p_\theta(x_i)} = -\frac 1 N \sum_{i=1}^N \log p_\theta(x_i) + \mathrm{Const} \end{aligned}$$
+
 - 而对于 scored-based model，就是典型的最小二乘，即
 	- $\mathbb{E}_{p({x})}\left[\left\|\nabla_{{x}} \log p({x})-{s}_\theta({x})\right\|_2^2\right] = \int_x p(x) \left\|\nabla_{{x}} \log p({x})-{s}_\theta({x})\right\|_2^2 \mathrm dx$
 
