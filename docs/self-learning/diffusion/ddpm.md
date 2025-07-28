@@ -9,6 +9,10 @@
 >   
 > 你只能假设我学过微积分、线性代数以及初等概率论。其它我都没学过。
 
+## tl;dr
+
+<img src="https://gitlab.com/mtdickens1998/mtd-images/-/raw/main/pictures/2025/07/28_17_4_50_202507281704700.png"/>
+
 ## 零基础读懂 Diffusion Model？带你逐行精读DDPM
 
 你好，欢迎来到今天的深度学习研讨课。我是你的助教 Aurelle。今天要拆解的这篇论文，是生成模型领域的一座里程碑：来自 UC Berkeley 的 [Denoising Diffusion Probabilistic Models (DDPM)](https://arxiv.org/abs/2006.11239)。
